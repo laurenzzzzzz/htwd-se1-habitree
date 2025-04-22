@@ -1,6 +1,6 @@
 // Meta
-:project-name: Projektthema (T00)
-:project-system-name: Software-Name
+:project-name: Habit-Tracker (T03)
+:project-system-name: Habitly
 // Settings:
 :toc:
 :toc-title: Inhaltsverzeichnis
