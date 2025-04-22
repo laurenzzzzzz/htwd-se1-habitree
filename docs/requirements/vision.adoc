@@ -12,7 +12,7 @@ Der Zweck dieses Dokuments ist es, die wesentlichen Bedarfe und Funktionalitäte
 Der Zweck dieses Dokuments ist es, die wesentlichen Anforderungen an das System aus Sicht und mit den Begriffen der künftigen Anwender zu beschreiben.
 
 === Gültigkeitsbereich (Scope)
-Dieses Visions-Dokument bezieht sich auf das System {project-system-name}, das von Team 3A entwickelt wird. Das System wird es vorallem Studenten erlauben, tägliche Gewohnheiten zu verfolgen um Routinen zu entwickeln um gewünschtes Verhalten anzutrainieren oder schlechtes Verhalten abzulegen. Ziel ist es dem Nutzer bei seiner gewünschten persönlichen Weiterentwicklung zu unterstützen.
+Dieses Visions-Dokument bezieht sich auf das System {project-system-name}, das von Team 3A entwickelt wird. Das System wird es vorallem Studenten erlauben, tägliche Gewohnheiten zu verfolgen um Routinen zu entwickeln und gewünschtes Verhalten anzutrainieren oder schlechtes Verhalten abzulegen. Ziel ist es dem Nutzer bei seiner gewünschten persönlichen Weiterentwicklung zu unterstützen.
 
 === Definitionen, Akronyme und Abkürzungen
 //Verweis passend zum Belegabgabe-Template se1_belegabgabe_t00.adoc
