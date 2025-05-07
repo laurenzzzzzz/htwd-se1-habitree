@@ -17,6 +17,8 @@ In diesem Dokument werden die Benutzeroberflächen des Systems {project-system-n
 == Personas
 // Fügen Sie hier als Tabelle oder Bild die Persons der wichtigsten Stakeholder ein
 *Hannes Krusch* _“Ich will nicht mehr, ich kann nicht mehr, ich halt das alles nicht mehr aus”_
+
+image::Persona-Hannes_Krusch.png[200,200]
 |===
 |Demografie | 20 Jahre alt, männlich, Student, ledig, wohnt in Dresden
 |Verhaltensvariablen | eher extrovertiert, undiszipliniert , motiviert
@@ -26,6 +28,8 @@ In diesem Dokument werden die Benutzeroberflächen des Systems {project-system-n
 |===
 
 *Lisa Maria Töpfer* _"Go big or go home"_
+
+image::Persona-Lisa_Maria_Töpfer.jpeg[200,150]
 |===
 |Demografie | 22 Jahre alt, studiert BWL, ledig, wohnt in Dresden, fordernd
 |Verhaltensvariablen | extrovertiert, eher Disziplin, eher unmotiviert
@@ -35,6 +39,8 @@ In diesem Dokument werden die Benutzeroberflächen des Systems {project-system-n
 |===
 
 *Lara Schneider* _"Fragen statt Umfragen"_
+
+image::Persona-Lara_Schneider.PNG[200,200]
 |===
 |Demografie | weiblich, 21 Jahre alt, ledig, wohnt in Bautzen, keien Arbeit, Farbenblindheit (Rot- Grün- Scwäche)
 |Verhaltensvariablen | eher Introvertiert, diszipliniert, Prinzipiell willig sich neue Dinge anzutrainieren und neue Gewohnheiten sich sukzessive aufzubauen. In stressigen Lebensphasen ggf. Probleme der Beständigkeit
