@@ -13,7 +13,14 @@ In diesem Dokument werden die wesentlichen Begriffe aus dem Anwendungsgebiet (Fa
 |===
 | Begriff | Definition und Erläuterung | Synonyme
 //| Kommissionierung | Bereitstellung von Waren aus einem Lager entsprechend eines Kundenauftrags | (keine)
-| xx | xx | xx
+| Habit Stacking | Technik, bei welcher neue Gewohnheiten an bestehende angeknüpft werden. Es entsteht dabei eine Form der Kopplung zwischen den Gewohnheiten.
+| xx
+| Streak Tracking 
+| Visualisierung kontinuierlicher Durchführung. (z.B.: Erreichen des 10- Tage Zieles.)
+| xx
+| Gamification
+| Spielerische und Nutzerabhängige Fortschrittsvisualisierung
+| xx
 |===
 
 
