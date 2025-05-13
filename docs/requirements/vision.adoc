@@ -35,15 +35,26 @@ Aus betriebswirtschaftlicher Sicht kann der Habit Tracker zur Steigerung von Pro
 //Eine Produktvision beschreibt das Einsatzziel der Anwendung und sorgt für ein gemeinsames Ziel und Verständnis für alle Beteiligten im Projekt. Geben Sie in knapper Form übersichtsartig die Positionierung der angestrebten Lösung im Vergleich zu verfügbaren Alternativen dar. Das folgende Format kann dazu verwendet werden:
 
 
+// [cols="1,3"]
+// |===
+// | Für | [Zielkunde / Persona]
+// | der / die | [Angabe des Bedarfs oder Chance]
+// | ist das  | [Produktname]
+// | eine  | [Produktkategorie]
+// | der / die | [Aussage zum Hauptvorteil / Alleinstellungsmerkmal]
+// | anders als | [wesentliche Lösungsalternative]
+// | kann unser Produkt | [Aussage zum Hauptunterschied]
+// |===
+
 [cols="1,3"]
 |===
-| Für | [Zielkunde / Persona]
-| der / die | [Angabe des Bedarfs oder Chance]
-| ist das  | [Produktname]
-| eine  | [Produktkategorie]
-| der / die | [Aussage zum Hauptvorteil / Alleinstellungsmerkmal]
-| anders als | [wesentliche Lösungsalternative]
-| kann unser Produkt | [Aussage zum Hauptunterschied]
+| Für | Berufstätige und Studierende mit dem Wunsch nach persönlicher Weiterentwicklung
+| die | ihre Gewohnheiten systematisch verfolgen und verbessern möchten
+| ist   | {project-name}
+| eine  | digitale Habit-Tracking-App
+| die | motiviert, durch smarte Erinnerungen und visuelle Fortschrittsverfolgung
+| anders als | herkömmliche Kalender- oder Notiz-Apps
+| kann unser Produkt | gezielt Verhalten analysieren, automatisiert Feedback geben und sich an individuelle Ziele anpassen
 |===
 
 
