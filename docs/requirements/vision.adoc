@@ -92,7 +92,7 @@ Aus betriebswirtschaftlicher Sicht kann der Habit Tracker zur Steigerung von Pro
 | Die Vertreter testen das System aus Nutzerperspektive und geben ein strukturiertes Feedback zu Bedienbarkeit, Verständlichkeit und Nützlichkeit der Features.
 | Behörden (Gesetzgeber)
 | Institutionen auf Bund, Landes und Kommunaler Ebene, die gesetzliche Vorgaben wie Datenschutz, Urheberrecht o.ä. Standards prüfen.
-| Diese Institutionen achten darauf, dass personenbezogene Daten korrekt verarbeitet werden, nach aktuellen gesetzlichen Bestimmungen (wie z.B.: der DSGVO) . Ferner beurteilen Sie auch die Einhaltung des Urheberrechtes bei Verwendung von beispielsweisen externen Grafiken. (z.B.: via UrhG) oder auch die Einhaltung der Standards des Bundesamt für Sicherheit in der Informationstechnik.
+| Diese Institutionen achten darauf, dass personenbezogene Daten korrekt verarbeitet werden, nach aktuellen gesetzlichen Bestimmungen (wie z.B.: der DSGVO) . Ferner beurteilen Sie auch die Einhaltung des Urheberrechtes bei Verwendung von beispielsweisen externen Grafiken. (z.B.: mittels UrhG) oder auch die Einhaltung der Standards des Bundesamt für Sicherheit in der Informationstechnik.
 Ihr Interesse liegt an minimaler Datenspeicherung, transparenter Nutzeraufklärung sowie einer gewissen Systemsicherheit.
 |===
 
