@@ -22,18 +22,18 @@ image::Persona-Hannes_Krusch.png[200,200]
 |===
 |Demografie | 20 Jahre alt, männlich, Student, ledig, wohnt in Dresden
 |Verhaltensvariablen | eher extrovertiert, undiszipliniert , motiviert
-|Technische Fähigkeiten | Nothingphone 1, Smartwatch von Nothing, Social Media
+|Technische Fähigkeiten | ist viel am PC bzw. Handy, hat hohe technische Kompetenzen
 |Bedürfnisse/ Ziele | will mit Rauchen aufhören, Rauchen zu teuer
 |Hindernisse | nach der ersten Zigarette wieder das Gefühl bei 0 anzufangen, Freundesgruppe raucht, mehrmals versucht aufzuhören 
 |===
 
 *Lisa Maria Töpfer* _"Go big or go home"_
 
-image::Persona-Lisa_Maria_Töpfer.jpeg[200,150]
+image::Persona-Lisa_Maria_Töpfer.jpeg[200,200]
 |===
 |Demografie | 22 Jahre alt, studiert BWL, ledig, wohnt in Dresden, fordernd
 |Verhaltensvariablen | extrovertiert, eher Disziplin, eher unmotiviert
-|Technische Fähigkeiten | benutz ein iPhone 16 Pro Max, Apple Watch Ultra 2
+|Technische Fähigkeiten | benutzt häufig ihr Tablet und Handy, wenig Kompetenzen am PC
 |Bedürfnisse/ Ziele | mehr trainieren, körperliche/ geistige Weiterentwicklung
 |Hindernisse | Gleichheit
 |===
