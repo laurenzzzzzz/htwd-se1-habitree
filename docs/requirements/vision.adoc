@@ -50,7 +50,7 @@ Aus betriebswirtschaftlicher Sicht kann der Habit Tracker zur Steigerung von Pro
 |===
 | Für | Berufstätige und Studierende mit dem Wunsch nach persönlicher Weiterentwicklung
 | die | ihre Gewohnheiten systematisch verfolgen und verbessern möchten
-| ist   | {project-name}
+| ist   | {project-system-name}
 | eine  | digitale Habit-Tracking-App
 | die | motiviert, durch smarte Erinnerungen und visuelle Fortschrittsverfolgung
 | anders als | herkömmliche Kalender- oder Notiz-Apps
