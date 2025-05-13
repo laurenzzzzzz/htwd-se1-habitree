@@ -67,10 +67,14 @@ Aus betriebswirtschaftlicher Sicht kann der Habit Tracker zur Steigerung von Pro
 |===
 | Name | Beschreibung | Verantwortlichkeiten
 
-| [Benennung des Stakeholders (als Rolle)]
-| [Kurze Beschreibung des Stakeholders und seiner Ziele]
-| [Fassen Sie die wesentlichen Verantwortlichkeiten des Stakeholder mit Bezug auf das zu entwickelnde System kurz zusammen, d.h. ihr besonderen Interessen. Beispiele: Dieser Stakeholder sorgt dafür, dass das System gewartet wird / dass die angezeigten Daten aktuell sind / überwacht den Projektfortschritt / usw.]
+| Studierende (Primäre Nutzer)
+| Studierende mit stark schwankenden Tagesrhythmus, teils hoher Stressbelastung und einen Wunsch nach Selbstoptimierung im Alltag.
+| Unterstützung positiver Gewohnheitsbildung. Ihr Interesse liegt in einer intuitiven Bedienung, flexibler Zeitplanung, motivierender Rückmeldungen und sinnvoller sowie spielerischer Fortschrittsvisualisierung. Sie liefern Feedback zu Aspekten der Funktionalität, des Designes und der Performance.
+| Projektgruppe
+| Projektgruppe, bestehend aus: Scrum- Master, Product- Owner und einem Entwicklerteam
+| Konzipieren, Entwicklung und Test des Systemes. Das Team will ein stabiles und nutzerorientiertes System schaffen, dass elementarsten Anforderungen aus der Vision und dem Backlog erfüllt. Das Team ist somit Stakeholder in Bezug auf technische Umsetzbarkeit, Planung , Konzipierung, Modifikation und Wartbarkeit
 |===
+
 
 Die Verfeinerung der Stakeholder, die das System benutzen, wird im UX-Konzept mittels Personas vorgenommen.
 
