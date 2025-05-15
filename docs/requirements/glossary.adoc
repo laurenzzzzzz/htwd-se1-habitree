@@ -20,7 +20,7 @@ In diesem Dokument werden die wesentlichen Begriffe aus dem Anwendungsgebiet (Fa
 | xx
 | Gamification
 | Spielerische und Nutzerabhängige Fortschrittsvisualisierung
-| xx
+| xy
 |===
 
 
