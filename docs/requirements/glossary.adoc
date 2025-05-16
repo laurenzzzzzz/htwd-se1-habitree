@@ -35,7 +35,7 @@ In diesem Dokument werden die wesentlichen Begriffe aus dem Anwendungsgebiet (Fa
 |===
 | Abkürzung | Bedeutung | Erläuterung
 //| UP | Unified Process | Vorgehensmodell für die Softwareentwicklung
-| xx | xx | xx
+| UX | User Experience | User Experience Umfasst sowohl Warnehmungen als auch Erfahrungen eines Nutzers bei der Bedienung eines Systemes bzw. einer Anwendung, hier also die Interaktion des Nutzers mit "Habitly".
 |===
 
 == Verzeichnis der Datenstrukturen
