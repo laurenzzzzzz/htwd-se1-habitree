@@ -16,15 +16,30 @@ In diesem Dokument werden die Benutzeroberflächen des Systems {project-system-n
 
 == Personas
 // Fügen Sie hier als Tabelle oder Bild die Persons der wichtigsten Stakeholder ein
-*Hannes Krusch* _“Ich will nicht mehr, ich kann nicht mehr, ich halt das alles nicht mehr aus”_
+*Nutzer: Hannes Krusch* _“Ich will nicht mehr, ich kann nicht mehr, ich halt das alles nicht mehr aus”_
 
 image::Persona-Hannes_Krusch.png[200,200]
 |===
-|Demografie | 20 Jahre alt, männlich, Student, ledig, wohnt in Dresden
-|Verhaltensvariablen | eher extrovertiert, undiszipliniert , motiviert
-|Technische Fähigkeiten | ist viel am PC bzw. Handy, hat hohe technische Kompetenzen
-|Bedürfnisse/ Ziele | will mit Rauchen aufhören, Rauchen zu teuer
-|Hindernisse | nach der ersten Zigarette wieder das Gefühl bei 0 anzufangen, Freundesgruppe raucht, mehrmals versucht aufzuhören 
+|Kategorie |Beschreibung
+
+|Demografie
+|20 Jahre alt, männlich, Student, ledig, wohnhaft in Dresden
+
+|Verhaltensvariablen
+|eher extrovertiert, trotz vorhandener Motivation Schwierigkeiten, Routinen dauerhaft und beständig beizubehalten
+
+|Technische Fähigkeiten
+|ist viel am PC bzw. Handy, hat hohe technische Kompetenzen, passt sich schnell an UI-Design an und hat keine Probleme, Icons, Buttons und Reiter in kurzer Zeit zu finden
+
+|Bedürfnisse / Ziele
+|Möchte langfristig rauchfrei leben und sucht nach einem System,  
+welches durch stetige und spielerische Fortschrittsvisualisierung Rückfälle zu alten Mustern vermeidet.  
+Wichtig ist Hannes vor allem, dass seine Aufmerksamkeit und sein Interesse auch über einen längeren Zeitraum aufrechterhalten bleiben.
+
+|Hindernisse
+|Hannes hat nach der ersten Zigarette wieder das Gefühl, bei Null anzufangen. + 
+Er hat schon mehrmals versucht aufzuhören. +
+Seine Freundesgruppe raucht, wodurch bei Treffen eine Art Gruppenzwang entsteht.
 |===
 
 *Lisa Maria Töpfer* _"Go big or go home"_
