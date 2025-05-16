@@ -13,14 +13,20 @@ In diesem Dokument werden die wesentlichen Begriffe aus dem Anwendungsgebiet (Fa
 |===
 | Begriff | Definition und Erläuterung | Synonyme
 //| Kommissionierung | Bereitstellung von Waren aus einem Lager entsprechend eines Kundenauftrags | (keine)
+| Habit  | Eine wiederkehrende Gewohnheit, welche in regelmäßigen Abständen praktiziert wird. Häufig ist diese bereits im Menschlichen Unterbewusstsein fest verankert und wird somit automatisiert ausgeführt. | Routine, Gewohnheit
+| Habit Tracker | Eine Anwendung zur systematischen Nachverfolgung und Dokumentation der Habits. Nutzer sollten sowohl in der Lage sein gute Gewohnheiten anzutrainieren als auch sich schlechte Habits abzutrainieren. Ziel ist eine Selbstreflexion und Verhaltensänderung bei dem User herbeizuführen.  |  Gewohnheits- Verfolger, Gewohnheits- Aufzeichner, Gewohnheits- Tracker
 | Habit Stacking | Technik, bei welcher neue Gewohnheiten an bestehende angeknüpft werden. Es entsteht dabei eine Form der Kopplung zwischen den Gewohnheiten.
-| xx
+| Verknüpfen von Gewohnheiten
+
+| Streak | Anzahl der aufeinanderfolgenden Tage, an denem eine Gewohnheit durch den entsprechenden Nutzer erfolgreich durchgeführt wurde. | Serie, Kette
 | Streak Tracking 
 | Visualisierung kontinuierlicher Durchführung. (z.B.: Erreichen des 10- Tage Zieles.)
-| xx
+| Erfolgsserie
+| Reminder | Notifikation, die dem User an die Ausführung seiner Habits erinnert. | Benachrichtigung, Erinnerung
 | Gamification
 | Spielerische und Nutzerabhängige Fortschrittsvisualisierung
-| xy
+| Spielifizierung
+
 |===
 
 
