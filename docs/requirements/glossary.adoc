@@ -29,7 +29,7 @@ In diesem Dokument werden die wesentlichen Begriffe aus dem Anwendungsgebiet (Fa
 | Recovery Mode
 | Modus/Funktion zur Reduktion von Aufgaben bei Stress/Überforderung
 | Erholungsmodus
-| Saison Challenge
+| Season Challenge
 | Extra Herausforderungen für bestimmte Zeiträume
 | Saisonale Herausforderungen
 
