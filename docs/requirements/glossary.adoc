@@ -26,6 +26,12 @@ In diesem Dokument werden die wesentlichen Begriffe aus dem Anwendungsgebiet (Fa
 | Gamification
 | Spielerische und Nutzerabhängige Fortschrittsvisualisierung
 | Spielifizierung
+| Recovery Mode
+| Modus/Funktion zur Reduktion von Aufgaben bei Stress/Überforderung
+| Erholungsmodus
+| Saison Challenge
+| Extra Herausforderungen für bestimmte Zeiträume
+| Saisonale Herausforderungen
 
 |===
 
