@@ -27,9 +27,11 @@ Siehe <<#glossary, Glossar>>.
 
 === Fachliche Motivation
 //Erläutern Sie kurz den Hintergrund, in dem das Projekt angesiedelt ist. Welches Problem soll gelöst werden, wie ist es entstanden? Welche Verbesserung wird angestrebt. Achten Sie darauf, eine fachliche (organisatorische, betriebswirtschaftliche) Perspektive einzunehmen.
-Unser Projekt „Habit Tracker“ entstand aus dem Bedarf an einer einfachen und effektiven Lösung zur Unterstützung der persönlichen Zielverfolgung und Selbstorganisation. Viele bestehende Tools sind überladen oder nicht benutzerfreundlich. Unser Ansatz ist es, eine schlanke und intuitive Anwendung zu entwickeln, die Nutzer motiviert, positive Gewohnheiten aufzubauen und langfristig beizubehalten oder negative Gewohnheiten nachhaltig abzustellen.
+Unser Projekt „Habit Tracker“ entstand aus dem Bedarf an einer einfachen und effektiven Lösung zur Unterstützung der persönlichen Zielverfolgung und Selbstorganisation. Viele bestehende Tools sind überladen oder nicht benutzerfreundlich. Unser Ansatz ist es, eine schlanke und intuitive Anwendung zu entwickeln, die Nutzer motiviert, positive Gewohnheiten aufzubauen und langfristig beizubehalten oder negative Gewohnheiten nachhaltig abzustellen. 
+
 
 Aus betriebswirtschaftlicher Sicht kann der Habit Tracker zur Steigerung von Produktivität und Selbstmanagement beitragen – sowohl im privaten als auch im beruflichen Kontext.
+
 
 === Produktvision
 //Eine Produktvision beschreibt das Einsatzziel der Anwendung und sorgt für ein gemeinsames Ziel und Verständnis für alle Beteiligten im Projekt. Geben Sie in knapper Form übersichtsartig die Positionierung der angestrebten Lösung im Vergleich zu verfügbaren Alternativen dar. Das folgende Format kann dazu verwendet werden:
@@ -48,13 +50,13 @@ Aus betriebswirtschaftlicher Sicht kann der Habit Tracker zur Steigerung von Pro
 
 [cols="1,3"]
 |===
-| Für | Berufstätige und Studierende mit dem Wunsch nach persönlicher Weiterentwicklung
-| die | ihre Gewohnheiten systematisch verfolgen und verbessern möchten
+| Für | Junge Erwachsene, vor allem Berufstätige und Studierende mit dem Wunsch nach persönlicher Weiterentwicklung
+| die | ihre Gewohnheiten systematisch verfolgen, verbessern und reflektieren möchten
 | ist   | {project-system-name}
 | eine  | digitale Habit-Tracking-App
-| die | motiviert, durch smarte Erinnerungen und visuelle Fortschrittsverfolgung
-| anders als | herkömmliche Kalender- oder Notiz-Apps
-| kann unser Produkt | gezielt Verhalten analysieren, automatisiert Feedback geben und sich an individuelle Ziele anpassen
+| die |  durch smarte Erinnerungen und kontinuierliche visuelle Fortschrittsverfolgung motiviert.
+| Anders als | herkömmliche Kalender- oder Notiz-Apps mit einfachen Erinnerungen und Dokumentationsfunktionen oder klassische Tagebücher
+| kann unser Produkt | gezielt Verhalten analysieren, automatisiertes Feedback geben, über Grundlagen der Verhaltenspsychologie aufklären und sich an individuelle Ziele spielerisch und psychologisch fundiert anpassen.
 |===
 
 
