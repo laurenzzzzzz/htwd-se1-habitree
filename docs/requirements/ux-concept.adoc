@@ -46,11 +46,19 @@ Seine Freundesgruppe raucht, wodurch bei Treffen eine Art Gruppenzwang entsteht.
 
 image::Persona-Lisa_Maria_Töpfer.jpeg[200,200]
 |===
-|Demografie | 22 Jahre alt, studiert BWL, ledig, wohnt in Dresden, fordernd
-|Verhaltensvariablen | extrovertiert, eher Disziplin, eher unmotiviert
-|Technische Fähigkeiten | benutzt häufig ihr Tablet und Handy, wenig Kompetenzen am PC
-|Bedürfnisse/ Ziele | mehr trainieren, körperliche/ geistige Weiterentwicklung
-|Hindernisse | Gleichheit
+|Demografie | Alter: 22 Jahre +
+Wohnhort: Dresden in einer WG mit 2 Freundinnen  +
+Beruf: Studium der Betriebswirtschaftslehre an der Hochschule für Technik und Wirtschaft Dresden (5. Semester) +
+Beziehungsstatus: single 
+|Verhaltensvariablen | Lisa ist extrovertiert und kontaktfreudig und ständig unterwegs  +
+Sie sagt zu allen Aktivitäten, die Ihr angeboten werden zu und liebt Spontanität. +
+Lisa hat Angst Dinge zu verpassen, was Sie dazu veranlässt viel Dinge zu beginnen, jedoch kaum welche abzuschließen.
+|Technische Fähigkeiten | Lisa benutzt häufig Ihr Handy und Tablet vor allem für Social Media. Sie ist zwar vertraut mit Anwendungen auf mobilen Endgeräten, verliert aber schnell das Interesse, wenn Sie Reiter oder Icons nicht sofort findet. Im Zuge Ihres Studiums erlernte Sie Kenntnisse in Excel und Power Point. Ihr fehlen jedoch tiefgehende Informatische Kenntnisse.
+|Bedürfnisse/ Ziele | Lisa möchte sich mehr auf sich selbst Konzentrieren, Ihren Körper und Geist stärken. Sie möche in Teilen Ihre Spontanität behalten, ist sich aber auch dessen bewusst, dass diese oft negative Auswirkungen auf Ihre persönliche Weiterentwicklung hat. 
+Lisa möchte regelmäßig Sport treiben um körperlich Fit zu bleiben und meditieren um eine geistige Fitness zu erlangen. Sie weiß, dass eine mentale Stärke auch positive Auswirkungen auf Ihre Konzentrationsfähigkeit und Konzentrationsdauer hat, was weiterführend auch psoitiv auf andere Aspekte Ihres Lebens, wie z.B.: ihr Studium auswirken würde.
+Hierbei sucht Sie nach einer Balance, da Sie auch weiter Ihren sozialen Hobbies nachgehen möchte.
+|Hindernisse | Lisa verliert sich im sozialen Trubel, was dazu führt, dass Sie kaum Zeit für sich selbst hat. Ihr fehlt eine gewisse grundlegende Struktur im Leben, weswegen Sie Gewohnheiten abbricht, sobald diese nicht mehr spannend sondern aufwändig sind. 
+Da Lisas Konzentrationsspanne  zeitlich begrenzt ist, benötigt Sie ein einfaches UI- Design wo Sie gleich die passenden Icons findet, ohne sich erst langfristig in die Anwendung einarbeiten zu müssen.
 |===
 
 *Lara Schneider* _"Fragen statt Umfragen"_
