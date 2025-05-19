@@ -1,5 +1,5 @@
 = Vision: Habitly
-Laurenz Born <laurenz.born@stud.htw-dresden.de>; Alexander Chlebowski <alexander.chlebowski@stud.htw-dresden.de>; Leonhard Hermann <leonhard.hermann@stud.htw-dresden.de>; Johann Schmidt <johann.schmidt@stud.htw-dresden.de>; Kimi Jerke <kimi.jerke@stud.htw-dresden.de>
+Laurenz Born <laurenz.born@stud.htw-dresden.de>; Alexander Chlebowski <alexander.chlebowski@stud.htw-dresden.de>; Leonhard Hermann <leonhard.hermann@stud.htw-dresden.de>; Johann Schmidt <johann.schmidt@stud.htw-dresden.de>; Kimi Jerke <kimi.jerke@stud.htw-dresden.de>; Jannes Lehmann <s86317@htw-dresden.de>
 {localdatetime}
 include::../_includes/default-attributes.inc.adoc[]
 // Platzhalter für weitere Dokumenten-Attribute
@@ -22,7 +22,16 @@ Siehe <<#glossary, Glossar>>.
 === Referenzen
 (hier externe Verweise zu anderen Dokumenten, Quellen, Standards etc. einfügen, sofern notwendig)
 
-
+=== Projektteamstruktur
+|===
+|*Name* |*Rolle*
+|Laurenz Born| Product Owner
+|Alexander Chlebowski| Scrum Master
+|Leonhard Hermann|Developer
+|Johann Schmidt|Developer
+|Kimi Jerke|Developer
+|Jannes Lehmann|Developer/Designer
+|===
 == Positionierung
 
 === Fachliche Motivation
