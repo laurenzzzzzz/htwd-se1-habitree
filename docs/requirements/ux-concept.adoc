@@ -16,7 +16,7 @@ In diesem Dokument werden die Benutzeroberflächen des Systems {project-system-n
 
 == Personas
 // Fügen Sie hier als Tabelle oder Bild die Persons der wichtigsten Stakeholder ein
-*Nutzer: Hannes Krusch* _“Ich will nicht mehr, ich kann nicht mehr, ich halt das alles nicht mehr aus”_
+*Nutzer: Hannes Krusch* _“Level up statt Rückfall – jeder rauchfreie Tag ist ein Erfolg!”_
 
 image::Persona-Hannes_Krusch.png[200,200]
 |===
