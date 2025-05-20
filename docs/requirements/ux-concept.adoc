@@ -26,10 +26,11 @@ image::Persona-Hannes_Krusch.png[200,200]
 |Alter: 20 Jahre +
 Wohnort: Braunschweig +
 Beruf: Studium der Medieninformatik an der Technischen Universität Braunschweig +
-Beziehungsstatus: ledig
+Beziehungsstatus: ledig +
+Hobby: Gaming
 
 |Verhaltensvariablen
-|eher extrovertiert, trotz vorhandener Motivation Schwierigkeiten, Routinen dauerhaft und beständig beizubehalten
+|eher extrovertiert, trotz vorhandener anfänglicher Motivation Schwierigkeiten, Routinen dauerhaft und beständig beizubehalten
 
 |Technische Fähigkeiten
 |ist viel am PC bzw. Handy, hat hohe technische Kompetenzen, passt sich schnell an UI-Design an und hat keine Probleme, Icons, Buttons und Reiter in kurzer Zeit zu finden
