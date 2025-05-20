@@ -25,8 +25,8 @@ Siehe <<#glossary, Glossar>>.
 === Projektteamstruktur
 |===
 |*Name* |*Rolle*
-|Laurenz Born| Product Owner
-|Alexander Chlebowski| Scrum Master
+|Laurenz Born| Product Owner/ Developer
+|Alexander Chlebowski| Scrum Master/ Developer
 |Leonhard Hermann|Developer
 |Johann Schmidt|Developer
 |Kimi Jerke|Developer
