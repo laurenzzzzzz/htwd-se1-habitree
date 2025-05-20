@@ -27,7 +27,7 @@ Siehe <<#glossary, Glossar>>.
 |*Name* |*Rolle*
 |Laurenz Born| Product Owner/ Developer
 |Alexander Chlebowski| Scrum Master/ Developer
-|Leonhard Hermann|Developer
+|Leonhard Hermann|Developer/ Responsible contact
 |Johann Schmidt|Developer
 |Kimi Jerke|Developer
 |Jannes Lehmann|Developer/Designer
