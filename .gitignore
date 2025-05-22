@@ -4,3 +4,8 @@
 .DS_Store
 *~
 .vscode
+
+*.html
+*.pdf
+images/diagrams/ 
+.asciidoctor/
