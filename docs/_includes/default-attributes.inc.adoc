@@ -1,6 +1,6 @@
 // Meta
 :project-name: Habit-Tracker (T03)
-:project-system-name: Habitly
+:project-system-name: Habitree
 // Settings:
 :toc:
 :toc-title: Inhaltsverzeichnis

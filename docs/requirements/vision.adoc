@@ -14,6 +14,12 @@ Der Zweck dieses Dokuments ist es, die wesentlichen Anforderungen an das System 
 === Gültigkeitsbereich (Scope)
 Dieses Visions-Dokument bezieht sich auf das System {project-system-name}, das von Team 3A entwickelt wird. Das System wird es vorallem Studenten erlauben, tägliche Gewohnheiten zu verfolgen um Routinen zu entwickeln und gewünschtes Verhalten anzutrainieren oder schlechtes Verhalten abzulegen. Ziel ist es dem Nutzer bei seiner gewünschten persönlichen Weiterentwicklung zu unterstützen.
 
+{project-system-name} wird als Mobileanwendung konzipiert und ermöglicht es den Nutzern, Gewohnheiten zu erstellen, zu verfolgen und mithilfe von Statistiken sowie Erinnerungen zu reflektieren.
+
+Der Gültigkeitsbereich dieses Dokuments umfasst die funktionalen Anforderungen wie das Anlegen, Bearbeiten und Verfolgen von Gewohnheiten, sowie grundlegende Benutzerverwaltung. Nicht-funktionale Aspekte wie Datensicherheit, Benutzerfreundlichkeit und Plattformunabhängigkeit sind ebenfalls Teil des Entwicklungsziels.
+
+Nicht im Umfang dieses Dokuments enthalten sind Funktionen wie psychologische Beratung oder medizinische Empfehlungen.
+
 === Definitionen, Akronyme und Abkürzungen
 //Verweis passend zum Belegabgabe-Template se1_belegabgabe_t00.adoc
 Siehe <<#glossary, Glossar>>.
