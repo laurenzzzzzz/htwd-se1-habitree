@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -17,43 +17,20 @@ import {
 
 import { Calendar } from 'react-native-calendars';
 import { Picker } from '@react-native-picker/picker';
-
 import { Image } from 'react-native';
 import { Linking } from 'react-native';
-
 import * as Notifications from 'expo-notifications';
 import * as Device from 'expo-device';
 import * as Progress from 'react-native-progress';
 
-import { useEffect } from 'react';
-// import { Platform } from 'react-native';
-
-{/*Pushbenachrichtigung-Feature hat die App nicht mehr aktualieren lassen!!*/}
-
-{/*}
-useEffect(() => {
-  registerForPushNotificationsAsync();
-}, []);
-{*/}
-
-{/*}
-async function registerForPushNotificationsAsync() {
-  if (Device.isDevice) {
-    const { status: existingStatus } = await Notifications.getPermissionsAsync();
-    let finalStatus = existingStatus;
-    if (existingStatus !== 'granted') {
-      const { status } = await Notifications.requestPermissionsAsync();
-      finalStatus = status;
-    }
-    if (finalStatus !== 'granted') {
-      Alert.alert('Benachrichtigungen deaktiviert', 'Bitte aktiviere sie in den Einstellungen.');a
-      return;
-    }
-  } else {
-    Alert.alert('Push-Nachrichten', 'Nur auf physischem Gerät möglich');
-  }
-}
-{*/}
+// Push-Benachrichtigungs Handler
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: true,
+  }),
+});
 
 export default function HomeScreen() {
   const [expanded, setExpanded] = useState(false);
@@ -64,9 +41,13 @@ export default function HomeScreen() {
   const [markedDates, setMarkedDates] = useState({
     '2025-05-16': { selected: true, marked: true, selectedColor: 'rgb(15, 74, 70)' },
   });
-
   const [selectedOption, setSelectedOption] = useState('Option 1');
   const [choice, setChoice] = useState('A');
+
+  // Push-Benachrichtigungs Registrierung
+  useEffect(() => {
+    registerForPushNotificationsAsync();
+  }, []);
 
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   const toggleExpand = () => setExpanded(!expanded);
@@ -91,35 +72,35 @@ export default function HomeScreen() {
     Alert.alert('Button gedrückt', 'Du hast den Button gedrückt!');
   };
   
-  {/*Zufällige Motivationsnachricht bauen*/}
+  // Zufallsquote
   const quotes = [
-  "Der Weg ist das Ziel.",
-  "Mach jeden Tag zu deinem Meisterwerk.",
-  "Kleine Schritte führen zum großen Ziel.",
-  "Disziplin schlägt Motivation.",
-  "Du wächst mit jeder Wiederholung.",
-    ];
+    "Der Weg ist das Ziel.",
+    "Mach jeden Tag zu deinem Meisterwerk.",
+    "Kleine Schritte führen zum großen Ziel.",
+    "Disziplin schlägt Motivation.",
+    "Du wächst mit jeder Wiederholung.",
+  ];
 
-    const [quote, setQuote] = useState('');
+  const [quote, setQuote] = useState('');
 
-    useEffect(() => {
-      const random = quotes[Math.floor(Math.random() * quotes.length)];
-      setQuote(random);
-    }, []);
+  useEffect(() => {
+    const random = quotes[Math.floor(Math.random() * quotes.length)];
+    setQuote(random);
+  }, []);
 
-  {/* Ziel-Countdown */}
+  // Ziel-Countdown
   const zielDatum = new Date('2025-12-31');
   const heute = new Date();
   const diff = Math.ceil((zielDatum - heute) / (1000 * 60 * 60 * 24));
   
-  {/* Darkmode toggle */}
+  // Darkmode
   const [darkMode, setDarkMode] = useState(false);
 
-  {/* Wochenprogress berechnen */}
+  // Wochenprogress
   const getWeekProgress = () => {
     const now = new Date();
     const startOfWeek = new Date(now);
-    startOfWeek.setDate(now.getDate() - now.getDay() + 1); // Montag
+    startOfWeek.setDate(now.getDate() - now.getDay() + 1);
     startOfWeek.setHours(0, 0, 0, 0);
 
     const endOfWeek = new Date(startOfWeek);
@@ -132,6 +113,26 @@ export default function HomeScreen() {
     return Math.min(elapsedMillis / totalMillis, 1);
   };
 
+  // Push-Benachrichtigungs Funktion
+  async function registerForPushNotificationsAsync() {
+    if (Device.isDevice) {
+      const { status: existingStatus } = await Notifications.getPermissionsAsync();
+      let finalStatus = existingStatus;
+      if (existingStatus !== 'granted') {
+        const { status } = await Notifications.requestPermissionsAsync();
+        finalStatus = status;
+      }
+      if (finalStatus !== 'granted') {
+        Alert.alert('Benachrichtigungen deaktiviert', 'Bitte aktiviere sie in den Einstellungen.');
+        return;
+      }
+      const token = (await Notifications.getExpoPushTokenAsync()).data;
+      return token;
+    } else {
+      Alert.alert('Push-Nachrichten', 'Nur auf physischem Gerät möglich');
+    }
+  }
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle="light-content" backgroundColor="rgb(25, 145, 137)" />
@@ -139,11 +140,10 @@ export default function HomeScreen() {
         <Text style={styles.title}>habitree🌳</Text>
         <Text style={styles.subtitle}>Die letzte App die du brauchst</Text>
 
-        {/* Bild eingefügt */}
         <Image
-            source={require('../assets/icon.png')}
-            style={{ width: 100, height: 100, marginBottom: 20 }}
-            resizeMode="contain"
+          source={require('../assets/icon.png')}
+          style={{ width: 100, height: 100, marginBottom: 20 }}
+          resizeMode="contain"
         />
       
         {/* Wochenfortschritt */}
@@ -180,24 +180,23 @@ export default function HomeScreen() {
           </View>
         </View>
 
-
-      {/*Push-Benachrichtigung*/}
-      <View style={styles.card}>
-        <Text style={styles.cardTitle}>Test-Benachrichtigung</Text>
-        <Button
-          title="Push senden"
-          color="#fff"
-          onPress={async () => {
-            await Notifications.scheduleNotificationAsync({
-              content: {
-                title: '🎯 Ziel erreicht!',
-                body: 'Du hast gerade erfolgreich eine Testnachricht erhalten!',
-              },
-              trigger: null, // Sofort senden
-            });
-          }}
-        />
-      </View>
+        {/* Push-Benachrichtigung */}
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>Test-Benachrichtigung</Text>
+          <Button
+            title="Push senden"
+            color="#fff"
+            onPress={async () => {
+              await Notifications.scheduleNotificationAsync({
+                content: {
+                  title: '🎯 Ziel erreicht!',
+                  body: 'Du hast gerade erfolgreich eine Testnachricht erhalten!',
+                },
+                trigger: null,
+              });
+            }}
+          />
+        </View>
 
         {/* Liste */}
         <View style={styles.card}>
@@ -241,46 +240,39 @@ export default function HomeScreen() {
         {/* Switches */}
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Benachrichtigungen</Text>
+          <View style={styles.switchRow}>
+            <Text style={styles.textWhite}>Meldungen</Text>
+            <Switch
+              trackColor={{ false: '#767577', true: 'rgb(15, 74, 70)' }}
+              thumbColor={isEnabled ? 'rgb(25, 145, 137)' : '#f4f3f4'}
+              ios_backgroundColor="#3e3e3e"
+              onValueChange={toggleSwitch}
+              value={isEnabled}
+            />
+          </View>
+          
+          <View style={styles.switchRow}>
+            <Text style={styles.textWhite}>Motivationsnachrichten</Text>
+            <Switch
+              trackColor={{ false: '#767577', true: 'rgb(15, 74, 70)' }}
+              thumbColor={motivationEnabled ? 'rgb(25, 145, 137)' : '#f4f3f4'}
+              ios_backgroundColor="#3e3e3e"
+              onValueChange={() => setMotivationEnabled(!motivationEnabled)}
+              value={motivationEnabled}
+            />
+          </View>
 
-          {/* Meldungen */}
-            <View style={styles.switchRow}>
-              <Text style={styles.textWhite}>Meldungen</Text>
-              <Switch
-                trackColor={{ false: '#767577', true: 'rgb(15, 74, 70)' }}
-                thumbColor={isEnabled ? 'rgb(25, 145, 137)' : '#f4f3f4'}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={toggleSwitch}
-                value={isEnabled}
-              />
-            </View>
-            {/*<Text style={styles.textWhite}>{isEnabled ? 'An' : 'Aus'}</Text>*/}
-
-            {/* Motivationsnachrichten */}
-            <View style={styles.switchRow}>
-              <Text style={styles.textWhite}>Motivationsnachrichten</Text>
-              <Switch
-                trackColor={{ false: '#767577', true: 'rgb(15, 74, 70)' }}
-                thumbColor={motivationEnabled ? 'rgb(25, 145, 137)' : '#f4f3f4'}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={() => setMotivationEnabled(!motivationEnabled)}
-                value={motivationEnabled}
-              />
-            </View>
-
-            {/* Tageszitat */}
-            <View style={styles.switchRow}>
-              <Text style={styles.textWhite}>Tageszitat</Text>
-              <Switch
-                trackColor={{ false: '#767577', true: 'rgb(15, 74, 70)' }}
-                thumbColor={quoteEnabled ? 'rgb(25, 145, 137)' : '#f4f3f4'}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={() => setQuoteEnabled(!quoteEnabled)}
-                value={quoteEnabled}
-              />
-            </View>
-
+          <View style={styles.switchRow}>
+            <Text style={styles.textWhite}>Tageszitat</Text>
+            <Switch
+              trackColor={{ false: '#767577', true: 'rgb(15, 74, 70)' }}
+              thumbColor={quoteEnabled ? 'rgb(25, 145, 137)' : '#f4f3f4'}
+              ios_backgroundColor="#3e3e3e"
+              onValueChange={() => setQuoteEnabled(!quoteEnabled)}
+              value={quoteEnabled}
+            />
+          </View>
         </View>
-
 
         {/* TextInput */}
         <View style={styles.card}>
@@ -326,7 +318,7 @@ export default function HomeScreen() {
           />
         </View>
 
-        {/* Klickbare Auswahl */}
+        {/* Picker */}
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Kategorie wählen</Text>
           <Picker
@@ -370,15 +362,15 @@ export default function HomeScreen() {
           </Text>
         </View>
 
-        {/*Klickbarer link*/}
-       <View style={[styles.card, { alignItems: 'center' }]}>
-        <Text
-          style={{ color: '#fff', textDecorationLine: 'underline' }}
-          onPress={() => Linking.openURL('https://www.htw-dresden.de')}
-        >
-          Navigiere in unseren Shop
-        </Text>
-       </View>
+        {/* Link */}
+        <View style={[styles.card, { alignItems: 'center' }]}>
+          <Text
+            style={{ color: '#fff', textDecorationLine: 'underline' }}
+            onPress={() => Linking.openURL('https://www.htw-dresden.de')}
+          >
+            Navigiere in unseren Shop
+          </Text>
+        </View>
 
         <Text style={styles.footer}>© 2025 habitree Inc.</Text>
       </ScrollView>
@@ -386,6 +378,7 @@ export default function HomeScreen() {
   );
 }
 
+// StyleSheet
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
@@ -502,16 +495,16 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgb(15, 74, 70)',
   },
   switchRow: {
-  flexDirection: 'row',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  marginBottom: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 10,
   },
   rowContainer: {
-  flexDirection: 'row',
-  justifyContent: 'space-between',
-  gap: 10, // für Abstand zwischen den Karten (bei neueren React Native Versionen)
-  marginVertical: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: 10,
+    marginVertical: 10,
   },
   flexCard: {
     flex: 1,
