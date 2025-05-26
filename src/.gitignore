@@ -1,12 +1,3 @@
-# Syntax: https://git-scm.com/docs/gitignore
-
-# Asciidoctor
-**/.asciidoctor/
-**/images/diagrams/
-*.pdf
-*.html
-
-
 # Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
 
 # dependencies
