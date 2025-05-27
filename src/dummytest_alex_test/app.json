@@ -1,8 +1,7 @@
 {
   "expo": {
-    "scheme": "habitreeappp",
-    "name": "habitree",
-    "slug": "habitree",
+    "name": "dummytest_alex_test",
+    "slug": "dummytest_alex_test",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -27,5 +26,4 @@
       "favicon": "./assets/favicon.png"
     }
   }
-  
 }
