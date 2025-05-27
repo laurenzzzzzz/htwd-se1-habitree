@@ -27,14 +27,15 @@ include::../_includes/default-attributes.inc.adoc[]
 
 === Definition of Ready
 // Definition of Ready 
-
-Die Defninition of Ready beschreibt, wann ein Backlog Item als “bereit zur Umsetzung” gilt. Dazu müssen folgende Inhalte stimmen:\
-    - Die Akzeptanzkriterien sind klar formuliert\
-    - Die Abhängigkeiten zu anderen Issues sind geklärt\
-    - Story ist klein genug, um in einem Sprint abgeschlossen zu werden\
-    - Das Team versteht die Issue/Story inhaltlich und technisch\
-    - Design/Ui liegt vor, falls nötig\
-    - Testkriterien oder Hinweise sind definiert.
+- Die Definition of Done legt fest, wann ein Backlog Item als vollständig abgeschlossen gilt. Dazu müssen folgende Inhalte stimmen:
+    - Der Code ist implementiert und gebaut
+    - Der Code ist reviewed
+    - Es existieren automatisierte Unit Tests
+    - Alle Tests sind erfolgreich bestanden.
+    - Die Funktion ist in der Testumgebung funktionsfähig
+    - Dokumentation wurde aktualisiert
+    - Die Akzeptanzkriterien der Story sind vollständig erfüllt
+    - Product Owner hat abgenommen
 
 === Definition of Done
 // Listen Sie hier alle Kritierien auf, damit die Aufgabe eines bestimmten Typs (z.B. Task, User Story) als abgeschlossen gilt.
