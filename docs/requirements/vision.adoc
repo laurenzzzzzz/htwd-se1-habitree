@@ -118,8 +118,14 @@ Die Verfeinerung der Stakeholder, die das System benutzen, wird im UX-Konzept mi
 [%header, cols="4,1,4,1"]
 |===
 | Bedarf | Priorität | Features / Funktionen | Geplantes Release
-| Nutzer benötigen Anreize und emotionale Belohnungen, um langfristig motiviert zu bleiben und regelmäßig ihre Gewohnheiten zu verfolgen. | xx | Gamifizierte Nutzererfahrung | xx
-|Fortschrittsanalyse und Statistiken
+| Nutzer benötigen Anreize und emotionale Belohnungen, um langfristig motiviert zu bleiben und regelmäßig ihre Gewohnheiten zu verfolgen. 
+| xx 
+| Gamifizierte Nutzererfahrung 
+| xx
+|Nutzer möchten ihre Entwicklung nachvollziehen können, um Erfolge sichtbar zu machen und sich selbst besser zu reflektieren.
+| xx
+|Fortschrittsanalyse und Statistiken 
+| xx
 |===
 
 
