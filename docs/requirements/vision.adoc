@@ -136,5 +136,7 @@ Hinweise:
 [%header, cols="4,1,1"]
 |===
 | Anforderung | Priorität | Geplantes Release
-| xx | xx | xx
+| Theme- Anpassungen| Niedrig | xx
+| Einfache Bedienbarkeit | Hoch | xx
+| Mehrsprachigkeit | Mittel | xx
 |===
