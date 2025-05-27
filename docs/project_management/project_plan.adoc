@@ -26,7 +26,15 @@ include::../_includes/default-attributes.inc.adoc[]
 
 
 === Definition of Ready
-// Listen Sie hier die Kriterien auf, die ein Product Backlog Item (z.B. User Story) erfüllen muss, damit es bei der Sprint-Planung berücksichtigt werden kann
+// Definition of Ready 
+
+- Die Defninition of Ready beschreibt, wann ein Backlog Item als “bereit zur Umsetzung” gilt. Dazu müssen folgende Inhalte stimmen:
+    - Die Akzeptanzkriterien sind klar formuliert
+    - Die Abhängigkeiten zu anderen Issues sind geklärt
+    - Story ist klein genug, um in einem Sprint abgeschlossen zu werden
+    - Das Team versteht die Issue/Story inhaltlich und technisch
+    - Design/Ui liegt vor, falls nötig
+    - Testkriterien oder Hinweise sind definiert.
 
 === Definition of Done
 // Listen Sie hier alle Kritierien auf, damit die Aufgabe eines bestimmten Typs (z.B. Task, User Story) als abgeschlossen gilt.
