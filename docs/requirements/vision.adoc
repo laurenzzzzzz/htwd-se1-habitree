@@ -118,7 +118,7 @@ Die Verfeinerung der Stakeholder, die das System benutzen, wird im UX-Konzept mi
 [%header, cols="4,1,4,1"]
 |===
 | Bedarf | Priorität | Features / Funktionen | Geplantes Release
-| xx | xx | xx | xx
+| Nutzer benötigen Anreize und emotionale Belohnungen, um langfristig motiviert zu bleiben und regelmäßig ihre Gewohnheiten zu verfolgen. | xx | xx | xx
 |===
 
 
