@@ -28,7 +28,7 @@ include::../_includes/default-attributes.inc.adoc[]
 === Definition of Ready
 // Definition of Ready 
 
-- Die Defninition of Ready beschreibt, wann ein Backlog Item als “bereit zur Umsetzung” gilt. Dazu müssen folgende Inhalte stimmen:
+Die Defninition of Ready beschreibt, wann ein Backlog Item als “bereit zur Umsetzung” gilt. Dazu müssen folgende Inhalte stimmen:
     - Die Akzeptanzkriterien sind klar formuliert
     - Die Abhängigkeiten zu anderen Issues sind geklärt
     - Story ist klein genug, um in einem Sprint abgeschlossen zu werden
