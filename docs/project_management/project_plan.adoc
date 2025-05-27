@@ -10,8 +10,16 @@ include::../_includes/default-attributes.inc.adoc[]
 
 
 == Projektorganisation
-//Introduce the project team, team members, and roles that they play during this project. If applicable, introduce work areas, domains, or technical work packages that are assigned to team members. Introduce neighboring projects, relationships, and communication channels. If the project is introduced somewhere else, reference that location with a link.
-
+=== Projektteamstruktur
+|===
+|*Name* |*Rolle*
+|Laurenz Born| Developer/ Product Owner 
+|Alexander Chlebowski| Developer/ Scrum Master
+|Leonhard Hermann|Developer/ Responsible contact
+|Johann Schmidt|Developer
+|Kimi Jerke|Developer
+|Jannes Lehmann|Developer/ Designer
+|===
 
 == Praktiken und Bewertung
 //Describe or reference which management and technical practices will be used in the project, such as iterative development, continuous integration, independent testing and list any changes or particular configuration to the project. Specify how you will track progress in each practice. As an example, for iterative development the team may decide to use iteration assessments and iteration burndown reports and collect metrics such as velocity (completed work item points/ iteration).
