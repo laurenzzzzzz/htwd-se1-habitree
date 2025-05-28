@@ -13,12 +13,12 @@ include::../_includes/default-attributes.inc.adoc[]
 === Projektteamstruktur
 |===
 |*Name* |*Rolle*
-|Laurenz Born| Developer/ Product Owner 
-|Alexander Chlebowski| Developer/ Scrum Master
+|Laurenz Born| Developer
+|Alexander Chlebowski| Scrum Master
 |Leonhard Hermann|Developer/ Responsible contact
 |Johann Schmidt|Developer
 |Kimi Jerke|Developer
-|Jannes Lehmann|Developer/ Designer
+|Jannes Lehmann| Product Owner
 |===
 
 == Praktiken und Bewertung
