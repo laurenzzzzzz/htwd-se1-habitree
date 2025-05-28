@@ -66,10 +66,8 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  height: 250,
+  width: 400,
+  alignSelf: 'center', // zentriert das Bild horizontal
   },
 });

@@ -1,13 +1,25 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Image } from 'react-native'; // Import Image
 import { Calendar } from 'react-native-calendars';
 
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 
+// Transparent 1x1 pixel image
+const transparentImage = { uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=' };
+
 export default function TabTwoScreen() {
   return (
-    <ParallaxScrollView headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}>
+    <ParallaxScrollView 
+      headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
+      // Add headerImage prop with transparent image
+      headerImage={
+        <Image 
+          source={transparentImage} 
+          style={{ width: 0, height: 0 }} 
+        />
+      }
+    >
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Kalender</ThemedText>
       </ThemedView>

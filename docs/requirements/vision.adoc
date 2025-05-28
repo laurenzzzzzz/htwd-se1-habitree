@@ -118,13 +118,37 @@ Die Verfeinerung der Stakeholder, die das System benutzen, wird im UX-Konzept mi
 [%header, cols="4,1,4,1"]
 |===
 | Bedarf | Priorität | Features / Funktionen | Geplantes Release
-| Nutzer benötigen Anreize und emotionale Belohnungen, um langfristig motiviert zu bleiben und regelmäßig ihre Gewohnheiten zu verfolgen. 
-| xx 
 | Gamifizierte Nutzererfahrung 
 | xx
-|Nutzer möchten ihre Entwicklung nachvollziehen können, um Erfolge sichtbar zu machen und sich selbst besser zu reflektieren.
+| Nutzer benötigen Anreize und emotionale Belohnungen, um langfristig motiviert zu bleiben und regelmäßig ihre Gewohnheiten zu verfolgen. 
+| xx 
+| Fortschrittsanalyse und Statistiken 
 | xx
-|Fortschrittsanalyse und Statistiken 
+| Nutzer möchten ihre Entwicklung nachvollziehen können, um Erfolge sichtbar zu machen und sich selbst besser zu reflektieren.
+| xx
+| Optimierte Habit-Erstellung und -Planung
+| xx
+| Nutzer wollen ihre Gewohnheiten schnell, flexibel und ohne technische Hürden erstellen und verwalten können.
+| xx
+| Plattformübergreifende UI & Barrierefreiheit
+| xx
+| Die Anwendung soll auf allen Geräten intuitiv bedienbar sein und auch Menschen mit besonderen Bedürfnissen (z. B. ADHS) gerecht werden.
+| xx
+| Fokus- und Konzentrationshilfen
+| xx
+| Nutzer wünschen sich Unterstützung zur Ablenkungsvermeidung, um fokussierter an ihren Zielen zu arbeiten.
+| xx
+| Soziale Funktionen und Interaktion
+| xx
+| Nutzer möchten sich mit anderen austauschen, gegenseitig motivieren und soziale Verantwortung nutzen, um dranzubleiben.
+| xx
+| Wissens- und Lernbereich
+| xx
+| Nutzer benötigen fundierte Informationen über Gewohnheitsbildung und Selbstoptimierung, um ihr Verhalten besser zu verstehen und zu verbessern.
+| xx
+| Mehrsprachige Unterstützung
+| xx
+| Die App soll auch international verständlich und barrierefrei nutzbar sein, um eine breitere Zielgruppe zu erreichen.
 | xx
 |===
 
@@ -142,5 +166,7 @@ Hinweise:
 [%header, cols="4,1,1"]
 |===
 | Anforderung | Priorität | Geplantes Release
-| xx | xx | xx
+| Theme- Anpassungen| Niedrig | xx
+| Einfache Bedienbarkeit | Hoch | xx
+| Mehrsprachigkeit | Mittel | xx
 |===
