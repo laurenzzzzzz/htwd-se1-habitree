@@ -14,8 +14,8 @@ include::../_includes/default-attributes.inc.adoc[]
 |===
 |*Name* |*Rolle*
 |Laurenz Born| Developer
-|Alexander Chlebowski| Scrum Master
-|Leonhard Hermann|Developer/ Responsible contact
+|Alexander Chlebowski| Developer
+|Leonhard Hermann| Scrum Master
 |Johann Schmidt|Developer
 |Kimi Jerke|Developer
 |Jannes Lehmann| Product Owner
