@@ -20,9 +20,19 @@ include::../_includes/default-attributes.inc.adoc[]
 |Kimi Jerke|Developer
 |Jannes Lehmann| Product Owner
 |===
+// Personen nach Rollen und alphabetisch ordnen
 
 == Praktiken und Bewertung
 //Describe or reference which management and technical practices will be used in the project, such as iterative development, continuous integration, independent testing and list any changes or particular configuration to the project. Specify how you will track progress in each practice. As an example, for iterative development the team may decide to use iteration assessments and iteration burndown reports and collect metrics such as velocity (completed work item points/ iteration).
+
+|===
+|*Kategorie* |*Praktik*
+| Management | Iterative Entwicklung unter Nutzung des Scrum- Frameworks  +
+- Arbeit in festen Zyklen (Sprints), von jeweils 4 Wochen  +
+- Nach jeden Sprint erfolgt Retrospektive, in der Team seine Arbeitsweise rekapituliert und überdenkt  +
+- Jeder Sprint wird im Vorhinein durch ein längeres "Sprint- Planning" Meeting taktisch geplant  +
+- Jede Woche erfolge kurze  
+|===
 
 
 === Definition of Ready
@@ -33,18 +43,20 @@ include::../_includes/default-attributes.inc.adoc[]
     - Story ist klein genug, um in einem Sprint abgeschlossen zu werden
     - Das Team versteht die Issue/Story inhaltlich und technisch
     - Design/Ui liegt vor, falls nötig
-    - Testkriterien oder Hinweise sind definiert.
+    - Testkriterien oder Hinweise sind definiert
+
 
 
 === Definition of Done
 - Die Definition of Done legt fest, wann ein Backlog Item als vollständig abgeschlossen gilt. Dazu müssen folgende Inhalte stimmen:
     - Der Code ist implementiert und gebaut
-    - Der Code ist reviewed
+    - Der Code ist reviewed 
     - Es existieren automatisierte Unit Tests
     - Alle Tests sind erfolgreich bestanden.
     - Die Funktion ist in der Testumgebung funktionsfähig
     - Dokumentation wurde aktualisiert
-    - Die Akzeptanzkriterien der Story sind vollständig erfüllt
+    - Die Akzeptanzkriterien der Story sind vollständig erfüllt 
+    - Die Software ist frei von bekannten Fehlern
     - Product Owner hat abgenommen
 
 == Deployment
@@ -53,3 +65,15 @@ include::../_includes/default-attributes.inc.adoc[]
 
 == Erkenntnisse (Lessons learned)
 // Führen Sie hier die wesentlichen Erkenntnisse auf, die Sie in den Retrospektiven gewonnen haben. Legen Sie besonderen Fokus auf die Maßnahmen, die Sie getroffen haben um Verbesserungen in den verschiedenen Aspekten des Projekts zu erzielen, z.B. dem Entwicklungsprozess, der technischen und organisatorischen Umgebung oder der Zusammenarbeit im Team.
+
+|===
+|*Ereignis* |*Maßnahme* |*Erkenntnis*
+| Ausstieg aus der Gruppe von Frederic Egle (Developer) | - Gruppenberatung in der ersten Retrospektive  +
+- Neuverteilung von Frederics Aufgaben auf andere Teammitglieder, besonders bezogen auf das Development- Team  +
+- Ist- Stand- Analyse, was Frederic von Frederics bisherigen  Arbeitsstand.  Durch ihn wurde bis zu dem damaligen Zeitpunkt keinerlei Leistung erbracht.
+| - Ausstieg eines Gruppenmitgliedes ist nicht unmöglich  +
+- Es entsteht massiv Mehrarbeit für die verbleidenden Gruppenmitglieder, insbesonders die Entwickler  +
+- Es müssen zeitliche Puffer existieren in der taktischen Planung um den Erfolg des Projektes nicht zu gefährden und um in den angegebenen Zeiträumen alle Aufgaben abarbeiten zu können +
+- Strategische Planung im Vorhinein und  Abwägung potenzieller Risiken vor allem bei der Teamstruktur sind unabdingbar. Hierfür eignet sich eine Visualisierung im Git Hub Risk- Board.
+- Wöchentliche  Meetings mit kurzer Arbeitsstandangabe und nächster Schritte sind elementar um zu sehen dass jeder Mitarbeiter effizient arbeitet und das Projekt nicht gefährdet wird.
+|===
