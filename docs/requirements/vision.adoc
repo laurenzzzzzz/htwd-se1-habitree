@@ -168,5 +168,13 @@ Hinweise:
 | Anforderung | Priorität | Geplantes Release
 | Theme- Anpassungen| Niedrig | xx
 | Einfache Bedienbarkeit | Hoch | xx
-| Mehrsprachigkeit | Mittel | xx
+| Mehrsprachigkeit  +
+- Das System sollte ein Zweisprachiges Benutzermenü anbieten können in Deutsch und Englisch| Mittel | xx
+| Reaktionszeit des Systemes  +
+- Das system sollte innerhalb von maximal 30 ms Antworten generieren| Mittel | xx 
+| Sicherheit  +
+- Das System blockiert 45 Sekunden nach 3 falschen Anmeldeversuchen | Mittel | xx
+| Ausfallsicherheit  +
+- Das System sollte 99.9% der Zeit verfügbar sein. Das sind: [(7 Tage*99,9%)/100%]*24 Stunden*60 Minuten = etwa 10 min/Woche
+| Hoch | xx
 |===
