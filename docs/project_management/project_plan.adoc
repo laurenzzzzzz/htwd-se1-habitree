@@ -76,4 +76,17 @@ include::../_includes/default-attributes.inc.adoc[]
 - Es müssen zeitliche Puffer existieren in der taktischen Planung um den Erfolg des Projektes nicht zu gefährden und um in den angegebenen Zeiträumen alle Aufgaben abarbeiten zu können +
 - Strategische Planung im Vorhinein und  Abwägung potenzieller Risiken vor allem bei der Teamstruktur sind unabdingbar. Hierfür eignet sich eine Visualisierung im Git Hub Risk- Board.
 - Wöchentliche  Meetings mit kurzer Arbeitsstandangabe und nächster Schritte sind elementar um zu sehen dass jeder Mitarbeiter effizient arbeitet und das Projekt nicht gefährdet wird.
+| Terminfindung, vor allem bei außerplanmäßigen Meetings ist schwer | - Termine zeitig und langfristig planen  +
+- Erinnerungen nochmals im Vorhinein absetzen (z.B.: über Whats- App)  +
+- Nutzen von Abstimmungen oder Ereignis- Objekten  +
+- Einführung eines Team- Kalenders, z.B.: im Miro Board
+| - Je größer die Gruppe ist, desto langfristiger muss die Planung erfolgen.  +
+-  Nicht jeder Beteiligte muss in jedem Meeting zwangsläufig anwesend sein. So reicht es z.B.: wenn das Sprint- Review nur von 3 Personen durchgeführt wird. Hierbei ist wichtig dass die Mitarbeitenden sich abwechseln, damit jeder Mitarbeiter in einem ausgewogenen Maße entlastet werden kann, aber dennoch seine Bedeutung für die Gruppe erkennt. Dies führt dazu, dass alle Akteure sich mit der Gruppe, der Aufgabe und dem Projekt identifizieren können.  +
+- Es braucht einen Organisator, der alle Meetings und Treffen sowohl innerhalb der Gruppe, als auch zwischen den Mitarbeitenden und weiteren Stakeholdern plant und organisiert. Dies ist im Scrum- Framework der Scrum Master.  +
+
+| Konflikte innerhalb des Teams hinsichtlich Arbeitsverteilung, Engagement und Verlässlichkeit
+| - Regelmäßige kurze Standup- Meetings, wo jeder Mitarbeitende seine Arbeitsstand, Herausforderungen und Probleme der letzten und der kommenden Woche dem Team mitteilt.  +
+- Bei Konflikten ist Kommunikation das A und O. Dabei ist es wichtig die Konflikte bereits in Ihrer Entstehung anzusprechen und zu charakterisieren. Sonst stauen diese sich immer weiter auf und werden im schwerer lösbar. Als Negativbeispiel lässt sich hier ebenfalls unser ehemaliger Entwickler Frederic anbringen.   +
+|- Jeder Akteur des Teams sollte erkennen, dass er ein wichtiger und unersetzlicher Bestandteil des Teams ist, welchen Vertrauen und Wertschätzung entgegengebracht wird. Dies schafft ein Zusammenheitsgefühl, gegenseitigen Respekt, Unterstützung und Motivationssteigerung.  +
+- Bewältigungen von Konflikten haben auch positive Auswirkungen, da dadurch der Gruppenzusammenhalt wächst und neue Strategien entwickelt werden können. Somit können Konflikte auch indirekt die Gruppe voran bringen.
 |===
