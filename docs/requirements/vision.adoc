@@ -12,7 +12,7 @@ Der Zweck dieses Dokuments ist es, die wesentlichen Bedarfe und Funktionalitäte
 Der Zweck dieses Dokuments ist es, die wesentlichen Anforderungen an das System aus Sicht und mit den Begriffen der künftigen Anwender zu beschreiben.
 
 === Gültigkeitsbereich (Scope)
-Dieses Visions-Dokument bezieht sich auf das System {project-system-name}, das von Team 3A entwickelt wird. Das System wird es vorallem Studenten erlauben, tägliche Gewohnheiten zu verfolgen um Routinen zu entwickeln und gewünschtes Verhalten anzutrainieren oder schlechtes Verhalten abzulegen. Ziel ist es dem Nutzer bei seiner gewünschten persönlichen Weiterentwicklung zu unterstützen.
+Dieses Visions-Dokument bezieht sich auf das System {project-system-name}, das von Team 3A entwickelt wird. Das System wird es vor allem Studenten erlauben, tägliche Gewohnheiten zu verfolgen, um Routinen zu entwickeln und gewünschtes Verhalten anzutrainieren oder schlechtes Verhalten abzulegen. Ziel ist es, dem Nutzer bei seiner gewünschten persönlichen Weiterentwicklung zu unterstützen.
 
 {project-system-name} wird als Mobileanwendung konzipiert und ermöglicht es den Nutzern, Gewohnheiten zu erstellen, zu verfolgen und mithilfe von Statistiken sowie Erinnerungen zu reflektieren.
 
@@ -32,7 +32,7 @@ Siehe <<#glossary, Glossar>>.
 
 === Fachliche Motivation
 //Erläutern Sie kurz den Hintergrund, in dem das Projekt angesiedelt ist. Welches Problem soll gelöst werden, wie ist es entstanden? Welche Verbesserung wird angestrebt. Achten Sie darauf, eine fachliche (organisatorische, betriebswirtschaftliche) Perspektive einzunehmen.
-Unser Projekt „Habit Tracker“ entstand aus dem Bedarf an einer einfachen und effektiven Lösung zur Unterstützung der persönlichen Zielverfolgung und Selbstorganisation. Viele bestehende Tools sind überladen oder nicht benutzerfreundlich. Unser Ansatz ist es, eine schlanke und intuitive Anwendung zu entwickeln, die Nutzer motiviert, positive Gewohnheiten aufzubauen und langfristig beizubehalten oder negative Gewohnheiten nachhaltig abzustellen. 
+Unser Projekt „Habit Tracker“ entstand aus dem Bedarf an einer einfachen und effektiven Lösung zur Unterstützung der persönlichen Zielverfolgung und Selbstorganisation. Viele bestehende Tools sind überladen, nicht benutzerfreundlich. oder nicht ausreichend animierend. Unser Ansatz ist es, eine schlanke und intuitive Anwendung zu entwickeln, die Nutzer motiviert, positive Gewohnheiten aufzubauen und langfristig beizubehalten oder negative Gewohnheiten nachhaltig abzustellen. 
 
 
 Aus betriebswirtschaftlicher Sicht kann der Habit Tracker zur Steigerung von Produktivität und Selbstmanagement beitragen – sowohl im privaten als auch im beruflichen Kontext.
@@ -55,12 +55,12 @@ Aus betriebswirtschaftlicher Sicht kann der Habit Tracker zur Steigerung von Pro
 
 [cols="1,3"]
 |===
-| Für | Junge Erwachsene, vor allem Berufstätige und Studierende mit dem Wunsch nach persönlicher Weiterentwicklung
+| Für | junge Erwachsene, vor allem Berufstätige und Studierende mit dem Wunsch nach persönlicher Weiterentwicklung und gesundem Lebensstil
 | die | ihre Gewohnheiten systematisch verfolgen, verbessern und reflektieren möchten
 | ist   | {project-system-name}
 | eine  | digitale Habit-Tracking-App
 | die |  durch smarte Erinnerungen und kontinuierliche visuelle Fortschrittsverfolgung motiviert.
-| Anders als | herkömmliche Kalender- oder Notiz-Apps mit einfachen Erinnerungen und Dokumentationsfunktionen oder klassische Tagebücher
+| Anders als | herkömmliche Kalender- oder Notiz-Apps mit einfachen Erinnerungen und Dokumentationsfunktionen oder klassischen Tagebüchern
 | kann unser Produkt | gezielt Verhalten analysieren, automatisiertes Feedback geben, über Grundlagen der Verhaltenspsychologie aufklären und sich an individuelle Ziele spielerisch und psychologisch fundiert anpassen.
 |===
 
@@ -86,23 +86,24 @@ Aus betriebswirtschaftlicher Sicht kann der Habit Tracker zur Steigerung von Pro
 | Name | Beschreibung | Verantwortlichkeiten
 
 | Studierende (Primäre Nutzer)
-| Studierende mit stark schwankenden Tagesrhythmus, teils hoher Stressbelastung und einen Wunsch nach Selbstoptimierung im Alltag.
-| Unterstützung positiver Gewohnheitsbildung. Ihr Interesse liegt in einer intuitiven Bedienung, flexibler Zeitplanung, motivierender Rückmeldungen und sinnvoller sowie spielerischer Fortschrittsvisualisierung. Sie liefern Feedback zu Aspekten der Funktionalität, des Designes und der Performance.
+| Studierende mit stark schwankendem Tagesrhythmus, teils hoher Stressbelastung und dem Wunsch nach Selbstoptimierung im Alltag.
+| Unterstützung positiver Gewohnheitsbildung. Ihr Interesse liegt in einer intuitiven Bedienung, flexibler Zeitplanung, motivierender Rückmeldungen und sinnvoller sowie spielerischer Fortschrittsvisualisierung.  +
+Sie liefern Feedback zu Aspekten der Funktionalität, des Designs und der Performance.
 | Projektgruppe
 | Projektgruppe, bestehend aus: Scrum- Master, Product- Owner und einem Entwicklerteam
-| Konzipieren, Entwicklung und Test des Systemes. Das Team will ein stabiles und nutzerorientiertes System schaffen, dass elementarsten Anforderungen aus der Vision und dem Backlog erfüllt. Das Team ist somit Stakeholder in Bezug auf technische Umsetzbarkeit, Planung , Konzipierung, Modifikation und Wartbarkeit
+| Konzipieren, Entwicklung und Test des Systems. Das Team will ein stabiles und nutzerorientiertes System schaffen, das elementarsten Anforderungen aus der Vision und dem Backlog erfüllt. Das Team ist somit Stakeholder in Bezug auf technische Umsetzbarkeit, Planung , Konzipierung, Modifikation und Wartbarkeit
 | Wissenschaftliche Community
-| Experten für Verhaltenstherapie, auf dessen Ansätzen und Strategien sich die App Logik stützt, unter anderem die Gamification und der Wissensbereich. 
+| Experten für Verhaltenstherapie, auf deren Ansätze und Strategien sich die App-Logik stützt, unter anderem die Gamification und der Wissensbereich. 
 | Diese Personen liefern theoretische Grundlagen, die korrekt angewendet und verständlich erklärt werden müssen.
 | Teamvertreter im Sprint- Review
 | Mitglieder anderer Teams, die am Ende jeder Iteration Feedback geben.
 | Die Vertreter testen das System aus Nutzerperspektive und geben ein strukturiertes Feedback zu Bedienbarkeit, Verständlichkeit und Nützlichkeit der Features.
 | Behörden (Gesetzgeber)
-| Institutionen auf Bund, Landes und Kommunaler Ebene, die gesetzliche Vorgaben wie Datenschutz, Urheberrecht o.ä. Standards prüfen.
-| Diese Institutionen achten darauf, dass personenbezogene Daten korrekt verarbeitet werden, nach aktuellen gesetzlichen Bestimmungen (wie z.B.: der DSGVO) . Ferner beurteilen Sie auch die Einhaltung des Urheberrechtes bei Verwendung von beispielsweisen externen Grafiken. (z.B.: mittels UrhG) oder auch die Einhaltung der Standards des Bundesamt für Sicherheit in der Informationstechnik.
+| Institutionen auf Bundes-, Landes- und kommunaler Ebene, die gesetzliche Vorgaben wie Datenschutz, Urheberrecht o.ä. Standards prüfen.
+| Diese Institutionen achten darauf, dass personenbezogene Daten korrekt verarbeitet werden, nach aktuellen gesetzlichen Bestimmungen (wie z.B.: der DSGVO). Ferner beurteilen Sie auch die Einhaltung des Urheberrechts bei Verwendung von z.B. externen Grafiken (z.B.: mittels UrhG) oder auch die Einhaltung der Standards des Bundesamts für Sicherheit in der Informationstechnik.
 Ihr Interesse liegt an minimaler Datenspeicherung, transparenter Nutzeraufklärung sowie einer gewissen Systemsicherheit.
 | Infrastrukturbetreiber
-| Externe Anbieter wie Server-Hoster, Google Play Store und Apple App Store (Vertriebsplattformen).
+| externe Anbieter wie Server-Hoster, Google Play Store und Apple App Store (Vertriebsplattformen).
 | Gewährleistung stabiler Serverkapazitäten und Netzwerkanbindung. Durchsetzung plattformspezifischer Richtlinien für App-Veröffentlichung und Updates.
 |===
 
@@ -132,7 +133,7 @@ Die Verfeinerung der Stakeholder, die das System benutzen, wird im UX-Konzept mi
 | xx
 | Plattformübergreifende UI & Barrierefreiheit
 | xx
-| Die Anwendung soll auf allen Geräten intuitiv bedienbar sein und auch Menschen mit besonderen Bedürfnissen (z. B. ADHS) gerecht werden.
+| Die Anwendung soll auf allen Geräten intuitiv bedienbar sein und auch Menschen mit besonderen Bedürfnissen (z. B. LRS, Dykalkulie, AD(H)S, Farbblindheit) gerecht werden.
 | xx
 | Fokus- und Konzentrationshilfen
 | xx
@@ -168,5 +169,13 @@ Hinweise:
 | Anforderung | Priorität | Geplantes Release
 | Theme- Anpassungen| Niedrig | xx
 | Einfache Bedienbarkeit | Hoch | xx
-| Mehrsprachigkeit | Mittel | xx
+| Mehrsprachigkeit  +
+- Das System sollte ein zweisprachiges Benutzermenü anbieten können in Deutsch und Englisch| Mittel | xx
+| Reaktionszeit des Systems  +
+- Das System sollte innerhalb von maximal 30 Millisekunden Antworten generieren| Mittel | xx 
+| Sicherheit  +
+- Das System blockiert 45 Sekunden nach 3 falschen Anmeldeversuchen | Mittel | xx
+| Ausfallsicherheit  +
+- Das System sollte 99.9% der Zeit verfügbar sein. Das sind: [(7 Tage*99,9%)/100%]*24 Stunden*60 Minuten = etwa 10 min/Woche
+| Hoch | xx
 |===
