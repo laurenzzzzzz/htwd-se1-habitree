@@ -40,27 +40,96 @@ Dieses Dokument beschreibt die Philosophie, Entscheidungen, Nebenbedingungen, Be
 
 == Annahmen und Abhängigkeiten
 //[List the assumptions and dependencies that drive architectural decisions. This could include sensitive or critical areas, dependencies on legacy interfaces, the skill and experience of the team, the availability of important resources, and so forth]
-- Infrastruktur: Eigener Server im Rechenzentrum
-- Datenbanken
-
+* Die App wird als mobile Anwendung mit EXPO umgesetzt, um iOS und Android gleichermaßen zu unterstützen
+* Die Zielgruppe sind vor allem Einzelpersonen, die persönliche Routinen tracken wollen; eine Mehrbenutzerfähigkeit (z. B. Teams) ist vorerst nicht vorgesehen
+* Die initiale Entwicklung erfolgt durch ein kleines Team mit begrenzter Backend-Erfahrung
+* Es ist vorgesehen das die App offline fähig ist mittels Caching
+** Datenschutz ist zentral: DSGVO-Konformität ist Pflicht; daher müssen persönliche Daten sicher gespeichert und ggf. löschbar sein.
 
 == Architektur-relevante Anforderungen
 //Fügen Sie eine Referenz / Link zu den Anforderungen ein, die implementiert werden müssen, um die Architektur zu erzeugen.
 
+* [Anforderungen im Produkt-Backlog (z. B. in GitHub Issues)](https://github.com/laurenzzzzzz/htwd-se1-habitree/issues)
+* Basisfunktionen:
+** Nutzer kann Habits anlegen, bearbeiten, löschen
+** Habit-Erfüllung pro Tag tracken (z. B. Häkchen setzen)
+** Statistiken / Verlauf anzeigen
+** Reminder-Funktion für Habits
+** Dark Mode Unterstützung
+* Optional:
+** Gamification-Elemente wie Streaks
+** Exportfunktion als CSV/PDF
 
 == Entscheidungen, Nebenbedingungen und Begründungen
 //[List the decisions that have been made regarding architectural approaches and the constraints being placed on the way that the developers build the system. These will serve as guidelines for defining architecturally significant parts of the system. Justify each decision or constraint so that developers understand the importance of building the system according to the context created by those decisions and constraints. This may include a list of DOs and DON’Ts to guide the developers in building the system.]
+. **EXPO (React Native) als Frontend-Framework**
+.. *Begründung:* Plattformübergreifende Entwicklung (iOS und Android) mit einer gemeinsamen Codebasis. Schnelle UI-Entwicklung dank Hot Reload. Unterstützt Offline-Speicherung via lokalem Storage.
 
-. Entscheidung oder Einschränkung oder Begründung 1
-. Entscheidung oder Einschränkung oder Begründung 2
+. **Node.js mit Express als Backend**
+.. *Begründung:* Geringe Einstiegshürde dank vorhandener Kenntnisse (z. B. aus EWA), schnelle API-Entwicklung mit Express, eine einheitliche Programmiersprache (JavaScript/TypeScript) für Frontend und Backend.
+
+. **REST API mit Express-Routen**
+.. *Begründung:* Klare Trennung der Endpunkte (`/habits`, `/logs`, `/users`) für Wartbarkeit und einfache Integration mit dem Frontend. Standardkonform, leicht erweiterbar.
+
+. **PostgreSQL als relationale Datenbank**
+.. *Begründung:* Zuverlässige Speicherung strukturierter Daten (Habits, User). Unterstützt zeitbasierte Abfragen (z. B. „alle Habits im Juni“), geeignet für langfristige Entwicklung.
+
+. **Prisma als ORM**
+.. *Begründung:* Abstraktionsebene zwischen Express und PostgreSQL. Vereinfachtes Datenbankmanagement, automatisierte Migrationen, Typsicherheit.
+
+. **Keine eigene Authentifizierungslösung**
+.. *Begründung:* Sicherheit und Zeitersparnis.
+.. *DO:* Firebase Authentication verwenden, Passwort-Hashing
+.. *DON’T:* Passwort-Handling selbst entwickeln
+
+. **App muss offlinefähig sein**
+.. *Begründung:* Nutzer wollen auch ohne Internet ihre Gewohnheiten erfassen können (z. B. im Flugmodus oder unterwegs). EXPO unterstützt lokale Speicherung.
+
+. **Modulare Architektur**
+.. *Begründung:* Bessere Testbarkeit und Wartbarkeit.
+.. *DO:* Trennung in UI-, Logik- und Daten-Schichten (z. B. `services/`, `components/`, `api/`)
+.. *DON’T:* Direktzugriffe auf die Datenbank aus der UI
+
+. **Keine Persistenz sensibler Daten im Klartext**
+.. *Begründung:* DSGVO-Konformität, Schutz der Privatsphäre.
+.. *DO:* Verschlüsselung lokaler Daten (z. B. mit Expo SecureStore oder ähnlichem)
+.. *DON’T:* Klartextspeicherung persönlicher Daten wie Gewohnheiten oder Nutzerdaten
+
+. **Automatisierte Tests für Kernlogik**
+.. *Begründung:* Schnelles Feedback bei Änderungen, stabiler Code trotz iterativer Entwicklung.
+.. *DO:* Unit-Tests für Geschäftslogik (z. B. Habit-Tracking-Funktionen, Reminder)
+.. *DON’T:* Logik ungetestet in Komponenten oder Routen einbauen
 
 
 == Schichten oder Architektur-Framework
-//[Describe the architectural pattern that you will use or how the architecture will be consistent and uniform. This could be a simple reference to an existing or well-known architectural pattern, such as the Layer framework, a reference to a high-level model of the framework, or a description of how the major system components should be put together.]
 
+Für die Umsetzung der Habit-Tracking-App wird eine klassische mehrschichtige Architektur verwendet, kombiniert mit modernen Webtechnologien und einem komponentenbasierten Aufbau. Die Architektur ist so konzipiert, dass sie wartbar, erweiterbar und skalierbar bleibt.
+
+* **Infrastruktur:** Eigener Server im Rechenzentrum (für erhöhte Kontrolle über Datenschutz und Ausfallsicherheit)
+* **Datenbank:** PostgreSQL – relationale Datenbank zur strukturierten Speicherung von Nutzern, Gewohnheiten und Zeitstempeln. Unterstützt komplexe zeitbasierte Abfragen (z. B. "Alle Habits im Mai").
+* **Backend:** Node.js mit Express.js – schnelles Setup und einfache API-Definition. Verantwortlich für Authentifizierung, Geschäftslogik und Anbindung an die Datenbank.
+* **API:** REST-API mit Express-Routen (`/habits`, `/logs`, `/users`) – saubere, klar getrennte Endpunkte.
+* **ORM:** Prisma – verbindet Backend und Datenbank. Bietet Typsicherheit, einfaches Datenmodellieren und Migrationstools.
+* **Frontend:** EXPO (React Native) – eine Codebasis für iOS und Android, schnelle UI-Entwicklung, Zugriff auf native Funktionen, unterstützt Offline-Speicherung.
+
+Die App folgt der Clean Architecture:
+* **Presentation Layer (Frontend)**
+* **Application Layer (Business Logic / Services)**
+* **Infrastructure Layer (API, DB, Auth)**
+* **Data Layer (ORM / Datenbankzugriff)**
 
 == Architektursichten (Views)
-//[Describe the architectural views that you will use to describe the software architecture. This illustrates the different perspectives that you will make available to review and to document architectural decisions.]
+
+Zur besseren Kommunikation und Dokumentation der Architektur werden folgende Sichten genutzt:
+
+* **Kontextsicht:** Darstellung der wichtigsten externen Akteure (z. B. Benutzer, Firebase Auth) und deren Beziehung zum System. Zeigt, in welchem Umfeld sich die App bewegt.
+* **Bausteinsicht:** Zeigt die interne Struktur der Anwendung auf Modulebene – z. B. Trennung von Komponenten, Services, Routen und Datenzugriff.
+* **Laufzeitsicht:** Veranschaulicht typische Abläufe wie die Erstellung eines Habits oder das Abrufen von Logs – wichtig zur Analyse von Performance und Nebenläufigkeit.
+* **Verteilungssicht:** Zeigt, welche Teile des Systems wo laufen – z. B. Backend auf eigenem Server, Datenbank auf dediziertem Datenbankserver, Frontend auf mobilen Geräten.
+
+Weitere optionale Sichten (nur bei Bedarf):
+* **Sicherheitssicht:** Welche Schutzmaßnahmen greifen wo (z. B. Authentifizierung, Datenverschlüsselung)?
+* **Entwicklungssicht:** Projektstruktur, CI/CD-Prozesse, Deployment-Pipeline.
 
 === Kontextabgrenzung
 //Level 1 im C4-Modell
