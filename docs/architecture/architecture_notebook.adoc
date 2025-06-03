@@ -18,17 +18,30 @@ Dieses Dokument beschreibt die Philosophie, Entscheidungen, Nebenbedingungen, Be
 
 //Formulieren Sie eine Reihe von Zielen, die die Architektur in ihrer Struktur und ihrem Verhalten erfüllen muss. Identifizieren Sie kritische Fragen, die von der Architektur adressiert werden müssen, z.B. besondere Hardware-Abhängigkeiten, die vom Rest des Systems isoliert werden sollten oder Sicherstellung der Funktionsfähigkeit unter besonderen Bedingungen (z.B. Offline-Nutzung).
 
-*Performance: Geringe Latenz bei UI-Interaktionen.
-*Zuverlässigkeit: Redundante Services, automatisches Roll-Back und Health-Checks.
-*Sicherheit: Authentifizierung, Verschlüsselung Daten.
-*Portabilität: Gemeinsame Code-Basis für Android & iOS über Expo
-*Echtzeit-Updates
-*Offline-Support
+
+* Performance:  
+** Geringe Latenz bei UI-Interaktionen  
+
+* Zuverlässigkeit: 
+** Redundante Services
+** automatisches Roll-Back und Health-Checks
+
+* Sicherheit:  
+** Authentifizierung
+** Verschlüsselung der Daten
+
+* Portabilität:  
+** Gemeinsame Code-Basis für Android & iOS über Expo
+** plattformunabhängige APIs und Services.
+
+* Echtzeit-Updates
+
+* Offline-Support: Cachen der Daten
 
 == Annahmen und Abhängigkeiten
 //[List the assumptions and dependencies that drive architectural decisions. This could include sensitive or critical areas, dependencies on legacy interfaces, the skill and experience of the team, the availability of important resources, and so forth]
-*Infrastruktur: Eigener Server im Rechenzentrum
-*Datenbanken
+- Infrastruktur: Eigener Server im Rechenzentrum
+- Datenbanken
 
 
 == Architektur-relevante Anforderungen
