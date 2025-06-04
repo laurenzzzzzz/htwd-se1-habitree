@@ -89,10 +89,12 @@ Problem: Verschiedene Technologien verfügbar, alle jeweils mit eigenen Vor und 
 - Eingeschränkte Nutzung von Drittanbieter Bibliotheken  +
  
 *b) Expo/React Native:*  +
-Live Testen möglich, mehr Drittanbieterunterstützung, bessere Einstiegshürde
+- Live Testen möglich  +
+- mehr Drittanbieterunterstützung  + 
+-bessere Einstiegshürde  +
 |Entscheidung fiel auf **Expo mit React Native**, da:  +
 - Teammitglieder beötigen nur eine zusätzliche App namens Expo Go auf dem Handy und einen PC mit dem man programmieren kann  +
-- Live Testing auf echter Hardware via QR-Scan (Expo Go)  + 
+- Live Testing auf echter Hardware mittels QR-Scan (Expo Go)  + 
 - Nutzung vertrauter Webtechnologien (JavaScript, TypeScript)  +
 - Schnelles Ausführen, Testen und Debugging  +
 - Konfiguration mit JSON als Lokalspeicher +
