@@ -34,8 +34,8 @@ Die Architektur der Habit-Tracking-App verfolgt das Ziel, eine robuste, nutzerfr
 ** *Anmeldung & Sessions:* Nutzer bleiben über Sessions angemeldet. Token laufen nach vordefiniertem Zeitraum (z. B. 2 Wochen) automatisch ab.
 
 * **Portabilität**
-** *Gemeinsame Code-Basis (Android & iOS):* Expo (React Native) ermöglicht die Pflege einer einzigen Codebasis für beide Plattformen.
-** *Plattformunabhängige Schnittstellen:* REST-API kann von jeder Client-Plattform genutzt werden, nicht nur der App.
+** *Gemeinsame Code-Basis (Android & iOS):* Pflege einer einzigen Codebasis für beide Plattformen.
+** *Plattformunabhängige Schnittstellen* 
 
 * **Echtzeit-Updates**
 ** *Aktuelle Anzeige von Status & Logs:* Änderungen (z. B. „Habit abgehakt“) sollen unmittelbar im UI sichtbar sein – ggf. über Polling oder Push-Ansätze.
@@ -48,8 +48,8 @@ Die Architektur der Habit-Tracking-App verfolgt das Ziel, eine robuste, nutzerfr
 ** *Dokumentation:* Saubere Schnittstellen und Struktur fördern Problemlösungen bei Fehlern und Ergänzungen leichter zu implementieren. 
 
 * **Skalierbarkeit**
-** *Horizontale Skalierung:* Node.js-Backend kann containerisiert (z.B. via Docker) betrieben und skaliert werden.
-** *Effiziente Datenbank:* PostgreSQL kann über Indexe, Abfragen und ggf. Caching skaliert werden.
+** *Horizontale Skalierung:* bei Nutzerwachstum
+** *Effiziente Datenbank* 
 
 * **Barrierefreiheit**
 ** *Kontrast & Schriftgrößen:* App unterstützt Systemeinstellungen für Barrierefreiheit.
@@ -61,75 +61,256 @@ Die Architektur der Habit-Tracking-App verfolgt das Ziel, eine robuste, nutzerfr
 
 == Annahmen und Abhängigkeiten
 //[List the assumptions and dependencies that drive architectural decisions. This could include sensitive or critical areas, dependencies on legacy interfaces, the skill and experience of the team, the availability of important resources, and so forth]
-* Die App wird als mobile Anwendung mit EXPO umgesetzt, um iOS und Android gleichermaßen zu unterstützen.
-* Die Zielgruppe sind vor allem Einzelpersonen, die persönliche Routinen tracken wollen, eine Mehrbenutzerfähigkeit (z.B. Teams oder Gruppenfunktionen) ist vorerst nicht vorgesehen.
+* Die App wird als mobile Anwendung umgesetzt, welche iOS und Android gleichermaßen  unterstützen soll.
+* Die Zielgruppe sind vor allem Einzelpersonen, die persönliche Routinen tracken wollen, eine Mehrbenutzerfähigkeit (z.B. Teams oder Gruppenfunktionen) ist  nicht vorgesehen.
 * Die initiale Entwicklung erfolgt durch ein kleines Team mit begrenzter Programmiererfahrung, daher sind einfache Tools, gute Dokumentation und Typsicherheit wichtig.
 * Es ist vorgesehen, dass die App offlinefähig ist mittels lokalem Caching und späterer Synchronisation.
 * Datenschutz ist wichtig: DSGVO-Konformität sollte berücksichtigt werden, weshalb persönliche Daten sicher gespeichert werden müssen und auf Wunsch vollständig löschbar sind.
-* Benutzerverwaltung und Authentifizierung werden vollständig im eigenen System umgesetzt – keine externe Auth-Plattform wie Firebase wird verwendet.
-* Das Backend wird auf einem selbstverwalteten Server betrieben – Cloud-native Dienste wie AWS, Firebase oder Azure werden nicht genutzt.
+* Benutzerverwaltung und Authentifizierung werden aufgrund hohem Arbeitsaufwand nicht selbst entwickelt.
+* Das Backend wird auf einem selbstverwalteten Server betrieben – eigene Datenbank zur Speicherung der Nutzdaten der jeweiligen Nutzer (Fortschritte etc.).
 * Die App setzt keine Legacy-Systeme oder bestehende Datenbanken voraus, da es sich um eine Neuentwicklung ohne Altsystem handelt.
-* Die geplanten Nutzerzahlen sind zunächst gering, was eine einfache Architektur und Serverinfrastruktur erlaubt.
-* Die Entwicklungsumgebung setzt auf Open-Source-Tools: Node.js, Express, PostgreSQL, Prisma, React Native (EXPO).
+* Die geplanten Nutzerzahlen sind zunächst gering, was keine groß skalierte Architektur und vorallem Serverinfrastruktur voraussetzt.
+//* Die Entwicklungsumgebung setzt auf Open-Source-Tools: Node.js, Express, PostgreSQL, Prisma, React Native (EXPO).
 * Für den Anfang bestehen erstmal keine besonderen Anforderungen an spezielle Hardware-Sensoren oder Hintergrunddienste (z.B. HealthKit, Schrittzähler).  Erweiterungen sind aber technisch denkbar.
 * Push-Benachrichtigungen oder Reminder sind im MVP (Minimum Viable Product) vorgesehen.
-* Für Statisiken die Grafen nutzen werden Java eigene Bibliotheken benutzt, da die implementierung für das Dev-Team zu aufwendig ist. 
+* Für Erstellung von Statistiken z.B. in Form von Grafiken werden Javascript eigene Bibliotheken benutzt, um Implementierungsaufwand zu minimieren. 
 
 == Architektur-relevante Anforderungen
 //Fügen Sie eine Referenz / Link zu den Anforderungen ein, die implementiert werden müssen, um die Architektur zu erzeugen.
 
-* [Anforderungen im Produkt-Backlog (z. B. in GitHub Issues)](https://github.com/laurenzzzzzz/htwd-se1-habitree/issues)
-* Basisfunktionen:
-** Nutzer kann Habits anlegen, bearbeiten, löschen
-** Habit-Erfüllung pro Tag tracken (z. B. Häkchen setzen)
-** Statistiken / Verlauf anzeigen
-** Reminder-Funktion für Habits
-** Dark Mode Unterstützung
-* Optional:
-** Gamification-Elemente wie Streaks
-** Exportfunktion als CSV/PDF
+//Alex alt:
+//* [Anforderungen im Produkt-Backlog (z. B. in GitHub Issues)](https://github.com/laurenzzzzzz/htwd-se1-habitree/issues)
+//* Basisfunktionen:
+//** Nutzer kann Habits anlegen, bearbeiten, löschen
+//** Habit-Erfüllung pro Tag tracken (z. B. Häkchen setzen)
+//** Statistiken / Verlauf anzeigen
+//** Reminder-Funktion für Habits
+//** Dark Mode Unterstützung
+// Optional:
+//** Gamification-Elemente wie Streaks
+//** Exportfunktion als CSV/PDF
+
+//Laurenz alt:
+//* **Offline-First-Architektur**
+//** Anforderung: Vollfunktionalität ohne Internetverbindung mit automatischer Synchronisation bei Wiederherstellung
+//** Konsequenzen:
+//*** Lokale Caching im Client -> SQLite als Offline DB?
+//*** Konfliktlösungsstrategie (z. B. "Last Write Wins") bei unkonsistenz zw. Daten Client und Server
+//*** Synchronisations-API im Backend
+
+//* **Echtzeit-Datensynchronisation **
+//** Anforderung: Sofortige UI-Aktualisierung bei Datenänderungen Synchronisation bei Wiederherstellung
+//** Konsequenzen:
+//*** WebSockets oder Server-Sent Events (SSE)
+//*** Optimistic UI Updates?
+
+//* **Sicherheitsarchitektur  **
+//** Anforderung: DSGVO-konforme Datenverarbeitung
+//** Konsequenzen:
+//*** Ende-zu-Ende-Verschlüsselung sensibler Daten
+//*** Datenanonymisierung für Analytics
+//*** Automatische Token-Erneuerung?
+//*** Löschkaskaden bei Account-Deletion?
+
+//* **Internationalisierungsframework   **
+//** Anforderung: Mehrsprachige Unterstützung
+//** Konsequenzen:
+//*** Übersetzungsmanagement-System
+//*** Dynamische Sprachumschaltung
+
+
+* **FA1: Firebase-PostgreSQL Nutzersynchronisation**
+** *Anforderung:* Automatische Spiegelung von Firebase-Auth-Nutzern in PostgreSQL
+** *Referenz:* https://firebase.google.com/docs/auth/admin/manage-users
+** *Konsequenzen:*
+*** Firebase-Auth-Trigger für Nutzererstellung/Löschung
+*** Idempotente Upsert-Operationen in PostgreSQL
+*** Schema: `users(firebase_uid UUID, email TEXT UNIQUE)`
+
+* **FA2: Bi-direktionale Offline-Synchronisation**
+** *Anforderung:* Konfliktfreie Synchronisation zwischen SQLite (Client) und PostgreSQL (Server)
+** *Referenz:* https://rxdb.info/synchronisation.html
+** *Konsequenzen:*
+*** Revision-Tracking mit `_rev` Feld
+*** "Last Write Wins" mit Client-Priorität
+*** Batch-Synchronisation bei Netzwerkwiederherstellung
+
+* **FA3: Token-basierte Autorisierung**
+** *Anforderung:* Sichere Weiterleitung von Firebase-Tokens an PostgreSQL
+** *Referenz:* https://hasura.io/docs/latest/auth/authentication/firebase/
+** *Konsequenzen:*
+*** JWT-Verifikation mit `firebase-admin`
+*** Integration mit PostgreSQL Row-Level Security
+*** Refresh-Token-Rotation (15min Access Token)
+
+* **FA4: Effiziente Datenreplikation**
+** *Anforderung:* Minimale Datenübertragung bei Synchronisation
+** *Referenz:* https://debezium.io/
+** *Konsequenzen:*
+*** Delta-Updates mit Change Data Capture
+*** MessagePack-Kompression
+*** Client-seitiges Debouncing (300ms)
+
+* **FA5: Offline-first UI/UX**
+** *Anforderung:* Nahtlose Nutzererfahrung bei Netzwerkwechsel
+** *Referenz:* https://developers.google.com/web/fundamentals/instant-and-offline/offline-ux
+** *Konsequenzen:*
+*** Netzwerkstatus-Detektion mit Expo NetInfo
+*** Visuelles Offline-Feedback
+*** Automatische Retry-Logik
+
+* **FA6: Sicherer Datenpipeline**
+** *Anforderung:* Ende-zu-Ende-Sicherheit in Sync-Prozessen
+** *Referenz:* https://owasp.org/www-project-top-ten/
+** *Konsequenzen:*
+*** Field-Level Encryption für Habit-Daten
+*** HMAC-Validierung von Sync-Payloads
+*** Audit-Logging aller Sync-Vorgänge
+
+* **FA7: Internationalisierung**
+** *Anforderung:* Dynamische Mehrsprachigkeit
+** *Referenz:* https://www.i18next.com/
+** *Konsequenzen:*
+*** i18next mit ICU Message Format
+*** Übersetzungsmanagement-System
+*** Dynamische Sprachumschaltung
+
 
 == Entscheidungen, Nebenbedingungen und Begründungen
 //[List the decisions that have been made regarding architectural approaches and the constraints being placed on the way that the developers build the system. These will serve as guidelines for defining architecturally significant parts of the system. Justify each decision or constraint so that developers understand the importance of building the system according to the context created by those decisions and constraints. This may include a list of DOs and DON’Ts to guide the developers in building the system.]
-. **EXPO (React Native) als Frontend-Framework**
-.. *Begründung:* Plattformübergreifende Entwicklung (iOS und Android) mit einer gemeinsamen Codebasis. Schnelle UI-Entwicklung dank Hot Reload. Unterstützt Offline-Speicherung via lokalem Storage.
+//. **EXPO (React Native) als Frontend-Framework**
+//.. *Begründung:* Plattformübergreifende Entwicklung (iOS und Android) mit einer gemeinsamen Codebasis. Schnelle UI-Entwicklung dank Hot Reload. Unterstützt Offline-Speicherung via lokalem Storage.
 
-. **Node.js mit Express als Backend**
-.. *Begründung:* Geringe Einstiegshürde dank vorhandener Kenntnisse (z. B. aus EWA), schnelle API-Entwicklung mit Express, eine einheitliche Programmiersprache (JavaScript/TypeScript) für Frontend und Backend.
+//. **Node.js mit Express als Backend**
+//.. *Begründung:* Geringe Einstiegshürde dank vorhandener Kenntnisse (z. B. aus EWA), schnelle API-Entwicklung mit Express, eine einheitliche Programmiersprache (JavaScript/TypeScript) für Frontend und Backend.
 
-. **REST API mit Express-Routen**
-.. *Begründung:* Klare Trennung der Endpunkte (`/habits`, `/logs`, `/users`) für Wartbarkeit und einfache Integration mit dem Frontend. Standardkonform, leicht erweiterbar.
+//. **REST API mit Express-Routen**
+//.. *Begründung:* Klare Trennung der Endpunkte (`/habits`, `/logs`, `/users`) für Wartbarkeit und einfache Integration mit dem Frontend. Standardkonform, leicht erweiterbar.
 
-. **PostgreSQL als relationale Datenbank**
-.. *Begründung:* Zuverlässige Speicherung strukturierter Daten (Habits, User). Unterstützt zeitbasierte Abfragen (z. B. „alle Habits im Juni“), geeignet für langfristige Entwicklung.
+//. **PostgreSQL als relationale Datenbank**
+//.. *Begründung:* Zuverlässige Speicherung strukturierter Daten (Habits, User). Unterstützt zeitbasierte Abfragen (z. B. „alle Habits im Juni“), geeignet für langfristige Entwicklung.
 
-. **Prisma als ORM**
-.. *Begründung:* Abstraktionsebene zwischen Express und PostgreSQL. Vereinfachtes Datenbankmanagement, automatisierte Migrationen, Typsicherheit.
+//. **Prisma als ORM**
+//.. *Begründung:* Abstraktionsebene zwischen Express und PostgreSQL. Vereinfachtes Datenbankmanagement, automatisierte Migrationen, Typsicherheit.
 
-. **Keine eigene Authentifizierungslösung**
-.. *Begründung:* Sicherheit und Zeitersparnis.
-.. *DO:* Firebase Authentication verwenden, Passwort-Hashing
-.. *DON’T:* Passwort-Handling selbst entwickeln
+//. **Keine eigene Authentifizierungslösung - Firebase Auth**
+//.. *Begründung:* Sicherheit und Zeitersparnis, Google-gesicherte Infrastruktur 2FA, Social Logins, Passwort-Reset
+//.. *DO:* Firebase Authentication verwenden, Passwort-Hashing
+//.. *DON’T:* Passwort-Handling selbst entwickeln
 
-. **App muss offlinefähig sein**
-.. *Begründung:* Nutzer wollen auch ohne Internet ihre Gewohnheiten erfassen können (z. B. im Flugmodus oder unterwegs). EXPO unterstützt lokale Speicherung.
+//. **App muss offlinefähig sein**
+//.. *Begründung:* Nutzer wollen auch ohne Internet ihre Gewohnheiten erfassen können (z. B. im Flugmodus oder unterwegs). EXPO unterstützt lokale Speicherung.
 
-. **Modulare Architektur**
-.. *Begründung:* Bessere Testbarkeit und Wartbarkeit.
-.. *DO:* Trennung in UI-, Logik- und Daten-Schichten (z. B. `services/`, `components/`, `api/`)
-.. *DON’T:* Direktzugriffe auf die Datenbank aus der UI
+//. **Modulare Architektur**
+//.. *Begründung:* Bessere Testbarkeit und Wartbarkeit.
+//.. *DO:* Trennung in UI-, Logik- und Daten-Schichten (z. B. `services/`, `components/`, `api/`)
+//.. *DON’T:* Direktzugriffe auf die Datenbank aus der UI
 
-. **Keine Persistenz sensibler Daten im Klartext**
-.. *Begründung:* DSGVO-Konformität, Schutz der Privatsphäre.
-.. *DO:* Verschlüsselung lokaler Daten (z. B. mit Expo SecureStore oder ähnlichem)
-.. *DON’T:* Klartextspeicherung persönlicher Daten wie Gewohnheiten oder Nutzerdaten
+//. **Keine Persistenz sensibler Daten im Klartext**
+//.. *Begründung:* DSGVO-Konformität, Schutz der Privatsphäre.
+//.. *DO:* Verschlüsselung lokaler Daten (z. B. mit Expo SecureStore oder ähnlichem)
+//.. *DON’T:* Klartextspeicherung persönlicher Daten wie Gewohnheiten oder Nutzerdaten
 
-. **Automatisierte Tests für Kernlogik**
-.. *Begründung:* Schnelles Feedback bei Änderungen, stabiler Code trotz iterativer Entwicklung.
-.. *DO:* Unit-Tests für Geschäftslogik (z. B. Habit-Tracking-Funktionen, Reminder)
-.. *DON’T:* Logik ungetestet in Komponenten oder Routen einbauen
+//. **Automatisierte Tests für Kernlogik**
+//.. *Begründung:* Schnelles Feedback bei Änderungen, stabiler Code trotz iterativer Entwicklung.
+//.. *DO:* Unit-Tests für Geschäftslogik (z. B. Habit-Tracking-Funktionen, Reminder)
+//.. *DON’T:* Logik ungetestet in Komponenten oder Routen einbauen
 
 
+=== Authentifizierung und Nutzerverwaltung
+//!! Die Dos und Donts sind bisschen knapp unverständlich und zu technisch noch find ich
+* *Entscheidung:* Nutzung von Firebase Authentication statt eigenem Auth-System
+* *Nebenbedingung:* Abhängigkeit von Google-Infrastruktur
+* *Begründung:* 
+** Reduziert Entwicklungsaufwand um ~80%
+** Bietet OAuth, 2FA und Passwort-Reset out-of-the-box
+** DSGVO-konforme Nutzerdatenverwaltung
+* *DOs:*
+** Nutzerprovisioning über Firebase-Trigger implementieren
+** Firebase UID als Primärschlüssel in PostgreSQL verwenden
+* *DON'Ts:*
+** Keine lokale Speicherung von Passwörtern
+** Keine manuelle Token-Generierung
+
+=== Datenpersistenz
+
+* *Entscheidung:* PostgreSQL als "Single Source of Truth" mit SQLite für Offline-Caching
+* *Nebenbedingung:* Synchronisationslogik muss implementiert werden
+* *Begründung:*
+** Volle Kontrolle über Datenmodell und Abfragen
+** Kosteneffizienz bei selbstgehostetem Betrieb
+** Transaktionssicherheit für Habit-Daten
+* *DOs:*
+** Row-Level Security für Datenisolation
+** Revision-Felder (_rev, _deleted) für Sync
+* *DON'Ts:*
+** Keine direkte DB-Verbindung vom Client
+** Keine Business-Logik in der Datenbank
+
+=== Offline-First-Implementierung
+
+* *Entscheidung:* Optimistic UI mit Client-seitiger Priorität bei Konflikten
+* *Nebenbedingung:* Potenzielle Datenverluste bei gleichzeitigen Änderungen
+* *Begründung:*
+** Bessere User Experience bei mobilen Netzwerken
+** Einfacherer Implementierungsansatz für MVP
+* *DOs:*
+** Lokale Änderungen sofort im UI anzeigen
+** Konflikt-Warnungen für Nutzer implementieren
+* *DON'Ts:*
+** Keine komplexen Merge-Strategien im MVP
+** Keine Blockierung der UI während Sync
+
+=== Sicherheitsarchitektur
+
+* *Entscheidung:* End-to-End-Verschlüsselung sensibler Habit-Daten
+* *Nebenbedingung:* Höhere Komplexität bei Sync-Operationen
+* *Begründung:*
+** DSGVO-Konformität bei Gesundheitsdaten
+** Schutz vor Server-Kompromittierung
+* *DOs:*
+** Schlüsselmanagement über Secure Enclave
+** Regelmäßige Sicherheitsaudits
+* *DON'Ts:*
+** Keine Speicherung unverschlüsselter Nutzerdaten
+** Keine langlebigen Access Tokens (>15min)
+
+=== Internationalisierung
+
+* *Entscheidung:* i18next mit JSON-basierten Übersetzungen
+* *Nebenbedingung:* Statische Code-Analyse für Texte erforderlich
+* *Begründung:*
+** Einfache Integration mit React Native
+** Community-Standard mit Plugins
+* *DOs:*
+** Namespaces für Komponenten verwenden
+** ICU Message Format für Pluralisierung
+* *DON'Ts:*
+** Keine hartkodierten Texte in Komponenten
+** Keine serverseitige Übersetzung
+
+=== Entwicklung und Deployment
+
+* *Entscheidung:* Expo Managed Workflow für Cross-Platform-Entwicklung
+* *Nebenbedingung:* Beschränkungen bei nativen Erweiterungen
+* *Begründung:*
+** *Für weniger erfahrene Entwickler einfacher:* +
+   Expo bietet eine vorkonfigurierte Umgebung mit: +
+   - Automatischem Setup für iOS/Android Builds +
+   - Vordefinierten Komponenten und APIs +
+   - Live Reload während der Entwicklung +
+* *DOs:*
+** *EAS Build für automatisierte Pipelines:* +
+   Nutzt Expo Application Services (EAS) für: +
+   - Automatisierte Build-Erstellung (CI/CD) +
+   - Simultaner Build für iOS und Android +
+   - Deployment zu TestFlight/Play Store +
+** Typisierung mit TypeScript
+* *DON'Ts:*
+** Keine Expo Eject im MVP
+** Keine plattformspezifischen Optimierungen vor Profiling
+
+//Alles ab hier ist jetzt nichtmehr aktuell und müsste angepasst werden auf das von oben(falls das jetzt so bleibt)
 == Schichten oder Architektur-Framework
 
 Für die Umsetzung der Habit-Tracking-App wird eine klassische mehrschichtige Architektur verwendet, kombiniert mit modernen Webtechnologien und einem komponentenbasierten Aufbau. Die Architektur ist so konzipiert, dass sie wartbar, erweiterbar und skalierbar bleibt.
