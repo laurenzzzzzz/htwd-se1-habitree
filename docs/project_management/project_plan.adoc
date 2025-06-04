@@ -10,6 +10,7 @@ include::../_includes/default-attributes.inc.adoc[]
 
 
 == Projektorganisation
+
 === Projektteamstruktur
 |===
 |*Name* |*Rolle*
@@ -61,7 +62,21 @@ include::../_includes/default-attributes.inc.adoc[]
 
 == Deployment
 //Outline the strategy for deploying the software (and its updates) into the production environment.
-
+|===
+|*Herausforderung* |*Vorgehensweise*
+| Technologien finden für native App => IOS- App (alle Apple USer): Swift mit X Code  +
+Wir hatten zwar alle I Phones, X Code funktioniert nur auf Mac, versuch das mit Virtueller MAschine zu klären, funktionierte nicht  +
+Android- App geht auch schwer, da fast ausschließlich apple verwendet wurde in der Gruppe => Testen umständlich , da keine echte Hardware vorliegt. Man kann nicht nur mit Emulatoren testen 
+| Cross- Plattform - Lösung, basierend auf Websprachen => Erlaubt Entwicklung für alle Plattformen simultan  +
+Dabei gibt es auch verschiedenen Varianten  +
+(1) Flutter: Es ist prinzipiell Cross Plattform, man programmiert in einer Sprache und es ist für IOS udn Android ausführtbar, Aber:  Testumgebung Virtuell, nicht live, weniger Drittanbieter Bibliotheken, Flutter eher für größere Projekte vorgesehen=> überdimensionalere Speichergrößen, erschwert Testen  +
+(2) Expo: Nutzt react- native (Framework für JS) => Sind mit Sprachen (JS, Type- Script, JSON als Lokalspeicher und Konfigurationsmedium), Live Testen auf nativer Hardware möglich, schnelles Ausführen, Testen und Debugging, Voraussetzung: Expo- App (Expo Go) mit der man QR- Code scannt vom PC mit welchen man Programmiert => Dann läuft App auf Handy  +
+| Kompatible Datenbank finrden  | asd
+| 1. iOS-Entwicklung mit Swift und Xcode  +
+**Problem:**  +
+Swift und Xcode funktionieren ausschließlich auf macOS.  +
+Zwar hatten |
+|===
 
 == Erkenntnisse (Lessons learned)
 // Führen Sie hier die wesentlichen Erkenntnisse auf, die Sie in den Retrospektiven gewonnen haben. Legen Sie besonderen Fokus auf die Maßnahmen, die Sie getroffen haben um Verbesserungen in den verschiedenen Aspekten des Projekts zu erzielen, z.B. dem Entwicklungsprozess, der technischen und organisatorischen Umgebung oder der Zusammenarbeit im Team.
@@ -89,4 +104,11 @@ include::../_includes/default-attributes.inc.adoc[]
 - Bei Konflikten ist Kommunikation das A und O. Dabei ist es wichtig die Konflikte bereits in Ihrer Entstehung anzusprechen und zu charakterisieren. Sonst stauen diese sich immer weiter auf und werden im schwerer lösbar. Als Negativbeispiel lässt sich hier ebenfalls unser ehemaliger Entwickler Frederic anbringen.   +
 |- Jeder Akteur des Teams sollte erkennen, dass er ein wichtiger und unersetzlicher Bestandteil des Teams ist, welchen Vertrauen und Wertschätzung entgegengebracht wird. Dies schafft ein Zusammenheitsgefühl, gegenseitigen Respekt, Unterstützung und Motivationssteigerung.  +
 - Bewältigungen von Konflikten haben auch positive Auswirkungen, da dadurch der Gruppenzusammenhalt wächst und neue Strategien entwickelt werden können. Somit können Konflikte auch indirekt die Gruppe voran bringen.
+| Mitteilungen über unbeachteten Kommunikationskanal, was dazu führte, dass der Empfänger die Nachrichten nicht gelesen hatte und dadurch wichtige Sachen im Sprint- Review nicht dargestellt werden konnten
+|- Vereinbarung von gemeinsamen Kommunikationskanälen, die allen Teammitgliedern bekannt sind, und von jedem regelmäßig genutzt werden und genutzt werden können. (z.B.: keine Plattformabhängigkeit)  +
+- Festlegung von wenigen, bestenfalls einen bis zwei festen Kommunikationswegen. In unserem Team nutzen wir WhatsApp für den täglichen Nachrichtenaustausch und Discord für den Transfer umfangreicher Dokumente und Online- Meetings.  +
+| - Vorab- Festelegung der genutzten Kommunikationsplattformen und dessen zeitlicher Nutzung.  
+| Unkenntniss über Reihenfolge des Arbeitens gemäß des Scrum- Frameworks und den Prinzipien der iterativen und agilen Entwicklung
+| -  
+|
 |===
