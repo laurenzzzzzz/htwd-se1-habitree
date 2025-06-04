@@ -129,31 +129,14 @@ Die Architektur der Habit-Tracking-App verfolgt das Ziel, eine robuste, nutzerfr
 
 * **FA2: Bi-direktionale Offline-Synchronisation**
 ** *Anforderung:* Konfliktfreie Synchronisation zwischen SQLite (Client) und PostgreSQL (Server)
-** *Referenz:* https://rxdb.info/synchronisation.html
+** *Referenz:* https://rxdb.info/
 ** *Konsequenzen:*
 *** Revision-Tracking mit `_rev` Feld
 *** "Last Write Wins" mit Client-Priorität
 *** Batch-Synchronisation bei Netzwerkwiederherstellung
 
-* **FA3: Token-basierte Autorisierung**
-** *Anforderung:* Sichere Weiterleitung von Firebase-Tokens an PostgreSQL
-** *Referenz:* https://hasura.io/docs/latest/auth/authentication/firebase/
-** *Konsequenzen:*
-*** JWT-Verifikation mit `firebase-admin`
-*** Integration mit PostgreSQL Row-Level Security
-*** Refresh-Token-Rotation (15min Access Token)
-
-* **FA4: Effiziente Datenreplikation**
-** *Anforderung:* Minimale Datenübertragung bei Synchronisation
-** *Referenz:* https://debezium.io/
-** *Konsequenzen:*
-*** Delta-Updates mit Change Data Capture
-*** MessagePack-Kompression
-*** Client-seitiges Debouncing (300ms)
-
 * **FA5: Offline-first UI/UX**
 ** *Anforderung:* Nahtlose Nutzererfahrung bei Netzwerkwechsel
-** *Referenz:* https://developers.google.com/web/fundamentals/instant-and-offline/offline-ux
 ** *Konsequenzen:*
 *** Netzwerkstatus-Detektion mit Expo NetInfo
 *** Visuelles Offline-Feedback
@@ -161,11 +144,8 @@ Die Architektur der Habit-Tracking-App verfolgt das Ziel, eine robuste, nutzerfr
 
 * **FA6: Sicherer Datenpipeline**
 ** *Anforderung:* Ende-zu-Ende-Sicherheit in Sync-Prozessen
-** *Referenz:* https://owasp.org/www-project-top-ten/
 ** *Konsequenzen:*
-*** Field-Level Encryption für Habit-Daten
-*** HMAC-Validierung von Sync-Payloads
-*** Audit-Logging aller Sync-Vorgänge
+*** Encryption für Habit-Daten
 
 * **FA7: Internationalisierung**
 ** *Anforderung:* Dynamische Mehrsprachigkeit
@@ -238,7 +218,6 @@ Die Architektur der Habit-Tracking-App verfolgt das Ziel, eine robuste, nutzerfr
 * *Nebenbedingung:* Synchronisationslogik muss implementiert werden
 * *Begründung:*
 ** Volle Kontrolle über Datenmodell und Abfragen
-** Kosteneffizienz bei selbstgehostetem Betrieb
 ** Transaktionssicherheit für Habit-Daten
 * *DOs:*
 ** Row-Level Security für Datenisolation
