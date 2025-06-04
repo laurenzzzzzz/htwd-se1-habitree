@@ -18,25 +18,46 @@ Dieses Dokument beschreibt die Philosophie, Entscheidungen, Nebenbedingungen, Be
 
 //Formulieren Sie eine Reihe von Zielen, die die Architektur in ihrer Struktur und ihrem Verhalten erfüllen muss. Identifizieren Sie kritische Fragen, die von der Architektur adressiert werden müssen, z.B. besondere Hardware-Abhängigkeiten, die vom Rest des Systems isoliert werden sollten oder Sicherstellung der Funktionsfähigkeit unter besonderen Bedingungen (z.B. Offline-Nutzung).
 
+Die Architektur der Habit-Tracking-App verfolgt das Ziel, eine robuste, nutzerfreundliche und wartbare mobile Anwendung bereitzustellen. Sie muss auch unter mobilen Bedingungen zuverlässig funktionieren, inklusive Offline-Nutzung, sicherem Umgang mit Nutzerdaten und reibungsloser Benutzererfahrung. Im Fokus stehen dabei folgende zentrale Ziele:
 
-* Performance:  
-** Geringe Latenz bei UI-Interaktionen  
+* **Performance**
+** *Geringe Latenz bei UI-Interaktionen:* Die App soll sofort auf Benutzereingaben reagieren, ohne Ruckler beim Scrollen oder Wechseln zwischen Ansichten.
+** *Schnelle Ladezeiten:* Daten sollen lokal vorgehalten oder effizient über das Netzwerk geladen werden.
 
-* Zuverlässigkeit: 
-** Redundante Services
-** automatisches Roll-Back und Health-Checks
+* **Zuverlässigkeit**
+** *Redundante Services:* Bei Dienstausfällen auf Serverseite (z. B. Neustarts) darf es nicht zu dauerhaftem Funktionsverlust kommen.
+** *Health-Checks und Rollback:* Das System soll regelmäßig geprüft und bei Fehlern automatisch zurückgesetzt oder stabilisiert werden.
 
-* Sicherheit:  
-** Authentifizierung
-** Verschlüsselung der Daten
+* **Sicherheit**
+** *Authentifizierung:* Nutzerregistrierung und -login erfolgen über ein eigenes Auth-System. Passwörter werden mit einem sicheren Hash-Verfahren (z. B. bcrypt) gehasht und in PostgreSQL gespeichert.
+** *Datenverschlüsselung:* Sensible Daten (z. B. persönliche Gewohnheiten) werden lokal verschlüsselt gespeichert; Kommunikation erfolgt ausschließlich über HTTPS.
+** *Anmeldung & Sessions:* Nutzer bleiben über Sessions angemeldet. Token laufen nach vordefiniertem Zeitraum (z. B. 2 Wochen) automatisch ab.
 
-* Portabilität:  
-** Gemeinsame Code-Basis für Android & iOS über Expo
-** plattformunabhängige APIs und Services.
+* **Portabilität**
+** *Gemeinsame Code-Basis (Android & iOS):* Expo (React Native) ermöglicht die Pflege einer einzigen Codebasis für beide Plattformen.
+** *Plattformunabhängige Schnittstellen:* REST-API kann von jeder Client-Plattform genutzt werden, nicht nur der App.
 
-* Echtzeit-Updates
+* **Echtzeit-Updates**
+** *Aktuelle Anzeige von Status & Logs:* Änderungen (z. B. „Habit abgehakt“) sollen unmittelbar im UI sichtbar sein – ggf. über Polling oder Push-Ansätze.
 
-* Offline-Support: Cachen der Daten
+* **Offline-Support**
+** *Lokales Caching von Nutzerdaten:* Die App funktioniert auch ohne Internetverbindung, indem Daten lokal zwischengespeichert und später synchronisiert werden.
+
+* **Wartbarkeit**
+** *Modularität:* Sauber getrennte Komponenten und Services erleichtern Weiterentwicklung.
+** *Dokumentation:* Saubere Schnittstellen und Struktur fördern Problemlösungen bei Fehlern und Ergänzungen leichter zu implementieren. 
+
+* **Skalierbarkeit**
+** *Horizontale Skalierung:* Node.js-Backend kann containerisiert (z.B. via Docker) betrieben und skaliert werden.
+** *Effiziente Datenbank:* PostgreSQL kann über Indexe, Abfragen und ggf. Caching skaliert werden.
+
+* **Barrierefreiheit**
+** *Kontrast & Schriftgrößen:* App unterstützt Systemeinstellungen für Barrierefreiheit.
+
+* **Internationalisierung**
+** *Mehrsprachigkeit vorbereitet:* Inhalte können in verschiedene Sprachen übersetz werden.
+
+
 
 == Annahmen und Abhängigkeiten
 //[List the assumptions and dependencies that drive architectural decisions. This could include sensitive or critical areas, dependencies on legacy interfaces, the skill and experience of the team, the availability of important resources, and so forth]
