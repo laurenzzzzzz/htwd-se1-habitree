@@ -61,11 +61,19 @@ Die Architektur der Habit-Tracking-App verfolgt das Ziel, eine robuste, nutzerfr
 
 == Annahmen und Abhängigkeiten
 //[List the assumptions and dependencies that drive architectural decisions. This could include sensitive or critical areas, dependencies on legacy interfaces, the skill and experience of the team, the availability of important resources, and so forth]
-* Die App wird als mobile Anwendung mit EXPO umgesetzt, um iOS und Android gleichermaßen zu unterstützen
-* Die Zielgruppe sind vor allem Einzelpersonen, die persönliche Routinen tracken wollen; eine Mehrbenutzerfähigkeit (z. B. Teams) ist vorerst nicht vorgesehen
-* Die initiale Entwicklung erfolgt durch ein kleines Team mit begrenzter Backend-Erfahrung
-* Es ist vorgesehen das die App offline fähig ist mittels Caching
-** Datenschutz ist zentral: DSGVO-Konformität ist Pflicht; daher müssen persönliche Daten sicher gespeichert und ggf. löschbar sein.
+* Die App wird als mobile Anwendung mit EXPO umgesetzt, um iOS und Android gleichermaßen zu unterstützen.
+* Die Zielgruppe sind vor allem Einzelpersonen, die persönliche Routinen tracken wollen, eine Mehrbenutzerfähigkeit (z.B. Teams oder Gruppenfunktionen) ist vorerst nicht vorgesehen.
+* Die initiale Entwicklung erfolgt durch ein kleines Team mit begrenzter Programmiererfahrung, daher sind einfache Tools, gute Dokumentation und Typsicherheit wichtig.
+* Es ist vorgesehen, dass die App offlinefähig ist mittels lokalem Caching und späterer Synchronisation.
+* Datenschutz ist wichtig: DSGVO-Konformität sollte berücksichtigt werden, weshalb persönliche Daten sicher gespeichert werden müssen und auf Wunsch vollständig löschbar sind.
+* Benutzerverwaltung und Authentifizierung werden vollständig im eigenen System umgesetzt – keine externe Auth-Plattform wie Firebase wird verwendet.
+* Das Backend wird auf einem selbstverwalteten Server betrieben – Cloud-native Dienste wie AWS, Firebase oder Azure werden nicht genutzt.
+* Die App setzt keine Legacy-Systeme oder bestehende Datenbanken voraus, da es sich um eine Neuentwicklung ohne Altsystem handelt.
+* Die geplanten Nutzerzahlen sind zunächst gering, was eine einfache Architektur und Serverinfrastruktur erlaubt.
+* Die Entwicklungsumgebung setzt auf Open-Source-Tools: Node.js, Express, PostgreSQL, Prisma, React Native (EXPO).
+* Für den Anfang bestehen erstmal keine besonderen Anforderungen an spezielle Hardware-Sensoren oder Hintergrunddienste (z.B. HealthKit, Schrittzähler).  Erweiterungen sind aber technisch denkbar.
+* Push-Benachrichtigungen oder Reminder sind im MVP (Minimum Viable Product) vorgesehen.
+* Für Statisiken die Grafen nutzen werden Java eigene Bibliotheken benutzt, da die implementierung für das Dev-Team zu aufwendig ist. 
 
 == Architektur-relevante Anforderungen
 //Fügen Sie eine Referenz / Link zu den Anforderungen ein, die implementiert werden müssen, um die Architektur zu erzeugen.
