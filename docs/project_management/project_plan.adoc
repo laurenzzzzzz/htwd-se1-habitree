@@ -64,18 +64,40 @@ include::../_includes/default-attributes.inc.adoc[]
 //Outline the strategy for deploying the software (and its updates) into the production environment.
 |===
 |*Herausforderung* |*Vorgehensweise*
-| Technologien finden für native App => IOS- App (alle Apple USer): Swift mit X Code  +
-Wir hatten zwar alle I Phones, X Code funktioniert nur auf Mac, versuch das mit Virtueller MAschine zu klären, funktionierte nicht  +
-Android- App geht auch schwer, da fast ausschließlich apple verwendet wurde in der Gruppe => Testen umständlich , da keine echte Hardware vorliegt. Man kann nicht nur mit Emulatoren testen 
-| Cross- Plattform - Lösung, basierend auf Websprachen => Erlaubt Entwicklung für alle Plattformen simultan  +
-Dabei gibt es auch verschiedenen Varianten  +
-(1) Flutter: Es ist prinzipiell Cross Plattform, man programmiert in einer Sprache und es ist für IOS udn Android ausführtbar, Aber:  Testumgebung Virtuell, nicht live, weniger Drittanbieter Bibliotheken, Flutter eher für größere Projekte vorgesehen=> überdimensionalere Speichergrößen, erschwert Testen  +
-(2) Expo: Nutzt react- native (Framework für JS) => Sind mit Sprachen (JS, Type- Script, JSON als Lokalspeicher und Konfigurationsmedium), Live Testen auf nativer Hardware möglich, schnelles Ausführen, Testen und Debugging, Voraussetzung: Expo- App (Expo Go) mit der man QR- Code scannt vom PC mit welchen man Programmiert => Dann läuft App auf Handy  +
-| Kompatible Datenbank finrden  | asd
-| 1. iOS-Entwicklung mit Swift und Xcode  +
-**Problem:**  +
-Swift und Xcode funktionieren ausschließlich auf macOS.  +
-Zwar hatten |
+
+|**1. iOS-Entwicklung mit Swift und Xcode**  +
+Problem: Swift & Xcode funktionieren ausschließlich auf macOS, das Team besitzt mobile iOS- Geräte jedoch kaum Macs
+|Versuch über virtuelle macOS Maschine scheiterte bedauerlicherweise.  +
+Daher Entscheidung gegen native Entwicklung mit Swift und Xcode. Stattdessn wurde nach plattformübergreifender Lösung gesucht
+
+|**2. Android-Entwicklung schwer testbar**  +
+Problem: Kaum Teammitglieder besitzen Android Geräte
+|Testen wäre nur über Emulatoren möglich gewesen.  
+Für stabiles Testen auf echter Hardware nicht praktisch umsetzbar. Somit wurde Entschluss gefasst auch keine native Android- App zu entwickeln.
+
+|**3. Allgemeines Plattformproblem bei nativer Entwicklung:**  +  
+Problem: Doppelte Entwicklungsarbeit für iOS und Android nicht schaffbar in der Zeit und mit unseren begrenzten Ressourcen und Humankapital.
+|Ressourcenmangel bei kleinem Team  +
+Stattdessen: Fokus auf Cross-Plattform Technologie.
+
+|**4. Auswahl geeigneter Cross-Plattform-Technologie**  +
+Problem: Verschiedene Technologien verfügbar, alle jeweils mit eigenen Vor und Nachteilen  +
+*a) Flutter:*  +
+- nur virtuelle Testumgebung verfügbar  +
+- kein Test auf echter Hardware möglich  +
+- Hoher Speicherverbrauch, da Flutter eher für größere Projekte vorgesehen ist  +
+- Eingeschränkte Nutzung von Drittanbieter Bibliotheken  +
+ 
+*b) Expo/React Native:*  +
+Live Testen möglich, mehr Drittanbieterunterstützung, bessere Einstiegshürde
+|Entscheidung fiel auf **Expo mit React Native**, da:  +
+- Teammitglieder beötigen nur eine zusätzliche App namens Expo Go auf dem Handy und einen PC mit dem man programmieren kann  +
+- Live Testing auf echter Hardware via QR-Scan (Expo Go)  + 
+- Nutzung vertrauter Webtechnologien (JavaScript, TypeScript)  +
+- Schnelles Ausführen, Testen und Debugging  +
+- Konfiguration mit JSON als Lokalspeicher +
+- Kein Mac erforderlich, Entwicklung auf Windows möglich  +
+
 |===
 
 == Erkenntnisse (Lessons learned)
