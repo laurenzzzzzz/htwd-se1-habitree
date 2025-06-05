@@ -25,13 +25,13 @@ Die Architektur der Habit-Tracking-App verfolgt das Ziel, eine robuste, nutzerfr
 ** *Schnelle Ladezeiten:* Daten sollen lokal vorgehalten oder effizient über das Netzwerk geladen werden.
 
 * **Zuverlässigkeit**
-** *Redundante Services:* Bei Dienstausfällen auf Serverseite (z. B. Neustarts) darf es nicht zu dauerhaftem Funktionsverlust kommen.
-** *Health-Checks und Rollback:* Das System soll regelmäßig geprüft und bei Fehlern automatisch zurückgesetzt oder stabilisiert werden.
+** *Robuste Services:* Bei Dienstausfällen auf Serverseite (z. B. Neustarts) darf es nicht zu langfristigen Funktionsverlust kommen.
+** *Health-Checks und Rollback:* Das System soll bei Inkonsistenzen in Datenbeständen o. ä. automatisch einen Rollback durchführen.
 
 * **Sicherheit**
-** *Authentifizierung:* Nutzerregistrierung und -login erfolgen über ein eigenes Auth-System. Passwörter werden mit einem sicheren Hash-Verfahren (z. B. bcrypt) gehasht und in PostgreSQL gespeichert.
-** *Datenverschlüsselung:* Sensible Daten (z. B. persönliche Gewohnheiten) werden lokal verschlüsselt gespeichert; Kommunikation erfolgt ausschließlich über HTTPS.
-** *Anmeldung & Sessions:* Nutzer bleiben über Sessions angemeldet. Token laufen nach vordefiniertem Zeitraum (z. B. 2 Wochen) automatisch ab.
+** *Authentifizierung:* Nutzerregistrierung und -login sollen über ein sicheres Auth-System einerfolgen.
+** *Datenverschlüsselung:* Sensible Daten (z. B. persönliche Gewohnheiten) werden sicher gespeichert.
+** *Anmeldung & Sessions:* Nutzer bleiben über Sessions angemeldet. Session laufen nach vordefiniertem Zeitraum (z. B. 2 Wochen) automatisch ab.
 
 * **Portabilität**
 ** *Gemeinsame Code-Basis (Android & iOS):* Pflege einer einzigen Codebasis für beide Plattformen.
