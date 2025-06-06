@@ -1,6 +1,6 @@
 import { useColorScheme } from 'react-native';
 import { Image } from 'expo-image';
-import { Platform, StyleSheet, Switch } from 'react-native';
+import { Platform, StyleSheet, Switch, TouchableOpacity } from 'react-native';
 import { useState } from 'react';
 
 import { Collapsible } from '@/components/Collapsible';
@@ -66,6 +66,16 @@ export default function TabTwoScreen() {
           <Switch value={oeffentlichesProfilEnabled} onValueChange={toggleOeffentlichesProfil} />
         </ThemedView>
       </ThemedView>
+
+      {/* Auth-Buttons */}
+      <ThemedView style={styles.authButtonsContainer}>
+        <TouchableOpacity style={styles.authButton} onPress={() => console.log('Anmelden gedrückt')}>
+          <ThemedText style={styles.authButtonText}>Anmelden</ThemedText>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.authButton} onPress={() => console.log('Registrieren gedrückt')}>
+          <ThemedText style={styles.authButtonText}>Registrieren</ThemedText>
+        </TouchableOpacity>
+      </ThemedView>
     </ParallaxScrollView>
   );
 }
@@ -90,5 +100,25 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingVertical: 8,
+  },
+  /* Neue/angepasste Styles */
+  authButtonsContainer: {
+    marginTop: 40,
+    alignItems: 'center',   // zentriert horizontal
+    gap: 12,                // Abstand zwischen den Buttons
+    paddingBottom: 40,
+  },
+  authButton: {
+    backgroundColor: 'rgb(25, 145, 137)', // gewünschte Farbe
+    paddingVertical: 10,
+    paddingHorizontal: 40,
+    borderRadius: 8,
+    width: '70%',            // sorgt für gleiche Breite & zentriert
+    alignItems: 'center',
+  },
+  authButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 16,
   },
 });

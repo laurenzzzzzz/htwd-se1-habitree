@@ -171,80 +171,88 @@ export default function HomeScreen() {
 
       {/* Modal zum Hinzufügen eines neuen Habits */}
       <Modal
-  visible={modalVisible}
-  transparent
-  animationType="slide"
-  onRequestClose={() => {
-    setModalVisible(false);
-    setHabitMode(null);
-  }}
->
-  <View style={styles.modalBackdrop}>
-    <View style={styles.modalContent}>
-      {habitMode === 'menu' && (
-        <>
-          <ThemedText type="subtitle" style={{ marginBottom: 12 }}>
-            Was möchtest du tun?
-          </ThemedText>
-          <Button title="Vordefiniertes Ziel wählen" onPress={() => setHabitMode('predefined')} />
-          <View style={{ height: 12 }} />
-          <Button title="Eigenes Ziel erstellen" onPress={() => setHabitMode('custom')} />
-        </>
-      )}
+        visible={modalVisible}
+        transparent
+        animationType="slide"
+        onRequestClose={() => {
+          setModalVisible(false);
+          setHabitMode(null);
+        }}
+      >
+        <View style={styles.modalBackdrop}>
+          <View style={styles.modalContent}>
+            {habitMode === 'menu' && (
+              <>
+                <ThemedText type="subtitle" style={{ marginBottom: 12 }}>
+                  Was möchtest du tun?
+                </ThemedText>
+                <Button title="Vordefiniertes Ziel wählen" onPress={() => setHabitMode('predefined')} />
+                <View style={{ height: 12 }} />
+                <Button title="Eigenes Ziel erstellen" onPress={() => setHabitMode('custom')} />
+              </>
+            )}
 
-      {habitMode === 'predefined' && (
-        <>
-          <ThemedText type="subtitle" style={{ marginBottom: 12 }}>
-            Vordefiniertes Ziel auswählen:
-          </ThemedText>
-          {['6000 Schritte', '1,5h Uni', '40 Liegestütze', '10 Klimmzüge'].map((label, index) => (
-            <Pressable
-              key={index}
-              onPress={() => {
-                const nextId = habits.length > 0 ? Math.max(...habits.map(h => h.id)) + 1 : 1;
-                setHabits(prev => [...prev, { id: nextId, label, checked: false }]);
-                setModalVisible(false);
-                setHabitMode(null);
-              }}
-              style={{
-                paddingVertical: 10,
-                paddingHorizontal: 16,
-                borderBottomColor: '#ddd',
-                borderBottomWidth: 1,
-              }}
-            >
-              <ThemedText>{label}</ThemedText>
-            </Pressable>
-          ))}
-        </>
-      )}
+            {habitMode === 'predefined' && (
+              <>
+                <ThemedText type="subtitle" style={{ marginBottom: 12 }}>
+                  Vordefiniertes Ziel auswählen:
+                </ThemedText>
+                {['6000 Schritte', '1,5h Uni', '40 Liegestütze', '10 Klimmzüge'].map((label, index) => (
+                  <Pressable
+                    key={index}
+                    onPress={() => {
+                      const nextId = habits.length > 0 ? Math.max(...habits.map(h => h.id)) + 1 : 1;
+                      setHabits(prev => [...prev, { id: nextId, label, checked: false }]);
+                      setModalVisible(false);
+                      setHabitMode(null);
+                    }}
+                    style={{
+                      paddingVertical: 10,
+                      paddingHorizontal: 16,
+                      borderBottomColor: '#ddd',
+                      borderBottomWidth: 1,
+                    }}
+                  >
+                    <ThemedText>{label}</ThemedText>
+                  </Pressable>
+                ))}
+              </>
+            )}
 
-      {habitMode === 'custom' && (
-        <>
-          <ThemedText type="subtitle" style={{ marginBottom: 12 }}>
-            Eigenes Ziel erstellen
-          </ThemedText>
-          <TextInput
-            placeholder="Kurzname (z. B. Kniebeugen)"
-            value={newHabit}
-            onChangeText={setNewHabit}
-            style={styles.textInput}
-          />
-          <View style={{ flexDirection: 'row', gap: 12, marginTop: 16 }}>
-            <Button title="Hinzufügen" onPress={addHabit} />
+            {habitMode === 'custom' && (
+              <>
+                <ThemedText type="subtitle" style={{ marginBottom: 12 }}>
+                  Eigenes Ziel erstellen
+                </ThemedText>
+                <TextInput
+                  placeholder="Kurzname (z. B. Kniebeugen)"
+                  value={newHabit}
+                  onChangeText={setNewHabit}
+                  style={styles.textInput}
+                />
+                <View style={{ flexDirection: 'row', gap: 12, marginTop: 16 }}>
+                  <Button title="Hinzufügen" onPress={addHabit} />
+                </View>
+              </>
+            )}
+
+            {/* Zurück-Button immer zeigen */}
+            <View style={{ marginTop: 24 }}>
+              <Button
+                title="Zurück"
+                onPress={() => {
+                  if (habitMode === 'menu') {
+                    setModalVisible(false);
+                    setHabitMode(null);
+                  } else {
+                    setHabitMode('menu');
+                  }
+                }}
+              />
+            </View>
           </View>
-        </>
-      )}
-
-      {/* Der Zurück-Button, wenn nicht im Menü */}
-      {habitMode !== 'menu' && (
-        <View style={{ marginTop: 24 }}>
-          <Button title="Zurück" onPress={() => setHabitMode('menu')} />
         </View>
-      )}
-    </View>
-  </View>
-</Modal>
+      </Modal>
 
     </SafeAreaView>
   );
@@ -275,20 +283,20 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   chartButton: {
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-    borderRadius: 8,
-    backgroundColor: '#e0e0e0',
+  paddingVertical: 6,
+  paddingHorizontal: 12,
+  borderRadius: 8,
+  backgroundColor: '#e0e0e0', // bleibt für nicht-ausgewählt
   },
   chartButtonSelected: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: 'rgb(25, 145, 137)', // ✅ neue Farbe
   },
   chartButtonText: {
     color: '#333',
     fontWeight: '500',
   },
   chartButtonTextSelected: {
-    color: '#fff',
+    color: '#fff', // weißer Text auf grünem Button
   },
   chartImage: {
     width: '100%',
@@ -340,7 +348,7 @@ const styles = StyleSheet.create({
   width: 56,
   height: 56,
   borderRadius: 28,
-  backgroundColor: '#34C759',
+  backgroundColor: 'rgb(25, 145, 137)',
   alignItems: 'center',
   justifyContent: 'center',
   elevation: 6,
