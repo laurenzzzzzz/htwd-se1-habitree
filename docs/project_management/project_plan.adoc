@@ -36,8 +36,25 @@ include::../_includes/default-attributes.inc.adoc[]
 - Arbeit in festen Zyklen (Sprints) von jeweils 4 Wochen +
 - Weekly-Meetings (30–45 Minuten) zur Besprechung und Aufzeigung des aktuellen Arbeitsstatus der Mitglieder, Aufgabenverteilung und operativer Planung für die nächste Woche und Identifikation von Hindernissen +
 - Aufgaben werden in einem gemeinsamen Miro-Board visualisiert und zusätzlich im Discord-Chat dokumentiert, um Transparenz zu gewährleisten +
-- Aufgabenverteilung erfolgt zum großen Teil nach dem Prinzip der Freiwilligkeit zur Förderung eines positiven Arbeitsklimas in einem Team mit flachen Hierarchien
-
+- Aufgabenverteilung erfolgt zum großen Teil nach dem Prinzip der Freiwilligkeit zur Förderung eines positiven Arbeitsklimas in einem Team mit flachen Hierarchien  
+| Cross Functional Team | Unser Team besteht aus Personen verschiedener Fachbereiche, die gemeinsam an unserem Projekt zusammenarbeiten. HIerfür definierten wir für unsere Mitglieder Scrum- Rollen:  +
+**- Product Owner:**  +
+Dieser ließt sich in die Domäne ein und kommuniziert mit Stakeholdern.  +
+Domänenwissen eignet er sich durch Bücher (wie z.B.: "Atomic Habits" oder "The Power of Habits") und Internet an.  +
+Kommunikation mit Stakeholdern erfolgt mit dem Durchforsten von Kommentaren in Foren oder Bewertungen in Kommentarspalten bei konkurrierenden Anwendungen. Zudem wurde eine Umfrage erstellt, die mit Stakeholdern durchgeführt wurde. +
+In unserem Team kümmert er maßgeblich sich um die Vision  sowie  um die User Stories.  +
+**- Scrum Master:** +
+Der Scrum Master organisiert und protokolliert die Meetings hilft dem Teammitgliedern bei der Konfliktbewältigung.  Dies bedeutet dass er alle wichtigen Dinge, welche in Meetings thematisiert wurden aufnimmt und anschließend in Discord oder ins Miro- Board schreibt, Meetingräume reserviert, Schwerpunkte festlegt und ständig vor allem mit den Entwicklern potenzielle Probleme bespricht. +
+Er ermöglicht ein effizientes Arbeiten innerhalb des Teams bei einer hohen Mitarbeiterzufriedenheit.  + 
+Seine Ergebnisse schreibt der Scrum Master im  project_plan.adoc nieder.  +
+Zudem unterstützt er auch den Product Owner in seinen Tätigkeiten.  +
+**-Entwickler- Team: **
+Das Entwickler- Team ist bei uns in der Planung und der konkreten Umsetzung der Software beteiligt. Seine Aufgaben sind beispielsweise: +
+- Erstellung/Planung der Architektur  +
+- Erstellung und Planung des Domänenmodelles +
+- Festlegung von User Stories (mit dem PO) und Absprache darüber welche nochmals konkretisiert werden müssen  +
+- Herausarbeiten von Task aus den User Stories  +
+- Programmierung eines Prototypen  +
 | Planung & Tracking
 | Sprint Planning zu Beginn jeder Iteration legt gemeinsam das Sprintziel fest +
 - Bearbeitung der vom Professor bereitgestellten Iterationsdokumente +
@@ -57,6 +74,7 @@ include::../_includes/default-attributes.inc.adoc[]
 | Review von Ergebnissen | Am Ende jeder Iteration werden unsere bisherigen Ergebnisse Stakeholdern vorgestellt. Am Ende der zweiten Iteration wurden so z.B.: unsere Prototyp als auch unsere Wireframes und der Wireflow einer anderen Gruppe in einem Microsofft Teams- Meeting dargelegt. Wir holten uns über diesen Weg Feeback, Verbesserungsvorschläge und Ideen für weitere User Stories und Personas ein. Zudem wurde auch ein Meeting mit unseren Coach und den Professor durchgeführt um unsere. bisherigen Arbeitsstand und Arbeitsphilosophie zu bewerten. Nach jedem Meeting mit weiteren Stakeholdern besprechen wir im Anschluss noch einmal kurz die Resultate, Protokollieren diese und leiten Aufgabe/Änderungen daran ab. 
 | Entwicklung | Unser Entwicklerteam arbeitet häufig zusammen und kommuniziert auch untereinander viel. Hierbei legt es individuelle Aufgaben nochmals fest und unterstützt sich gegenseitig auch bei Problemen. 
 | Ergebnisübertragung | Ziel ist eine Softwareentwicklung unter Nutzung einer versionsverwaltenden Plattform. Hierfür wird Git- Hub verwendet. Ergebnisse in den Dokumenten oder auch im Code werden per standardisierter Commits in das Repository übertragen. Die Vorlage für die Commits wurde im Miro- Board öffentlich jedem Mitglied zur verfügung gestellt.
+
 |===
 
 === Technische Praktiken
