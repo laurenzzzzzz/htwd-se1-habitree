@@ -26,12 +26,12 @@ include::../_includes/default-attributes.inc.adoc[]
 == Praktiken und Bewertung
 //Describe or reference which management and technical practices will be used in the project, such as iterative development, continuous integration, independent testing and list any changes or particular configuration to the project. Specify how you will track progress in each practice. As an example, for iterative development the team may decide to use iteration assessments and iteration burndown reports and collect metrics such as velocity (completed work item points/ iteration).
 
-== Praktiken und Bewertung
+=== Managementpraktiken
 
 |===
 | *Kategorie* | *Praktik*
 
-| Management
+| Zusammenarbeit und Workflow
 | Nutzung des Scrum-Frameworks zur strukturierten Projektorganisation +
 - Arbeit in festen Zyklen (Sprints) von jeweils 4 Wochen +
 - Weekly-Meetings (30–45 Minuten) zur Besprechung und Aufzeigung des aktuellen Arbeitsstatus der Mitglieder, Aufgabenverteilung und operativer Planung für die nächste Woche und Identifikation von Hindernissen +
@@ -54,8 +54,12 @@ include::../_includes/default-attributes.inc.adoc[]
 - Konkrete Maßnahmen zur Verbesserung werden abgeleitet und im "Lessons Learned"-Teil der Dokumentation dokumentiert.  +
 - Wie alle weiteren Meetings wird auch die Retrospektive im Miro- Board aus Gründen der Transparenz im Team jeden sichtbar gemacht.  +
 - Zum Ende der Retrospektive soll jedes Mitglied seine Hapiness bewerten. Hierfür haben wir einen Hapiness- Index eingeführt. Diesen protokollieren wir auch um Entiwcklungen und Trends in den Emotionen einzelner Mitglieder sehen zu können.
+| Review von Ergebnissen | Am Ende jeder Iteration werden unsere bisherigen Ergebnisse Stakeholdern vorgestellt. Am Ende der zweiten Iteration wurden so z.B.: unsere Prototyp als auch unsere Wireframes und der Wireflow einer anderen Gruppe in einem Microsofft Teams- Meeting dargelegt. Wir holten uns über diesen Weg Feeback, Verbesserungsvorschläge und Ideen für weitere User Stories und Personas ein. Zudem wurde auch ein Meeting mit unseren Coach und den Professor durchgeführt um unsere. bisherigen Arbeitsstand und Arbeitsphilosophie zu bewerten. Nach jedem Meeting mit weiteren Stakeholdern besprechen wir im Anschluss noch einmal kurz die Resultate, Protokollieren diese und leiten Aufgabe/Änderungen daran ab. 
+| Entwicklung | Unser Entwicklerteam arbeitet häufig zusammen und kommuniziert auch untereinander viel. Hierbei legt es individuelle Aufgaben nochmals fest und unterstützt sich gegenseitig auch bei Problemen. 
+| Ergebnisübertragung | Ziel ist eine Softwareentwicklung unter Nutzung einer versionsverwaltenden Plattform. Hierfür wird Git- Hub verwendet. Ergebnisse in den Dokumenten oder auch im Code werden per standardisierter Commits in das Repository übertragen. Die Vorlage für die Commits wurde im Miro- Board öffentlich jedem Mitglied zur verfügung gestellt.
 |===
 
+=== Technische Praktiken
 
 === Definition of Ready
 // Definition of Ready 
