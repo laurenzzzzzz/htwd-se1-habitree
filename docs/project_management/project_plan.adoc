@@ -94,6 +94,13 @@ Sinn ist, dass jeder der Mitglieder seine Aufgaben genau kennt, versteht, dass e
 - Das Risiko- Board wird bei Bedarf geupdatet und um neue Risiken ergänzt. Bestehende Risiken werden in regelmäßigen Abständen durchgangen und verwaltet hisnichtlich des Aufwandes und Einflusses.  +
 - Auftretende Fehler und Risiken werden direkt in Meetings besprochen und nach Dringlichkeit priorisiert +
 - Fehler und Bug-Fixes werden als eigene Tasks verwaltet und in die Iteration mit aufgenommen. (z.B.: Issues mit dem Label "Defect")
+| Entwicklungstechnologie 
+| Verwendung von Expo mit React Native zur plattformübergreifenden Entwicklung +
+- Entwicklung in Java Script und in Type- Script  +
+- Nutzung der Expo Go App zur Live Vorschau auf echter Hardware +
+- Einsatz von Visual Studio Code als Entwicklungsplattform.
+| Visualisierung von Aspekten unter Zuhilfenahme von Diagrammen 
+|
 |===
 
 === Definition of Ready
