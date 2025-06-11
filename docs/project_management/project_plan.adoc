@@ -129,6 +129,8 @@ Sinn ist, dass jeder der Mitglieder seine Aufgaben genau kennt, versteht, dass e
 
 == Deployment
 //Outline the strategy for deploying the software (and its updates) into the production environment.
+
+== Diskussion zu Vorgehensweisen
 |===
 |*Herausforderung* |*Vorgehensweise*
 
