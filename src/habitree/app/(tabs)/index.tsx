@@ -131,6 +131,13 @@ export default function HomeScreen() {
           contentFit="contain"
         />
 
+        {/* Streak-Bild anzeigen */}
+        <Image
+          source={require('@/assets/images/streak.png')}
+          style={[styles.chartImage, { height: 280 }]}  // z.B. 280 statt 200
+          contentFit="contain"
+        />
+
         <ThemedView style={styles.habitListContainer}>
           <ThemedText type="subtitle" style={styles.habitTitle}>
             Heutige Ziele:
