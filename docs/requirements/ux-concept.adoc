@@ -83,8 +83,46 @@ Besonderheiten: Farbenblindheit (Rot-Grün-Schwäche)
 Lara benötigt eine flexible App, die sich an Ihre wechselnden Alltagssituationen anpasst, sodass sie auch bei höheren Stresslevel Erfolge feiern kann.
 |Hindernisse |Zeitmangel, ein hohes vorhandenes Stresspensum und eine daraus resultierende Prokrastination bei dem Erlernenen zusätzlicher Dinge, erschweren es Lara, ihre Ziele konsequent zu verfolgen.
 Lara möchte Ergebnisse schnell sehen und neigt dazu, sich zu hohe Ziele zu setzen, was zu Frustration führt, wenn diese nicht eintreten.
+|===
+
+*Tom Neumann* _"Alles auf einmal-oder gar nichts"_
+
+image::Persona-Tom_Neumann.png[200,200]
 
 |===
+|Kategorie | Beschreibung
+
+|Demografie
+|Alter: 24 Jahre +
+Wohnort: Leipzig +
+Beruf: Ausbildung zum Fachinformatiker für Anwendungsentwicklung im 2. Lehrjahr +
+Beziehungsstatus: in einer offenen Beziehung +
+Hobby: Musikproduktion und Urban Gardening
+
+|Verhaltensvariablen
+|Tom ist ein kreativer Kopf mit viel Energie, allerdings sehr impulsiv.
+Er hat ADHS, wodurch er oft sprunghaft handelt, sich schnell ablenken lässt und es ihm schwerfällt, über längere Zeit an einer Aufgabe konzentriert zu bleiben.
+Trotzdem ist er sehr begeisterungsfähig und kommt in einen produktiven "Hyperfokus", wenn ihn ein Thema wirklich interessiert.
+
+|Technische Fähigkeiten
+|Tom ist technisch sehr versiert. Er arbeitet täglich mit Software-Tools, programmiert kleinere Anwendungen und nutzt verschiedene Plattformen (PC, Tablet, Smartphone).
+Er findet sich schnell in neuen Systemen zurecht, verliert jedoch schnell die Geduld, wenn Ladezeiten oder zu viele Schritte nötig sind.
+Er bevorzugt klare Strukturen, eine visuell stimulierende Umgebung und kurze, direkte Rückmeldungen.
+
+|Bedürfnisse / Ziele
+|Tom möchte lernen, mit seiner ADHS besser umzugehen und gesunde Routinen in seinen Alltag zu integrieren – z. B. regelmäßiger Schlaf, Bewegung, feste Arbeitsblöcke und Pausen.
+Er sucht nach einer App, die ihm hilft, sich auf das Wesentliche zu fokussieren, ihn durch kleine Erfolge motiviert und ihm Flexibilität bietet, ohne ihn zu überfordern.
+Besonders wichtig ist ihm eine Gamification, die ihn mit Sounds, Fortschrittsbalken oder kleinen Animationen belohnt.
+
+|Hindernisse
+|Tom neigt zur Überforderung durch zu viele gleichzeitige Aufgaben.
+Er vergisst schnell, was er sich vorgenommen hat, und springt zwischen verschiedenen Tätigkeiten hin und her.
+Klassische Kalender- oder Aufgaben-Apps empfindet er oft als langweilig oder zu restriktiv.
+Er hat Schwierigkeiten, Prioritäten zu setzen und wünscht sich visuelle Unterstützung und akustische Hinweise, um sich zu orientieren.
+Zudem ist sein Selbstwertgefühl manchmal belastet, wenn er das Gefühl hat, „mal wieder nichts geschafft zu haben“.
+|===
+
+
 
 == Nutzungskontext
 // Beschreiben Sie die Arbeitsaufgaben, Arbeitsmittel, physische und soziale Umgebung, in der das Produkt genutzt wird. 
