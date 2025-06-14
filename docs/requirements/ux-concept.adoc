@@ -184,6 +184,22 @@ Es wurde ein Kalender selber programmiert im Prototypen, der direkt deutlich eff
 ==== Ist Prinzipiell eine Verbindung zu weiteren Diensten erfoderlich/ vorgesehen?
 **??????**
 
+=== Physische Umgebung:
+==== In welcher Umgebung wird die App genutzt?
+Da die App für mobile Endgeräte konzipiert ist, kann sie prinzipiell von überall aus genutzt werden. Benutzer können somit unabhängig von deren genauer Umgebung auf die Anwendung und die Daten zugreifen. Sie soll als portable und effiziente Alltagsüberwachung von Visualisierung aller Habits einschließlich deren Streaks gelten.
+
+==== Sind soziale Interaktionen zwischen den einzelnen Usern möglich?
+Es ist angedacht, dass Benutzer welcher in unserer App eingeloggt ist verfügt über ein Profil, welches er auf Privat oder öffentlich stellebn kann. Nutzer sollen untereinander die Erfolge anderer Akteure einsehen können, die auch ein öffentliches Profil haben. Unser Ansatz ist: Motivationssteigerung durch freiwilligen Wettkampf. Sollte ein Benutzer nicht wollen, dass andere seinen Stand einsehen können kann er dies verhindern dadurch, dass er sein Profil auf Privat stellt.
+
+=== Ablauf und Häufigkeit:
+==== Wie häufig sollte die Anwendung verwendet werden?
+Die Anwendung kann beliebig häufig verwendet werden. Vorgesehen ist aber, dass jeder User zumindest einmal täglich einträgt, welche Habits er absolvierte. Dies wird ersichtlich in Form einer Benachrichtigung, ausgehend von der Anwendung.
+
+==== Wie verändert sich die Nutzung über die Zeit?
+Nutzer sollen konstant ihre Gewohnheiten an- bzw. abtrainieren mindestens bis zum Erreichen eines Grenzwertes (z.B.: 66 Tage). Bis dahin ist es vorgesehen, dass die App zumindest einmal täglich genutzt wird. Ab dem Grenzdatum, ist es vorgesehen, dass die Habits weitestgehend abtrainiert sind, wobei der Benutzer natürlich gerne weiter seine Habiterfolge protokollieren kann.
+
+=== Potentielle Fehlerquellen:
+
 
 == Wireframes und Wireflow
 // Fügen Sie Wireframes als Bilder oder als Link (z.B. zu einem Miroboard) ein
