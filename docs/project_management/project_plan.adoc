@@ -174,7 +174,7 @@ Problem: Verschiedene Technologien verfügbar, alle jeweils mit eigenen Vor und 
 
 == Erkenntnisse (Lessons learned)
 // Führen Sie hier die wesentlichen Erkenntnisse auf, die Sie in den Retrospektiven gewonnen haben. Legen Sie besonderen Fokus auf die Maßnahmen, die Sie getroffen haben um Verbesserungen in den verschiedenen Aspekten des Projekts zu erzielen, z.B. dem Entwicklungsprozess, der technischen und organisatorischen Umgebung oder der Zusammenarbeit im Team.
-
+=== Negative Ereignisse:
 |===
 |*Ereignis* |*Maßnahme* |*Erkenntnis*
 | Ausstieg aus der Gruppe von Frederic Egle (Developer) | - Gruppenberatung in der ersten Retrospektive  +
@@ -202,7 +202,10 @@ Problem: Verschiedene Technologien verfügbar, alle jeweils mit eigenen Vor und 
 |- Vereinbarung von gemeinsamen Kommunikationskanälen, die allen Teammitgliedern bekannt sind, und von jedem regelmäßig genutzt werden und genutzt werden können. (z.B.: keine Plattformabhängigkeit)  +
 - Festlegung von wenigen, bestenfalls einen bis zwei festen Kommunikationswegen. In unserem Team nutzen wir WhatsApp für den täglichen Nachrichtenaustausch und Discord für den Transfer umfangreicher Dokumente und Online- Meetings.  +
 | - Vorab- Festelegung der genutzten Kommunikationsplattformen und dessen zeitlicher Nutzung.  
-| Unkenntniss über Reihenfolge des Arbeitens gemäß des Scrum- Frameworks und den Prinzipien der iterativen und agilen Entwicklung
+| Unkenntniss über Reihenfolge des Arbeitens gemäß des Scrum- Frameworks und den Prinzipien der iterativen und agilen Entwicklung:  +
+- Verzögerungen bei der Rollenbildung  +
+- Neuverteilungen von Rollen  +
+- Fehlende Koordination
 | - Studieren der empfohlenen Fachliteratur   +
 - Nutzung aller Hinweise und fortführender Materialien (Z.B.: Anschauen des vom Professors empfohlenen YouTube- Videos )  +
 - Konstanter Besuch der Vorlesungen und Praktika  +
@@ -213,4 +216,30 @@ Problem: Verschiedene Technologien verfügbar, alle jeweils mit eigenen Vor und 
 - Klärung von ungelösten Fragen in persönlichen Gesprächen:  +
     (1) Kleinere FRagen jeweils direkt im Anschluss an der Lehrveranstaltung  +
     (2) Größere Fragen und Anliegen nach Terminabsprache in einem längeren Gespräch
+- Ein guter und regelmäßiger Kontakt zu den Betreuern und Stakeholdern ist für ein erfolgreiches Projekt unabdingbar
+|===
+
+=== Positive Ereignisse
+|===
+|*Ereignis* |*Erkenntnis*
+| Schnelle Teambildung 
+|Alle Teilnehmer außer Frederic haben sich sofort mit der Gruppe und der 
+Gruppendynamik identifiziert und fühlten sich zur Gruppe zugehörig.  +
+Es entstand ein freundschaftliches Verhältnis auf Augenhöhe und alle Mitglieder sind gleichberechtigt.  +
+Durch die schnelle Teambildung konnten fast alle Mitglieder gleich schon von Beginn an harmonisch zusammenarbeiten ohne größere Konflikte.
+| Frühzeitiger Arbeitsbeginn bei den einzelnen vorgegebenen Aufgabenblättern
+| Dadurch, dass wir gleich schon von Beginn an aktiv an dem Projekt gearbeitet haben und einzelne Aufgaben auch immer in den zugehörigen Iterationen abgearbeitet haben, kam es zu weniger Stress und Zeitdruck.
+| Ist- Standsanalyse und Befragung von Coach und Professor führten dazu, dass die einzelnen Mitglieder ihren eigenen Wissensstand reflektierten und aktiv sich Wissen über das agile Projektmanagement aneigneten.  +
+Schlussendlich führte dies dann dazu, dass alle Beteiligten erkannten, dass die Regelungen hilfreich und sinnvoll sind und diese dann zeitnah umsetzten.
+| Wenn man Probleme hat, sollte man sich nicht scheuen nachzufragen.  +
+Es ist außerdem sinnvoll auf dem Wissens- und Erfahrungsschatz von Experten prinzipiell aufzubauen. 
+| Erfolgreiches Einbringen eigener Ideen  zur effizienten Modifizierung 
+des Projektes. Projekt  enthält eigene Gedanken und Ideen und ist somit hinsichtlich der Gestaltung und Arbeitsweise individuell.  +
+- Einführung unterschiedlicher Labels für Aufgaben auf Git Hub um klar zwschen den durch User Stories entstehenden Task und den vom Professor vorgegebenen Iterationsaufgaben zu differenzieren +
+-  Flexible Kommunikationswege:   +
+(1) Discord für Versand größere Dokumente  +
+(2) Whats- App für spontane Kommuikation und Meetingplanung  +
+(3) Miro- Board für Festlegung von Aufgaben und Zufriedenheit nach Meetings und Templates (z.B.: für Git Commit- Messages)  +
+- Einführung Hapiness- Index
+| 
 |===
