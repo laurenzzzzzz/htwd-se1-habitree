@@ -240,6 +240,6 @@ des Projektes. Projekt  enthält eigene Gedanken und Ideen und ist somit hinsich
 (1) Discord für Versand größere Dokumente  +
 (2) Whats- App für spontane Kommuikation und Meetingplanung  +
 (3) Miro- Board für Festlegung von Aufgaben und Zufriedenheit nach Meetings und Templates (z.B.: für Git Commit- Messages)  +
-- Einführung Hapiness- Index
-| 
+- Einführung Hapiness- Index für alle Mitarbeiter nach Retrospektiven und transparente Darstellung im Miro- Board.
+| Wissen und Kenntnisse sind anwendbar und können individuell angepasst werden, sodass diese nochmals mehr den Bedürfnissen des Teams entsprechen.
 |===
