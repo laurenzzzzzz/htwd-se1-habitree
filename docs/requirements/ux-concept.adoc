@@ -158,6 +158,17 @@ Die Anwendung soll im Alltag genutzt werden und kann somit überall und jederzei
 Prinzipiell ist die App für Einzelnutzer konzipiert. Der aktuelle Stand kann jedoch im Profil auf "öffentlich" gestellt werden und somit auch von anderen Nutzern eingesehen werden. Dies soll motivierend wirken und könnte somit Wettkampfcharakter annehmen.
 
 
+=== Einzigartigkeit von Habittree:
+==== Was wird erleichtert durch das Programm?
+Das regelmäßige Habit- Tracking, die Nachverfolgung und Visualisierung in Diagrammen von Streaks und durch Gamification Elemente auf psychologischer Ebene auch das Dranbleiben am Habitaufbau.
+Somit ist unsere Anwendung sowohl effizienter als auch effektiver als herkömmliche Excel- Listen oder analoge  Tagebücher/ Notizen.  +
+
+==== Was wird durch die Anwendung ersetzt?
+Analoge Gewohnheits-Tracker wie z.B.: Kalender, Notizen, Tagebücher sind nicht mehr nötig, da unser Programm nicht nur Dokumentationsfunktionen besitzt, sondern auch über Visualisierungstools, einem Wissensbereich und Gamification- Elemente verfügt.
+
+==== Was wird durch die Anwendung ergänzt?
+Unser Programm basiert auf verhaltenspsychologischen Ansetzen um Nutzer aktiv zu motivieren und zu helfen ihr Verhalten gemäß ihrer Wünsche und wider ihrer Hindernisse dauerhaft anzupassen.
+
 
 
 == Wireframes und Wireflow
