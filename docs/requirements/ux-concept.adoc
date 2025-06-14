@@ -140,6 +140,25 @@ Zudem ist sein Selbstwertgefühl manchmal belastet, wenn er das Gefühl hat, „
 Hier können zudem bei Bedarf Teile des Unternehmensmodells (Prozesse, Organigramme, IT-Landschaft, ...) eingefügt werden, um die beteiligten Aufgaben und Rollen zu skizzieren.
 
 
+abzutrainieren. +
+. In Welchen Kontext wird das Produkt genutzt?  + 
+
+=== Arbeitsaufgaben:
+==== Wer nutzt das Produkt?  +  
+Das Produkt ist primär für Studierende in ihrem Alltag konzipiert um positive Gewohnheiten anzutrainieren oder negative Gewohnheiten abzugewöhnen, kann aber von prinzipiell allen Personengruppen genutzt werden, die die Technik und den Umgang mit Medien beherschen.
+
+==== Welche konkreten Aufgaben sollen die Nutzer mit der Anwendung ausführen?
+Die Nutzer können ihre gewünschten Gewohnheiten anlegen,ändern und löschen. ZUdem können Sie persönliche Ziele einstellen und den aktuellen Wert jeweils eintragen. Außerdem müssen Sie ihre Erfolge und Ihren Ist-Stand kontrollieren und einsehen.  
+Außerdem könen Sie persönliche Habits konfigurieren (z.B.: Festlegung der genauen Schrittzahl, die man laufen möchte je Tag).
+
+==== In welchen Situationen wird die Anwendung verwendet?
+Die Anwendung soll im Alltag genutzt werden und kann somit überall und jederzeit eingesetzt werden.
+
+==== Anzahl der Personen, die an der Erfüllung der Aufgabe beteiligt sind. Ändert sich das? 
+Prinzipiell ist die App für Einzelnutzer konzipiert. Der aktuelle Stand kann jedoch im Profil auf "öffentlich" gestellt werden und somit auch von anderen Nutzern eingesehen werden. Dies soll motivierend wirken und könnte somit Wettkampfcharakter annehmen.
+
+
+
 
 == Wireframes und Wireflow
 // Fügen Sie Wireframes als Bilder oder als Link (z.B. zu einem Miroboard) ein
