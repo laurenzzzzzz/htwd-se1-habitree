@@ -169,6 +169,20 @@ Analoge Gewohnheits-Tracker wie z.B.: Kalender, Notizen, Tagebücher sind nicht 
 ==== Was wird durch die Anwendung ergänzt?
 Unser Programm basiert auf verhaltenspsychologischen Ansetzen um Nutzer aktiv zu motivieren und zu helfen ihr Verhalten gemäß ihrer Wünsche und wider ihrer Hindernisse dauerhaft anzupassen.
 
+=== Arbeitsmittel:
+==== Welche Endgeräte werden typischerweise genutzt?
+Die Anwendung ist auf die Nutzung mit Hilfe mobiler Endgeräte ausgelegt. Hierbei soll vor allem die Smartphone Nutzung im Vordergrund stehen.  +
+Handys sind für fast alle Menschen ein täglicher Begleiter im Alltag und somit macht es auch am meisten Sinn damit Habits und Gewohnheiten aufzuzeichnen und zu kontrollieren. 
+
+==== Nutzt der Anwender zusätzliche Hilfmittel?
+Integration von Kalender Apps oder Smartwatches ist in der initialen Produktvisions Phase angedacht gewesen, bislang aber noch nicht umgesetzt wurden.  +
+Es wurde ein Kalender selber programmiert im Prototypen, der direkt deutlich effizienter auf die Bedürfnisse der Nutzer unserer Anwendung zugeschnitten ist als externe Programme.
+
+==== Kommuniziert das Programm mit  anderen Programmen/ Schnittstellen?
+**???????** 
+
+==== Ist Prinzipiell eine Verbindung zu weiteren Diensten erfoderlich/ vorgesehen?
+**??????**
 
 
 == Wireframes und Wireflow
