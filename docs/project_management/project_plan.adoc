@@ -128,6 +128,7 @@ Sinn ist, dass jeder der Mitglieder seine Aufgaben genau kennt, versteht, dass e
     - Product Owner hat abgenommen
 
 == Deployment
+Jeder muss es ausprobieren => Fehler
 //Outline the strategy for deploying the software (and its updates) into the production environment.
 
 == Diskussion zu Vorgehensweisen
@@ -202,6 +203,14 @@ Problem: Verschiedene Technologien verfügbar, alle jeweils mit eigenen Vor und 
 - Festlegung von wenigen, bestenfalls einen bis zwei festen Kommunikationswegen. In unserem Team nutzen wir WhatsApp für den täglichen Nachrichtenaustausch und Discord für den Transfer umfangreicher Dokumente und Online- Meetings.  +
 | - Vorab- Festelegung der genutzten Kommunikationsplattformen und dessen zeitlicher Nutzung.  
 | Unkenntniss über Reihenfolge des Arbeitens gemäß des Scrum- Frameworks und den Prinzipien der iterativen und agilen Entwicklung
-| -  
-|
+| - Studieren der empfohlenen Fachliteratur   +
+- Nutzung aller Hinweise und fortführender Materialien (Z.B.: Anschauen des vom Professors empfohlenen YouTube- Videos )  +
+- Konstanter Besuch der Vorlesungen und Praktika  +
+- Nacharbeitung der Lehrveranstaltungen und des behandelten Stoffes  +
+- Kontaktaufnahme bei Fragen zu Professor Anke und Herrn Zirkelbach
+| - Ein Regelmäßiger Besuch der Lehrveranstaltungen schafft das Fundament und gibt Reihenfolge und Inhalt der zu erledigenden Aufgaben an.  +
+- Besuch der Praktika vermittelt anhand eines kleinen Cocktailversand- Fallbeispieles grundlegendes praktisch anwandbares Wissen.  +
+- Klärung von ungelösten Fragen in persönlichen Gesprächen:  +
+    (1) Kleinere FRagen jeweils direkt im Anschluss an der Lehrveranstaltung  +
+    (2) Größere Fragen und Anliegen nach Terminabsprache in einem längeren Gespräch
 |===
