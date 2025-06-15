@@ -199,6 +199,34 @@ Die Anwendung kann beliebig häufig verwendet werden. Vorgesehen ist aber, dass 
 Nutzer sollen konstant ihre Gewohnheiten an- bzw. abtrainieren mindestens bis zum Erreichen eines Grenzwertes (z.B.: 66 Tage). Bis dahin ist es vorgesehen, dass die App zumindest einmal täglich genutzt wird. Ab dem Grenzdatum, ist es vorgesehen, dass die Habits weitestgehend abtrainiert sind, wobei der Benutzer natürlich gerne weiter seine Habiterfolge protokollieren kann.
 
 === Potentielle Fehlerquellen:
+==== Welche Fehler können bei der Bedienung auftreten?
+**Technische Fehler: ???**
+
+==== Existieren derzeit potenzielle Stolpersteine in der UI oder andere technische Einschränkungen?
+**????**
+
+==== Welche Situationen könnten die Nutzung behindern?
+Unsere Anwendung kann in prinzipiell jeder Situation benutzt werden. Bei Fehlender Internetverbindung sind aber nicht alle Funktionen wie z.B.: die Profilsuche von öffentlichen Nutzern verfügbar. Somit kann man dann die Applikation nur eingeschränkt nutzen, Grundfunktionalitäten wie das anschauen des bisherigen Standes bleiben jedoch erhalten. 
+**????**
+
+
+==== Barrierefreiheit und Besonderheiten:
+==== Sollte die Anwendung für Menschen mit Einschränkungen nutzbar sein?
+In unserem Team  hat Inklusion einen hohen Stellenwert. Demnach achten wir sehr genau darauf, dass unsere App von möglichst vielen Nutzern unabhängig potenzieller Behinderungen und Barrieren nutzbar ist.  Laut dem statistischen Bundesamt leiden derzeit rund 9.4% aller deutschen Bürgen an Einschränkungen. Diese untergliedern sich abermals wie folgt:  +
+- körperlich bedingte Behinderungen: 4,5 Millionen Menschen  +
+- seelisch/ geistig bedingte Behinderungen: 1.8 Millionen Menschen  +
+- weitere Behinderungen ohne Spezifizierung: 1.5 Millionen Menschen  +
+Bereits zu Beginn des Projektes haben wir mit Stakeholdern kommuniziert und uns über potenzielle Behinderungen informiert. Diese haben wir nun in Git Hub als Issue mit dem Label "Constraint" versehen.   +
+Diese Umfassen unter anderem Restriktionen hinsichtlich der Kontrastreiche, des Layouts und der Navigation auch in Anlehnung an den Nielsens Heuristiken.
+Wir verpflichten  uns diese mit  umzusetzen bei der Abarbeitung aller Task von den User Stories und sind somit Voraussetzungen bevor eine User Story auf "done" gesetzt werden kann. Demnach probieren wir maximale Usability und Barrerefreiheit in unser Programm mit einzubringen, auch wenn wir uns darüber bewusst sind, dass wir nicht alle Menschen mit allen möglichen Einschränkungen inkludieren können. Grenzen liegen derzeit zum Beispiel bei einer Steuerung des Programmes via Spracherkennung oder nur über Gesten.
+
+==== Gibt es verschiedene Anpassungen/Mode?
+Unser Programm verfügt über einen Lightmode und einen Darkmode. Diese können in den Einstellungen umgestellt werden. 
+
+=== Systeme und Plattformen:
+==== Welche Plattformen werden unterstützt?
+**????**
+
 
 
 == Wireframes und Wireflow
