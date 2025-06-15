@@ -162,13 +162,13 @@ Weitere optionale Sichten (nur bei Bedarf):
 [%header]
 |===
 | Begriff | Definition/Erläuterung 
-| Emulator |
-| XCode |
-| Swift |
-| Flutter |
-| React Native |
-| Expo |
-| Expo Go |
+| Emulator | Ein Emulator ist eine Software, die auf einem Computer die Hardware und das Betriebssystem eines anderen Geräts nachahmt, um darauf Programme auszuführen.
+| XCode |  integrierte Entwicklungsumgebung (IDE) von Apple zum Programmieren, Testen und Veröffentlichen von Apps für iOS, macOS, watchOS und tvOS.
+| Swift | Programmiersprache zur Erstellung von Apps für iOS, macOS, watchOS und tvOS.
+| Flutter | Flutter ist ein Open-Source-Framework von Google zur Entwicklung plattformübergreifender Apps für iOS, Android, Web und Desktop mit einer einzigen Codebasis in der Programmiersprache Dart.
+| React Native | Framework zur Entwciklung von mobilen Applikationen für IOS und Android
+| Expo | open source Platform für die entwicklung nativer apps für Andoiid, IOS und Web auf einer Codebasis in der Programmiersprache Typescript
+| Expo Go | App auf mobilen Endgerät zur darstellung des entwickeltem Projects
 | Ausfallzeit (engl.: Downtime)
 | Zeitspanne, in der System nicht verfügbar oder funktionsfähig ist.  +
 Kann verursacht werden Beispielsweise durch:  +
@@ -179,4 +179,10 @@ Kann verursacht werden Beispielsweise durch:  +
 | Darstellungsmodus einer Anwendung mit heller bzw. dunkler Benutzeroberfläche, meisten mit dunklen bzw. hellen Text auf hellen bzw. dunklen Hintergrund.  +
 Das Ziel des Lightmodes ist es den Nutzer ein angenehmes feeling auch bei Tageslicht zu geben.  +
 Die  Ziele des Darmodes sind primär die Entlastung der Augen und die Erhöhung der Energieeffizienz.
+|Backend| Der Teil einer Anwendung, der auf dem Server läuft und Daten verarbeitet
+|Frontend| Die Benutzeroberfläche einer Anwendung, die im Browser oder auf dem Gerät sichtbar ist
+|API| Eine Schnittstelle, die den Datenaustausch zwischen verschiedenen Softwarekomponenten ermöglicht
+|ORM|  Ein Werkzeug, das Datenbanktabellen in Programmiersprachenobjekte übersetzt und deren Nutzung vereinfacht
+|Relationale Datenbank|  Eine Datenbank, die Daten in Tabellen mit Beziehungen zueinander speichert
+|Framework| Ein vorgefertigtes Softwaregerüst, das Entwicklern beim Erstellen von Anwendungen hilft
 |===
