@@ -175,4 +175,8 @@ Kann verursacht werden Beispielsweise durch:  +
 - Serverprobleme  +
 - Bugs  +
 - Wartung   
+| Lightmode bzw. Darkmode 
+| Darstellungsmodus einer Anwendung mit heller bzw. dunkler Benutzeroberfläche, meisten mit dunklen bzw. hellen Text auf hellen bzw. dunklen Hintergrund.  +
+Das Ziel des Lightmodes ist es den Nutzer ein angenehmes feeling auch bei Tageslicht zu geben.  +
+Die  Ziele des Darmodes sind primär die Entlastung der Augen und die Erhöhung der Energieeffizienz.
 |===

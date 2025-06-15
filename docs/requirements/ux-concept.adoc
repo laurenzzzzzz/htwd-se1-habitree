@@ -206,19 +206,20 @@ Nutzer sollen konstant ihre Gewohnheiten an- bzw. abtrainieren mindestens bis zu
 **????**
 
 ==== Welche Situationen könnten die Nutzung behindern?
-Unsere Anwendung kann in prinzipiell jeder Situation benutzt werden. Bei Fehlender Internetverbindung sind aber nicht alle Funktionen wie z.B.: die Profilsuche von öffentlichen Nutzern verfügbar. Somit kann man dann die Applikation nur eingeschränkt nutzen, Grundfunktionalitäten wie das anschauen des bisherigen Standes bleiben jedoch erhalten. 
+Unsere Anwendung kann in prinzipiell jeder Situation benutzt werden. Bei Fehlender Internetverbindung sind aber nicht alle Funktionen wie z.B.: die Profilsuche von öffentlichen Nutzern verfügbar. Somit kann man dann die Applikation nur eingeschränkt nutzen, Grundfunktionalitäten wie das anschauen des bisherigen Standes bleiben jedoch erhalten.   +
+Natürlich gehen wir auch davon aus, dass der Nutzer eine gewisse Grundehrlichkeit und Grundmotivation aufbringt, da die Angaben des Nutzern nicht von uns auf Korrektheit überprüft werden können.  Auch dies würde die Nutzung und den eventuellen Wettbewerb zwischen Usern beeinträchtigen. +
 **????**
 
 
 ==== Barrierefreiheit und Besonderheiten:
 ==== Sollte die Anwendung für Menschen mit Einschränkungen nutzbar sein?
-In unserem Team  hat Inklusion einen hohen Stellenwert. Demnach achten wir sehr genau darauf, dass unsere App von möglichst vielen Nutzern unabhängig potenzieller Behinderungen und Barrieren nutzbar ist.  Laut dem statistischen Bundesamt leiden derzeit rund 9.4% aller deutschen Bürgen an Einschränkungen. Diese untergliedern sich abermals wie folgt:  +
-- körperlich bedingte Behinderungen: 4,5 Millionen Menschen  +
-- seelisch/ geistig bedingte Behinderungen: 1.8 Millionen Menschen  +
-- weitere Behinderungen ohne Spezifizierung: 1.5 Millionen Menschen  +
+In unserem Team  hat Inklusion einen hohen Stellenwert. Demnach achten wir sehr genau darauf, dass unsere App von möglichst vielen Nutzern unabhängig potenzieller Behinderungen und Barrieren nutzbar ist.  Laut dem statistischen Bundesamt leiden derzeit rund 9.4% aller deutschen Bürge an Einschränkungen. Diese untergliedern sich abermals wie folgt:  +
+- körperliche Behinderungen: 4,5 Millionen Menschen  +
+- seelisch/ geistige Behinderungen: 1.8 Millionen Menschen  +
+- weitere Behinderungen ohne genauere Spezifikation: 1.5 Millionen Menschen  +
 Bereits zu Beginn des Projektes haben wir mit Stakeholdern kommuniziert und uns über potenzielle Behinderungen informiert. Diese haben wir nun in Git Hub als Issue mit dem Label "Constraint" versehen.   +
 Diese Umfassen unter anderem Restriktionen hinsichtlich der Kontrastreiche, des Layouts und der Navigation auch in Anlehnung an den Nielsens Heuristiken.
-Wir verpflichten  uns diese mit  umzusetzen bei der Abarbeitung aller Task von den User Stories und sind somit Voraussetzungen bevor eine User Story auf "done" gesetzt werden kann. Demnach probieren wir maximale Usability und Barrerefreiheit in unser Programm mit einzubringen, auch wenn wir uns darüber bewusst sind, dass wir nicht alle Menschen mit allen möglichen Einschränkungen inkludieren können. Grenzen liegen derzeit zum Beispiel bei einer Steuerung des Programmes via Spracherkennung oder nur über Gesten.
+Wir verpflichten  uns diese mit  umzusetzen bei der Abarbeitung aller Task von den User Stories. Somit sind diese Voraussetzungen bevor eine User Story auf "done" gesetzt werden kann. Demnach probieren wir maximale Usability und Barrerefreiheit in unser Programm mit einzubringen, auch wenn wir uns darüber bewusst sind, dass wir nicht alle Menschen mit allen möglichen Einschränkungen inkludieren können. Grenzen liegen derzeit zum Beispiel bei einer Steuerung des Programmes via Spracherkennung oder nur über Gesten. Auch probieren wir einfache und verständliche Sprache zu nutzen um Personen mit geistigen Einschränkungen einen Zugang zu der App zu ermöglichen, dennoch können wir nicht jeden mit eingeschränkter kognitiver Fähigkeit eine problemlose Nutzung garantieren.
 
 ==== Gibt es verschiedene Anpassungen/Mode?
 Unser Programm verfügt über einen Lightmode und einen Darkmode. Diese können in den Einstellungen umgestellt werden. 
