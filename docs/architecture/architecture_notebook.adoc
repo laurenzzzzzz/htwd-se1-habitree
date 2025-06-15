@@ -146,9 +146,11 @@ Weitere optionale Sichten (nur bei Bedarf):
 
 === Kontextabgrenzung
 //Level 1 im C4-Modell
+image::C4-Level1.png[]
 
 === Container
 //Level 2 im C4-Modell
+image::C4-level2.png[]
 
 === Components
 //Level 3 im C4-Modell

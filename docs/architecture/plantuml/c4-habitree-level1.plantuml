@@ -1,0 +1,28 @@
+@startuml C4-Level1
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+System_Boundary(s1, "Habitreee") {
+  System(habitreee, "Habitreee", "Habit-Tracking-App zur Unterstützung positiver Gewohnheiten")
+}
+
+' Personen
+Person(studierende, "Studierende", "Primäre Nutzer mit Wunsch nach Selbstoptimierung und flexiblem Alltag")
+Person(projektgruppe, "Projektgruppe", "Scrum-Master, PO, Entwicklerteam – verantwortlich für Entwicklung und Wartung")
+Person(wissenschaft, "Wissenschaftliche Community", "Liefern psychologische & verhaltenstherapeutische Grundlagen")
+Person(teamvertreter, "Teamvertreter im Sprint Review", "Geben Feedback zur Usability aus Nutzerperspektive")
+Person(behörden, "Behörden (Gesetzgeber)", "Stellen rechtliche Anforderungen z.B. DSGVO, Urheberrecht")
+Person(hochschule, "Hochschule", "Stellt Infrastruktur (Server) für das Backend bereit")
+
+
+' Beziehungen
+Rel(projektgruppe, habitreee, "entwickelt, betreibt & wartet den Server")
+Rel(studierende, habitreee, "verwenden zur Selbstoptimierung & Gewohnheitsbildung")
+Rel(teamvertreter, habitreee, "testet")
+Rel(teamvertreter, projektgruppe, "gibt Feedback zu Usability & Funktionalität")
+Rel(behörden, projektgruppe, "gibt Richtlinien vor die eingehaltet werden müssen z.B DSGVO & rechtl. Standards")
+Rel(wissenschaft, projektgruppe, "liefert psychologische & theoretische Grundlagen")
+Rel(projektgruppe, habitreee, "entwickelt, testet, wartet, implementiert Funktionen & Inhalte")
+Rel(hochschule, projektgruppe, "stellt Server & Netzwerkinfrastruktur")
+
+
+@enduml
