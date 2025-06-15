@@ -161,7 +161,7 @@ Weitere optionale Sichten (nur bei Bedarf):
 == Glossar für technische Fachbegriffe
 [%header]
 |===
-| Begriff | Definition/nErläuterung 
+| Begriff | Definition/Erläuterung 
 | Emulator |
 | XCode |
 | Swift |
@@ -169,4 +169,10 @@ Weitere optionale Sichten (nur bei Bedarf):
 | React Native |
 | Expo |
 | Expo Go |
+| Ausfallzeit (engl.: Downtime)
+| Zeitspanne, in der System nicht verfügbar oder funktionsfähig ist.  +
+Kann verursacht werden Beispielsweise durch:  +
+- Serverprobleme  +
+- Bugs  +
+- Wartung   
 |===

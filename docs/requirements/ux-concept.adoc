@@ -227,6 +227,11 @@ Unser Programm verfügt über einen Lightmode und einen Darkmode. Diese können 
 ==== Welche Plattformen werden unterstützt?
 **????**
 
+==== Kann eine Datensicherheit garantiert werden?
+**????**
+
+==== Mit wie viel Ausfallzeit muss gerechnet werden?
+**????**
 
 
 == Wireframes und Wireflow
