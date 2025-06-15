@@ -14,12 +14,13 @@ include::../_includes/default-attributes.inc.adoc[]
 === Projektteamstruktur
 |===
 |*Name* |*Rolle*
-|Laurenz Born| Developer
 |Alexander Chlebowski| Developer
-|Leonhard Hermann| Scrum Master
+|Jannes Lehmann| Product Owner
 |Johann Schmidt|Developer
 |Kimi Jerke|Developer
-|Jannes Lehmann| Product Owner
+|Laurenz Born| Developer
+|Leonhard Hermann| Scrum Master
+
 |===
 // Personen nach Rollen und alphabetisch ordnen
 
@@ -35,7 +36,7 @@ include::../_includes/default-attributes.inc.adoc[]
 | Nutzung des Scrum-Frameworks zur strukturierten Projektorganisation +
 - Arbeit in festen Zyklen (Sprints) von jeweils 4 Wochen +
 - Weekly-Meetings (30–45 Minuten) zur Besprechung und Aufzeigung des aktuellen Arbeitsstatus der Mitglieder, Aufgabenverteilung und operativer Planung für die nächste Woche und Identifikation von Hindernissen +
-- Aufgaben werden in einem gemeinsamen Miro-Board visualisiert und zusätzlich im Discord-Chat dokumentiert, um Transparenz zu gewährleisten +
+- Aufgaben werden als Issues und Tasks angelegt und in einem Git-Projekt mithilfe von Eigenschaften strukturiert, um eine Gesamtübersicht sowie eine iterationsbasierte und personengebundene Darstellung zu ermöglichen +
 - Aufgabenverteilung erfolgt zum großen Teil nach dem Prinzip der Freiwilligkeit zur Förderung eines positiven Arbeitsklimas in einem Team mit flachen Hierarchien  
 | Cross Functional Team | Unser Team besteht aus Personen verschiedener Fachbereiche, die gemeinsam an unserem Projekt zusammenarbeiten. Hierfür definierten wir für unsere Mitglieder Scrum- Rollen:  +
 **- Product Owner:**  +
@@ -45,7 +46,7 @@ Kommunikation mit Stakeholdern erfolgt mit dem Durchforsten von Kommentaren in F
 In unserem Team kümmert er maßgeblich sich um die Vision  sowie  um die User Stories.  +
 **- Scrum Master:** +
 Der Scrum Master organisiert und protokolliert die Meetings hilft dem Teammitgliedern bei der Konfliktbewältigung.  Dies bedeutet dass er alle wichtigen Dinge, welche in Meetings thematisiert wurden aufnimmt und anschließend in Discord oder ins Miro- Board schreibt, Meetingräume reserviert, Schwerpunkte festlegt und ständig vor allem mit den Entwicklern potenzielle Probleme bespricht. +
-Er ermöglicht ein effizientes Arbeiten innerhalb des Teams bei einer hohen Mitarbeiterzufriedenheit.  + 
+Er ermöglicht ein effizientes Arbeiten innerhalb des Teams bei einer hohen Mitarbeiterzufriedenheit. + 
 Seine Ergebnisse schreibt der Scrum Master im  project_plan.adoc nieder.  +
 Zudem unterstützt er auch den Product Owner in seinen Tätigkeiten.  +
 **-Entwickler- Team: **
@@ -56,7 +57,9 @@ Das Entwickler- Team ist bei uns in der Planung und der konkreten Umsetzung der 
 - Herausarbeiten von Task aus den User Stories  +
 - Programmierung eines Prototypen  +  
 
-Sinn ist, dass jeder der Mitglieder seine Aufgaben genau kennt, versteht, dass er unersetzbar und wichtig für das Team ist und dementsprechend gemäß seiner spezialisierung Verantwortung übernimmt. Somit ist macht nicht jeder alles, da alle Personen spezifische, ihnen zugeordnete Aufgaben besitzen.
+Sinn ist, dass jeder der Mitglieder seine Aufgaben genau kennt, versteht, dass er unersetzbar und wichtig für das Team ist und dementsprechend gemäß seiner spezialisierung Verantwortung übernimmt. Somit macht nicht jeder alles, da alle Rollen spezifische, ihnen zugeordnete Aufgaben besitzen.
+
+
 | Planung & Tracking
 | Sprint Planning zu Beginn jeder Iteration legt gemeinsam das Sprintziel fest +
 - Bearbeitung der vom Professor bereitgestellten Iterationsdokumente +
@@ -70,23 +73,24 @@ Sinn ist, dass jeder der Mitglieder seine Aufgaben genau kennt, versteht, dass e
 - Gegenseitiger Respekt ist bei uns sehr wichtig, sodass kein Mitglied während seiner Erklärungen durch andere verbessert, berichtigt oder unterbrochen werden darf.  +
 - Protokollierung aller technischen, sozialen und organisatorischen Problemen im Team durch den Scrum Master. +
 - Konkrete Maßnahmen zur Verbesserung werden abgeleitet und im "Lessons Learned"-Teil der Dokumentation dokumentiert.  +
-- Wie alle weiteren Meetings wird auch die Retrospektive im Miro- Board aus Gründen der Transparenz im Team, jedem sichtbar gemacht.  +
+- Wie alle weiteren Meetings wird die Retrospektive im Miro- Board aus Gründen der Transparenz im Team, jedem sichtbar gemacht.  +
 - Zum Ende der Retrospektive soll jedes Mitglied seine Hapiness bewerten. Hierfür haben wir einen Hapiness- Index eingeführt. Diesen protokollieren wir auch, um Entiwcklungen und Trends in den Emotionen einzelner Mitglieder sehen zu können.
-| Review von Ergebnissen | Am Ende jeder Iteration werden unsere bisherigen Ergebnisse Stakeholdern vorgestellt. Am Ende der zweiten Iteration wurden so z.B.: unsere Prototyp als auch unsere Wireframes und der Wireflow einer anderen Gruppe in einem Microsofft Teams- Meeting dargelegt. Wir holten uns über diesen Weg Feeback, Verbesserungsvorschläge und Ideen für weitere User Stories und Personas ein. Zudem wurde auch ein Meeting mit unseren Coach und den Professor durchgeführt um unsere. bisherigen Arbeitsstand und Arbeitsphilosophie zu bewerten. Nach jedem Meeting mit weiteren Stakeholdern besprechen wir im Anschluss noch einmal kurz die Resultate, Protokollieren diese und leiten Aufgabe/Änderungen daran ab. 
+| Review von Ergebnissen | Am Ende jeder Iteration werden unsere bisherigen Ergebnisse Stakeholdern vorgestellt. Am Ende der zweiten Iteration wurden so z.B. unser Prototyp sowie Wireframes und Wireflows einer anderen Gruppe in einem Microsofft Teams- Meeting dargelegt. Wir holten uns über diesen Weg Feedback, Verbesserungsvorschläge und Ideen für weitere User Stories und Personas ein. Zudem wurde auch ein Meeting mit unseren Coach und den Professor durchgeführt um unseren bisherigen Arbeitsstand und Arbeitsphilosophie zu bewerten. Nach jedem Meeting mit weiteren Stakeholdern besprechen wir im Anschluss noch einmal kurz die Resultate, Protokollieren diese und leiten Aufgabe/Änderungen daran ab. 
 | Entwicklung | Unser Entwicklerteam arbeitet häufig zusammen und kommuniziert auch untereinander viel. Hierbei legt es individuelle Aufgaben nochmals fest und unterstützt sich gegenseitig auch bei Problemen. 
 |===
 
 === Technische Praktiken
 |===
 | *Kategorie* | *Praktik*
-| Ergebnisübertragung | Ziel ist eine Softwareentwicklung unter Nutzung einer versionsverwaltenden Plattform. Hierfür wird Git- Hub verwendet. Ergebnisse in den Dokumenten oder auch im Code werden per standardisierter Commits in das Repository übertragen. Die Vorlage für die Commits wurde im Miro- Board öffentlich jedem Mitglied zur verfügung gestellt.
+| Ergebnisübertragung | Ziel ist eine Softwareentwicklung unter Nutzung einer versionsverwaltenden Plattform. Hierfür wird Git- Hub verwendet. Ergebnisse in den Dokumenten oder auch im Code werden per standardisierter Commits in das Repository übertragen. Die Vorlage für die Commits wurde im Miro- Board öffentlich jedem Mitglied zur verfügung gestellt. +
+Update/Delete/Add {Beschreibungstext(Deutsch)} (Datei)
 | Dokumentation 
 | Projektdokumentation in Ascii Doc  +
 -  Strukturierte Gliederung und Unterteilung des Projektes gemäß seiner einzelnen Komponenten(vision.adoc, project_plan.adoc, glossary.adoc etc.) +
 - Gemeinsame Ablage aller Dokumente im Git Repository für eine sinnvolle und effiziente Versionierung  +
-- Zusätzlich ergänzende Inhalte im Miro Board und in Discord (Kommentare,  Templates, Meeting- Dokumentationen)
+- Zusätzlich ergänzende Inhalte im Miro Board, WhatsApp-Gruppenchat und in Discord (Kommentare,  Templates, Meeting- Dokumentationen)
 |UI/UX- Design
-|Erstellung von Wireframes und darauf aufbauend Wireflows mit Hilfe von **????** durch das Entwicklerteam+
+|Erstellung von Wireframes und darauf aufbauend Wireflows mit Hilfe von **????** durch das Entwicklerteam +
 - Bewertung der Wireframes und Wireflows durch das gesamte Team und durch Stakeholder in Reviews. +
 - Feedback wird systematisch dokumentiert, gruppiert und fließt in die Weiterentwicklung ein. 
 | Fehler und Risikomangement
@@ -99,37 +103,79 @@ Sinn ist, dass jeder der Mitglieder seine Aufgaben genau kennt, versteht, dass e
 - Entwicklung in Java Script und in Type- Script  +
 - Nutzung der Expo Go App zur Live Vorschau auf echter Hardware +
 - Einsatz von Visual Studio Code als Entwicklungsplattform.
-| Visualisierung von Aspekten unter Zuhilfenahme von Diagrammen 
-|
+| Visualisierung von Aspekten unter Zuhilfenahme von Diagrammen
+|- nuzten von PlantUML um Strukturen und Interkationen innerhalb von unserem Softwaresystemen in Form von den ertsen Beiden Level, Level 1 und Level 2, von einem C4 Modell zu modellieren
+
 |===
 
 === Definition of Ready
 // Definition of Ready 
-- Die Defninition of Ready beschreibt, wann ein Backlog Item als “bereit zur Umsetzung” gilt. Dazu müssen folgende Inhalte stimmen:
-    - Die Akzeptanzkriterien sind klar formuliert
-    - Die Abhängigkeiten zu anderen Issues sind geklärt
-    - Story ist klein genug, um in einem Sprint abgeschlossen zu werden
-    - Das Team versteht die Issue/Story inhaltlich und technisch
-    - Design/Ui liegt vor, falls nötig
-    - Testkriterien oder Hinweise sind definiert
+Die Defninition of Ready beschreibt, wann ein Backlog Item als “bereit zur Umsetzung” gilt. Dazu müssen folgende Inhalte stimmen: 
+    - Die Akzeptanzkriterien sind klar formuliert +
+    - Die Abhängigkeiten zu anderen Issues sind geklärt +
+    - Story ist klein genug, um in einem Sprint abgeschlossen zu werden +
+    - Das Team versteht die Issue/Story inhaltlich und technisch +
+    - Design/Ui liegt vor, falls nötig +
+    - Testkriterien oder Hinweise sind definiert +
 
 
 
 === Definition of Done
-- Die Definition of Done legt fest, wann ein Backlog Item als vollständig abgeschlossen gilt. Dazu müssen folgende Inhalte stimmen:
-    - Der Code ist implementiert und gebaut
-    - Der Code ist reviewed 
-    - Es existieren automatisierte Unit Tests
-    - Alle Tests sind erfolgreich bestanden.
-    - Die Funktion ist in der Testumgebung funktionsfähig
-    - Dokumentation wurde aktualisiert
-    - Die Akzeptanzkriterien der Story sind vollständig erfüllt 
-    - Die Software ist frei von bekannten Fehlern
-    - Product Owner hat abgenommen
+Die Definition of Done legt fest, wann ein Backlog Item als vollständig abgeschlossen gilt. Dazu müssen folgende Inhalte stimmen:
+    - Der Code ist implementiert und gebaut +
+    - Der Code ist reviewed +
+    - Es existieren automatisierte Unit Tests +
+    - Alle Tests sind erfolgreich bestanden. +
+    - Die Funktion ist in der Testumgebung funktionsfähig +
+    - Dokumentation wurde aktualisiert +
+    - Die Akzeptanzkriterien der Story sind vollständig erfüllt +
+    - Die Software ist frei von bekannten Fehlern +
+    - Product Owner hat abgenommen +
 
 == Deployment
-Jeder muss es ausprobieren => Fehler
 //Outline the strategy for deploying the software (and its updates) into the production environment.
+
+=== Frontend (Mobile App mit Expo/React Native)
+
+- Die App wird mit *Expo* entwickelt
+- Die App wird über die *Expo Go App* gestartet, indem ein *QR-Code* aus dem lokalen Entwicklungsserver gescannt wird, dafür muss man aber in dem Netzwerk der Hochschule sein oder mit dem VPN der Hochschule (eduVPN) verbunden sein
+- Diese Methode ermöglicht eine einfache Nutzung und Demonstration innerhalb des Teams oder im Rahmen des Semesters
+- Änderungen im Code sind sofort sichtbar durch *Hot Reloading*
+- Keine Build- oder Release-Prozesse erforderlich
+- Es erfolgt keine Veröffentlichung im App- oder Playstore
+- eine APK-Erstellung ist möglich aber nicht vorgesehen
+
+
+=== Backend (Node.js + Express API)
+
+- Das Backend wird online auf einem bereitgestellten Windows Server der HTW gehostet
+- Der Server bleibt *bis zum Ende des Wintersemesters 2026* erreichbar
+- Deployment erfolgt manuell oder automatisiert über *GitHub* 
+- Die API ist öffentlich erreichbar, solange man sich im Hoschulnetz der HTW befindet 
+
+=== Authentifizierung (Firebase Auth)
+
+- Die Authentifizierung erfolgt über *Firebase Authentication*
+- Die Konfiguration erfolgt über die *Firebase Console*
+- Die Authentifizierungsdienste werden mit dem Ende des Wintersemesters 2026 eingestellt
+
+=== Datenbank (PostgreSQL + Prisma)
+
+- Die PostgreSQL-Datenbank wird auf dem bereitgestellten Windows Server der HTW gehostet
+- Die Datenbankmigrationen werden mit *Prisma Migrate* durchgeführt
+- Die Datenbank bleibt bis zum Projektabschluss(Wintersemester 2026) verfügbar
+
+=== Rollback und Wartung
+
+- Da es keine produktive Veröffentlichung gibt, sind keine komplexen Rollback-Mechanismen notwendig
+- Fehlerbehebungen erfolgen durch Codeänderungen und direktes Testen über die Expo Go App
+
+=== Verfügbarkeit
+
+- Die App ist jederzeit über den *QR-Code in der Expo Go App* nutzbar
+- Das Backend bleibt bis *Ende des Wintersemesters 2026* aktiv und wird danach abgeschaltet
+
+
 
 == Diskussion zu Vorgehensweisen
 |===
@@ -170,6 +216,16 @@ Problem: Verschiedene Technologien verfügbar, alle jeweils mit eigenen Vor und 
 - Konfiguration mit JSON als Lokalspeicher +
 - Kein Mac erforderlich, Entwicklung auf Windows möglich  +
 
+|**5. Einrichten vom Backend auf Windows-Server**  +
+Problem: Backend musste eingerichtet und betreut werden, inklusive Server, API, Authentifizierung und Datenbankzugriff. Es gab keine Vorerfahrung im Team mit der kompletten Stack-Einrichtung
+|-Verwendung bekannter Programmiersprachen wie JavaScript (Node.js) und SQL (PostgreSQL über Prisma) erleichterte den Einstieg und Nutzung der Datenbank  +
+-Zunächst Einarbeitung in Express.js und Prisma ORM notwendig  +
+-Backend wurde auf einem bereitgestellten Windows-Server aufgesetzt, sodass kein lokaler Rechner von einem Teammitglied ständig laufen muss   +
+-Kommunikation mit dem Frontend erfolgt über REST-API   +
+-Firebase Auth wurde für einfache Nutzerverwaltung integriert  +
+-Migrationsmanagement und Datenmodellierung erfolgten über Prisma.  +
+-Das Setup wurde dokumentiert, sodass Teammitglieder es lokal nachvollziehen und ggf. anpassen können.
+
 |===
 
 == Erkenntnisse (Lessons learned)
@@ -177,15 +233,17 @@ Problem: Verschiedene Technologien verfügbar, alle jeweils mit eigenen Vor und 
 === Negative Ereignisse:
 |===
 |*Ereignis* |*Maßnahme* |*Erkenntnis*
-| Ausstieg aus der Gruppe von Frederic Egle (Developer) | - Gruppenberatung in der ersten Retrospektive  +
+|**Ausstieg aus der Gruppe von Frederic Egle (Developer)**  +
+Problem: Frederic war Teil des Development-Teams, hatte jedoch bis zu seinem Austritt keine Beiträge geleistet.
+| - Gruppenberatung in der ersten Retrospektive  +
 - Neuverteilung von Frederics Aufgaben auf andere Teammitglieder, besonders bezogen auf das Development- Team  +
-- Ist- Stand- Analyse, was Frederic von Frederics bisherigen  Arbeitsstand.  Durch ihn wurde bis zu dem damaligen Zeitpunkt keinerlei Leistung erbracht.
+- Ist- Stand- Analyse, von Frederics bisherigem Arbeitsstand
 | - Ausstieg eines Gruppenmitgliedes ist nicht unmöglich  +
-- Es entsteht massiv Mehrarbeit für die verbleidenden Gruppenmitglieder, insbesonders die Entwickler  +
+- Es entsteht Mehrarbeit für die verbleidenden Gruppenmitglieder, insbesonders die Entwickler  +
 - Es müssen zeitliche Puffer existieren in der taktischen Planung um den Erfolg des Projektes nicht zu gefährden und um in den angegebenen Zeiträumen alle Aufgaben abarbeiten zu können +
-- Strategische Planung im Vorhinein und  Abwägung potenzieller Risiken vor allem bei der Teamstruktur sind unabdingbar. Hierfür eignet sich eine Visualisierung im Git Hub Risk- Board.
+- Strategische Planung im Vorhinein und Abwägung potenzieller Risiken vor allem bei der Teamstruktur sind unabdingbar. Hierfür eignet sich eine Visualisierung im Git Hub Risk- Board.
 - Wöchentliche  Meetings mit kurzer Arbeitsstandangabe und nächster Schritte sind elementar um zu sehen dass jeder Mitarbeiter effizient arbeitet und das Projekt nicht gefährdet wird.
-| Terminfindung, vor allem bei außerplanmäßigen Meetings ist schwer | - Termine zeitig und langfristig planen  +
+|**Terminfindung, vor allem bei außerplanmäßigen Meetings ist schwer**  | - Termine zeitig und langfristig planen  +
 - Erinnerungen nochmals im Vorhinein absetzen (z.B.: über Whats- App)  +
 - Nutzen von Abstimmungen oder Ereignis- Objekten  +
 - Einführung eines Team- Kalenders, z.B.: im Miro Board
@@ -193,16 +251,18 @@ Problem: Verschiedene Technologien verfügbar, alle jeweils mit eigenen Vor und 
 -  Nicht jeder Beteiligte muss in jedem Meeting zwangsläufig anwesend sein. So reicht es z.B.: wenn das Sprint- Review nur von 3 Personen durchgeführt wird. Hierbei ist wichtig dass die Mitarbeitenden sich abwechseln, damit jeder Mitarbeiter in einem ausgewogenen Maße entlastet werden kann, aber dennoch seine Bedeutung für die Gruppe erkennt. Dies führt dazu, dass alle Akteure sich mit der Gruppe, der Aufgabe und dem Projekt identifizieren können.  +
 - Es braucht einen Organisator, der alle Meetings und Treffen sowohl innerhalb der Gruppe, als auch zwischen den Mitarbeitenden und weiteren Stakeholdern plant und organisiert. Dies ist im Scrum- Framework der Scrum Master.  +
 
-| Konflikte innerhalb des Teams hinsichtlich Arbeitsverteilung, Engagement und Verlässlichkeit
+| **Konflikte innerhalb des Teams hinsichtlich Arbeitsverteilung, Engagement und Verlässlichkeit**
 | - Regelmäßige kurze Standup- Meetings, wo jeder Mitarbeitende seine Arbeitsstand, Herausforderungen und Probleme der letzten und der kommenden Woche dem Team mitteilt.  +
-- Bei Konflikten ist Kommunikation das A und O. Dabei ist es wichtig die Konflikte bereits in Ihrer Entstehung anzusprechen und zu charakterisieren. Sonst stauen diese sich immer weiter auf und werden im schwerer lösbar. Als Negativbeispiel lässt sich hier ebenfalls unser ehemaliger Entwickler Frederic anbringen.   +
+- Bei Konflikten ist Kommunikation das A und O. Dabei ist es wichtig die Konflikte bereits in Ihrer Entstehung anzusprechen und zu charakterisieren. Sonst stauen diese sich immer weiter auf und werden schwerer lösbar. Als Negativbeispiel lässt sich hier ebenfalls unser ehemaliger Entwickler Frederic anbringen.   +
 |- Jeder Akteur des Teams sollte erkennen, dass er ein wichtiger und unersetzlicher Bestandteil des Teams ist, welchen Vertrauen und Wertschätzung entgegengebracht wird. Dies schafft ein Zusammenheitsgefühl, gegenseitigen Respekt, Unterstützung und Motivationssteigerung.  +
 - Bewältigungen von Konflikten haben auch positive Auswirkungen, da dadurch der Gruppenzusammenhalt wächst und neue Strategien entwickelt werden können. Somit können Konflikte auch indirekt die Gruppe voran bringen.
-| Mitteilungen über unbeachteten Kommunikationskanal, was dazu führte, dass der Empfänger die Nachrichten nicht gelesen hatte und dadurch wichtige Sachen im Sprint- Review nicht dargestellt werden konnten
+
+| **Mitteilungen über unbeachteten Kommunikationskanal, was dazu führte, dass der Empfänger die Nachrichten nicht gelesen hatte und dadurch wichtige Sachen im Sprint- Review nicht dargestellt werden konnten**
 |- Vereinbarung von gemeinsamen Kommunikationskanälen, die allen Teammitgliedern bekannt sind, und von jedem regelmäßig genutzt werden und genutzt werden können. (z.B.: keine Plattformabhängigkeit)  +
-- Festlegung von wenigen, bestenfalls einen bis zwei festen Kommunikationswegen. In unserem Team nutzen wir WhatsApp für den täglichen Nachrichtenaustausch und Discord für den Transfer umfangreicher Dokumente und Online- Meetings.  +
+- Festlegung von wenigen, bestenfalls einen bis zwei festen Kommunikationswegen. In unserem Team nutzen wir WhatsApp für den täglichen Nachrichtenaustausch und Git-Hub für den Transfer umfangreicher Dokumente und Discord für Online- Meetings.  +
 | - Vorab- Festelegung der genutzten Kommunikationsplattformen und dessen zeitlicher Nutzung.  
-| Unkenntniss über Reihenfolge des Arbeitens gemäß des Scrum- Frameworks und den Prinzipien der iterativen und agilen Entwicklung:  +
+
+| **Unkenntniss über Reihenfolge des Arbeitens gemäß des Scrum- Frameworks und den Prinzipien der iterativen und agilen Entwicklung:**  +
 - Verzögerungen bei der Rollenbildung  +
 - Neuverteilungen von Rollen  +
 - Fehlende Koordination
@@ -237,9 +297,9 @@ Es ist außerdem sinnvoll auf dem Wissens- und Erfahrungsschatz von Experten pri
 des Projektes. Projekt  enthält eigene Gedanken und Ideen und ist somit hinsichtlich der Gestaltung und Arbeitsweise individuell.  +
 - Einführung unterschiedlicher Labels für Aufgaben auf Git Hub um klar zwschen den durch User Stories entstehenden Task und den vom Professor vorgegebenen Iterationsaufgaben zu differenzieren +
 -  Flexible Kommunikationswege:   +
-(1) Discord für Versand größere Dokumente  +
+(1) Git-Hub für Austausch größere Dokumente und Aufgabenverteilung  +
 (2) Whats- App für spontane Kommuikation und Meetingplanung  +
-(3) Miro- Board für Festlegung von Aufgaben und Zufriedenheit nach Meetings und Templates (z.B.: für Git Commit- Messages)  +
+(3) Miro- Board für Festlegung von Zufriedenheit nach Meetings und Templates (z.B.: für Git Commit- Messages)  +
 - Einführung Hapiness- Index für alle Mitarbeiter nach Retrospektiven und transparente Darstellung im Miro- Board.
 | Wissen und Kenntnisse sind anwendbar und können individuell angepasst werden, sodass diese nochmals mehr den Bedürfnissen des Teams entsprechen.
 |===
