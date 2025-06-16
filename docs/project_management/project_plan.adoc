@@ -90,7 +90,7 @@ Update/Delete/Add {Beschreibungstext(Deutsch)} (Datei)
 - Gemeinsame Ablage aller Dokumente im Git Repository für eine sinnvolle und effiziente Versionierung  +
 - Zusätzlich ergänzende Inhalte im Miro Board, WhatsApp-Gruppenchat und in Discord (Kommentare,  Templates, Meeting- Dokumentationen)
 |UI/UX- Design
-|Erstellung von Wireframes und darauf aufbauend Wireflows mit Hilfe von **????** durch das Entwicklerteam +
+|Erstellung von Wireframes und darauf aufbauend Wireflows mit Hilfe von Figma und penpot durch das Entwicklerteam +
 - Bewertung der Wireframes und Wireflows durch das gesamte Team und durch Stakeholder in Reviews. +
 - Feedback wird systematisch dokumentiert, gruppiert und fließt in die Weiterentwicklung ein. 
 | Fehler und Risikomangement
