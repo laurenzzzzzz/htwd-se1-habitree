@@ -1,19 +1,26 @@
 import { Image } from 'expo-image';
-import { Platform, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
-import { Collapsible } from '@/components/Collapsible';
-import { ExternalLink } from '@/components/ExternalLink';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
+// import ParallaxScrollView from '@/components/ParallaxScrollView'; // Achte hier auf default vs. named export
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { IconSymbol } from '@/components/ui/IconSymbol';
+import ParallaxScrollView from '@/components/ParallaxScrollView';
 
-const abzeichenBilder = [
-  require('@/assets/images/abzeichen1.png'),
-  require('@/assets/images/abzeichen2.png'),
-  require('@/assets/images/abzeichen3.png'),
-  require('@/assets/images/abzeichen4.png'),
-  require('@/assets/images/abzeichen5.png'),
+const abzeichenZeilen = [
+  [
+    require('@/assets/images/abzeichen1.png'),
+    require('@/assets/images/abzeichen2.png'),
+  ],
+  [
+    require('@/assets/images/abzeichen3.png'),
+    require('@/assets/images/abzeichen4.png'),
+    require('@/assets/images/abzeichen5.png'),
+  ],
+  [
+    require('@/assets/images/abzeichen6.png'),
+    require('@/assets/images/abzeichen7.png'),
+  ],
 ];
 
 export default function TabTwoScreen() {
@@ -36,18 +43,18 @@ export default function TabTwoScreen() {
         Erfolge
       </ThemedText>
 
-      <View style={styles.badgeGrid}>
-        {abzeichenBilder.map((source, index) => (
-          <Image
-            key={index}
-            source={source}
-            style={styles.badge}
-            contentFit="contain"
-          />
-        ))}
-      </View>
-
-      
+      {abzeichenZeilen.map((zeile, zeilenIndex) => (
+        <View key={zeilenIndex} style={styles.badgeRow}>
+          {zeile.map((source, index) => (
+            <Image
+              key={index}
+              source={source}
+              style={styles.badge}
+              contentFit="contain"
+            />
+          ))}
+        </View>
+      ))}
     </ParallaxScrollView>
   );
 }
@@ -70,12 +77,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginVertical: 12,
   },
-  badgeGrid: {
+  badgeRow: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
     justifyContent: 'center',
     gap: 12,
-    marginBottom: 20,
+    marginBottom: 16,
   },
   badge: {
     width: 100,
