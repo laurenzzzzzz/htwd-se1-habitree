@@ -26,10 +26,10 @@ export default function HomeScreen() {
   const [habitMode, setHabitMode] = useState<'menu' | 'custom' | 'predefined' | null>(null);
   const [selectedFilter, setSelectedFilter] = useState<FilterKey>('alle');
 
-  // optionales Definieren von interfaces für Tabellen aus DB
   interface Habit {
     id: number;
     label: string;
+    description: string;
     checked: boolean;
   }
 
@@ -47,29 +47,29 @@ export default function HomeScreen() {
     { key: 'schritte', label: 'Schritte' },
   ];
 
-  // Importieren der Datein aus der Datenbank
   const [habits, setHabits] = useState<Habit[]>([]);
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-  const fetchHabits = async () => {
-    try {
-      const response = await axios.get<{ id: number; label: string ; checked: boolean}[]>(API_URL);
-      const loadedHabits: Habit[] = response.data.map((habit) => ({
-        id: habit.id,
-        label: habit.label,
-        checked: habit.checked,
-      }));
+    const fetchHabits = async () => {
+      try {
+        const response = await axios.get<{ id: number; label: string; description: string; checked: boolean }[]>(API_URL);
+        const loadedHabits: Habit[] = response.data.map((habit) => ({
+          id: habit.id,
+          label: habit.label,
+          description: habit.description || '',
+          checked: habit.checked,
+        }));
+        setHabits(loadedHabits);
+      } catch (error) {
+        console.error('Fehler beim Abrufen der Habits:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-      setHabits(loadedHabits);
-    } catch (error) {
-      console.error('Fehler beim Abrufen der Habits:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  fetchHabits();
-}, []);
+    fetchHabits();
+  }, []);
 
   const toggleHabit = (id: number) => {
     setHabits((prev) =>
@@ -93,14 +93,26 @@ export default function HomeScreen() {
 
   const [modalVisible, setModalVisible] = useState(false);
   const [newHabit, setNewHabit] = useState('');
+  const [newDescription, setNewDescription] = useState('');
 
   const addHabit = () => {
     if (newHabit.trim() === '') return;
     const nextId = habits.length > 0 ? Math.max(...habits.map(h => h.id)) + 1 : 1;
-    setHabits(prev => [...prev, { id: nextId, label: newHabit.trim(), checked: false }]);
+    setHabits(prev => [
+      ...prev,
+      {
+        id: nextId,
+        label: newHabit.trim(),
+        description: newDescription.trim(),
+        checked: false,
+      }
+    ]);
     setNewHabit('');
+    setNewDescription('');
     setModalVisible(false);
+    setHabitMode(null);
   };
+  
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -168,26 +180,33 @@ export default function HomeScreen() {
           <ThemedText type="subtitle" style={styles.habitTitle}>
             Heutige Ziele:
           </ThemedText>
-
+          
+          {/* Habits anzeigen */}
           {habits.map((habit) => (
-            <Pressable
-              key={habit.id}
-              onPress={() => toggleHabit(habit.id)}
-              style={styles.habitItem}
+          <Pressable
+            key={habit.id}
+            onPress={() => toggleHabit(habit.id)}
+            style={styles.habitItem}
+          >
+            <View
+              style={[
+                styles.checkbox,
+                habit.checked && styles.checkboxChecked,
+              ]}
             >
-              <View
-                style={[
-                  styles.checkbox,
-                  habit.checked && styles.checkboxChecked,
-                ]}
-              >
-                {habit.checked && (
-                  <ThemedText style={styles.checkmark}>✓</ThemedText>
-                )}
-              </View>
+              {habit.checked && (
+                <ThemedText style={styles.checkmark}>✓</ThemedText>
+              )}
+            </View>
+            <View>
               <ThemedText>{habit.label}</ThemedText>
-            </Pressable>
-          ))}
+              <ThemedText style={styles.habitDescription}>
+                {habit.description}
+              </ThemedText>
+            </View>
+          </Pressable>
+        ))}
+
         </ThemedView>
       </ParallaxScrollView>
 
@@ -235,7 +254,10 @@ export default function HomeScreen() {
                     key={index}
                     onPress={() => {
                       const nextId = habits.length > 0 ? Math.max(...habits.map(h => h.id)) + 1 : 1;
-                      setHabits(prev => [...prev, { id: nextId, label, checked: false }]);
+                      setHabits(prev => [
+                        ...prev,
+                        { id: nextId, label, description: '', checked: false }
+                      ]);
                       setModalVisible(false);
                       setHabitMode(null);
                     }}
@@ -417,5 +439,10 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 8,
     fontSize: 16,
+  },
+  habitDescription: {
+  fontSize: 12,
+  color: '#666',
+  marginTop: 2,
   },
 });
