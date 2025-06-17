@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Image } from 'expo-image';
+import axios from 'axios';
+
 import {
   Pressable,
   ScrollView,
@@ -20,8 +22,16 @@ import { ThemedView } from '@/components/ThemedView';
 type FilterKey = 'alle' | 'klimmzuege' | 'liegestuetze' | 'schritte';
 
 export default function HomeScreen() {
+  const API_URL = 'http://iseproject01.informatik.htw-dresden.de:8000/habitss';
   const [habitMode, setHabitMode] = useState<'menu' | 'custom' | 'predefined' | null>(null);
   const [selectedFilter, setSelectedFilter] = useState<FilterKey>('alle');
+
+  // optionales Definieren von interfaces für Tabellen aus DB
+  interface Habit {
+    id: number;
+    label: string;
+    checked: boolean;
+  }
 
   const chartMap: Record<FilterKey, any> = {
     alle: require('@/assets/images/chart1.png'),
@@ -37,13 +47,29 @@ export default function HomeScreen() {
     { key: 'schritte', label: 'Schritte' },
   ];
 
-  const [habits, setHabits] = useState([
-    { id: 1, label: '10 Klimmzüge', checked: false },
-    { id: 2, label: '40 Liegestütze', checked: false },
-    { id: 3, label: '6000 Schritte', checked: false },
-    { id: 4, label: '2L Wasser', checked: false },
-    { id: 5, label: '1,5h Uni', checked: false },
-  ]);
+  // Importieren der Datein aus der Datenbank
+  const [habits, setHabits] = useState<Habit[]>([]);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+  const fetchHabits = async () => {
+    try {
+      const response = await axios.get<{ id: number; label: string ; checked: boolean}[]>(API_URL);
+      const loadedHabits: Habit[] = response.data.map((habit) => ({
+        id: habit.id,
+        label: habit.label,
+        checked: habit.checked,
+      }));
+
+      setHabits(loadedHabits);
+    } catch (error) {
+      console.error('Fehler beim Abrufen der Habits:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchHabits();
+}, []);
 
   const toggleHabit = (id: number) => {
     setHabits((prev) =>
