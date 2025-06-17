@@ -1,0 +1,42 @@
+@startuml Domänenmodell
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+' Konfiguration für besseres Layout
+skinparam classAttributeIconSize 0
+
+' Klassen
+class Nutzer {
+  +nutzerId
+  +name
+  +email
+}
+
+class Gewohnheit {
+  +gewohnheitId
+  +titel
+  +beschreibung
+  +frequenz
+  +startDatum
+}
+
+class Eintrag {
+  +datum
+  +status  ' z.B. erledigt/nicht erledigt
+}
+
+class Kategorie {
+  +name
+  +farbe
+}
+
+class Ziel {
+  +beschreibung
+  +zielDatum
+}
+
+' Beziehungen
+Nutzer "1" -- "0..*" Gewohnheit : besitzt >
+Gewohnheit "1" -- "0..*" Eintrag : hat >
+Gewohnheit "0..*" -- "0..1" Kategorie : gehört zu >
+Gewohnheit "0..1" -- "0..*" Ziel : verfolgt >
+
+@enduml
