@@ -22,7 +22,7 @@ import { ThemedView } from '@/components/ThemedView';
 type FilterKey = 'alle' | 'klimmzuege' | 'liegestuetze' | 'schritte';
 
 export default function HomeScreen() {
-  const API_URL = 'http://iseproject01.informatik.htw-dresden.de:8000/habitss';
+  const API_URL = 'http://iseproject01.informatik.htw-dresden.de:8000/habits';
   const [habitMode, setHabitMode] = useState<'menu' | 'custom' | 'predefined' | null>(null);
   const [selectedFilter, setSelectedFilter] = useState<FilterKey>('alle');
 
