@@ -180,10 +180,14 @@ Integration von Kalender Apps oder Smartwatches ist in der initialen Produktvisi
 Es wurde ein Kalender selber programmiert im Prototypen, der direkt deutlich effizienter auf die Bedürfnisse der Nutzer unserer Anwendung zugeschnitten ist als externe Programme.
 
 ==== Kommuniziert das Programm mit  anderen Programmen/ Schnittstellen?
-**???????** 
+Die Expo-Go App, Frontend kommuniziert mit dem Nodejs Server mittels REST-API.
+Desweiteren werden Express Routen genutzt für den einfachen Austausch von Abfragen von der Datenbank. Für den Datenbankzugriff von Backend zu Datenbankserver nutzen wir Pirsma als ORM. 
+Für die Anmeldung, fragt der NodeJS Server Firebase Auth an, dieser schickt die Firebase-ID, welche einzigartig ist, an den Server zurück und dieser prüft ob diese im Datenbankserver (PostgreSQL) vorhanden ist. Falls dies nicht der Fall wird diese gespeichert und ein neuer Nutzer wird angelegt. 
+
 
 ==== Ist Prinzipiell eine Verbindung zu weiteren Diensten erfoderlich/ vorgesehen?
-**??????**
+Weitere Verbindungen könnten externe APIs wie Apple Fitness, Google Kalender, Apple Kalender, jegliche Fitness Apps (MCI) oder Produktivitätstools.
+Die Implementierungen sind erstmal nicht in diesem Projekt vorgesehen.
 
 === Physische Umgebung:
 ==== In welcher Umgebung wird die App genutzt?
@@ -201,16 +205,28 @@ Nutzer sollen konstant ihre Gewohnheiten an- bzw. abtrainieren mindestens bis zu
 
 === Potentielle Fehlerquellen:
 ==== Welche Fehler können bei der Bedienung auftreten?
-**Technische Fehler: ???**
+* App kann sich nicht verbinden wenn nicht im HTW-Netz (eduVPN) 
+* Backend Server kann ausfallen (Stromausfall, Updates, Wartungen)
+* Datenbankserver kann ausfallen (Stromausfall, Updates, Wartungen)
+* Daten werden nicht gespeichert 
+* Benachrichtigungen werden nicht angezeigt
+* App reagiert nicht aus Interaktion
+* Fehlerquelle Android (Buttons werden falsch/nicht angezeigt) trotz gleicher Codebasis
+* Falsche Habits werden angezeigt
+* Habits werden doppelt angelegt 
+* Erinnerungen zur falschen Zeit
+* Inkorekkte Datumsanzeige und Fehler mit von verbundenen Inhalten 
+* Baumanzeige ist falsch
 
 ==== Existieren derzeit potenzielle Stolpersteine in der UI oder andere technische Einschränkungen?
-**????**
+* Auf Android werden UI Elemente falsch dargestellt
+* Im Dark Mode sind Kontraste bei Texten nicht richtig angezeigt 
+* Teile der UI unüersichtlich da die momentan nur als Placeholder dienen
+
 
 ==== Welche Situationen könnten die Nutzung behindern?
-Unsere Anwendung kann in prinzipiell jeder Situation benutzt werden. Bei Fehlender Internetverbindung sind aber nicht alle Funktionen wie z.B.: die Profilsuche von öffentlichen Nutzern verfügbar. Somit kann man dann die Applikation nur eingeschränkt nutzen, Grundfunktionalitäten wie das anschauen des bisherigen Standes bleiben jedoch erhalten.   +
-Natürlich gehen wir auch davon aus, dass der Nutzer eine gewisse Grundehrlichkeit und Grundmotivation aufbringt, da die Angaben des Nutzern nicht von uns auf Korrektheit überprüft werden können.  Auch dies würde die Nutzung und den eventuellen Wettbewerb zwischen Usern beeinträchtigen. +
-**????**
-
+Unsere Anwendung kann in prinzipiell jeder Situation benutzt werden, solange man sich im HTW Netz befindet. Bei Fehlender Internetverbindung sind aber nicht alle Funktionen wie z.B.: die Profilsuche von öffentlichen Nutzern verfügbar. Somit kann man dann die Applikation nur eingeschränkt nutzen, Grundfunktionalitäten wie das anschauen des bisherigen Standes bleiben jedoch erhalten.   +
+Natürlich gehen wir auch davon aus, dass der Nutzer eine gewisse Grundehrlichkeit und Grundmotivation aufbringt, da die Angaben des Nutzers nicht von uns auf Korrektheit überprüft werden können.  Auch dies würde die Nutzung und den eventuellen Wettbewerb zwischen Usern beeinträchtigen. +
 
 ==== Barrierefreiheit und Besonderheiten:
 ==== Sollte die Anwendung für Menschen mit Einschränkungen nutzbar sein?
@@ -227,14 +243,15 @@ Unser Programm verfügt über einen Lightmode und einen Darkmode. Diese können 
 
 === Systeme und Plattformen:
 ==== Welche Plattformen werden unterstützt?
-**????**
+Unterstütze Plattformen sind iOS und Android. 
+Es ist möglich die App im Browser zu benutzen, wird aber nicht unterstütz.
+
 
 ==== Kann eine Datensicherheit garantiert werden?
-**????**
+Nein
 
 ==== Mit wie viel Ausfallzeit muss gerechnet werden?
-**????**
-
+Da der Server immer online ist, wird mir Ausfallzeiten erstmal nicht gerechnet. Für Wartungen des Servers, auf dem der Datenbankserver läuft, gewartet wird können geringe Ausfallzeiten entstehen. A
 
 == Wireframes und Wireflow
 // Fügen Sie Wireframes als Bilder oder als Link (z.B. zu einem Miroboard) ein
