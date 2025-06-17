@@ -95,7 +95,7 @@ image::Persona-Tom_Neumann.png[200,200]
 |Demografie
 |Alter: 24 Jahre +
 Wohnort: Leipzig +
-Beruf: Ausbildung zum Fachinformatiker für Anwendungsentwicklung im 2. Lehrjahr +
+Beruf: Internationaler Student aus England – Studium im Bereich Informatik an einer Leipziger Hochschule +
 Beziehungsstatus: in einer offenen Beziehung +
 Hobby: Musikproduktion und Urban Gardening
 
@@ -113,6 +113,7 @@ Er bevorzugt klare Strukturen, eine visuell stimulierende Umgebung und kurze, di
 |Tom möchte lernen, mit seiner ADHS besser umzugehen und gesunde Routinen in seinen Alltag zu integrieren – z. B. regelmäßiger Schlaf, Bewegung, feste Arbeitsblöcke und Pausen.
 Er sucht nach einer App, die ihm hilft, sich auf das Wesentliche zu fokussieren, ihn durch kleine Erfolge motiviert und ihm Flexibilität bietet, ohne ihn zu überfordern.
 Besonders wichtig ist ihm eine Gamification, die ihn mit Sounds, Fortschrittsbalken oder kleinen Animationen belohnt.
+Zusätzlich wünscht er sich, dass die App mehrsprachig ist, damit er die Sprache auf Engluisch umstellen kann.
 
 |Hindernisse
 |Tom neigt zur Überforderung durch zu viele gleichzeitige Aufgaben.
