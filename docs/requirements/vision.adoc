@@ -106,7 +106,7 @@ Ihr Interesse liegt an minimaler Datenspeicherung, transparenter Nutzeraufkläru
 | externe Anbieter wie Server-Hoster, Google Play Store und Apple App Store (Vertriebsplattformen).
 | Gewährleistung stabiler Serverkapazitäten und Netzwerkanbindung. Durchsetzung plattformspezifischer Richtlinien für App-Veröffentlichung und Updates.
 | Professor Dr. Ing. Jürgen Anke, Dipl. Inf. (FH) Christoph Zirkelbach
-| Projektauftraggeber, 
+| Projektauftraggeber, Coaches
 | Stellen die Aufgabenstellung zum Projekt, stehen für Fragen zum Projekt zur verfügung, bewerten das Projekt, 
 |===
 
