@@ -239,6 +239,26 @@ Unser Programm verfügt über einen Lightmode und einen Darkmode. Diese können 
 // Fügen Sie Wireframes als Bilder oder als Link (z.B. zu einem Miroboard) ein
 https://www.figma.com/design/Y2WTCzOev0BUor9mt8Ee6o/Habitree?node-id=0-1&t=TYwYh26QllyDRy4f-1
 // Beziehen Sie ihre Wireframes auf konkrete User Stories oder Epics.
+User Stories
+#29, 30
+Bild 1
+
+#33
+Bild 2
+
+#31
+Bild 3
+
+#36
+Bild 4
+
+#40, 39, 38
+Bild 5
+
+#39
+Bild 6
 
 
+nicht zugeordnet:
+34, 35, 37, 41, 42, 43
 == Gestaltung der Benutzeroberfläche
