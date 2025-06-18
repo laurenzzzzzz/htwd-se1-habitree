@@ -106,6 +106,15 @@ Ihr Interesse liegt an minimaler Datenspeicherung, transparenter Nutzeraufkläru
 | Infrastrukturbetreiber
 | externe Anbieter wie Server-Hoster, Google Play Store und Apple App Store (Vertriebsplattformen).
 | Gewährleistung stabiler Serverkapazitäten und Netzwerkanbindung. Durchsetzung plattformspezifischer Richtlinien für App-Veröffentlichung und Updates.
+| Professor Dr. -Ing. habil. Jürgen Anke 
+| Auftragegeber des Projekts und Ansprechpartner bei Fragen 
+| Professor Anke ist verantwortlich dafür, dem Team grundlegendes Wissen zur Softwareentwicklung zu vermitteln. 
+Zudem gibt er Richtlinien in Form von Iterationsaufgaben vor. 
+Er steht dem Team als Ansprechpartner bei Fragen sowie bei der Bewertung von Inhalten zur Verfügung und übernimmt die abschließende Bewertung der Projektergebnisse. 
+
+|Dipl. -Inf. (FH) Christop Zirkelbach 
+|Coach für Thema "Habit Tracker", dient als Ansprechspartner für Themarelevante Fragen
+|Dipl.-Inf. (FH) Christoph Zirkelbach ist dafür verantwortlich, dem Team als Ansprechpartner zur Seite zu stehen. Er unterstützt insbesondere bei themenspezifischen und technischen Fragestellungen rund um das Projekt „Habit Tracker“.
 
 |===
 

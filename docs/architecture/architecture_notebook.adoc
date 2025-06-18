@@ -147,11 +147,27 @@ Weitere optionale Sichten (nur bei Bedarf):
 === Kontextabgrenzung
 //Level 1 im C4-Modell
 image::C4-Level1.png[]
+Das C4-Level-1-Diagramm zeigt das Kontextdiagramm des Projekts „Habitreee“, einer Habit-Tracking-App zur Förderung positiver Gewohnheiten. Es stellt die wichtigsten Stakeholder, deren Rollen sowie deren Beziehungen zum System und zur Projektgruppe dar.
+
+* Studierende sind die Hauptnutzer der App und geben aktiv Feedback zur Usability.
+* Die Projektgruppe entwickelt, betreibt und wartet das System.
+* Professor Dr.-Ing. Anke fungiert als Auftraggeber und bewertet Inhalte und Ergebnisse.
+* Coach Christoph Zirkelbach unterstützt das Team inhaltlich und technisch.
+* Die Hochschule stellt die notwendige Infrastruktur zur Verfügung.
+* Die Wissenschaftliche Community liefert fachliche Grundlagen zur Verhaltenspsychologie.
+* Behörden geben rechtliche Rahmenbedingungen vor.
+* Teamvertreter testen die Anwendung regelmäßig im Sprint Review. 
 
 === Container
 //Level 2 im C4-Modell
 image::C4-level2.png[]
+Das C4-Level-2-Container-Diagramm zeigt die technische Struktur der Habitreee-Anwendung auf Container-Ebene.
 
+* Die Mobile App, das Frontend programmiert mit React Native, wird direkt von den Studierenden genutzt
+* Das Backend basiert auf Node.js mit Express und läuft auf einem externen Server der Hochschule
+* Zur Nutzer-Authentifizierung wird der externe Dienst Firebase Auth eingebunden
+* Prisma ORM dient als Vermittler zwischen dem Backend und der PostgreSQL-Datenbank, in der Nutzerdaten und Gewohnheiten gespeichert werden
+* Die Kommunikation zwischen Frontend und Backend erfolgt über eine REST API
 === Components
 //Level 3 im C4-Modell
 
