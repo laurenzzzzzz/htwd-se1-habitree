@@ -125,11 +125,6 @@ Für die Umsetzung der Habit-Tracking-App wird eine klassische mehrschichtige Ar
 * **ORM:** Prisma – verbindet Backend und Datenbank. Bietet Typsicherheit, einfaches Datenmodellieren und Migrationstools.
 * **Frontend:** EXPO (React Native) – eine Codebasis für iOS und Android, schnelle UI-Entwicklung, Zugriff auf native Funktionen, unterstützt Offline-Speicherung.
 
-Die App folgt der Clean Architecture:
-* **Presentation Layer (Frontend)**
-* **Application Layer (Business Logic / Services)**
-* **Infrastructure Layer (API, DB, Auth)**
-* **Data Layer (ORM / Datenbankzugriff)**
 
 == Architektursichten (Views)
 
