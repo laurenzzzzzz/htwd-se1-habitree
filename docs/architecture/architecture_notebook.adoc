@@ -198,4 +198,5 @@ Die  Ziele des Darmodes sind primär die Entlastung der Augen und die Erhöhung 
 |ORM|  Ein Werkzeug, das Datenbanktabellen in Programmiersprachenobjekte übersetzt und deren Nutzung vereinfacht
 |Relationale Datenbank|  Eine Datenbank, die Daten in Tabellen mit Beziehungen zueinander speichert
 |Framework| Ein vorgefertigtes Softwaregerüst, das Entwicklern beim Erstellen von Anwendungen hilft
+|MVP (Minimum Viable Product)|Minimal umsetzbare Produktversion mit Kernfunktionen zur Validierung des Konzepts
 |===
