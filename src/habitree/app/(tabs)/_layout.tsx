@@ -7,15 +7,52 @@ import { IconSymbol } from '@/components/ui/IconSymbol';
 import TabBarBackground from '@/components/ui/TabBarBackground';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { StyleSheet } from 'react-native';
+
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+import { NavigationContainer } from '@react-navigation/native';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+
+  const insets = useSafeAreaInsets();
+  const HEADER_HEIGHT = 44 + insets.top;
 
   return (
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
+        headerShown: true,
+
+        headerTitleAlign: 'center',
+        headerTitleStyle: {
+          fontSize: 34,
+          fontWeight: '800',
+          height:HEADER_HEIGHT - 10,
+          color: Colors[colorScheme ?? 'light'].heading,
+          //flex: 1,
+          
+         
+        },
+
+        headerStyle: {
+
+            backgroundColor: Colors[colorScheme ?? 'light'].background,
+            borderBottomColor: Colors[colorScheme ?? 'light'].border,
+            height: HEADER_HEIGHT-40, 
+            borderBottomWidth: 0,
+            //paddingTop: 0,
+          
+
+            
+        },
+        headerTitleContainerStyle: {
+          //height: HEADER_HEIGHT, 
+          //paddingTop: 4,  // z.B. minimal nach unten schieben
+          //marginTop: 0, //um nach oben zu schieben
+        },
+
         tabBarButton: HapticTab,
         tabBarBackground: TabBarBackground,
         tabBarStyle: Platform.select({
@@ -35,6 +72,9 @@ export default function TabLayout() {
         options={{
           title: 'Home',
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+
+          headerTitle: 'Habitree',  // Text oben im Header
+
         }}
       />
       <Tabs.Screen

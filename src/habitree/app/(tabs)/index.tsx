@@ -10,18 +10,28 @@ import {
   Modal,
   TextInput,
   Button,
-  SafeAreaView,
 } from 'react-native';
 
 import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { useThemeColor } from '@/hooks/useThemeColor';
+import { Colors } from '@/constants/Colors';
+import { useColorScheme } from '@/hooks/useColorScheme';
+
+import { SafeAreaView } from 'react-native-safe-area-context';
+
 
 // Typ für die Filter-Schlüssel
 type FilterKey = 'alle' | 'klimmzuege' | 'liegestuetze' | 'schritte';
 
 export default function HomeScreen() {
+
+  
+  const backgroundColor = useThemeColor({}, 'background');
+  const borderColor = useThemeColor({}, 'border');
+
   const API_URL = 'http://iseproject01.informatik.htw-dresden.de:8000/habits';
   const [habitMode, setHabitMode] = useState<'menu' | 'custom' | 'predefined' | null>(null);
   const [selectedFilter, setSelectedFilter] = useState<FilterKey>('alle');
@@ -112,31 +122,33 @@ export default function HomeScreen() {
     setModalVisible(false);
     setHabitMode(null);
   };
-  
 
-  return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <ParallaxScrollView
-        headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-        headerImage={
-          <Image
-            source={require('@/assets/images/partial-react-logo.png')}
-            style={styles.reactLogo}
-          />
-        }>
+
+return (
+    <View style={{ flex: 1, backgroundColor }}>
+      <ScrollView 
+        style={{ flex: 1, backgroundColor }}
+        contentContainerStyle={styles.contentContainer}
+      >
+        {/* Begrüßungsbereich */}
         <View style={styles.titleContainer}>
-          <ThemedText type="title">Hallo, Calvin!</ThemedText>
+          <ThemedText type="title" style={styles.greetingText}>
+            Hallo, Calvin!
+          </ThemedText>
           <HelloWave />
         </View>
 
-        <ThemedText style={[styles.motivationQuote, { marginBottom: 8 }]}>
+        {/* Tagesspruch */}
+        <ThemedText style={styles.motivationQuote}>
           💬 Tagesspruch: "{todayQuote}"
         </ThemedText>
 
+        {/* Statistikbereich */}
         <ThemedText type="subtitle" style={styles.sectionTitle}>
           Deine Statistiken:
         </ThemedText>
 
+        {/* Filter-Buttons */}
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -147,6 +159,7 @@ export default function HomeScreen() {
               key={option.key}
               style={[
                 styles.chartButton,
+                { color: '#000000' },
                 selectedFilter === option.key && styles.chartButtonSelected,
               ]}
               onPress={() => setSelectedFilter(option.key)}
@@ -154,6 +167,7 @@ export default function HomeScreen() {
               <ThemedText
                 style={[
                   styles.chartButtonText,
+                  { color: '#000000' },
                   selectedFilter === option.key && styles.chartButtonTextSelected,
                 ]}
               >
@@ -163,266 +177,166 @@ export default function HomeScreen() {
           ))}
         </ScrollView>
 
+        {/* Chart-Bild */}
         <Image
           source={chartMap[selectedFilter]}
           style={styles.chartImage}
           contentFit="contain"
         />
 
-        {/* Streak-Bild anzeigen */}
+        {/* Streak-Bild */}
         <Image
           source={require('@/assets/images/streak.png')}
-          style={[styles.chartImage, { height: 280 }]}  // z.B. 280 statt 200
+          style={[styles.chartImage, { height: 280 }]}
           contentFit="contain"
         />
 
+        {/* Gewohnheiten-Liste */}
         <ThemedView style={styles.habitListContainer}>
           <ThemedText type="subtitle" style={styles.habitTitle}>
             Heutige Ziele:
           </ThemedText>
           
-          {/* Habits anzeigen */}
           {habits.map((habit) => (
-          <Pressable
-            key={habit.id}
-            onPress={() => toggleHabit(habit.id)}
-            style={styles.habitItem}
-          >
-            <View
-              style={[
-                styles.checkbox,
-                habit.checked && styles.checkboxChecked,
-              ]}
+            <Pressable
+              key={habit.id}
+              onPress={() => toggleHabit(habit.id)}
+              style={styles.habitItem}
             >
-              {habit.checked && (
-                <ThemedText style={styles.checkmark}>✓</ThemedText>
-              )}
-            </View>
-            <View>
-              <ThemedText>{habit.label}</ThemedText>
-              <ThemedText style={styles.habitDescription}>
-                {habit.description}
-              </ThemedText>
-            </View>
-          </Pressable>
-        ))}
-
+              <View
+                style={[
+                  styles.checkbox,
+                  habit.checked && styles.checkboxChecked,
+                ]}
+              >
+                {habit.checked && (
+                  <ThemedText style={styles.checkmark}>✓</ThemedText>
+                )}
+              </View>
+              <View style={styles.habitTextContainer}>
+                <ThemedText style={styles.habitLabel}>{habit.label}</ThemedText>
+                <ThemedText style={styles.habitDescription}>
+                  {habit.description}
+                </ThemedText>
+              </View>
+            </Pressable>
+          ))}
         </ThemedView>
-      </ParallaxScrollView>
 
-      {/* Floating Action Button */}
+
+      </ScrollView>
+      
+        {/* Floating Action Button */}
       <Pressable
-        style={styles.fab}
-        onPress={() => {
-          setHabitMode('menu');
-          setModalVisible(true);
-        }}
-      >
-        <ThemedText style={styles.fabText}>＋</ThemedText>
+          style={styles.fab}
+          onPress={() => {
+            setHabitMode('menu');
+            setModalVisible(true);
+          }}
+        >
+          <ThemedText style={styles.fabText}>＋</ThemedText>
       </Pressable>
 
-      {/* Modal zum Hinzufügen eines neuen Habits */}
-      <Modal
-        visible={modalVisible}
-        transparent
-        animationType="slide"
-        onRequestClose={() => {
-          setModalVisible(false);
-          setHabitMode(null);
-        }}
-      >
-        <View style={styles.modalBackdrop}>
-          <View style={styles.modalContent}>
-            {habitMode === 'menu' && (
-              <>
-                <ThemedText type="subtitle" style={{ marginBottom: 12 }}>
-                  Was möchtest du tun?
-                </ThemedText>
-                <Button title="Vordefiniertes Ziel wählen" onPress={() => setHabitMode('predefined')} />
-                <View style={{ height: 12 }} />
-                <Button title="Eigenes Ziel erstellen" onPress={() => setHabitMode('custom')} />
-              </>
-            )}
+        {/* Modal zum Hinzufügen eines neuen Habits */}
+        <Modal
+          visible={modalVisible}
+          transparent
+          animationType="slide"
+          onRequestClose={() => {
+            setModalVisible(false);
+            setHabitMode(null);
+          }}
+        >
+          <View style={styles.modalBackdrop}>
+            <View style={styles.modalContent}>
+              {habitMode === 'menu' && (
+                <>
+                  <ThemedText type="subtitle" style={{ marginBottom: 12 }}>
+                    Was möchtest du tun?
+                  </ThemedText>
+                  <Button title="Vordefiniertes Ziel wählen" onPress={() => setHabitMode('predefined')} />
+                  <View style={{ height: 12 }} />
+                  <Button title="Eigenes Ziel erstellen" onPress={() => setHabitMode('custom')} />
+                </>
+              )}
 
-            {habitMode === 'predefined' && (
-              <>
-                <ThemedText type="subtitle" style={{ marginBottom: 12 }}>
-                  Vordefiniertes Ziel auswählen:
-                </ThemedText>
-                {['6000 Schritte', '1,5h Uni', '40 Liegestütze', '10 Klimmzüge'].map((label, index) => (
-                  <Pressable
-                    key={index}
-                    onPress={() => {
-                      const nextId = habits.length > 0 ? Math.max(...habits.map(h => h.id)) + 1 : 1;
-                      setHabits(prev => [
-                        ...prev,
-                        { id: nextId, label, description: '', checked: false }
-                      ]);
+              {habitMode === 'predefined' && (
+                <>
+                  <ThemedText type="subtitle" style={{ marginBottom: 12 }}>
+                    Vordefiniertes Ziel auswählen:
+                  </ThemedText>
+                  {['6000 Schritte', '1,5h Uni', '40 Liegestütze', '10 Klimmzüge'].map((label, index) => (
+                    <Pressable
+                      key={index}
+                      onPress={() => {
+                        const nextId = habits.length > 0 ? Math.max(...habits.map(h => h.id)) + 1 : 1;
+                        setHabits(prev => [
+                          ...prev,
+                          { id: nextId, label, description: '', checked: false }
+                        ]);
+                        setModalVisible(false);
+                        setHabitMode(null);
+                      }}
+                      style={{
+                        paddingVertical: 10,
+                        paddingHorizontal: 16,
+                        borderBottomColor: '#ddd',
+                        borderBottomWidth: 1,
+                      }}
+                    >
+                      <ThemedText>{label}</ThemedText>
+                    </Pressable>
+                  ))}
+                </>
+              )}
+
+              {habitMode === 'custom' && (
+                <>
+                  <ThemedText type="subtitle" style={{ marginBottom: 12 }}>
+                    Eigenes Ziel erstellen
+                  </ThemedText>
+                  <TextInput
+                    placeholder="Kurzname (z. B. Kniebeugen)"
+                    value={newHabit}
+                    onChangeText={setNewHabit}
+                    style={styles.textInput}
+                  />
+                  <View style={{ flexDirection: 'row', gap: 12, marginTop: 16 }}>
+                    <Button title="Hinzufügen" onPress={addHabit} />
+                  </View>
+                </>
+              )}
+
+              {/* Zurück-Button immer zeigen */}
+              <View style={{ marginTop: 24 }}>
+                <Button
+                  title="Zurück"
+                  onPress={() => {
+                    if (habitMode === 'menu') {
                       setModalVisible(false);
                       setHabitMode(null);
-                    }}
-                    style={{
-                      paddingVertical: 10,
-                      paddingHorizontal: 16,
-                      borderBottomColor: '#ddd',
-                      borderBottomWidth: 1,
-                    }}
-                  >
-                    <ThemedText>{label}</ThemedText>
-                  </Pressable>
-                ))}
-              </>
-            )}
-
-            {habitMode === 'custom' && (
-              <>
-                <ThemedText type="subtitle" style={{ marginBottom: 12 }}>
-                  Eigenes Ziel erstellen
-                </ThemedText>
-                <TextInput
-                  placeholder="Kurzname (z. B. Kniebeugen)"
-                  value={newHabit}
-                  onChangeText={setNewHabit}
-                  style={styles.textInput}
+                    } else {
+                      setHabitMode('menu');
+                    }
+                  }}
                 />
-                <View style={{ flexDirection: 'row', gap: 12, marginTop: 16 }}>
-                  <Button title="Hinzufügen" onPress={addHabit} />
-                </View>
-              </>
-            )}
-
-            {/* Zurück-Button immer zeigen */}
-            <View style={{ marginTop: 24 }}>
-              <Button
-                title="Zurück"
-                onPress={() => {
-                  if (habitMode === 'menu') {
-                    setModalVisible(false);
-                    setHabitMode(null);
-                  } else {
-                    setHabitMode('menu');
-                  }
-                }}
-              />
+              </View>
             </View>
           </View>
-        </View>
-      </Modal>
-
-    </SafeAreaView>
+        </Modal>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-    marginBottom: 0,
-    paddingHorizontal: 16,
-  },
-  reactLogo: {
-    height: 250,
-    width: 400,
-    alignSelf: 'center',
-  },
-  sectionTitle: {
-    paddingHorizontal: 16,
-    marginTop: 8,
-    marginBottom: 4,
-  },
-  chartSelector: {
-    flexDirection: 'row',
-    gap: 12,
-    paddingHorizontal: 16,
-    marginBottom: 12,
-  },
-  chartButton: {
-  paddingVertical: 6,
-  paddingHorizontal: 12,
-  borderRadius: 8,
-  backgroundColor: '#e0e0e0', // bleibt für nicht-ausgewählt
-  },
-  chartButtonSelected: {
-    backgroundColor: 'rgb(25, 145, 137)', // ✅ neue Farbe
-  },
-  chartButtonText: {
-    color: '#333',
-    fontWeight: '500',
-  },
-  chartButtonTextSelected: {
-    color: '#fff', // weißer Text auf grünem Button
-  },
-  chartImage: {
-    width: '100%',
-    height: 200,
-    marginBottom: 16,
-  },
-  habitListContainer: {
-    gap: 12,
-    paddingHorizontal: 16,
-    paddingBottom: 100, // Platz für FAB
-  },
-  habitTitle: {
-    marginBottom: 4,
-  },
-  habitItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-    paddingVertical: 6,
-  },
-  checkbox: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
-    borderWidth: 2,
-    borderColor: '#ccc',
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  checkboxChecked: {
-    backgroundColor: '#34C759',
-    borderColor: '#34C759',
-  },
-  checkmark: {
-    color: 'white',
-    fontWeight: '600',
-    fontSize: 16,
-  },
-  motivationQuote: {
-    marginTop: 16,
-    fontStyle: 'italic',
-    paddingHorizontal: 4,
-  },
-  fab: {
-  position: 'absolute',
-  bottom: 54,
-  right: 20,
-  width: 56,
-  height: 56,
-  borderRadius: 28,
-  backgroundColor: 'rgb(25, 145, 137)',
-  alignItems: 'center',
-  justifyContent: 'center',
-  elevation: 6,
-  shadowColor: '#000',
-  shadowOpacity: 0.3,
-  shadowRadius: 6,
-},
-  fabText: {
-    color: 'white',
-    fontSize: 32,
-    fontWeight: '600',
-    lineHeight: 32,
-  },
+   // Neue Styles für Modal
   modalBackdrop: {
     flex: 1,
     backgroundColor: '#00000088',
     justifyContent: 'center',
     alignItems: 'center',
   },
+
   modalContent: {
     backgroundColor: 'white',
     padding: 24,
@@ -440,9 +354,132 @@ const styles = StyleSheet.create({
     padding: 8,
     fontSize: 16,
   },
+
+  // FAB-Style mit Theme
+  fab: {
+    position: 'absolute',
+    bottom: 54,
+    right: 20,
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    backgroundColor: 'rgb(25, 145, 137)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 6,
+    shadowColor: '#000',
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+  },
+  fabText: {
+    color: 'white',
+    fontSize: 32,
+    fontWeight: '600',
+    lineHeight: 40,
+  },
+  // Layout Styles
+  contentContainer: {
+    padding: 16,
+  },
+  titleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginBottom: 20,
+  },
+  greetingText: {
+    fontSize: 28,
+  },
+  
+  // Text Styles
+  motivationQuote: {
+    marginBottom: 20,
+    fontSize: 16,
+    fontStyle: 'italic',
+  },
+  sectionTitle: {
+    marginBottom: 12,
+    fontSize: 22,
+    fontWeight: '600',
+  },
+  habitTitle: {
+    marginBottom: 16,
+    fontSize: 20,
+  },
+  
+  // Chart Filter Styles
+  chartSelector: {
+    marginBottom: 16,
+  },
+  chartButton: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 20,
+    marginRight: 8,
+    backgroundColor: '#e0e0e0',
+  },
+  chartButtonSelected: {
+    backgroundColor: '#A1CEDC',
+  },
+  chartButtonText: {
+    fontSize: 14,
+  },
+  chartButtonTextSelected: {
+    fontWeight: 'bold',
+    color: '#1D3D47',
+  },
+  chartImage: {
+    width: '100%',
+    height: 200,
+    marginBottom: 20,
+    borderRadius: 12,
+  },
+  
+  // Habit List Styles
+  habitListContainer: {
+    borderRadius: 12,
+    padding: 16,
+  },
+  habitItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 12,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: '#e0e0e0',
+  },
+  habitTextContainer: {
+    marginLeft: 12,
+  },
+  habitLabel: {
+    fontSize: 16,
+    fontWeight: '500',
+  },
   habitDescription: {
-  fontSize: 12,
-  color: '#666',
-  marginTop: 2,
+    fontSize: 14,
+    opacity: 0.7,
+    marginTop: 4,
+  },
+  checkbox: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: '#ccc',
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  checkboxChecked: {
+    backgroundColor: '#A1CEDC',
+    borderColor: '#A1CEDC',
+  },
+  //checkboxChecked: {
+    //backgroundColor: '#34C759',
+    //borderColor: '#34C759',
+  //},
+  checkmark: {
+    color: 'white',
+    fontWeight: '600',
+    fontSize: 16,
   },
 });
