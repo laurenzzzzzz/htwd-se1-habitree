@@ -1,0 +1,36 @@
+@startuml
+!define RECTANGLE class
+
+title Deployment Diagram – Habitreee System
+
+' Smartphone der Nutzer
+node "Smartphone\n(Studierende)" {
+  [Mobile App\nReact Native (Expo)] <<Mobile App>>
+}
+
+' Firebase Auth (externer Dienst)
+cloud "Firebase Cloud\n(externer Dienst)" {
+  [Firebase Auth\nAuthentifizierung]
+}
+
+' Hochschulserver mit Backend
+node "Hochschulserver\n(Backend Server)" {
+  [Backend Service\nNode.js + Express]
+  [Prisma ORM\nORM-Modul]
+
+  '[Backend Service] --> [Prisma ORM] : nutzt
+}
+
+' PostgreSQL Datenbank (eigener Server oder gehostet)
+database "Hochschulserver\n(PostgreSQL Server)" {
+  [PostgreSQL Datenbank\nNutzerdaten, Gewohnheiten]
+}
+
+' Verbindungen
+[Mobile App\nReact Native (Expo)] --> [Backend Service\nNode.js + Express] : REST API (HTTPS)
+[Backend Service\nNode.js + Express] --> [Firebase Auth\nAuthentifizierung] : Authentifizierung
+[Firebase Auth\nAuthentifizierung] --> [Backend Service\nNode.js + Express] : Firebase ID
+[Prisma ORM\nORM-Modul] --> [PostgreSQL Datenbank\nNutzerdaten, Gewohnheiten] : SQL-Zugriff
+[Backend Service\nNode.js + Express] --> [Prisma ORM\nORM-Modul] : nutzt
+
+@enduml

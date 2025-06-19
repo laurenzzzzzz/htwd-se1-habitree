@@ -174,7 +174,7 @@ Das C4-Level-2-Container-Diagramm zeigt die technische Struktur der Habitreee-An
 
 === Verteilungsdiagramm (Deployment Diagramm)
 //Beschreibt die physischen Knoten (Rechner) des Systems und Komponenten, die in diesen Knoten ausgeführt werden. Diese Sicht wird nicht benötigt, wenn das System in einem einzelnen Prozess oder Thread ausgeführt wird.
-
+image::deployment-diagram-habitree.svg[]
 
 == Glossar für technische Fachbegriffe
 [%header]
