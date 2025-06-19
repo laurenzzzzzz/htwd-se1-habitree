@@ -1,0 +1,36 @@
+= Dokumentation Frontend
+
+
+== 1. Node.js installieren
+
+=== 1.1 Download
+
+. Download: https://nodejs.org
+
+=== 1.2 Installation
+
+. Installation von nodejs folgen
+
+=== 1.3 Überprüfung
+
+Öffne Windows-Eingabeaufforderung (cmd) oder PowerShell und führe folgende Befehle aus:
+
+[source,shell]
+----
+node -v
+npm -v
+----
+
+
+
+== 2. Habitree - Expo App starten
+
+[source,shell]
+----
+cd src/habitree
+npm install expo <- ausführen beim ersten mal
+npx expo install --fix <- Installiert und Updatet alle Packages
+npx expo start -c
+----
+
+. Scanne den angezeigten QR-Code mit der **Expo Go App** auf deinem Smartphone.
