@@ -208,5 +208,10 @@ Die Annahme ist, dass unsere Nutzer großteilig nur geringe  Aufmerksamkeitsspan
 - Ein Kontrastverhältnis von 4.5:1 für normalen Text (laut: WCAG 2.1 AA)  +
 - Ein Kontrastverhältnis von 3:1 für große Texte (ab 18 pt fett oder ab 24 pt normal)  +
 - Mitteilungen sollten nicht nur rein auf Farbe sondern auch Text haben (z.B.: Warnungen nicht nur als orangene Pop- Ups darstellen sondern auch die konkrete Warnmeldung mit hineinschreiben)
-Farbkombinationen vermeiden, die für Farbblinde schwer zu verstehen sind (z.B.: Rot- Grün) | Mittel | xx 
+Farbkombinationen vermeiden, die für Farbblinde schwer zu verstehen sind (z.B.: Rot- Grün) | Mittel | xx
+| Übersichtlichkeit und Aschaulichkeit von Buttons, Reiter und Icons:  +
+- Bei der Gestaltung des Layouts muss auf einfache Sprache, verständlich und standardisierte Bilder (z.B.: Einkaufskorb für den Warenkorb) für Buttons sowie auf eine Mindestgröße der Icons geachtet werden.  +
+- Die Validierung dieser Anforderung geschieht durch Nutzertests zu Ende des Sprints.  +
+Genauere Details und der vorgeschriebene Testablauf sind auf Git Hub im Constraint- Board bei "Gewährleistung Benutzbarkeit" anzufinden.
+| Hoch | xx 
 |===
