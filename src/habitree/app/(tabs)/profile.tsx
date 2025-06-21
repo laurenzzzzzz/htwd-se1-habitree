@@ -1,10 +1,6 @@
-import { useColorScheme } from 'react-native';
+import React, { useState } from 'react';
+import { useColorScheme, Alert, TextInput, Switch, TouchableOpacity, View, StyleSheet } from 'react-native';
 import { Image } from 'expo-image';
-import { Platform, StyleSheet, Switch, TouchableOpacity, View } from 'react-native';
-import { useState } from 'react';
-
-import { Collapsible } from '@/components/Collapsible';
-import { ExternalLink } from '@/components/ExternalLink';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
@@ -12,6 +8,7 @@ import { StatusBar } from 'expo-status-bar';
 
 export default function TabTwoScreen() {
   const systemColorScheme = useColorScheme();
+  
   const [isDarkMode, setIsDarkMode] = useState(systemColorScheme === 'dark');
   const [tagesMotivationEnabled, setTagesMotivationEnabled] = useState(false);
   const [taeglicheErinnerungEnabled, setTaeglicheErinnerungEnabled] = useState(false);
@@ -21,6 +18,40 @@ export default function TabTwoScreen() {
   const toggleTagesMotivation = () => setTagesMotivationEnabled((prev) => !prev);
   const toggleTaeglicheErinnerung = () => setTaeglicheErinnerungEnabled((prev) => !prev);
   const toggleOeffentlichesProfil = () => setOeffentlichesProfilEnabled((prev) => !prev);
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [showLoginForm, setShowLoginForm] = useState(false);
+
+  const handleLogin = async () => {
+    try {
+      //const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      //const token = await userCredential.user.getIdToken();
+      //console.log('Login erfolgreich, Token:', token);
+
+      // 🔍 Nutzerexistenz im Backend prüfen
+      const res = await fetch('http://iseproject01.informatik.htw-dresden.de:8000/user/check', {
+        method: 'GET',
+        headers: {
+          //Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data = await res.json();
+
+      if (data.exists) {
+        Alert.alert('Login erfolgreich', `Willkommen zurück, ${data.email}!`);
+      } else {
+        Alert.alert('Fehler', 'Der Nutzer ist nicht in der Datenbank registriert.');
+      }
+
+      setShowLoginForm(false);
+    } catch (error: any) {
+      console.error('Login fehlgeschlagen:', error);
+      Alert.alert('Fehler', error.message || 'Unbekannter Fehler');
+    }
+  };
+
 
   return (
     <ParallaxScrollView
@@ -102,18 +133,42 @@ export default function TabTwoScreen() {
         </TouchableOpacity>
       </ThemedView>
 
-      {/* Auth-Buttons */}
+       {/* Auth-Bereich */}
       <ThemedView style={styles.authButtonsContainer}>
-        <TouchableOpacity style={styles.authButton} onPress={() => console.log('Anmelden gedrückt')}>
-          <ThemedText style={styles.authButtonText}>Anmelden</ThemedText>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.authButton} onPress={() => console.log('Registrieren gedrückt')}>
+        {showLoginForm ? (
+          <View style={{ width: '100%', padding: 16 }}>
+            <TextInput
+              placeholder="E-Mail"
+              value={email}
+              onChangeText={setEmail}
+              autoCapitalize="none"
+              style={{ borderWidth: 1, borderColor: '#ccc', padding: 10, borderRadius: 8, marginBottom: 12 }}
+            />
+            <TextInput
+              placeholder="Passwort"
+              value={password}
+              onChangeText={setPassword}
+              secureTextEntry
+              style={{ borderWidth: 1, borderColor: '#ccc', padding: 10, borderRadius: 8, marginBottom: 12 }}
+            />
+            <TouchableOpacity style={styles.authButton} onPress={handleLogin}>
+              <ThemedText style={styles.authButtonText}>Login</ThemedText>
+            </TouchableOpacity>
+          </View>
+        ) : (
+          <TouchableOpacity style={styles.authButton} onPress={() => setShowLoginForm(true)}>
+            <ThemedText style={styles.authButtonText}>Anmelden</ThemedText>
+          </TouchableOpacity>
+        )}
+      
+            <TouchableOpacity style={styles.authButton} onPress={() => console.log('Registrieren gedrückt')}>
           <ThemedText style={styles.authButtonText}>Registrieren</ThemedText>
         </TouchableOpacity>
       </ThemedView>
     </ParallaxScrollView>
   );
 }
+
 
 const styles = StyleSheet.create({
   headerImage: {
@@ -177,3 +232,4 @@ const styles = StyleSheet.create({
   color: '#888',
 },
 });
+

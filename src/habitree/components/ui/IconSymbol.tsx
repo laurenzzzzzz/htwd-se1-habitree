@@ -1,18 +1,12 @@
-// Fallback for using MaterialIcons on Android and web.
-
+import React from 'react';
+import { Platform, View, Text, StyleProp, ViewStyle, TextStyle } from 'react-native';
+import { SymbolView, SymbolViewProps, SymbolWeight } from 'expo-symbols';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import { SymbolWeight, SymbolViewProps } from 'expo-symbols';
-import { ComponentProps } from 'react';
-import { OpaqueColorValue, type StyleProp, type TextStyle } from 'react-native';
+import { OpaqueColorValue } from 'react-native';
 
-type IconMapping = Record<SymbolViewProps['name'], ComponentProps<typeof MaterialIcons>['name']>;
+type IconMapping = Record<SymbolViewProps['name'], keyof typeof MaterialIcons.glyphMap>;
 type IconSymbolName = keyof typeof MAPPING;
 
-/**
- * Add your SF Symbols to Material Icons mappings here.
- * - see Material Icons in the [Icons Directory](https://icons.expo.fyi).
- * - see SF Symbols in the [SF Symbols](https://developer.apple.com/sf-symbols/) app.
- */
 const MAPPING = {
   'house.fill': 'home',
   'paperplane.fill': 'send',
@@ -20,22 +14,40 @@ const MAPPING = {
   'chevron.right': 'chevron-right',
 } as IconMapping;
 
-/**
- * An icon component that uses native SF Symbols on iOS, and Material Icons on Android and web.
- * This ensures a consistent look across platforms, and optimal resource usage.
- * Icon `name`s are based on SF Symbols and require manual mapping to Material Icons.
- */
 export function IconSymbol({
   name,
   size = 24,
   color,
   style,
+  weight = 'regular',
 }: {
   name: IconSymbolName;
   size?: number;
   color: string | OpaqueColorValue;
-  style?: StyleProp<TextStyle>;
+  style?: StyleProp<ViewStyle | TextStyle>;
   weight?: SymbolWeight;
 }) {
-  return <MaterialIcons color={color} size={size} name={MAPPING[name]} style={style} />;
+  const finalStyle: StyleProp<ViewStyle> = [
+    { width: size, height: size },
+    style,
+  ];
+
+  if (Platform.OS === 'ios') {
+    return (
+      <SymbolView
+        name={name}
+        tintColor={color}
+        weight={weight}
+        resizeMode="scaleAspectFit"
+        style={finalStyle}
+      />
+    );
+  }
+
+  // ✅ Android/Web fallback: MaterialIcons
+  return (
+    <View style={finalStyle}>
+      <MaterialIcons name={MAPPING[name]} size={size} color={color} />
+    </View>
+  );
 }

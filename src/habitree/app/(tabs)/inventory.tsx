@@ -1,5 +1,7 @@
 import { Image } from 'expo-image';
 import { StyleSheet, View } from 'react-native';
+import React from 'react';
+
 
 // import ParallaxScrollView from '@/components/ParallaxScrollView'; // Achte hier auf default vs. named export
 import { ThemedText } from '@/components/ThemedText';

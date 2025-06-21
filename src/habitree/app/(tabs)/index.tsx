@@ -1,26 +1,15 @@
 import { useState, useEffect } from 'react';
 import { Image } from 'expo-image';
 import axios from 'axios';
-
-import {
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  View,
-  Modal,
-  TextInput,
-  Button,
-} from 'react-native';
-
+import React from 'react';
+import {Pressable,ScrollView,StyleSheet,View,Modal,TextInput,Button,} from 'react-native';
 import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { useThemeColor } from '@/hooks/useThemeColor';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
+import { getAuthSafe } from '@/constants/firebase';
+import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
 
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 // Typ für die Filter-Schlüssel
@@ -28,20 +17,37 @@ type FilterKey = 'alle' | 'klimmzuege' | 'liegestuetze' | 'schritte';
 
 export default function HomeScreen() {
 
-  
+
   const backgroundColor = useThemeColor({}, 'background');
   const borderColor = useThemeColor({}, 'border');
-
   const API_URL = 'http://iseproject01.informatik.htw-dresden.de:8000/habits';
   const [habitMode, setHabitMode] = useState<'menu' | 'custom' | 'predefined' | null>(null);
   const [selectedFilter, setSelectedFilter] = useState<FilterKey>('alle');
 
-  interface Habit {
+  interface HabitEntry {
+    id: number;
+    habitId: number;
+    date: string;
+    status: boolean;
+    note: string;
+  }
+
+  interface HabitFromBackend {
+    id: number;
+    userId: string;
+    name: string;
+    description: string;
+    frequency: string;
+    createdAt: string;
+    entries: HabitEntry[];
+  }
+
+  interface HabitView {
     id: number;
     label: string;
     description: string;
     checked: boolean;
-  }
+  } 
 
   const chartMap: Record<FilterKey, any> = {
     alle: require('@/assets/images/chart1.png'),
@@ -57,37 +63,115 @@ export default function HomeScreen() {
     { key: 'schritte', label: 'Schritte' },
   ];
 
-  const [habits, setHabits] = useState<Habit[]>([]);
+  const [habits, setHabits] = useState<HabitView[]>([]);
   const [loading, setLoading] = useState(true);
+  const today = new Date();
+  const todayDateOnly = today.toISOString().split('T')[0];
+  const isSameDay = (a: Date, b: Date) =>
+    a.getFullYear() === b.getFullYear() &&
+    a.getMonth() === b.getMonth() &&
+    a.getDate() === b.getDate();
+
 
   useEffect(() => {
-    const fetchHabits = async () => {
-      try {
-        const response = await axios.get<{ id: number; label: string; description: string; checked: boolean }[]>(API_URL);
-        const loadedHabits: Habit[] = response.data.map((habit) => ({
+  const waitForAuthReady = async () => {
+    const auth = await getAuthSafe(); // ✅ await notwendig!
+
+    let tries = 10;
+    while (!auth.currentUser && tries > 0) {
+      await new Promise((res) => setTimeout(res, 300));
+      tries--;
+    }
+
+    const user = auth.currentUser;
+    if (!user) {
+      console.warn('⚠️ Kein eingeloggter Benutzer verfügbar (nach Timeout)');
+      return;
+    }
+
+    try {
+      const token = await user.getIdToken();
+      console.log('✅ Auth-Token:', token);
+
+      const response = await axios.get<HabitFromBackend[]>(API_URL, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      console.log('📦 Daten vom Server:', response.data);
+
+      const loadedHabits: HabitView[] = response.data.map((habit) => {
+        const entryForToday = habit.entries.find((entry) =>
+          isSameDay(new Date(entry.date), today)
+        );
+
+        return {
           id: habit.id,
-          label: habit.label,
-          description: habit.description || '',
-          checked: habit.checked,
-        }));
-        setHabits(loadedHabits);
-      } catch (error) {
-        console.error('Fehler beim Abrufen der Habits:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
+          label: habit.name,
+          description: habit.description,
+          checked: entryForToday?.status ?? false,
+        };
+      });
 
-    fetchHabits();
-  }, []);
+      setHabits(loadedHabits);
+    } catch (error) {
+      console.error('❌ Fehler beim Abrufen der Habits:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  const toggleHabit = (id: number) => {
+  waitForAuthReady();
+}, []);
+
+    const toggleHabit = async (id: number) => {
     setHabits((prev) =>
       prev.map((habit) =>
         habit.id === id ? { ...habit, checked: !habit.checked } : habit
       )
     );
-  };
+
+    try {
+      const auth = await getAuthSafe();
+      const user = auth.currentUser;
+      if (!user) return;
+      const token = await user.getIdToken();
+
+      // Status umschalten im Backend
+      await axios.put(
+        `http://iseproject01.informatik.htw-dresden.de:8000/habits/${id}/toggle`,
+        { date: today }, // heutiges Datum senden
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+    } catch (error) {
+      console.error('Fehler beim Aktualisieren des Status:', error);
+      }
+    };
+
+  useEffect(() => {
+    const loginTestUser = async () => {
+      try {
+        const auth = await getAuthSafe();
+        const email = 'testnutzer2@gmail.com';
+        const password = 'abc123'; 
+
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        console.log('✅ Testuser angemeldet', userCredential.user);
+
+        const token = await userCredential.user.getIdToken();
+        console.log('✅ Authentifizierter Token:', token);
+      } catch (error) {
+        console.error('❌ Fehler beim automatischen Testuser-Login:', error);
+      }
+    };
+
+    loginTestUser();
+  }, []);
 
   const motivationalQuotes = [
     "Heute ist ein guter Tag, um stark zu sein.",
@@ -100,7 +184,6 @@ export default function HomeScreen() {
   ];
 
   const todayQuote = motivationalQuotes[new Date().getDay()];
-
   const [modalVisible, setModalVisible] = useState(false);
   const [newHabit, setNewHabit] = useState('');
   const [newDescription, setNewDescription] = useState('');
@@ -123,8 +206,7 @@ export default function HomeScreen() {
     setHabitMode(null);
   };
 
-
-return (
+  return (
     <View style={{ flex: 1, backgroundColor }}>
       <ScrollView 
         style={{ flex: 1, backgroundColor }}
@@ -159,7 +241,6 @@ return (
               key={option.key}
               style={[
                 styles.chartButton,
-                { color: '#000000' },
                 selectedFilter === option.key && styles.chartButtonSelected,
               ]}
               onPress={() => setSelectedFilter(option.key)}
@@ -483,3 +564,4 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
+

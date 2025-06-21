@@ -61,6 +61,11 @@ npm install --save-dev ts-node
 * Windowsdefender Firewall mit erweitertet Sicherheit öffnen
 * unter *Eingehender* und *Ausgehender Regel* neue Regel ``Port 8000 für Server öffnen`` erstellt damit ausgehende und eingehende Anfragen nicht geblockt werden
 
+.6 Abhängigkeiten für Firebase installieren
+[source,shell]
+----
+npm install firebase-admin
+----
 == Datenbankeinträge ändern / hinzufügen / löschen
 
 .*Datenbank verändern (Tabellen erstellen)*
