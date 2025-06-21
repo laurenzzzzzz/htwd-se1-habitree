@@ -171,7 +171,21 @@ Hinweise:
 
 . Führen Sie die wesentlichen anzuwendenden Standards, Hardware oder andere Plattformanforderungen, Leistungsanforderungen und Umgebungsanforderungen auf
 . Definieren Sie grob die Qualitätsanforderungen für Leistung, Robustheit, Ausfalltoleranz, Benutzbarkeit und ähnliche Merkmale, die Qualitätsanforderungen an das geplante Produkt beschreiben.
+
+
 . Notieren Sie alle Entwurfseinschränkungen, externe Einschränkungen, Annahmen oder andere Abhängigkeiten, die wenn Sie geändert werden, das Visions-Dokument beeinflussen. Ein Beispiel wäre die Annahme, dass ein bestimmtes Betriebssystem für die vom System erforderliche Hardware verfügbar ist. Ist das Betriebssystem nicht verfügbar, muss das Visions-Dokument angepasst werden.
+
+**Annahmen:**   +
+1. App wird nicht von Menschen über 70 Jahren oder von Menschen unter 10 Jahren genutzt. Dies hat Einflüsse auf die Kenntnisse im Umgang mit Medien und auf die Kenntnisse von Symbolen.  +
+Somit wird unter anderem die Annahme getroffen, dass die Nutzer wissen, dass ein Zahnrad das Symbol für Einstellungen ist.  +
+2. Die App wird prinzipiell eher von motivierten und intellektuell normalen bis besser gestellten Personen genutzt. Vor allem diese Gruppen sind eher an Verhaltensänderungen interessiert und sich diesen auch bewusst.  +
+Diese Annahme impliziert auch, dass wir eine gewisse Medienkompetenz als vorausgesetzt betrachten können, sowie auch eine Grundmotivation. Die Anwendung muss somit nicht komplett ausschließlich auf Motivation basieren.  +
+3. Die Nutzngsdauer ist zeitlich begrenzt. Nach spätestens einem halben Jahr muss die Verhaltensänderung erreicht sein, da sonst trotz Gamification die Motivation zu gering werden wird. Ggf. könnte man den Vorgang durch einen Wettkampfähnlichen Modus mit öffentlichen Profilen verlangsamen. +
+4. Erste Erfolge müssen sich zeitnah einstellen/visualisiert werden, da sonst die Motivation exponentiell abnimmt.  +
+5. Die Einrichtung und die Nutzung der Anwendung muss schnell gehen und mit geringen Aufwand realisiert werden können.  +
+Die Annahme ist, dass unsere Nutzer großteilig nur geringe  Aufmerksamkeitsspannen haben. +
+6. Gerade zu Beginn ist mehr Motivation erforderlich, um das Wachsen der neuen Routinen zu verstärken und den Nutzer am Weiterführen und Durchhaltenzu motivieren.  
+
 . Definieren Sie alle Dokumentationsanforderugen, inkl. Benutzerhandbücher, Onlinehilfe, Installations-, Kennzeichnungs- und Auslieferungsanforderungen.
 . Definieren Sie die Priorität für diese zusätzlichen Produktanforderungen. Ergänzen Sie, falls sinnvoll, Angaben zu Stabilität, Nutzen, Aufwand und Risiko für diese Anforderungen.
 
