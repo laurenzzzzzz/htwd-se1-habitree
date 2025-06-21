@@ -277,6 +277,15 @@ Problem: Frederic war Teil des Development-Teams, hatte jedoch bis zu seinem Aus
     (1) Kleinere FRagen jeweils direkt im Anschluss an der Lehrveranstaltung  +
     (2) Größere Fragen und Anliegen nach Terminabsprache in einem längeren Gespräch
 - Ein guter und regelmäßiger Kontakt zu den Betreuern und Stakeholdern ist für ein erfolgreiches Projekt unabdingbar
+|Zu viele Bewertungsfelder und Kategorisierungsfelder in Git Hub für einzelne Issues/Boards. +
+Dies steigerte die Unübersichtlichkeit innerhalb des Git Hub- Projects, da zum Beispiel es für User Stories 3 Bewertungsfelder "Aufwand" gab.  +
+Es war unstrukturiert, wo welche Bewertung erfolgen sollte.
+| - Standardisierung aller Kategorien zur Bewertung von Labels  +
+- Abstimmung im Team welche Kategorien wichtig sind und welche eher weniger.  +
+- Verzicht bei Einführung neuer Labels auf unwichtige Kategorien
+|- Zu viele gleichzeitige Bewertungsfelder (z.B.: Kategorien für "Priorität", "Aufwand", "Größe"...) führten zu Unübersichtlichkeit bei der Pflege, Erstellund und Konkretisierung der Issues und User Stories.   +
+- Eigentliche Aussagen von Issues gingen dadurch unter. +
+- Bewertung der Issues haben mehr Arbeit mit sich gebracht als Vorteile.
 |===
 
 === Positive Ereignisse
