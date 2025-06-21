@@ -189,6 +189,7 @@ Die Annahme ist, dass unsere Nutzer großteilig nur geringe  Aufmerksamkeitsspan
 . Definieren Sie alle Dokumentationsanforderugen, inkl. Benutzerhandbücher, Onlinehilfe, Installations-, Kennzeichnungs- und Auslieferungsanforderungen.
 . Definieren Sie die Priorität für diese zusätzlichen Produktanforderungen. Ergänzen Sie, falls sinnvoll, Angaben zu Stabilität, Nutzen, Aufwand und Risiko für diese Anforderungen.
 
+**Qualitätsandorderungen:**
 [%header, cols="4,1,1"]
 |===
 | Anforderung | Priorität | Geplantes Release
@@ -203,4 +204,9 @@ Die Annahme ist, dass unsere Nutzer großteilig nur geringe  Aufmerksamkeitsspan
 | Ausfallsicherheit  +
 - Das System sollte 99.9% der Zeit verfügbar sein. Das sind: [(7 Tage*99,9%)/100%]*24 Stunden*60 Minuten = etwa 10 min/Woche
 | Hoch | xx
+| Kontrastreiche der Benutzeroberfläche:  +
+- Ein Kontrastverhältnis von 4.5:1 für normalen Text (laut: WCAG 2.1 AA)  +
+- Ein Kontrastverhältnis von 3:1 für große Texte (ab 18 pt fett oder ab 24 pt normal)  +
+- Mitteilungen sollten nicht nur rein auf Farbe sondern auch Text haben (z.B.: Warnungen nicht nur als orangene Pop- Ups darstellen sondern auch die konkrete Warnmeldung mit hineinschreiben)
+Farbkombinationen vermeiden, die für Farbblinde schwer zu verstehen sind (z.B.: Rot- Grün) | Mittel | xx 
 |===
