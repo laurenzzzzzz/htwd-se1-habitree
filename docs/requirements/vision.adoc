@@ -194,7 +194,12 @@ Die Annahme ist, dass unsere Nutzer großteilig nur geringe  Aufmerksamkeitsspan
 
 * Benutzerbezogene Dokumentation:
 
+
 * Projektbezogene Dokumentation:
+-  Gliederung und Unterteilung des Projekts anhand der einzelnen Komponenten, unter anderem: vision.adoc, project_plan.adoc, glossary.adoc etc. +
+- Gemeinsame Ablage aller Dokumente im Git-Repository zur effizienten Versionsverwaltung +
+- Ergänzende Dokumentation: Live in Meetings, Miro Board, WhatsApp und Discord zur Absicherung
+
 ** "vision.adoc": Übersichtliche Darstellung der wesentlichen Bedarfe und Anforderungen der Nutzer an das System. Es gibt Aufschluss über:  +
 *** Scope:  +
 Gültigkeitsbereich des Projektes
@@ -221,12 +226,32 @@ Visuelle Entwürfe der Benutzeroberfläche, basierend auf den wichtigsten User S
 *** Gestaltung der Benutzeroberfläche:  +
 Kurze Beschreibung der Wireframes
 
-** "glossary.adoc":
+** "glossary.adoc":  +
+Dokumentation zentraler Fachbegriffe, Abkürzungen und Datenstrukturen für das Projekt. 
+Es ist elementar um Verständlichkeit und Klarheit über domänenspezifisches Vokabular zu schaffen.  +
+*** Begriffe:  +
+Kurze, verständliche Definitionen und Synonyme zu zentralen Begrffen und Konzepten aus der Fachdomäne.
+*** Abkürzungen und Akronyme:  +
+Erläuterung von Kurzformen mit Bezug auf das Projekt.
+*** Verzeichnis der Datenstrukturen:  +
+Übersicht über relevante Datenobjekte im System mit Angaben zu Format und Validierungsregeln.
+*** Domänenmodell:
+Visualisierung der zentralen Entitäten mit deren Beziehungen und Multiplizitäten innerhalb unseres Systemes.
 
-** "project_plan.adoc":
+** "project_plan.adoc": +
+*** Methoden und Praktiken +
+*** Deployment +
+*** Diskussion zur Vorgehensweise +
+*** Erkenntnisse (Lessons Learned) +
+
 
 ** "architecture_notebook.adoc":
-
+*** Architekturziele: +
+*** Annahmen und Abhängigkeiten:  +
+*** Architekturrelevante Anforderungen: +
+*** Entscheidungen, Nebenbedingungen und Bergündungen: +
+*** C4- Modell der Architektur: +
+*** Technisches Glossar: 
 
 * Technische Dokumentation:
 
