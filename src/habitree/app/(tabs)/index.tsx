@@ -517,7 +517,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#e0e0e0',
   },
   chartButtonSelected: {
-    backgroundColor: '#A1CEDC',
+    backgroundColor: 'rgb(25, 145, 137)',
   },
   chartButtonText: {
     fontSize: 14,
