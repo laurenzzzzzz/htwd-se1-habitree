@@ -206,6 +206,23 @@ export default function HomeScreen() {
     setHabitMode(null);
   };
 
+  const exampleHabits = [
+  {
+    id: '1',
+    label: 'Meditieren',
+    description: '10 Minuten Achtsamkeit',
+    checked: false,
+  },
+  {
+    id: '2',
+    label: 'Wasser trinken',
+    description: 'Mindestens 2 Liter am Tag',
+    checked: true,
+  },
+];
+
+const habitsToRender = habits && habits.length > 0 ? habits : exampleHabits;
+
   return (
     <View style={{ flex: 1, backgroundColor }}>
       <ScrollView 
@@ -278,7 +295,7 @@ export default function HomeScreen() {
             Heutige Ziele:
           </ThemedText>
           
-          {habits.map((habit) => (
+          {habitsToRender.map((habit) => (
             <Pressable
               key={habit.id}
               onPress={() => toggleHabit(habit.id)}
