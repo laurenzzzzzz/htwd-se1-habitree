@@ -4,25 +4,28 @@ import { StyleSheet } from 'react-native';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+
+import { useThemeColor } from '@/hooks/useThemeColor';
+
+import { View } from 'react-native';
+
 import React from 'react';
 
 
 export default function TabTwoScreen() {
+  
+  const backgroundColor = useThemeColor({}, 'background');
+  
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
-      headerImage={null} // kein Icon-Header mehr
+    <View
+        style={{ flex: 1, backgroundColor }}
     >
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Baum</ThemedText>
-      </ThemedView>
-
       <Image
         source={require('@/assets/images/tree.png')}
         style={styles.treeImage}
         contentFit="contain"
       />
-    </ParallaxScrollView>
+    </View>
   );
 }
 

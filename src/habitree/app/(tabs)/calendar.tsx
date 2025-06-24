@@ -6,6 +6,10 @@ import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import React from 'react';
+import { View } from 'react-native';
+
+
+import { useThemeColor } from '@/hooks/useThemeColor';
 
 
 const screenWidth = Dimensions.get('window').width;
@@ -20,6 +24,9 @@ const generateRandomData = () => {
 };
 
 export default function TabTwoScreen() {
+  
+ const backgroundColor = useThemeColor({}, 'background');
+
   const data = {
     labels: ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'],
     datasets: [
@@ -32,15 +39,9 @@ export default function TabTwoScreen() {
   };
 
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
-      headerImage={
-        <Image source={transparentImage} style={{ width: 0, height: 0 }} />
-      }
+    <View
+        style={{ flex: 1, backgroundColor }}
     >
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Kalender</ThemedText>
-      </ThemedView>
 
       <Calendar
         style={{ marginVertical: 20, borderRadius: 10 }}
@@ -95,7 +96,7 @@ export default function TabTwoScreen() {
           Alert.alert(`Wert am ${data.labels[index]}`, `Y: ${value}`);
         }}
       />
-    </ParallaxScrollView>
+    </View>
   );
 }
 

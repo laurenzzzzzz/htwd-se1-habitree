@@ -149,7 +149,7 @@ export default function HomeScreen() {
         }
       );
     } catch (error) {
-      console.error('Fehler beim Aktualisieren des Status:', error);
+      //console.error('Fehler beim Aktualisieren des Status:', error);
       }
     };
 
@@ -205,6 +205,15 @@ export default function HomeScreen() {
     setModalVisible(false);
     setHabitMode(null);
   };
+
+
+  const predefinedHabits = [
+  { label: '6000 Schritte', description: 'Gehe heute mindestens 6000 Schritte.' },
+  { label: '1,5h Uni', description: 'Verbringe 1,5 Stunden mit Uni-Aufgaben.' },
+  { label: '40 Liegestütze', description: 'Mache 40 saubere Liegestütze.' },
+  { label: '10 Klimmzüge', description: 'Schaffe heute 10 Klimmzüge.' },
+];
+
 
   return (
     <View style={{ flex: 1, backgroundColor }}>
@@ -277,32 +286,39 @@ export default function HomeScreen() {
           <ThemedText type="subtitle" style={styles.habitTitle}>
             Heutige Ziele:
           </ThemedText>
-          
-          {habits.map((habit) => (
-            <Pressable
-              key={habit.id}
-              onPress={() => toggleHabit(habit.id)}
-              style={styles.habitItem}
-            >
-              <View
-                style={[
-                  styles.checkbox,
-                  habit.checked && styles.checkboxChecked,
-                ]}
+
+          {habits && habits.length > 0 ? (
+            habits.map((habit) => (
+              <Pressable
+                key={habit.id}
+                onPress={() => toggleHabit(habit.id)}
+                style={styles.habitItem}
               >
-                {habit.checked && (
-                  <ThemedText style={styles.checkmark}>✓</ThemedText>
-                )}
-              </View>
-              <View style={styles.habitTextContainer}>
-                <ThemedText style={styles.habitLabel}>{habit.label}</ThemedText>
-                <ThemedText style={styles.habitDescription}>
-                  {habit.description}
-                </ThemedText>
-              </View>
-            </Pressable>
-          ))}
+                <View
+                  style={[
+                    styles.checkbox,
+                    habit.checked && styles.checkboxChecked,
+                  ]}
+                >
+                  {habit.checked && (
+                    <ThemedText style={styles.checkmark}>✓</ThemedText>
+                  )}
+                </View>
+                <View style={styles.habitTextContainer}>
+                  <ThemedText style={styles.habitLabel}>{habit.label}</ThemedText>
+                  <ThemedText style={styles.habitDescription}>
+                    {habit.description}
+                  </ThemedText>
+                </View>
+              </Pressable>
+            ))
+          ) : (
+            <ThemedText style={styles.noHabitsText}>
+              Keine Habits angelegt.
+            </ThemedText>
+          )}
         </ThemedView>
+
 
 
       </ScrollView>
@@ -322,7 +338,7 @@ export default function HomeScreen() {
         <Modal
           visible={modalVisible}
           transparent
-          animationType="slide"
+          animationType="fade"
           onRequestClose={() => {
             setModalVisible(false);
             setHabitMode(null);
@@ -346,14 +362,14 @@ export default function HomeScreen() {
                   <ThemedText type="subtitle" style={{ marginBottom: 12 }}>
                     Vordefiniertes Ziel auswählen:
                   </ThemedText>
-                  {['6000 Schritte', '1,5h Uni', '40 Liegestütze', '10 Klimmzüge'].map((label, index) => (
+                  {predefinedHabits.map(({ label, description }, index) => (
                     <Pressable
                       key={index}
                       onPress={() => {
                         const nextId = habits.length > 0 ? Math.max(...habits.map(h => h.id)) + 1 : 1;
                         setHabits(prev => [
                           ...prev,
-                          { id: nextId, label, description: '', checked: false }
+                          { id: nextId, label, description, checked: false }
                         ]);
                         setModalVisible(false);
                         setHabitMode(null);
@@ -365,7 +381,8 @@ export default function HomeScreen() {
                         borderBottomWidth: 1,
                       }}
                     >
-                      <ThemedText>{label}</ThemedText>
+                      <ThemedText style={{ fontWeight: '500' }}>{label}</ThemedText>
+                      <ThemedText style={{ opacity: 0.7, marginTop: 4 }}>{description}</ThemedText>
                     </Pressable>
                   ))}
                 </>
@@ -380,6 +397,12 @@ export default function HomeScreen() {
                     placeholder="Kurzname (z. B. Kniebeugen)"
                     value={newHabit}
                     onChangeText={setNewHabit}
+                    style={styles.textInput}
+                  />
+                  <TextInput
+                    placeholder="Beschreibung"
+                    value={newDescription}
+                    onChangeText={setNewDescription}
                     style={styles.textInput}
                   />
                   <View style={{ flexDirection: 'row', gap: 12, marginTop: 16 }}>
@@ -410,7 +433,16 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-   // Neue Styles für Modal
+  
+    noHabitsText: {
+      color: '#888',           // Grauton
+      fontStyle: 'italic',     // Optional: kursiv
+      textAlign: 'center',
+      marginVertical: 16,
+    },
+
+  
+  // Neue Styles für Modal
   modalBackdrop: {
     flex: 1,
     backgroundColor: '#00000088',
@@ -500,7 +532,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#e0e0e0',
   },
   chartButtonSelected: {
-    backgroundColor: '#A1CEDC',
+    backgroundColor: 'rgb(25, 145, 137)',
   },
   chartButtonText: {
     fontSize: 14,
