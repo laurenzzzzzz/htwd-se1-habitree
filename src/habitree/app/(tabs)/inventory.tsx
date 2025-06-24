@@ -9,6 +9,11 @@ import { ThemedView } from '@/components/ThemedView';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 
+import { useThemeColor } from '@/hooks/useThemeColor';
+
+
+
+
 const abzeichenZeilen = [
   [
     require('@/assets/images/abzeichen1.png'),
@@ -26,20 +31,13 @@ const abzeichenZeilen = [
 ];
 
 export default function TabTwoScreen() {
+  
+  const backgroundColor = useThemeColor({}, 'background');
+  
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
-      headerImage={
-        <IconSymbol
-          size={310}
-          color="#808080"
-          name="chevron.left.forwardslash.chevron.right"
-          style={styles.headerImage}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Inventar</ThemedText>
-      </ThemedView>
+    <View
+      style={{ flex: 1, backgroundColor }}
+    >
 
       <ThemedText type="subtitle" style={styles.erfolgeTitle}>
         Erfolge
@@ -57,7 +55,7 @@ export default function TabTwoScreen() {
           ))}
         </View>
       ))}
-    </ParallaxScrollView>
+    </View>
   );
 }
 
