@@ -13,6 +13,8 @@
   "dependencies": {
     "@expo/vector-icons": "^14.1.0",
     "@react-native-async-storage/async-storage": "2.1.2",
+    "@react-native-firebase/app": "^22.2.1",
+    "@react-native-firebase/auth": "^22.2.1",
     "@react-native-picker/picker": "^2.11.0",
     "@react-navigation/bottom-tabs": "^7.3.10",
     "@react-navigation/elements": "^2.3.8",
@@ -21,6 +23,7 @@
     "expo": "^53.0.12",
     "expo-blur": "~14.1.5",
     "expo-constants": "~17.1.6",
+    "expo-dev-client": "~5.2.1",
     "expo-device": "^7.1.4",
     "expo-font": "~13.3.1",
     "expo-haptics": "~14.1.4",

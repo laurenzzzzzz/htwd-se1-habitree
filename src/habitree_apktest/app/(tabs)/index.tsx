@@ -7,8 +7,7 @@ import { HelloWave } from '@/components/HelloWave';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { useThemeColor } from '@/hooks/useThemeColor';
-import { getAuthSafe } from '@/constants/firebase';
-import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { firebaseAuth } from '@/constants/firebase';
 
 
 
@@ -75,7 +74,7 @@ export default function HomeScreen() {
 
   useEffect(() => {
   const waitForAuthReady = async () => {
-    const auth = await getAuthSafe(); // ✅ await notwendig!
+    const auth = firebaseAuth;
 
     let tries = 10;
     while (!auth.currentUser && tries > 0) {
@@ -133,7 +132,7 @@ export default function HomeScreen() {
     );
 
     try {
-      const auth = await getAuthSafe();
+      const auth = firebaseAuth;
       const user = auth.currentUser;
       if (!user) return;
       const token = await user.getIdToken();
@@ -156,11 +155,10 @@ export default function HomeScreen() {
   useEffect(() => {
     const loginTestUser = async () => {
       try {
-        const auth = await getAuthSafe();
         const email = 'testnutzer2@gmail.com';
         const password = 'abc123'; 
 
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const userCredential = await firebaseAuth.signInWithEmailAndPassword(email, password);
         console.log('✅ Testuser angemeldet', userCredential.user);
 
         const token = await userCredential.user.getIdToken();
