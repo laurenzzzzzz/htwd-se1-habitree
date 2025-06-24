@@ -149,7 +149,7 @@ export default function HomeScreen() {
         }
       );
     } catch (error) {
-      console.error('Fehler beim Aktualisieren des Status:', error);
+      //console.error('Fehler beim Aktualisieren des Status:', error);
       }
     };
 
