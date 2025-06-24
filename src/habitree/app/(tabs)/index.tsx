@@ -206,22 +206,14 @@ export default function HomeScreen() {
     setHabitMode(null);
   };
 
-  const exampleHabits = [
-  {
-    id: '1',
-    label: 'Meditieren',
-    description: '10 Minuten Achtsamkeit',
-    checked: false,
-  },
-  {
-    id: '2',
-    label: 'Wasser trinken',
-    description: 'Mindestens 2 Liter am Tag',
-    checked: true,
-  },
+
+  const predefinedHabits = [
+  { label: '6000 Schritte', description: 'Gehe heute mindestens 6000 Schritte.' },
+  { label: '1,5h Uni', description: 'Verbringe 1,5 Stunden mit Uni-Aufgaben.' },
+  { label: '40 Liegestütze', description: 'Mache 40 saubere Liegestütze.' },
+  { label: '10 Klimmzüge', description: 'Schaffe heute 10 Klimmzüge.' },
 ];
 
-const habitsToRender = habits && habits.length > 0 ? habits : exampleHabits;
 
   return (
     <View style={{ flex: 1, backgroundColor }}>
@@ -294,32 +286,39 @@ const habitsToRender = habits && habits.length > 0 ? habits : exampleHabits;
           <ThemedText type="subtitle" style={styles.habitTitle}>
             Heutige Ziele:
           </ThemedText>
-          
-          {habitsToRender.map((habit) => (
-            <Pressable
-              key={habit.id}
-              onPress={() => toggleHabit(habit.id)}
-              style={styles.habitItem}
-            >
-              <View
-                style={[
-                  styles.checkbox,
-                  habit.checked && styles.checkboxChecked,
-                ]}
+
+          {habits && habits.length > 0 ? (
+            habits.map((habit) => (
+              <Pressable
+                key={habit.id}
+                onPress={() => toggleHabit(habit.id)}
+                style={styles.habitItem}
               >
-                {habit.checked && (
-                  <ThemedText style={styles.checkmark}>✓</ThemedText>
-                )}
-              </View>
-              <View style={styles.habitTextContainer}>
-                <ThemedText style={styles.habitLabel}>{habit.label}</ThemedText>
-                <ThemedText style={styles.habitDescription}>
-                  {habit.description}
-                </ThemedText>
-              </View>
-            </Pressable>
-          ))}
+                <View
+                  style={[
+                    styles.checkbox,
+                    habit.checked && styles.checkboxChecked,
+                  ]}
+                >
+                  {habit.checked && (
+                    <ThemedText style={styles.checkmark}>✓</ThemedText>
+                  )}
+                </View>
+                <View style={styles.habitTextContainer}>
+                  <ThemedText style={styles.habitLabel}>{habit.label}</ThemedText>
+                  <ThemedText style={styles.habitDescription}>
+                    {habit.description}
+                  </ThemedText>
+                </View>
+              </Pressable>
+            ))
+          ) : (
+            <ThemedText style={styles.noHabitsText}>
+              Keine Habits angelegt.
+            </ThemedText>
+          )}
         </ThemedView>
+
 
 
       </ScrollView>
@@ -363,14 +362,14 @@ const habitsToRender = habits && habits.length > 0 ? habits : exampleHabits;
                   <ThemedText type="subtitle" style={{ marginBottom: 12 }}>
                     Vordefiniertes Ziel auswählen:
                   </ThemedText>
-                  {['6000 Schritte', '1,5h Uni', '40 Liegestütze', '10 Klimmzüge'].map((label, index) => (
+                  {predefinedHabits.map(({ label, description }, index) => (
                     <Pressable
                       key={index}
                       onPress={() => {
                         const nextId = habits.length > 0 ? Math.max(...habits.map(h => h.id)) + 1 : 1;
                         setHabits(prev => [
                           ...prev,
-                          { id: nextId, label, description: '', checked: false }
+                          { id: nextId, label, description, checked: false }
                         ]);
                         setModalVisible(false);
                         setHabitMode(null);
@@ -382,7 +381,8 @@ const habitsToRender = habits && habits.length > 0 ? habits : exampleHabits;
                         borderBottomWidth: 1,
                       }}
                     >
-                      <ThemedText>{label}</ThemedText>
+                      <ThemedText style={{ fontWeight: '500' }}>{label}</ThemedText>
+                      <ThemedText style={{ opacity: 0.7, marginTop: 4 }}>{description}</ThemedText>
                     </Pressable>
                   ))}
                 </>
@@ -397,6 +397,12 @@ const habitsToRender = habits && habits.length > 0 ? habits : exampleHabits;
                     placeholder="Kurzname (z. B. Kniebeugen)"
                     value={newHabit}
                     onChangeText={setNewHabit}
+                    style={styles.textInput}
+                  />
+                  <TextInput
+                    placeholder="Beschreibung"
+                    value={newDescription}
+                    onChangeText={setNewDescription}
                     style={styles.textInput}
                   />
                   <View style={{ flexDirection: 'row', gap: 12, marginTop: 16 }}>
@@ -427,7 +433,16 @@ const habitsToRender = habits && habits.length > 0 ? habits : exampleHabits;
 }
 
 const styles = StyleSheet.create({
-   // Neue Styles für Modal
+  
+    noHabitsText: {
+      color: '#888',           // Grauton
+      fontStyle: 'italic',     // Optional: kursiv
+      textAlign: 'center',
+      marginVertical: 16,
+    },
+
+  
+  // Neue Styles für Modal
   modalBackdrop: {
     flex: 1,
     backgroundColor: '#00000088',
