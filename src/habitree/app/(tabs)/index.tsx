@@ -339,7 +339,7 @@ const habitsToRender = habits && habits.length > 0 ? habits : exampleHabits;
         <Modal
           visible={modalVisible}
           transparent
-          animationType="slide"
+          animationType="fade"
           onRequestClose={() => {
             setModalVisible(false);
             setHabitMode(null);

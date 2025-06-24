@@ -80,7 +80,7 @@ export default function TabTwoScreen() {
 
       <Modal
         visible={modalVisible !== null}
-        animationType="slide"
+        animationType="fade"
         transparent={true}
         onRequestClose={() => setModalVisible(null)}
       >
