@@ -188,7 +188,49 @@ Die Annahme ist, dass unsere Nutzer großteilig nur geringe  Aufmerksamkeitsspan
 6. Gerade zu Beginn ist mehr Motivation erforderlich, um das Wachsen der neuen Routinen zu verstärken und den Nutzer am Weiterführen und Durchhaltenzu motivieren.  
 
 . Definieren Sie alle Dokumentationsanforderugen, inkl. Benutzerhandbücher, Onlinehilfe, Installations-, Kennzeichnungs- und Auslieferungsanforderungen.
-. Definieren Sie die Priorität für diese zusätzlichen Produktanforderungen. Ergänzen Sie, falls sinnvoll, Angaben zu Stabilität, Nutzen, Aufwand und Risiko für diese Anforderungen.
+. Definieren Sie die Priorität für diese zusätzlichen Produktanforderungen. Ergänzen Sie, falls sinnvoll, Angaben zu Stabilität, Nutzen, Aufwand und Risiko für diese Anforderungen.  
+
+**Dokumentationsanforderungen:** 
+
+* Benutzerbezogene Dokumentation:
+
+* Projektbezogene Dokumentation:
+** "vision.adoc": Übersichtliche Darstellung der wesentlichen Bedarfe und Anforderungen der Nutzer an das System. Es gibt Aufschluss über:  +
+*** Scope:  +
+Gültigkeitsbereich des Projektes
+*** Positionierung: +
+Zielgruppen, Funktion und Vergleich mit Alternativen
+*** Produktvision:  +
+Alleinstellungsmerkmale, Abgrenzung und Ziel 
+*** Stakeholder:  +
+Charakterisierung aller potenziellen Anteilseigner am Produkt
+*** Funktionale Anforderungen:  +
+Hauptfunktionen, die über die Zeit in das Produkt implementiert werden sollen.
+*** Zusätzliche Anforderungen:  +
+Qualitätsanforderungen/ Constraints und Dokumentation des Projektes
+
+
+** "ux-concept.adoc": +
+Dokumentation zentraler Aspekte der Nutzererfahrung im Projekt. Konkretisierung der im vision.adoc erklärten Anforderungen, aus Nutzersicht.
+*** Personas: +
+Beschreibung potenzieller Nutzerzielgruppen mit Bedürfnissen, technischen Fähigkeiten, Gewohnheiten und Hindernissen.
+*** Nutzungskotext: +
+Erläuterung in welchen Situationen die Anwendung genutzt, welche Rahmenbedinungen existieren und welche Ziele User mit der Anwendung verfolgen.
+*** Wireframes/Wireflow:  +
+Visuelle Entwürfe der Benutzeroberfläche, basierend auf den wichtigsten User Stories.
+*** Gestaltung der Benutzeroberfläche:  +
+Kurze Beschreibung der Wireframes
+
+** "glossary.adoc":
+
+** "project_plan.adoc":
+
+** "architecture_notebook.adoc":
+
+
+* Technische Dokumentation:
+
+
 
 **Qualitätsandorderungen:**
 [%header, cols="4,1,1"]
