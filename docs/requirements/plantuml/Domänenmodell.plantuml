@@ -11,10 +11,7 @@ class User {
   - email
   - username
   - createdAt
-  - Anzahl Streaks (Eigen)
-  - Anzahl Streaks (Freunde)
-  - Anzahl Rückgriffe
-  - Recovery Mode (true/false)
+  - Recovery Mode ()
 }
 
 class Habit {
@@ -22,9 +19,8 @@ class Habit {
   - description
   - frequency
   - createdAt
-  - hasReminder
-  - currentStreak
-  - maxStreak
+  - currentStreak ()
+  - maxStreak ()
 }
 
 class HabitEntry {
@@ -32,43 +28,73 @@ class HabitEntry {
   - status
   - note
 }
+class Tagebucheintrag {
+  - date: Date
+  - content: Text
+  - mood: String
+  - weather: String
+}
 
+class Tagebuch {
+  - title
+  - createdAt
+}
+class seasonal_challenges {
+  - title
+  - description
+  - season
+  - isActive
+}
+class Statistik {
+  - totalHabits
+  - completedEntries
+  - successRate
+  - averageMood
+}
 
+class Dashboard {
+  - dailyOverview
+  - weeklySummary
+  - habitHighlights
+}
+class Grafen {
+  - type
+  - dataRange
+  - title
+}
+class Wissensbereich {
+  - topic
+  - content
+  - mediaType
+}
 class HabitStack
-class Tagebucheintrag
 
-
-
-class seasonal_challenges
-class Tagebuch
-
-
-class Statistik
-class Dashboard
-class Wissenschaftsbereich
 
 '=======================
 ' Beziehungen
 '=======================
 
-User "1" -- "0..*" Habit : besitzt >
-Habit "1" -- "0..*" HabitEntry : hat >
+User "1" *-- "0..*" Habit : besitzt >
 
-HabitStack -- "1..*" Habit : besteht aus >
+Habit "1" *-- "0..*" HabitEntry : enthält >
 
-Habit -- Statistik
+HabitStack "1" o-- "1..*" Habit : enthält >
+
 
 User -- HabitStack : erstellt Stack >
 
-
-
-User -- Tagebuch
 User -- seasonal_challenges
-seasonal_challenges -- Habit : besteht aus >
+seasonal_challenges -- "1..*" Habit : beinhaltet >
 
-Wissenschaftsbereich -- User : ruft ab >
+Wissensbereich - User : wird genutzt von >
 
-Statistik -- Dashboard : zeigt an >
-Statistik -- Grafen : wird interpretiert als >
+Habit - Statistik : bekommt Daten von <
+Statistik -- Dashboard : zeigt Daten >
+Statistik - Grafen : wird interpretiert als >
+
+User "1" - "0..*" Tagebuch : führt >
+
+Tagebuch "1" *- "0..*" Tagebucheintrag : enthält >
+
 
 @enduml
