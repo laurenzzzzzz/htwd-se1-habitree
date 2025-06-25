@@ -1,42 +1,74 @@
-@startuml Domänenmodell
-!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
-' Konfiguration für besseres Layout
+@startuml
+title Domänenmodell – Habit Tracker (integriert mit HabitStack)
+
 skinparam classAttributeIconSize 0
 
-' Klassen
-class Nutzer {
-  +nutzerId
-  +name
-  +email
+'=======================
+' Hauptklassen (Kernmodell)
+'=======================
+
+class User {
+  - email
+  - username
+  - createdAt
+  - Anzahl Streaks (Eigen)
+  - Anzahl Streaks (Freunde)
+  - Anzahl Rückgriffe
+  - Recovery Mode (true/false)
 }
 
-class Gewohnheit {
-  +gewohnheitId
-  +titel
-  +beschreibung
-  +frequenz
-  +startDatum
+class Habit {
+  - name
+  - description
+  - frequency
+  - createdAt
+  - hasReminder
+  - currentStreak
+  - maxStreak
 }
 
-class Eintrag {
-  +datum
-  +status  ' z.B. erledigt/nicht erledigt
+class HabitEntry {
+  - date
+  - status
+  - note
 }
 
-class Kategorie {
-  +name
-  +farbe
-}
 
-class Ziel {
-  +beschreibung
-  +zielDatum
-}
+class HabitStack
+class Tagebucheintrag
 
+
+
+class seasonal_challenges
+class Tagebuch
+
+
+class Statistik
+class Dashboard
+class Wissenschaftsbereich
+
+'=======================
 ' Beziehungen
-Nutzer "1" -- "0..*" Gewohnheit : besitzt >
-Gewohnheit "1" -- "0..*" Eintrag : hat >
-Gewohnheit "0..*" -- "0..1" Kategorie : gehört zu >
-Gewohnheit "0..1" -- "0..*" Ziel : verfolgt >
+'=======================
+
+User "1" -- "0..*" Habit : besitzt >
+Habit "1" -- "0..*" HabitEntry : hat >
+
+HabitStack -- "1..*" Habit : besteht aus >
+
+Habit -- Statistik
+
+User -- HabitStack : erstellt Stack >
+
+
+
+User -- Tagebuch
+User -- seasonal_challenges
+seasonal_challenges -- Habit : besteht aus >
+
+Wissenschaftsbereich -- User : ruft ab >
+
+Statistik -- Dashboard : zeigt an >
+Statistik -- Grafen : wird interpretiert als >
 
 @enduml
