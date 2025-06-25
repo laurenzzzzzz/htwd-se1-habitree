@@ -67,34 +67,37 @@ class Wissensbereich {
   - content
   - mediaType
 }
-class HabitStack
+class HabitStack {
+  - name
+  - ammount of Habits
+  - order
+}
 
 
 '=======================
 ' Beziehungen
 '=======================
+Wissensbereich - User : wird genutzt von >
+Tagebuch "1" *- "0..*" Tagebucheintrag : enthält >
+
 
 User "1" *-- "0..*" Habit : besitzt >
-
-Habit "1" *-- "0..*" HabitEntry : enthält >
+User "1" -- "0..*"HabitStack : erstellt Stack >
+User "0..*"-- "0..*"seasonal_challenges : nutzt >
+User "1" *- "0..*" Tagebuch : führt >
 
 HabitStack "1" o-- "1..*" Habit : enthält >
-
-
-User -- HabitStack : erstellt Stack >
-
-User -- seasonal_challenges
 seasonal_challenges -- "1..*" Habit : beinhaltet >
 
-Wissensbereich - User : wird genutzt von >
 
-Habit - Statistik : bekommt Daten von <
-Statistik -- Dashboard : zeigt Daten >
-Statistik - Grafen : wird interpretiert als >
+Habit "1" *-- "0..*" HabitEntry : enthält >
+Habit *- Statistik : bekommt Daten von <
 
-User "1" - "0..*" Tagebuch : führt >
 
-Tagebuch "1" *- "0..*" Tagebucheintrag : enthält >
+Statistik *-- Dashboard : zeigt Daten >
+Statistik *- Grafen : wird interpretiert als >
+
+
 
 
 @enduml
