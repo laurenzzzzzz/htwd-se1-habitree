@@ -239,19 +239,31 @@ Erläuterung von Kurzformen mit Bezug auf das Projekt.
 Visualisierung der zentralen Entitäten mit deren Beziehungen und Multiplizitäten innerhalb unseres Systemes.
 
 ** "project_plan.adoc": +
+Der Projektplan dokumentiert die organisatorischen, methodischen und technischen Vorgehensweisen des Teams während der iterativen und agilen Entwicklung mit Scrum. Das Dokument sorgt für Transparenz und Nachvollziehbarkeit hisnichtlich aller Teamprozesse und unterstützt die Qualitätssicherung und kontinuierliche Verbesserung, innerhalb und nach einzelner Sprints.
 *** Methoden und Praktiken +
+Beschreibt die eingesetzten Management und Entwicklungsmethoden, insbesondere Scrum, die innerhalb unseres Teams eingesetzt werden.
 *** Deployment +
+Detaillierte Beschreibung der Bereitstellung und Wartung der eingesetzten Softwarekomponenten
 *** Diskussion zur Vorgehensweise +
+Dokumentiert zentrale technische und organisatorische Herausforderungen sowie die daraus abgeleiteten Entscheidungen.
 *** Erkenntnisse (Lessons Learned) +
+Bündelt gewonnene Erfahrungen innerhalb der Retrospektive, Meetings und in Rücksprache mit Scrum- Master, aufgeteilt in negative und positive Ereignisse.
 
 
-** "architecture_notebook.adoc":
+** "architecture_notebook.adoc":  +
+Das Architecture Notebook beschreibt zentrale architekturrelevante Entscheidungen, Randbedingungen und Zielsetzungen des Systems. Es dokumentiert sowohl die technische Struktur als auch die übergeordneten Anforderungen und konzeptionellen Prinzipien, die der Entwicklung zugrunde liegen. Ziel ist es, für alle Teammitglieder und Stakeholdern eine klare, nachvollziehbare Architektur darzustellen, die durch den Prototyp validiert wird.
 *** Architekturziele: +
+Definiert die grundsätzlichen Ziele der Systemarchitektur, welche sich an den zusätzlichen Anforderungen im Visionsdokument teilweise orientieren.
 *** Annahmen und Abhängigkeiten:  +
+Enthält zentrale Projektannahmen und externe / interne Abhängigkeiten.
 *** Architekturrelevante Anforderungen: +
+Dokumentiert funktionale und technologische Anforderungen, die unmittelbaren Einfluss auf grundlegende Architekturentscheidungen haben.
 *** Entscheidungen, Nebenbedingungen und Bergündungen: +
+Erklärt und Begründet zentrale Technologieentscheidungen. 
 *** C4- Modell der Architektur: +
-*** Technisches Glossar: 
+Verdeutlicht die Struktur und Abgrenzung der App auf mehreren Ebenen/ Sichten.
+*** Technisches Glossar: +
+Definiert zentrale technische Begriffe. Ziel ist ein gemeinsames Verständnis der eingesetzten Technologien innerhalb des gesamten Teams und auch bei Stakeholdern zu gewährleisten.
 
 * Technische Dokumentation:
 
