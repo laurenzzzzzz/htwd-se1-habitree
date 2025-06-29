@@ -1,7 +1,7 @@
 @startuml C4-level2
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
 
-Person(student, "Studenten", "Nutzer")
+Person(Nutzer, "Nutzer")
 
 Container(frontend, "Mobile App", "Expo (React Native)", "Frontend läuft auf dem Handy")
 Container(backend, "Backend Service", "Node.js, Express", "Backend läuft auf dem externen Hochschulserver")
@@ -9,13 +9,13 @@ Container(auth, "Firebase Auth", "Firebase Service", "Authentifizierung der Nutz
 Container(db, "PostgreSQL Datenbank", "PostgreSQL", "Speichert Nutzerdaten, Gewohnheiten, etc.")
 Container(prisma, "Prisma ORM", "Node.js Modul", "Schnittstelle zwischen Backend und Datenbank")
 
-Rel(student, frontend, "nutzt")
-Rel(frontend, backend, "kommuniziert via REST API (Express Routen)")
-Rel(backend, auth, "nutzt zur Authentifizierung")
-Rel(auth, backend, "liefert Firebase ID")
-Rel(backend, prisma, "verwendet für Datenbankzugriffe")
-Rel(prisma, db, "verbindet zu")
-Rel(backend, db, "speichert Firebase ID und Nutzerdaten falls Nutzer noch nocht vorhanden in ")
+Nutzer --> frontend : nutzt
+frontend -> auth : meldet Nutzer an
+frontend -> backend : kommuniziert via REST API (Express Routen), schickt ID-Token mit
+
+Rel_D(backend, auth, "verifiziert ID-Token\nund erhält UID")
+
+backend -> prisma : speichert UID & Nutzerdaten, verwendet für Datenbankzugriff
+prisma --> db : verbindet und führt SQL-Befehle aus
 
 @enduml
-

@@ -6,7 +6,7 @@ System_Boundary(s1, "Habitreee") {
 }
 
 ' Personen
-Person(studierende, "Studierende", "Primäre Nutzer mit Wunsch nach Selbstoptimierung und flexiblem Alltag")
+Person(studierende, "Nutzer", "Primäre Nutzer mit Wunsch nach Selbstoptimierung und flexiblem Alltag")
 Person(teamvertreter, "Teamvertreter im Sprint Review", "Geben Feedback zur Usability aus Nutzerperspektive")
 Person(projektgruppe, "Projektgruppe", "Scrum-Master, PO, Entwicklerteam – verantwortlich für Entwicklung und Wartung")
 Person(professor, "Professor Dr.-Ing. habil. Jürgen Anke", "Projektauftraggeber, vermittelt Grundlagenwissen, stellt Iterationsaufgaben, bewertet Inhalte & Ergebnisse")

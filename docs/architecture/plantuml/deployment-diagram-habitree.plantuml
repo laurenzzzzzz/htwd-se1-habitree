@@ -28,8 +28,8 @@ database "Hochschulserver\n(PostgreSQL Server)" {
 
 ' Verbindungen
 [Mobile App\nReact Native (Expo)] --> [Backend Service\nNode.js + Express] : REST API (HTTPS)
-[Backend Service\nNode.js + Express] --> [Firebase Auth\nAuthentifizierung] : Authentifizierung
-[Firebase Auth\nAuthentifizierung] --> [Backend Service\nNode.js + Express] : Firebase ID
+[Backend Service\nNode.js + Express] -> [Firebase Auth\nAuthentifizierung] : Authentifizierung
+[Mobile App\nReact Native (Expo)] --> [Firebase Auth\nAuthentifizierung] : meldet Nutzer an
 [Prisma ORM\nORM-Modul] --> [PostgreSQL Datenbank\nNutzerdaten, Gewohnheiten] : SQL-Zugriff
 [Backend Service\nNode.js + Express] --> [Prisma ORM\nORM-Modul] : nutzt
 
