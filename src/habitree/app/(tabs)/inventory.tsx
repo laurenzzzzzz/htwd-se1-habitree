@@ -26,17 +26,6 @@ export default function TabTwoScreen() {
   const [modalVisible, setModalVisible] = useState<null | 'abzeichen5' | 'abzeichen6'>(null);
 
   const renderModalContent = () => {
-    if (modalVisible === 'abzeichen5') {
-      return (
-        <>
-          <Text style={styles.modalTitle}>Rauchen abgelegt</Text>
-          <Text style={styles.modalText}>
-            Starke Leistung! Du hast erfolgreich das Rauchen aufgegeben und damit einen großen Schritt in Richtung besserer Gesundheit und Lebensqualität gemacht. Weiter so!
-          </Text>
-        </>
-      );
-    }
-      
     if (modalVisible === 'abzeichen6') {
       return (
         <>
@@ -48,11 +37,23 @@ export default function TabTwoScreen() {
       );
     }
 
+    if (modalVisible === 'abzeichen5') {
+      return (
+        <>
+          <Text style={styles.modalTitle}>Rauchen ablegen</Text>
+          <Text style={styles.modalText}>
+            Starke Leistung! Du hast erfolgreich das Rauchen aufgegeben und damit einen großen Schritt in Richtung besserer Gesundheit und Lebensqualität gemacht. Weiter so!
+          </Text>
+        </>
+      );
+    }
+
     return null;
   };
 
   return (
     <View style={{ flex: 1, backgroundColor }}>
+      {/* Leerzeile durch Abstand oben */}
       <ThemedText type="subtitle" style={styles.erfolgeTitle}>
         Erfolge
       </ThemedText>
@@ -80,7 +81,7 @@ export default function TabTwoScreen() {
 
       <Modal
         visible={modalVisible !== null}
-        animationType="fade"
+        animationType="slide"
         transparent={true}
         onRequestClose={() => setModalVisible(null)}
       >
@@ -103,6 +104,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     textAlign: 'center',
     marginVertical: 12,
+    marginTop: 90,
   },
   badgeRow: {
     flexDirection: 'row',
@@ -140,11 +142,11 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     marginTop: 20,
-    backgroundColor: 'rgb(25, 145, 137)', 
+    backgroundColor: 'rgb(25, 145, 137)',
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 10,
-},
+  },
   closeButtonText: {
     color: '#fff',
     fontWeight: '600',
