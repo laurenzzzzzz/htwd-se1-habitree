@@ -29,7 +29,7 @@ export default function TabTwoScreen() {
     if (modalVisible === 'abzeichen6') {
       return (
         <>
-          <Text style={styles.modalTitle}>Täglich Sport 1h</Text>
+          <Text style={styles.modalTitle}>Täglicher Sport</Text>
           <Text style={styles.modalText}>
             Gratulation, du hast 66 Tage am Stück täglich eine Stunde Sport getrieben und damit nachhaltig deinen Alltag und Wohlbefinden verbessert. Bleib dran! :)
           </Text>
@@ -40,7 +40,7 @@ export default function TabTwoScreen() {
     if (modalVisible === 'abzeichen5') {
       return (
         <>
-          <Text style={styles.modalTitle}>Rauchen ablegen</Text>
+          <Text style={styles.modalTitle}>Rauchen abgelegt</Text>
           <Text style={styles.modalText}>
             Starke Leistung! Du hast erfolgreich das Rauchen aufgegeben und damit einen großen Schritt in Richtung besserer Gesundheit und Lebensqualität gemacht. Weiter so!
           </Text>
@@ -81,7 +81,7 @@ export default function TabTwoScreen() {
 
       <Modal
         visible={modalVisible !== null}
-        animationType="slide"
+        animationType="fade"
         transparent={true}
         onRequestClose={() => setModalVisible(null)}
       >
