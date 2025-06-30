@@ -11,11 +11,13 @@ Container(prisma, "Prisma ORM", "Node.js Modul", "Schnittstelle zwischen Backend
 
 Nutzer --> frontend : nutzt
 frontend -> auth : meldet Nutzer an
-frontend -> backend : kommuniziert via REST API (Express Routen), schickt ID-Token mit
+frontend -> backend : kommuniziert via REST API 
 
 Rel_D(backend, auth, "verifiziert ID-Token\nund erhält UID")
 
-backend -> prisma : speichert UID & Nutzerdaten, verwendet für Datenbankzugriff
-prisma --> db : verbindet und führt SQL-Befehle aus
+backend -> prisma : persistiert Daten und greift über ORM auf DB zu
+prisma --> db : ORM-Zugriff auf Datenbank
+
+
 
 @enduml
