@@ -255,9 +255,9 @@ Da der Server immer online ist, wird mir Ausfallzeiten erstmal nicht gerechnet. 
 
 == Wireframes und Wireflow
 // Fügen Sie Wireframes als Bilder oder als Link (z.B. zu einem Miroboard) ein
-https://www.figma.com/design/Y2WTCzOev0BUor9mt8Ee6o/Habitree?node-id=0-1&t=TYwYh26QllyDRy4f-1
+https://www.figma.com/design/Y2WTCzOev0BUor9mt8Ee6o/Habitree?node-id=0-1&t=TYwYh26QllyDRy4f-1 +
 // Beziehen Sie ihre Wireframes auf konkrete User Stories oder Epics.
-User Stories
+User Stories +
 #29, 30
 Bild 1
 
@@ -279,4 +279,5 @@ Bild 6
 
 nicht zugeordnet:
 34, 35, 37, 41, 42, 43
+
 == Gestaltung der Benutzeroberfläche
