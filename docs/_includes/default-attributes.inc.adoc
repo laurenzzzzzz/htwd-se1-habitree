@@ -1,5 +1,5 @@
 // Meta
-:project-name: Habit-Tracker (T03)
+:project-name: Habit-Tracker (T03) - Habitree
 :project-system-name: Habitree
 // Settings:
 :toc:

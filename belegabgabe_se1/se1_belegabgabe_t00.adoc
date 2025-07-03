@@ -49,10 +49,9 @@ include::{docs-project-management}/project_plan.adoc[lines=1..1;4..-1,leveloffse
 <<<
 
 // --- Technische Spezifikation ---
-= Technische Spezifikation
-* Produktvision
-* Glossar und Domänenmodel
-* UX-Konzept
+//* Produktvision
+//* Glossar und Domänenmodel
+//* UX-Konzept
 
 :imagesdir: {docs-requirements}/images
 
@@ -68,14 +67,17 @@ include::{docs-requirements}/ux-concept.adoc[lines=1..1;4..-1,leveloffset=+1]
 <<<
 
 // --- Entwurfsdokumentation ---
-= Entwurfsdokumentation
-* Architektur-Notizbuch
-* Test Cases
+//= Entwurfsdokumentation
+//* Architektur-Notizbuch
+//* Test Cases
 
 // Architektur-Notizbuch
 :imagesdir: {docs-architecture}/images
 include::{docs-architecture}/architecture_notebook.adoc[lines=1..1;4..-1,leveloffset=+1]
 <<<
+// Dokumentation Front und BAckend
+include::{docs-architecture}/Dokumentation_Backend.asciidoc[lines=1..1;4..-1,leveloffset=+1]
+include::{docs-architecture}/Dokumentation_Frontend.asciidoc[lines=1..1;4..-1,leveloffset=+1]
 // Test Cases
 :imagesdir: {docs-test}/images
 include::{docs-test}/test_cases.adoc[lines=1..1;4..-1,leveloffset=+1]
