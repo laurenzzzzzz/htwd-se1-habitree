@@ -192,9 +192,6 @@ Die Annahme ist, dass unsere Nutzer großteilig nur geringe  Aufmerksamkeitsspan
 
 **Dokumentationsanforderungen:** 
 
-* Benutzerbezogene Dokumentation:
-
-
 * Projektbezogene Dokumentation:
 -  Gliederung und Unterteilung des Projekts anhand der einzelnen Komponenten, unter anderem: vision.adoc, project_plan.adoc, glossary.adoc etc. +
 - Gemeinsame Ablage aller Dokumente im Git-Repository zur effizienten Versionsverwaltung +
@@ -264,9 +261,6 @@ Erklärt und Begründet zentrale Technologieentscheidungen.
 Verdeutlicht die Struktur und Abgrenzung der App auf mehreren Ebenen/ Sichten.
 *** Technisches Glossar: +
 Definiert zentrale technische Begriffe. Ziel ist ein gemeinsames Verständnis der eingesetzten Technologien innerhalb des gesamten Teams und auch bei Stakeholdern zu gewährleisten.
-
-* Technische Dokumentation:
-
 
 
 **Qualitätsandorderungen:**
