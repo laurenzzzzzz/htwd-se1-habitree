@@ -257,27 +257,44 @@ Da der Server immer online ist, wird mir Ausfallzeiten erstmal nicht gerechnet. 
 // Fügen Sie Wireframes als Bilder oder als Link (z.B. zu einem Miroboard) ein
 https://www.figma.com/design/Y2WTCzOev0BUor9mt8Ee6o/Habitree?node-id=0-1&t=TYwYh26QllyDRy4f-1 +
 // Beziehen Sie ihre Wireframes auf konkrete User Stories oder Epics.
-User Stories +
-#29, 30
-Bild 1
 
-#33
-Bild 2
+=== Homescreen
 
-#31
-Bild 3
+image::Wireframe_Wireflow/Homescreen.PNG[200,200]
+image::Wireframe_Wireflow/Homescreen 2.PNG[200,200]
+image::Wireframe_Wireflow/Wochenstatistik.PNG[200,200]
 
-#36
-Bild 4
+=== Habits abtrainieren
 
-#40, 39, 38
-Bild 5
+image::Wireframe_Wireflow/Habit_abtrainieren.PNG[200,200]
+image::Wireframe_Wireflow/Habit_abtrainieren_2.PNG[200,200]
 
-#39
-Bild 6
+=== Habits anlegen
+image::Wireframe_Wireflow/Habit_hinzufügen.PNG[200,200]
+image::Wireframe_Wireflow/Habit_hinzufügen_2.PNG[200,200]
+image::Wireframe_Wireflow/Habit_hinzufügen_3.PNG[200,200]
+image::Wireframe_Wireflow/Habit_hinzufügen_4.PNG[200,200]
+image::Wireframe_Wireflow/Habit_hinzufügen_5.PNG[200,200]
+image::Wireframe_Wireflow/Habit_hinzufügen_6.PNG[200,200]
+
+=== Eigenes Habit anlegen
+image::Wireframe_Wireflow/Habit_hinzufügen_eigen.PNG[200,200]
+
+=== Baum
+image::Wireframe_Wireflow/Baum_1.PNG[200,200]
+image::Wireframe_Wireflow/Baum_2.PNG[200,200]
+image::Wireframe_Wireflow/Baum_3.PNG[200,200]
+image::Wireframe_Wireflow/Baum_4.PNG[200,200]
+
+=== Achivements 
+image::Wireframe_Wireflow/Achivement.PNG[200,200]
+image::Wireframe_Wireflow/Achivement_2.PNG[200,200]
+
+=== Profil
+image::Wireframe_Wireflow/Profile.PNG[200,200]
+
+=== Loginscreen
+image::Wireframe_Wireflow/Login.PNG[200,200]
 
 
-nicht zugeordnet:
-34, 35, 37, 41, 42, 43
-
-== Gestaltung der Benutzeroberfläche
+//== Gestaltung der Benutzeroberfläche
