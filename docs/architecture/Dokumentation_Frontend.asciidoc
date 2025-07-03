@@ -30,7 +30,7 @@ npm -v
 cd src/habitree
 npm install expo <- ausführen beim ersten mal
 npx expo install --fix <- Installiert und Updatet alle Packages
-npx expo start -c
+npx expo start --tunnel --go --clear
 ----
 
 . Scanne den angezeigten QR-Code mit der **Expo Go App** auf deinem Smartphone.
