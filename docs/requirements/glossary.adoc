@@ -6,7 +6,7 @@ include::../_includes/default-attributes.inc.adoc[]
 
 
 == Einführung
-In diesem Dokument werden die wesentlichen Begriffe aus dem Anwendungsgebiet (Fachdomäne) der <Projektthema-Systems> definiert. Zur besseren Übersichtlichkeit sind Begriffe, Abkürzungen und Datendefinitionen gesondert aufgeführt.
+In diesem Dokument werden die wesentlichen Begriffe aus dem Anwendungsgebiet (Fachdomäne) der {project-system-name} App definiert. Zur besseren Übersichtlichkeit sind Begriffe, Abkürzungen und Datendefinitionen gesondert aufgeführt.
 
 == Begriffe
 [%header]
@@ -58,3 +58,30 @@ In diesem Dokument werden die wesentlichen Begriffe aus dem Anwendungsgebiet (Fa
 == Domänenmodell
 // Fügen Sie hier eine Abbildung mit ihrem Domänenmodell ein
 image::Domänenmodell.png[]
+
+=== Übersicht benutztes Wissen(Quellen)
+|===
+|Name | Link/Besitz
+|*Atomic Habits* + 
+James Clear 
+|physischer Besitz, +
+Zusammenfassung: https://www.instagantt.com/de/project-management/atomic-habits-summary 
+
+
+|*The Power of Habit* + 
+Charles Duhigg
+|Zusammenfassung: https://www.getstoryshots.com/de/books/the-power-of-habit-summary/
+
+|*ManyHats* + 
+u/IdeaRoots
+|Inspiration für erste Ideen und Abläufe: https://www.reddit.com/r/getdisciplined/comments/f5o6bz/method_ive_created_a_onepage_habit_tracker_app/?tl=de -> https://manyhatsapp.com/
+
+|*So krempelst du dein Leben um!* +
+Dinge Erklärt
+|https://www.youtube.com/watch?v=OSk0AUT4_8o
+
+|*Thema3_HabitTracker.pdf* +
+Juergen Anke
+
+|https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/21511831560/CourseNode/1636947272947851009/Themenbeschreibungen/Thema3_HabitTracker.pdf
+|===
