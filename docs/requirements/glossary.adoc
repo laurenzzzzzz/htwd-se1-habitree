@@ -59,7 +59,7 @@ In diesem Dokument werden die wesentlichen Begriffe aus dem Anwendungsgebiet (Fa
 // Fügen Sie hier eine Abbildung mit ihrem Domänenmodell ein
 image::Domänenmodell.png[]
 
-=== Übersicht benutztes Wissen(Quellen)
+== Übersicht benutztes Wissen(Quellen)
 |===
 |Name | Link/Besitz
 |*Atomic Habits* + 
