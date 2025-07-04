@@ -270,16 +270,14 @@ image::Wireframe_Wireflow/Habit_abtrainieren.PNG[200,200]
 image::Wireframe_Wireflow/Habit_abtrainieren_2.PNG[200,200]
 
 === Habits anlegen
-[cols="3*", frame="none", grid="none"]
-|===
-| image::Wireframe_Wireflow/Habit_hinzufügen.PNG[200,200]
-| image::Wireframe_Wireflow/Habit_hinzufügen_2.PNG[200,200]
-| image::Wireframe_Wireflow/Habit_hinzufügen_3.PNG[200,200]
 
-| image::Wireframe_Wireflow/Habit_hinzufügen_4.PNG[200,200]
-| image::Wireframe_Wireflow/Habit_hinzufügen_5.PNG[200,200]
-| image::Wireframe_Wireflow/Habit_hinzufügen_6.PNG[200,200]
-|===
+image::Wireframe_Wireflow/Habit_hinzufügen.PNG[200,200]
+image::Wireframe_Wireflow/Habit_hinzufügen_2.PNG[200,200]
+image::Wireframe_Wireflow/Habit_hinzufügen_3.PNG[200,200]
+image::Wireframe_Wireflow/Habit_hinzufügen_4.PNG[200,200]
+image::Wireframe_Wireflow/Habit_hinzufügen_5.PNG[200,200]
+image::Wireframe_Wireflow/Habit_hinzufügen_6.PNG[200,200]
+
 
 === Eigenes Habit anlegen
 image::Wireframe_Wireflow/Habit_hinzufügen_eigen.PNG[200,200]
