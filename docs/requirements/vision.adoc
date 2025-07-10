@@ -25,8 +25,8 @@ Nicht im Umfang dieses Dokuments enthalten sind Funktionen wie psychologische Be
 Siehe <<#glossary, Glossar>>.
 //Siehe <<./glossary.adoc#glossary, Glossar>>.
 
-=== Referenzen
-(hier externe Verweise zu anderen Dokumenten, Quellen, Standards etc. einfügen, sofern notwendig)
+//=== Referenzen
+//(hier externe Verweise zu anderen Dokumenten, Quellen, Standards etc. einfügen, sofern notwendig)
 
 == Positionierung
 
