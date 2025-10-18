@@ -126,23 +126,6 @@ Zudem ist sein Selbstwertgefühl manchmal belastet, wenn er das Gefühl hat, „
 
 
 == Nutzungskontext
-// Beschreiben Sie die Arbeitsaufgaben, Arbeitsmittel, physische und soziale Umgebung, in der das Produkt genutzt wird. 
-// Eventuell sind Angaben zu Fehlerquellen, Häufigkeiten von Ereignisse sowie Bearbeitungsdauern von Vorgängen relevant
-
-//Hier sind einige Anregungen:
-
-//Zutreffendes angeben, nicht zutreffendes streichen oder auskommentieren
-. Anzahl der Personen, die an der Erfüllung der Aufgabe beteiligt sind. Ändert sich das? 
-. Wie lange dauert die Bearbeitung der Aufgabe? Wie viel Zeit wird für jeden Arbeitsschritt benötigt? Ändert sich das?
-. Gibt es besondere Umgebungsbedingungen, z.B. mobil, offline, Außeneinsatz, Touchbedienung, Nutzung durch seh- oder hörbeeinträchtigte Personen?
-. Welche Systemplattformen werden heute eingesetzt? Welche sind es ggf. zukünftig?  
-. Welche anderen Anwendungen sind im Einsatz? Muss ihre Anwendung mit diesen integriert werden?
-
-Hier können zudem bei Bedarf Teile des Unternehmensmodells (Prozesse, Organigramme, IT-Landschaft, ...) eingefügt werden, um die beteiligten Aufgaben und Rollen zu skizzieren.
-
-
-abzutrainieren. +
-. In Welchen Kontext wird das Produkt genutzt?  + 
 
 === Arbeitsaufgaben:
 ==== Wer nutzt das Produkt?  +  
@@ -244,14 +227,14 @@ Unser Programm verfügt über einen Lightmode und einen Darkmode. Diese können 
 === Systeme und Plattformen:
 ==== Welche Plattformen werden unterstützt?
 Unterstütze Plattformen sind iOS und Android. 
-Es ist möglich die App im Browser zu benutzen, wird aber nicht unterstütz.
+Es ist möglich die App im Browser zu benutzen, wird aber nicht unterstützt.
 
 
 ==== Kann eine Datensicherheit garantiert werden?
 Nein
 
 ==== Mit wie viel Ausfallzeit muss gerechnet werden?
-Da der Server immer online ist, wird mir Ausfallzeiten erstmal nicht gerechnet. Für Wartungen des Servers, auf dem der Datenbankserver läuft, gewartet wird können geringe Ausfallzeiten entstehen. A
+Da der Server immer online ist, wird mir Ausfallzeiten erstmal nicht gerechnet. Für Wartungen des Servers, auf dem der Datenbankserver läuft, gewartet wird können geringe Ausfallzeiten entstehen. 
 
 == Wireframes und Wireflow
 // Fügen Sie Wireframes als Bilder oder als Link (z.B. zu einem Miroboard) ein
