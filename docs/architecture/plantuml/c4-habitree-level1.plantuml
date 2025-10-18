@@ -1,39 +1,23 @@
-@startuml C4-Level1
-!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+@startuml c4-habitree-level1
+!include <c4/C4_Context.puml>
+!include <C4/C4>  
+!include <C4/C4_Container> 
 
-System_Boundary(s1, "Habitreee") {
-  System(habitreee, "Habitreee", "Habit-Tracking-App zur Unterstützung positiver Gewohnheiten")
+Person(user, "Nutzer", "Möchte seine Habits tracken")
+System_Boundary(gewohnheitstier, "Habitree") {
+  
+  Container(api,    "Backend API", "Node.js/Express.js", "Verarbeitet Anfragen von der Mobile App ")
+  
+  Container(mobileApp, "Mobile App", "Expo/JavaScript/", "Mobile UI für Nutzerinteraktion")
+  ContainerDb(db,    "Database",  "PostgreSQL", "Datenspeicherung")
 }
 
-' Personen
-Person(studierende, "Nutzer", "Primäre Nutzer mit Wunsch nach Selbstoptimierung und flexiblem Alltag")
-Person(teamvertreter, "Teamvertreter im Sprint Review", "Geben Feedback zur Usability aus Nutzerperspektive")
-Person(projektgruppe, "Projektgruppe", "Scrum-Master, PO, Entwicklerteam – verantwortlich für Entwicklung und Wartung")
-Person(professor, "Professor Dr.-Ing. habil. Jürgen Anke", "Projektauftraggeber, vermittelt Grundlagenwissen, stellt Iterationsaufgaben, bewertet Inhalte & Ergebnisse")
-Person(coach, "Dipl.-Inf. (FH) Christoph Zirkelbach", "Coach für das Thema 'Habit Tracker', unterstützt bei themenbezogenen & technischen Fragen")
-Person(wissenschaft, "Wissenschaftliche Community", "Liefern psychologische & verhaltenstherapeutische Grundlagen")
-Person(behörden, "Behörden (Gesetzgeber)", "Stellen rechtliche Anforderungen z.B. DSGVO, Urheberrecht")
-Person(hochschule, "Hochschule", "Stellt Infrastruktur (Server) für das Backend bereit")
 
-' Layout-Anordnung
-Lay_L(professor, projektgruppe)
-Lay_L(coach, projektgruppe)
-Lay_D(hochschule, projektgruppe)
-Lay_R(wissenschaft, projektgruppe)
-Lay_R(behörden, studierende)
 
-' Beziehungen
-Rel(studierende, habitreee, "verwenden zur Selbstoptimierung & Gewohnheitsbildung")
-Rel(studierende, projektgruppe, "gibt Feedback")
-Rel(teamvertreter, habitreee, "testet")
-Rel(teamvertreter, projektgruppe, "gibt Feedback zu Usability & Funktionalität")
-Rel(projektgruppe, habitreee, "entwickelt, testet, wartet, implementiert Funktionen & Inhalte")
-Rel(hochschule, projektgruppe, "stellt Server & Netzwerkinfrastruktur")
-Rel(wissenschaft, projektgruppe, "liefert psychologische & theoretische Grundlagen")
-Rel(behörden, projektgruppe, "gibt Richtlinien vor")
-Rel(professor, projektgruppe, "gibt Richtlinien & bewertet Ergebnisse")
-Rel(professor, habitreee, "definiert Anforderungen & Zielsetzung")
-Rel(coach, projektgruppe, "unterstützt bei thematischen & technischen Fragen")
-Rel(coach, habitreee, "berät bei Umsetzung des Projekts")
+
+Rel(user, mobileApp, "nutzt")
+Rel_R(api,       db,     "SQL-CRUD")
+Rel(mobileApp, api, "REST-Calls")
+
 
 @enduml

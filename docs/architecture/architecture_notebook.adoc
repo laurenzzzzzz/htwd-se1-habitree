@@ -78,11 +78,14 @@ Die Architektur der Habit-Tracking-App verfolgt das Ziel, eine robuste, nutzerfr
 == Architektur-relevante Anforderungen
 //Fügen Sie eine Referenz / Link zu den Anforderungen ein, die implementiert werden müssen, um die Architektur zu erzeugen.
 
-* Datenbank PostgresSQL erstellen auf Server
-* Firebird Database bzw. System für Authentifizierung
-* NodeJS/Expo für App Entwicklung installieren
-* Express für Kommunikation zwischen App und Prisma 
-* Prisma für Kommunikation zwischen Express und Datenbank
+* Das System muss eine persistente Speicherung von Nutzerdaten und Habit-Daten ermöglichen.
+* Die Anwendung muss Nutzerregistrierung und -authentifizierung unterstützen.
+* Es muss eine sichere Speicherung sensibler Daten (z. B. Passwörter) gewährleistet sein.
+* Die Architektur muss eine mobile Anwendung unterstützen.
+* Die Lösung muss modular aufgebaut sein, um eine Trennung zwischen Präsentation, Logik und Datenzugriff zu ermöglichen.
+* Es muss eine Schnittstelle zur Kommunikation zwischen Frontend und Backend bereitgestellt werden 
+* Die Architektur soll wartbar und erweiterbar sein.
+* Die Anwendung muss mehrere Nutzer gleichzeitig unterstützen 
 
 == Entscheidungen, Nebenbedingungen und Begründungen
 //[List the decisions that have been made regarding architectural approaches and the constraints being placed on the way that the developers build the system. These will serve as guidelines for defining architecturally significant parts of the system. Justify each decision or constraint so that developers understand the importance of building the system according to the context created by those decisions and constraints. This may include a list of DOs and DON’Ts to guide the developers in building the system.]
@@ -141,17 +144,9 @@ Weitere optionale Sichten (nur bei Bedarf):
 
 === Kontextabgrenzung
 //Level 1 im C4-Modell
-image::C4-Level1.png[]
+image::c4-habitree-level1.png[]
 Das C4-Level-1-Diagramm zeigt das Kontextdiagramm des Projekts „Habitreee“, einer Habit-Tracking-App zur Förderung positiver Gewohnheiten. Es stellt die wichtigsten Stakeholder, deren Rollen sowie deren Beziehungen zum System und zur Projektgruppe dar.
 
-* Studierende sind die Hauptnutzer der App und geben aktiv Feedback zur Usability.
-* Die Projektgruppe entwickelt, betreibt und wartet das System.
-* Professor Dr.-Ing. Anke fungiert als Auftraggeber und bewertet Inhalte und Ergebnisse.
-* Coach Christoph Zirkelbach unterstützt das Team inhaltlich und technisch.
-* Die Hochschule stellt die notwendige Infrastruktur zur Verfügung.
-* Die Wissenschaftliche Community liefert fachliche Grundlagen zur Verhaltenspsychologie.
-* Behörden geben rechtliche Rahmenbedingungen vor.
-* Teamvertreter testen die Anwendung regelmäßig im Sprint Review. 
 
 === Container
 //Level 2 im C4-Modell
