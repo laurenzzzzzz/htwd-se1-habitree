@@ -89,31 +89,110 @@ Die Architektur der Habit-Tracking-App verfolgt das Ziel, eine robuste, nutzerfr
 
 == Entscheidungen, Nebenbedingungen und Begründungen
 //[List the decisions that have been made regarding architectural approaches and the constraints being placed on the way that the developers build the system. These will serve as guidelines for defining architecturally significant parts of the system. Justify each decision or constraint so that developers understand the importance of building the system according to the context created by those decisions and constraints. This may include a list of DOs and DON’Ts to guide the developers in building the system.]
-. **EXPO (React Native) als Frontend-Framework**
-.. *Begründung:* Plattformübergreifende Entwicklung (iOS und Android) mit einer gemeinsamen Codebasis. Schnelle UI-Entwicklung dank Hot Reload. Unterstützt Offline-Speicherung via lokalem Storage. Lernkurve schien einfach als Flutter.
 
-. **Node.js mit Express als Backend**
-.. *Begründung:* Geringe Einstiegshürde dank vorhandener Kenntnisse (z. B. aus EWA), schnelle API-Entwicklung mit Express, eine einheitliche Programmiersprache (JavaScript/TypeScript) für Frontend und Backend. Expo zwingt sowieso zur Nutzung von NodeJS.
 
-//. **REST API mit Express-Routen**
-//.. *Begründung:* Klare Trennung der Endpunkte (`/habits`, `/logs`, `/users`) für Wartbarkeit und einfache Integration mit dem Frontend. Standardkonform, leicht erweiterbar.
+=== Frontend-Technologie: Expo (React Native)
 
-. **PostgreSQL als relationale Datenbank**
-.. *Begründung:* Zuverlässige Speicherung strukturierter Daten (Habits, User). Unterstützt zeitbasierte Abfragen (z. B. „alle Habits im Juni“), geeignet für langfristige Entwicklung.
+*Begründung:* +
+- Plattformübergreifende Entwicklung (iOS & Android) mit gemeinsamer Codebasis +
+- Live-Testing auf echter Hardware über *Expo Go* per QR-Scan +
+- Schnelles Debugging & Hot Reloading +
+- Nutzung vertrauter Webtechnologien (JavaScript / TypeScript) +
+- Keine macOS-Umgebung notwendig → Entwicklung auf Windows möglich +
+- Unterstützt JSON-basierte Konfiguration und lokalen Speicher +
 
-. **Prisma als ORM**
-.. *Begründung:* Abstraktionsebene zwischen Express und PostgreSQL. Vereinfachtes Datenbankmanagement, automatisierte Migrationen, Typsicherheit. Schien als einfachste Technologie zur Umsetzung dieser Faktoren.
+*Nebenbedingung:* +
+- Expo-App muss auf Testgeräten installiert sein, um Builds zu starten +
+- Komplexe native Module sollten vermieden werden +
 
-. **Keine eigene Authentifizierungslösung - Firebase Auth**
-.. *Begründung:* Sicherheit und Zeitersparnis, Google-gesicherte Infrastruktur 2FA, Social Logins, Passwort-Reset
-.. *DO:* Firebase Authentication verwenden, Passwort-Hashing
-.. *DON’T:* Passwort-Handling selbst entwickeln
+---
 
-. **App muss offlinefähig sein**
-.. *Begründung:* Nutzer wollen auch ohne Internet ihre Gewohnheiten erfassen können (z. B. im Flugmodus oder unterwegs).
+=== Alternative bewertet: Flutter
 
-. **i18next für Internationalisierung**
-.. *Begründung:* i18next mit JSON-basierten Übersetzungen kompatibel mit React Native worauf Expo basiert.
+*Begründung für Verwerfung:* +
+- Nur virtuelle Testumgebung, kein direkter Test auf physischer Hardware +
+- Hoher Speicherverbrauch & Overhead für kleines Projekt +
+- Eingeschränkte Drittanbieterbibliotheken +
+- Für kleine studentische Teams mit kurzen Iterationszyklen ungeeignet +
+
+---
+
+=== Backend-Technologie: Node.js mit Express
+
+*Begründung:* +
+- Einheitliche Sprache (JavaScript) für Frontend & Backend +
+- geringere Einarbeitungszeit +
+- Bekannte Syntax aus vorherigen Modulen (z. B. EWA) +
+- Schnelle Erstellung von REST-Endpunkten +
+- Hohe Community-Unterstützung und viele verfügbare Bibliotheken +
+
+*DO:* +
+- Standardisierte Routenstruktur (z. B. `/habits`, `/users`, `/achievements`)  
+
+---
+
+=== Datenbank: PostgreSQL (mit Prisma ORM)
+
+*Begründung:* +
+- Zuverlässige relationale Datenbank für strukturierte Daten (User, Habits, Achievements) +
+- Unterstützt zeitbasierte Abfragen (z.B.: „Habits im letzten Monat“) +
+- Prisma ORM bietet Typsicherheit, Migrationen und abstrahiertes Datenbank-Management +
+- Vereinfachte Integration mit Express / Node.js +
+
+*Nebenbedingung:* +
+- Datenmodelle werden zentral über Prisma-Schema gepflegt +
+- Migrationsänderungen dokumentieren und im Repository versionieren +
+
+---
+
+=== Authentifizierung: Firebase Auth
+
+*Begründung:*  +
+- Sichere und skalierbare Lösung mit minimalem Implementierungsaufwand  +
+- Unterstützt 2-Faktor-Authentifizierung, Social Logins und Passwort-Reset +
+- Spart Entwicklungszeit, da keine eigene Authentifizierungslogik nötig ist +
+
+*DO:* +
+- Firebase Authentication verwenden (inkl. Passwort-Hashing) +
+
+*DON’T:* +
+- Passwörter selbst speichern oder eigene Authentifizierung entwickeln +
+
+---
+
+=== Internationalisierung (i18next) 
+
+*Begründung:* +
+- Kompatibel mit React Native +
+- Einfache JSON-basierte Übersetzungsstruktur +
+- Skalierbar für zukünftige Sprachen und Erweiterungen +
+
+---
+
+=== Offline-Funktionalität
+
+*Begründung:* +
+- Nutzer sollen Gewohnheiten auch ohne Internetverbindung (z. B. im Flugmodus) erfassen können +
+- Verwendung lokaler Speicherung (*AsyncStorage* / JSON) zur Synchronisation mit dem Backend bei Wiederverbindung +
+- Stellt sicher, dass Eingaben nicht verloren gehen, wenn kurzfristig keine Verbindung besteht +
+
+---
+
+=== Deployment & Entwicklungsumgebung
+
+*Problem:* +
+- Native Entwicklung (Swift/Xcode oder Kotlin/Android Studio) war aufgrund fehlender macOS- bzw. Android-Hardware nicht praktikabel +
+- Testen auf echten Geräten nur eingeschränkt möglich +
+
+*Entscheidung:* +
+- Nutzung von *Expo* für Frontend-Entwicklung und Testing auf echter Hardware +
+- Backend läuft auf bereitgestelltem Windows-Server, wodurch kein lokaler Rechner dauerhaft aktiv sein muss +
+
+*Vorgehensweise:* +
+- Express.js-Server aufgesetzt und über *Prisma* an *PostgreSQL* angebunden +
+- Kommunikation erfolgt über REST-API +
+- *Firebase Auth* integriert für Nutzerverwaltung +
+- Setup wurde dokumentiert, sodass Teammitglieder es lokal reproduzieren und erweitern +
 
 
 //Alles ab hier ist jetzt nichtmehr aktuell und müsste angepasst werden auf das von oben(falls das jetzt so bleibt)
