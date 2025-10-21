@@ -1,292 +1,207 @@
 = Vision: Habitree
-Laurenz Born <laurenz.born@stud.htw-dresden.de>; Alexander Chlebowski <alexander.chlebowski@stud.htw-dresden.de>; Leonhard Hermann <leonhard.hermann@stud.htw-dresden.de>; Johann Schmidt <johann.schmidt@stud.htw-dresden.de>; Kimi Jerke <kimi.jerke@stud.htw-dresden.de>; Jannes Lehmann <s86317@htw-dresden.de>
-{localdatetime}
+:project-name: Habitree
+:project-system-name: Habitree
+:authors: Laurenz Born [laurenz.born@stud.htw-dresden.de](mailto:laurenz.born@stud.htw-dresden.de); Alexander Chlebowski [alexander.chlebowski@stud.htw-dresden.de](mailto:alexander.chlebowski@stud.htw-dresden.de); Leonhard Hermann [leonhard.hermann@stud.htw-dresden.de](mailto:leonhard.hermann@stud.htw-dresden.de); Johann Schmidt [johann.schmidt@stud.htw-dresden.de](mailto:johann.schmidt@stud.htw-dresden.de); Kimi Jerke [kimi.jerke@stud.htw-dresden.de](mailto:kimi.jerke@stud.htw-dresden.de); Jannes Lehmann [s86317@htw-dresden.de](mailto:s86317@htw-dresden.de); Maurice Harnisch [s87128@htw-dresden.de](mailto:s87128@htw-dresden.de)
+:author: Maurice Harnisch
+:email: [s87128@htw-dresden.de](mailto:s87128@htw-dresden.de)
+:authorinitials: MH
+:revnumber: 1.0
+:revdate: {docdate} {doctime}
+:toc: left
+:toclevels: 3
+:sectnums:
+:sectanchors:
+:icons: font
+:imagesdir: ./images
+
 include::../_includes/default-attributes.inc.adoc[]
-// Platzhalter für weitere Dokumenten-Attribute
 
-
+// =====================================================================
 == Einführung
-Der Zweck dieses Dokuments ist es, die wesentlichen Bedarfe und Funktionalitäten des Systems {project-system-name} überblicksartig zu beschreiben. Der Fokus liegt auf den Fähigkeiten, die von Stakeholdern und adressierten Nutzern benötigt werden, und der Begründung dieser Bedarfe. Die Details, wie das System {project-system-name} diese Bedarfe erfüllt, werden durch User Stories im Product Backlog sowie dem UX-Konzept beschrieben.
+Der Zweck dieses Dokuments ist es, die wesentlichen *Bedarfe* und *Fähigkeiten* des Systems *{project-system-name}* überblicksartig zu beschreiben. Der Fokus liegt auf dem *Warum* (Bedarf & Nutzen) und dem *Was* (Fähigkeiten auf Feature‑Ebene). *Wie* diese Bedarfe erfüllt werden, wird in den *User Stories (Product Backlog)* und im *UX‑Konzept* konkretisiert.
 
 === Zweck
-Der Zweck dieses Dokuments ist es, die wesentlichen Anforderungen an das System aus Sicht und mit den Begriffen der künftigen Anwender zu beschreiben.
+Kompakte, nutzerzentrierte Beschreibung der zentralen Anforderungen in der Sprache der künftigen Anwender; gemeinsame Zielvorstellung für alle Beteiligten.
 
 === Gültigkeitsbereich (Scope)
-Dieses Visions-Dokument bezieht sich auf das System {project-system-name}, das von Team 3A entwickelt wird. Das System wird es vor allem Studenten erlauben, tägliche Gewohnheiten zu verfolgen, um Routinen zu entwickeln und gewünschtes Verhalten anzutrainieren oder schlechtes Verhalten abzulegen. Ziel ist es, dem Nutzer bei seiner gewünschten persönlichen Weiterentwicklung zu unterstützen.
+Dieses Visionsdokument bezieht sich auf *{project-system-name}*, entwickelt von *Team 3A*. Das System unterstützt primär Studierende und junge Berufstätige beim Aufbau positiver Routinen sowie beim Abtrainieren unerwünschter Verhaltensweisen.
 
-{project-system-name} wird als Mobileanwendung konzipiert und ermöglicht es den Nutzern, Gewohnheiten zu erstellen, zu verfolgen und mithilfe von Statistiken sowie Erinnerungen zu reflektieren.
+*Formfaktor:* Mobile Anwendung (iOS/Android). Nutzer können Gewohnheiten erstellen, verfolgen und reflektieren; Statistiken und Erinnerungen unterstützen die Selbstreflexion.
 
-Der Gültigkeitsbereich dieses Dokuments umfasst die funktionalen Anforderungen wie das Anlegen, Bearbeiten und Verfolgen von Gewohnheiten, sowie grundlegende Benutzerverwaltung. Nicht-funktionale Aspekte wie Datensicherheit, Benutzerfreundlichkeit und Plattformunabhängigkeit sind ebenfalls Teil des Entwicklungsziels.
+*Im Umfang:* Funktionale Fähigkeiten (Habits anlegen/bearbeiten/verfolgen; grundlegende Benutzerverwaltung) sowie ausgewählte nicht‑funktionale Ziele (Benutzerfreundlichkeit, Barrierefreiheit, Datenschutz/Sicherheit, plattformübergreifende Nutzung).
 
-Nicht im Umfang dieses Dokuments enthalten sind Funktionen wie psychologische Beratung oder medizinische Empfehlungen.
+*Außerhalb des Umfangs:* Psychologische Beratung oder medizinische Empfehlungen.
 
 === Definitionen, Akronyme und Abkürzungen
-//Verweis passend zum Belegabgabe-Template se1_belegabgabe_t00.adoc
 Siehe <<#glossary, Glossar>>.
-//Siehe <<./glossary.adoc#glossary, Glossar>>.
 
-//=== Referenzen
-//(hier externe Verweise zu anderen Dokumenten, Quellen, Standards etc. einfügen, sofern notwendig)
-
+// =====================================================================
 == Positionierung
 
 === Fachliche Motivation
-//Erläutern Sie kurz den Hintergrund, in dem das Projekt angesiedelt ist. Welches Problem soll gelöst werden, wie ist es entstanden? Welche Verbesserung wird angestrebt. Achten Sie darauf, eine fachliche (organisatorische, betriebswirtschaftliche) Perspektive einzunehmen.
-Unser Projekt „Habit Tracker“ entstand aus dem Bedarf an einer einfachen und effektiven Lösung zur Unterstützung der persönlichen Zielverfolgung und Selbstorganisation. Viele bestehende Tools sind überladen, nicht benutzerfreundlich oder nicht ausreichend animierend. Unser Ansatz ist es, eine schlanke und intuitive Anwendung zu entwickeln, die Nutzer motiviert, positive Gewohnheiten aufzubauen und langfristig beizubehalten oder negative Gewohnheiten nachhaltig abzustellen. 
-
-
-Aus betriebswirtschaftlicher Sicht kann der Habit Tracker zur Steigerung von Produktivität und Selbstmanagement beitragen, sowohl im privaten als auch im beruflichen Kontext.
-
+Viele Tools für Selbstorganisation sind überladen, wenig motivierend oder nicht alltagstauglich. *Habitree* adressiert dies mit einer *schlanken*, *intuitiven* und *motivierenden* App, die bewährte verhaltenspsychologische Prinzipien (z. B. Streaks, Feedback‑Loops, Micro‑Rewards) nutzt, um Nutzer*innen über die anfängliche Hürde hinaus langfristig zu begleiten. Aus betriebswirtschaftlicher Sicht steigert das System Produktivität und Selbstmanagement sowohl privat als auch beruflich.
 
 === Produktvision
-//Eine Produktvision beschreibt das Einsatzziel der Anwendung und sorgt für ein gemeinsames Ziel und Verständnis für alle Beteiligten im Projekt. Geben Sie in knapper Form übersichtsartig die Positionierung der angestrebten Lösung im Vergleich zu verfügbaren Alternativen dar. Das folgende Format kann dazu verwendet werden:
-
-
-// [cols="1,3"]
-// |===
-// | Für | [Zielkunde / Persona]
-// | der / die | [Angabe des Bedarfs oder Chance]
-// | ist das  | [Produktname]
-// | eine  | [Produktkategorie]
-// | der / die | [Aussage zum Hauptvorteil / Alleinstellungsmerkmal]
-// | anders als | [wesentliche Lösungsalternative]
-// | kann unser Produkt | [Aussage zum Hauptunterschied]
-// |===
-
 [cols="1,3"]
 |===
-| Für | junge Erwachsene, vor allem Berufstätige und Studierende mit dem Wunsch nach persönlicher Weiterentwicklung und gesundem Lebensstil
+| Für | junge Erwachsene (primär Studierende/Berufstätige) mit dem Wunsch nach persönlicher Weiterentwicklung und gesundem Lebensstil
 | die | ihre Gewohnheiten systematisch verfolgen, verbessern und reflektieren möchten
-| ist   | {project-system-name}
-| eine  | digitale Habit-Tracking-App
-| die |  durch smarte Erinnerungen und kontinuierliche visuelle Fortschrittsverfolgung motiviert.
-| Anders als | herkömmliche Kalender- oder Notiz-Apps mit einfachen Erinnerungen und Dokumentationsfunktionen oder klassischen Tagebüchern
-| kann unser Produkt | gezielt Verhalten analysieren, automatisiertes Feedback geben, über Grundlagen der Verhaltenspsychologie aufklären und sich an individuelle Ziele spielerisch und psychologisch fundiert anpassen.
-
+| ist | {project-system-name}
+| eine | mobile Habit‑Tracking‑App
+| die | durch smarte Erinnerungen, Gamification und kontinuierliche visuelle Fortschrittsverfolgung motiviert
+| Anders als | herkömmliche Kalender/Notiz‑Apps mit einfachen Erinnerungen oder klassische Tagebücher
+| kann unser Produkt | Verhalten anhand von Zielen/Streaks analysieren, automatisiertes Feedback geben, Wissen zur Verhaltensänderung bereitstellen und sich spielerisch an individuelle Ziele anpassen
 |===
 
-
-//Beispiel
-//[cols="1,3"]
-//|===
-//| Für | Studierende der HTWD
-//| die | zu wenig Zeit in der Mittagspause zum Essen haben
-//| ist   | Flying Burger
-//| ein  | Lieferdient für Burger
-//| der  | per Drohne liefert
-//| anders als | landgestützte Lieferdienste
-//| kann unser Produkt |  durchs Fenster direkt in den Hörsaal liefern.
-//|===
-
-== Stakeholder Beschreibungen
+// =====================================================================
+== Stakeholder‑Beschreibungen
 
 === Zusammenfassung der Stakeholder
-
 [%header, cols="1,3,3"]
 |===
 | Name | Beschreibung | Verantwortlichkeiten
 
 | Studierende (Primäre Nutzer)
-| Studierende mit stark schwankendem Tagesrhythmus, teils hoher Stressbelastung und dem Wunsch nach Selbstoptimierung im Alltag.
-| Unterstützung positiver Gewohnheitsbildung. Ihr Interesse liegt in einer intuitiven Bedienung, flexibler Zeitplanung, motivierender Rückmeldungen und sinnvoller sowie spielerischer Fortschrittsvisualisierung.  +
-Sie liefern Feedback zu Aspekten der Funktionalität, des Designs und der Performance.
+| Schwankende Tagesrhythmen, teils hoher Stress, Wunsch nach Selbstoptimierung
+| Nutzen die App zur Habit‑Bildung; geben Feedback zu Bedienung, Zeitplanung, Motivation und Visualisierung
+
 | Berufstätige (Sekundäre Nutzer)
-| Personen im Berufsleben mit festem oder flexiblem Arbeitsalltag, die Struktur in ihren Tagesablauf bringen und gesunde Routinen integrieren möchten.
-| Sie wünschen sich eine alltagstaugliche Lösung zur Gewohnheitsbildung, die mit Arbeitszeiten kompatibel ist. Sie legen Wert auf Effizienz, Klarheit, Datenschutz und mobile Verfügbarkeit.
-Ihr Feedback hilft dabei, das System auch außerhalb des Studierendenkontexts praxistauglich zu gestalten.
+| Fester oder flexibler Arbeitsalltag; Wunsch nach Struktur und gesunden Routinen
+| Fordern Effizienz, Klarheit, Datenschutz und mobile Verfügbarkeit; erweitern den Blick über den Studierendenkontext
+
 | Projektgruppe
-| Projektgruppe, bestehend aus: Scrum- Master, Product- Owner und einem Entwicklerteam
-| Konzipieren, Entwicklung und Test des Systems. Das Team will ein stabiles und nutzerorientiertes System schaffen, das elementarsten Anforderungen aus der Vision und dem Backlog erfüllt. Das Team ist somit Stakeholder in Bezug auf technische Umsetzbarkeit, Planung , Konzipierung, Modifikation und Wartbarkeit
-| Wissenschaftliche Community
-| Experten für Verhaltenstherapie, auf deren Ansätze und Strategien sich die App-Logik stützt, unter anderem die Gamification und der Wissensbereich. 
-| Diese Personen liefern theoretische Grundlagen, die korrekt angewendet und verständlich erklärt werden müssen.
-| Behörden (Gesetzgeber)
-| Institutionen auf Bundes-, Landes- und kommunaler Ebene, die gesetzliche Vorgaben wie Datenschutz, Urheberrecht o.ä. Standards prüfen.
-| Diese Institutionen achten darauf, dass personenbezogene Daten korrekt verarbeitet werden, nach aktuellen gesetzlichen Bestimmungen (wie z.B.: der DSGVO). Ferner beurteilen Sie auch die Einhaltung des Urheberrechts bei Verwendung von z.B. externen Grafiken (z.B.: mittels UrhG) oder auch die Einhaltung der Standards des Bundesamts für Sicherheit in der Informationstechnik.
-Ihr Interesse liegt an minimaler Datenspeicherung, transparenter Nutzeraufklärung sowie einer gewissen Systemsicherheit.
+| Scrum‑Master, Product‑Owner, Entwicklungsteam
+| Konzeption, Entwicklung, Test; Sicherstellung von Nutzungswert, Qualität, Wartbarkeit und Planbarkeit
+
+| Wissenschaft/Expert*innen
+| Fachleute zu Verhaltenstherapie/Verhaltensökonomie
+| Validieren Ansätze (Gamification, Wissensbereich) und liefern belastbare Grundlagen
+
+| Behörden/Compliance
+| DSGVO/UrhG/BSI‑relevante Institutionen
+| Prüfen gesetzeskonforme Verarbeitung personenbezogener Daten, Urheberrechte und Sicherheitsstandards
+
 | Infrastrukturbetreiber
-| externe Anbieter wie Server-Hoster, Google Play Store und Apple App Store (Vertriebsplattformen).
-| Gewährleistung stabiler Serverkapazitäten und Netzwerkanbindung. Durchsetzung plattformspezifischer Richtlinien für App-Veröffentlichung und Updates.
-| Professor Dr. -Ing. habil. Jürgen Anke 
-| Auftragegeber des Projekts und Ansprechpartner bei Fragen 
-| Professor Anke ist verantwortlich dafür, dem Team grundlegendes Wissen zur Softwareentwicklung zu vermitteln. 
-Zudem gibt er Richtlinien in Form von Iterationsaufgaben vor. 
-Er steht dem Team als Ansprechpartner bei Fragen sowie bei der Bewertung von Inhalten zur Verfügung und übernimmt die abschließende Bewertung der Projektergebnisse. 
+| Hoster, App‑Stores (Google/Apple)
+| Stellen Infrastruktur und Veröffentlichungsprozesse sicher; Richtlinienkonformität
 
-|Dipl. -Inf. (FH) Christop Zirkelbach 
-|Coach für Thema "Habit Tracker", dient als Ansprechspartner für Themarelevante Fragen
-|Dipl.-Inf. (FH) Christoph Zirkelbach ist dafür verantwortlich, dem Team als Ansprechpartner zur Seite zu stehen. Er unterstützt insbesondere bei themenspezifischen und technischen Fragestellungen rund um das Projekt „Habit Tracker“.
-
+| Lehrstühle/Betreuende
+| Auftraggeber/Coachings (z. B. Prof. Dr.‑Ing. habil. Jürgen Anke; Dipl.‑Inf. (FH) Christoph Zirkelbach)
+| Aufgabenstellung, Coaching, Bewertung; Unterstützung bei fachlichen/technischen Fragen
 |===
 
+*Die Detaillierung nutzerseitiger Stakeholder erfolgt im UX‑Konzept via Personas.*
 
-Die Verfeinerung der Stakeholder, die das System benutzen, wird im UX-Konzept mittels Personas vorgenommen.
-
-
+// =====================================================================
 == Produktüberblick
 
 === Bedarfe und Hauptfunktionen
-//Vermeiden Sie Angaben zum Entwurf. Nennen wesentliche Features (Produktmerkmale) auf allgemeiner Ebene. Fokussieren Sie sich auf die benötigten Fähigkeiten des Systems und warum (nicht wie!) diese realisiert werden sollen. Geben Sie die von den Stakeholdern vorgegebenen Prioritäten an.
-
+// Reihenfolge: Bedarf (Warum) → Fähigkeit (Was) mit Priorität & Release
 [%header, cols="4,1,4,1"]
 |===
-| Bedarf | Priorität | Features / Funktionen | Geplantes Release
-| Gamifizierte Nutzererfahrung 
-| xx
-| Nutzer benötigen Anreize und emotionale Belohnungen, um langfristig motiviert zu bleiben und regelmäßig ihre Gewohnheiten zu verfolgen. 
-| xx 
-| Fortschrittsanalyse und Statistiken 
-| xx
-| Nutzer möchten ihre Entwicklung nachvollziehen können, um Erfolge sichtbar zu machen und sich selbst besser zu reflektieren.
-| xx
-| Optimierte Habit-Erstellung und -Planung
-| xx
-| Nutzer wollen ihre Gewohnheiten schnell, flexibel und ohne technische Hürden erstellen und verwalten können.
-| xx
-| Plattformübergreifende UI & Barrierefreiheit
-| xx
-| Die Anwendung soll auf allen Geräten intuitiv bedienbar sein und auch Menschen mit besonderen Bedürfnissen (z. B. LRS, Dykalkulie, AD(H)S, Farbblindheit) gerecht werden.
-| xx
-| Fokus- und Konzentrationshilfen
-| xx
-| Nutzer wünschen sich Unterstützung zur Ablenkungsvermeidung, um fokussierter an ihren Zielen zu arbeiten.
-| xx
-| Soziale Funktionen und Interaktion
-| xx
-| Nutzer möchten sich mit anderen austauschen, gegenseitig motivieren und soziale Verantwortung nutzen, um dranzubleiben.
-| xx
-| Wissens- und Lernbereich
-| xx
-| Nutzer benötigen fundierte Informationen über Gewohnheitsbildung und Selbstoptimierung, um ihr Verhalten besser zu verstehen und zu verbessern.
-| xx
-| Mehrsprachige Unterstützung
-| xx
-| Die App soll auch international verständlich und barrierefrei nutzbar sein, um eine breitere Zielgruppe zu erreichen.
-| xx
+| Bedarf (Warum) | Priorität | Fähigkeit/Feature (Was) | Geplantes Release
+
+| *Langfristige Motivation*
+| Hoch
+| Gamification (Streak‑Badges 7/14/30/66, XP‑Leiste, Micro‑Animationen), sanftes Relapse‑Modell („Rückfall ≠ Reset“)
+| R1–R2
+
+| *Transparenz über Fortschritt*
+| Hoch
+| Dashboards (Tages/Wochen‑Streaks, Trends, Zielerreichung), exportierbare Verlaufsansicht
+| R1
+
+| *Schnelle Habit‑Erstellung/Planung*
+| Hoch
+| Vorlagen & Quick‑Add, flexible Frequenzen, Erinnerungen (inkl. Quiet Hours), Editierbarkeit
+| R1
+
+| *Barrierefreiheit & Konsistenz*
+| Mittel
+| WCAG 2.2 AA: Kontraste ≥ 4.5:1, Touch‑Ziele ≥ 44×44 px, Screenreader‑Labels; Dark Mode; keine reine Farbcodierung
+| R2
+
+| *Fokus & Ablenkungsreduktion*
+| Mittel
+| Fokus‑Modus (stille Zeiten, reduzierte UI), optionale Haptik/Audiosignale, DND‑Integration
+| R2
+
+| *Soziale Motivation*
+| Mittel
+| Öffentliches Profil (Opt‑in), Teilen‑Links, optionale Ranglisten; granularer Datenschutz
+| R3
+
+| *Wissens‑/Lernbereich*
+| Niedrig
+| Kuratierte Inhalte (Tipps, Mikro‑Lerneinheiten) zur Verhaltensänderung
+| R3
+
+| *Mehrsprachigkeit*
+| Mittel
+| DE/EN (Internationalisierung, lokales Zahlen/Datumsformat)
+| R2
+
+| *Datenschutz & Sicherheit*
+| Hoch
+| Minimalprinzip; TLS; sichere Auth; Backups verschlüsselt; Privacy‑Kontrollen (Privat/Öffentlich)
+| R1
 |===
 
-
 === Zusätzliche Produktanforderungen
-//Zutreffendes angeben, nicht zutreffendes streichen oder auskommentieren
-Hinweise:
 
-. Führen Sie die wesentlichen anzuwendenden Standards, Hardware oder andere Plattformanforderungen, Leistungsanforderungen und Umgebungsanforderungen auf
+==== Standards & Plattformen
 
-. Definieren Sie grob die Qualitätsanforderungen für Leistung, Robustheit, Ausfalltoleranz, Benutzbarkeit und ähnliche Merkmale, die Qualitätsanforderungen an das geplante Produkt beschreiben.
+* iOS/Android (React Native/Expo); App‑Stores (Google/Apple)
+* Relevante Leitlinien: WCAG 2.2 (AA), DSGVO, App‑Store‑Richtlinien
 
+==== Leistungsziele (Richtwerte)
 
-. Notieren Sie alle Entwurfseinschränkungen, externe Einschränkungen, Annahmen oder andere Abhängigkeiten, die wenn Sie geändert werden, das Visions-Dokument beeinflussen. Ein Beispiel wäre die Annahme, dass ein bestimmtes Betriebssystem für die vom System erforderliche Hardware verfügbar ist. Ist das Betriebssystem nicht verfügbar, muss das Visions-Dokument angepasst werden.
+* *Interaktion lokal:* visuelles Feedback ≤ 100 ms
+* *Netzwerk P95:* API‑Antwort ≤ 500 ms; Start bis erster nutzbarer Screen ≤ 2 s (Warmstart)
 
-**Annahmen:**   +
-1. App wird nicht von Menschen über 70 Jahren oder von Menschen unter 10 Jahren genutzt. Dies hat Einflüsse auf die Kenntnisse im Umgang mit Medien und auf die Kenntnisse von Symbolen.  +
-Somit wird unter anderem die Annahme getroffen, dass die Nutzer wissen, dass ein Zahnrad das Symbol für Einstellungen ist.  +
-2. Die App wird prinzipiell eher von motivierten und intellektuell normalen bis besser gestellten Personen genutzt. Vor allem diese Gruppen sind eher an Verhaltensänderungen interessiert und sich diesen auch bewusst.  +
-Diese Annahme impliziert auch, dass wir eine gewisse Medienkompetenz als vorausgesetzt betrachten können, sowie auch eine Grundmotivation. Die Anwendung muss somit nicht komplett ausschließlich auf Motivation basieren.  +
-3. Die Nutzngsdauer ist zeitlich begrenzt. Nach spätestens einem halben Jahr muss die Verhaltensänderung erreicht sein, da sonst trotz Gamification die Motivation zu gering werden wird. Ggf. könnte man den Vorgang durch einen Wettkampfähnlichen Modus mit öffentlichen Profilen verlangsamen. +
-4. Erste Erfolge müssen sich zeitnah einstellen/visualisiert werden, da sonst die Motivation exponentiell abnimmt.  +
-5. Die Einrichtung und die Nutzung der Anwendung muss schnell gehen und mit geringen Aufwand realisiert werden können.  +
-Die Annahme ist, dass unsere Nutzer großteilig nur geringe  Aufmerksamkeitsspannen haben. +
-6. Gerade zu Beginn ist mehr Motivation erforderlich, um das Wachsen der neuen Routinen zu verstärken und den Nutzer am Weiterführen und Durchhaltenzu motivieren.  
+==== Robustheit & Ausfalltoleranz
 
-. Definieren Sie alle Dokumentationsanforderugen, inkl. Benutzerhandbücher, Onlinehilfe, Installations-, Kennzeichnungs- und Auslieferungsanforderungen.
-. Definieren Sie die Priorität für diese zusätzlichen Produktanforderungen. Ergänzen Sie, falls sinnvoll, Angaben zu Stabilität, Nutzen, Aufwand und Risiko für diese Anforderungen.  
+* Zielverfügbarkeit *99,5 %* (Entwicklungsphase: Best‑Effort); geplante Wartungsfenster
+* Offline‑Lesefähigkeit wesentlicher Daten; Synchronisation bei Verbindung
 
-**Dokumentationsanforderungen:** 
+==== Benutzbarkeit & Barrierefreiheit
 
-* Projektbezogene Dokumentation:
--  Gliederung und Unterteilung des Projekts anhand der einzelnen Komponenten, unter anderem: vision.adoc, project_plan.adoc, glossary.adoc etc. +
-- Gemeinsame Ablage aller Dokumente im Git-Repository zur effizienten Versionsverwaltung +
-- Ergänzende Dokumentation: Live in Meetings, Miro Board, WhatsApp und Discord zur Absicherung
+* Einfache Sprache; konsistente Navigation; leere/Fehlerzustände gestaltet (mit Undo, wo sinnvoll)
+* Keine Statuskommunikation ausschließlich über Farbe; klare Labels/Icons
 
-** "vision.adoc": Übersichtliche Darstellung der wesentlichen Bedarfe und Anforderungen der Nutzer an das System. Es gibt Aufschluss über:  +
-*** Scope:  +
-Gültigkeitsbereich des Projektes
-*** Positionierung: +
-Zielgruppen, Funktion und Vergleich mit Alternativen
-*** Produktvision:  +
-Alleinstellungsmerkmale, Abgrenzung und Ziel 
-*** Stakeholder:  +
-Charakterisierung aller potenziellen Anteilseigner am Produkt
-*** Funktionale Anforderungen:  +
-Hauptfunktionen, die über die Zeit in das Produkt implementiert werden sollen.
-*** Zusätzliche Anforderungen:  +
-Qualitätsanforderungen/ Constraints und Dokumentation des Projektes
+==== Entwurfseinschränkungen & Annahmen
 
+* *Primärzielgruppe:* 16–60 Jahre; grundlegende Medienkompetenz wird angenommen
+* *Nutzungsmuster:* tägliche Nutzung (Reminder‑getrieben); frühe sichtbare Erfolge erhöhen Bindung
+* *Onboarding:* Einrichtung in ≤ 2 Minuten; Vorlagen senken kognitive Last
 
-** "ux-concept.adoc": +
-Dokumentation zentraler Aspekte der Nutzererfahrung im Projekt. Konkretisierung der im vision.adoc erklärten Anforderungen, aus Nutzersicht.
-*** Personas: +
-Beschreibung potenzieller Nutzerzielgruppen mit Bedürfnissen, technischen Fähigkeiten, Gewohnheiten und Hindernissen.
-*** Nutzungskotext: +
-Erläuterung in welchen Situationen die Anwendung genutzt, welche Rahmenbedinungen existieren und welche Ziele User mit der Anwendung verfolgen.
-*** Wireframes/Wireflow:  +
-Visuelle Entwürfe der Benutzeroberfläche, basierend auf den wichtigsten User Stories.
-*** Gestaltung der Benutzeroberfläche:  +
-Kurze Beschreibung der Wireframes
+==== Dokumentationsanforderungen
 
-** "glossary.adoc":  +
-Dokumentation zentraler Fachbegriffe, Abkürzungen und Datenstrukturen für das Projekt. 
-Es ist elementar um Verständlichkeit und Klarheit über domänenspezifisches Vokabular zu schaffen.  +
-*** Begriffe:  +
-Kurze, verständliche Definitionen und Synonyme zu zentralen Begrffen und Konzepten aus der Fachdomäne.
-*** Abkürzungen und Akronyme:  +
-Erläuterung von Kurzformen mit Bezug auf das Projekt.
-*** Verzeichnis der Datenstrukturen:  +
-Übersicht über relevante Datenobjekte im System mit Angaben zu Format und Validierungsregeln.
-*** Domänenmodell:
-Visualisierung der zentralen Entitäten mit deren Beziehungen und Multiplizitäten innerhalb unseres Systemes.
+* *vision.adoc:* Zweck, Scope, Positionierung, Stakeholder, Bedarfe/Fähigkeiten, Qualitätsziele
+* *ux‑concept.adoc:* Personas, Nutzungskontext, Wireframes/Wireflows, Gestaltungsrichtlinien
+* *glossary.adoc:* Begriffe, Abkürzungen, Datenstrukturen, Domänenmodell
+* *project_plan.adoc:* Vorgehen (Scrum), Deployment, Entscheidungen, Lessons Learned
+* *architecture_notebook.adoc:* Architekturziele, Annahmen, Entscheidungen, C4‑Modell, techn. Glossar
 
-** "project_plan.adoc": +
-Der Projektplan dokumentiert die organisatorischen, methodischen und technischen Vorgehensweisen des Teams während der iterativen und agilen Entwicklung mit Scrum. Das Dokument sorgt für Transparenz und Nachvollziehbarkeit hisnichtlich aller Teamprozesse und unterstützt die Qualitätssicherung und kontinuierliche Verbesserung, innerhalb und nach einzelner Sprints.
-*** Methoden und Praktiken +
-Beschreibt die eingesetzten Management und Entwicklungsmethoden, insbesondere Scrum, die innerhalb unseres Teams eingesetzt werden.
-*** Deployment +
-Detaillierte Beschreibung der Bereitstellung und Wartung der eingesetzten Softwarekomponenten
-*** Diskussion zur Vorgehensweise +
-Dokumentiert zentrale technische und organisatorische Herausforderungen sowie die daraus abgeleiteten Entscheidungen.
-*** Erkenntnisse (Lessons Learned) +
-Bündelt gewonnene Erfahrungen innerhalb der Retrospektive, Meetings und in Rücksprache mit Scrum- Master, aufgeteilt in negative und positive Ereignisse.
-
-
-** "architecture_notebook.adoc":  +
-Das Architecture Notebook beschreibt zentrale architekturrelevante Entscheidungen, Randbedingungen und Zielsetzungen des Systems. Es dokumentiert sowohl die technische Struktur als auch die übergeordneten Anforderungen und konzeptionellen Prinzipien, die der Entwicklung zugrunde liegen. Ziel ist es, für alle Teammitglieder und Stakeholdern eine klare, nachvollziehbare Architektur darzustellen, die durch den Prototyp validiert wird.
-*** Architekturziele: +
-Definiert die grundsätzlichen Ziele der Systemarchitektur, welche sich an den zusätzlichen Anforderungen im Visionsdokument teilweise orientieren.
-*** Annahmen und Abhängigkeiten:  +
-Enthält zentrale Projektannahmen und externe / interne Abhängigkeiten.
-*** Architekturrelevante Anforderungen: +
-Dokumentiert funktionale und technologische Anforderungen, die unmittelbaren Einfluss auf grundlegende Architekturentscheidungen haben.
-*** Entscheidungen, Nebenbedingungen und Bergündungen: +
-Erklärt und Begründet zentrale Technologieentscheidungen. 
-*** C4- Modell der Architektur: +
-Verdeutlicht die Struktur und Abgrenzung der App auf mehreren Ebenen/ Sichten.
-*** Technisches Glossar: +
-Definiert zentrale technische Begriffe. Ziel ist ein gemeinsames Verständnis der eingesetzten Technologien innerhalb des gesamten Teams und auch bei Stakeholdern zu gewährleisten.
-
-
-**Qualitätsandorderungen:**
+==== Qualitätsanforderungen (Auszug)
 [%header, cols="4,1,1"]
 |===
 | Anforderung | Priorität | Geplantes Release
-| Theme- Anpassungen| Niedrig | xx
-| Einfache Bedienbarkeit | Hoch | xx
-| Mehrsprachigkeit  +
-- Das System sollte ein zweisprachiges Benutzermenü anbieten können in Deutsch und Englisch| Mittel | xx
-| Reaktionszeit des Systems  +
-- Das System sollte innerhalb von maximal 30 Millisekunden Antworten generieren| Mittel | xx 
-| Sicherheit  +
-- Das System blockiert 45 Sekunden nach 3 falschen Anmeldeversuchen | Mittel | xx
-| Ausfallsicherheit  +
-- Das System sollte 99.9% der Zeit verfügbar sein. Das sind: [(7 Tage*99,9%)/100%]*24 Stunden*60 Minuten = etwa 10 min/Woche
-| Hoch | xx
-| Kontrastreiche der Benutzeroberfläche:  +
-- Ein Kontrastverhältnis von 4.5:1 für normalen Text (laut: WCAG 2.1 AA)  +
-- Ein Kontrastverhältnis von 3:1 für große Texte (ab 18 pt fett oder ab 24 pt normal)  +
-- Mitteilungen sollten nicht nur rein auf Farbe sondern auch Text haben (z.B.: Warnungen nicht nur als orangene Pop- Ups darstellen sondern auch die konkrete Warnmeldung mit hineinschreiben)
-Farbkombinationen vermeiden, die für Farbblinde schwer zu verstehen sind (z.B.: Rot- Grün) | Mittel | xx
-| Übersichtlichkeit und Aschaulichkeit von Buttons, Reiter und Icons:  +
-- Bei der Gestaltung des Layouts muss auf einfache Sprache, verständlich und standardisierte Bilder (z.B.: Einkaufskorb für den Warenkorb) für Buttons sowie auf eine Mindestgröße der Icons geachtet werden.  +
-- Die Validierung dieser Anforderung geschieht durch Nutzertests zu Ende des Sprints.  +
-Genauere Details und der vorgeschriebene Testablauf sind auf Git Hub im Constraint- Board bei "Gewährleistung Benutzbarkeit" anzufinden.
-| Hoch | xx 
+| Einfache Bedienbarkeit (kurze Wege, klare Labels) | Hoch | R1
+| Reaktionszeit lokal ≤ 100 ms; API P95 ≤ 500 ms | Mittel | R1–R2
+| Mehrsprachigkeit (DE/EN) | Mittel | R2
+| Sicherheit (TLS, Auth‑Sperre nach Fehlversuchen, Privacy‑Kontrollen) | Mittel | R1–R2
+| Ausfallsicherheit 99,5 % (Dev‑Phase) | Hoch | R1–R2
+| Barrierefreiheit (WCAG 2.2 AA, Kontrast ≥ 4.5:1, Touch‑Ziele) | Mittel | R2
+| Übersichtlichkeit von Buttons/Icons (Mindestgrößen, Standard‑Piktogramme) | Hoch | R1
 |===
+
+// =====================================================================
+[[glossary]]
+== Glossar (Kurz)
+
+* *Habit:* Wiederkehrende Tätigkeit mit Ziel‑/Frequenzvorgabe
+* *Streak:* Anzahl aufeinanderfolgender Erfolgstage
+* *Relapse:* Rückfall; Zielverfehlung ohne kompletten Progress‑Reset
+
+// EOF
