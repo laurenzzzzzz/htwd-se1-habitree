@@ -1,285 +1,397 @@
 = UX-Konzept: {project-name}
-Laurenz Born <laurenz.born@stud.htw-dresden.de>; Alexander Chlebowski <alexander.chlebowski@stud.htw-dresden.de>; Leonhard Hermann <leonhard.hermann@stud.htw-dresden.de>; Johann Schmidt <johann.schmidt@stud.htw-dresden.de>; Kimi Jerke <kimi.jerke@stud.htw-dresden.de>; Jannes Lehmann <s86317@htw-dresden.de>
-{localdatetime}
+{authors}
+{revdate}
+:project-name: Habitree
+:project-system-name: Habitree
+:authors: Laurenz Born [laurenz.born@stud.htw-dresden.de](mailto:laurenz.born@stud.htw-dresden.de); Alexander Chlebowski [alexander.chlebowski@stud.htw-dresden.de](mailto:alexander.chlebowski@stud.htw-dresden.de); Leonhard Hermann [leonhard.hermann@stud.htw-dresden.de](mailto:leonhard.hermann@stud.htw-dresden.de); Johann Schmidt [johann.schmidt@stud.htw-dresden.de](mailto:johann.schmidt@stud.htw-dresden.de); Kimi Jerke [kimi.jerke@stud.htw-dresden.de](mailto:kimi.jerke@stud.htw-dresden.de); Jannes Lehmann [s86317@htw-dresden.de](mailto:s86317@htw-dresden.de)
+:author: Maurice Harnisch
+:email: [s87128@htw-dresden.de](mailto:s87128@htw-dresden.de)
+:authorinitials: MH
+:revnumber: 1.1
+:revdate: {docdate} {doctime}
+:toc: left
+:toclevels: 3
+:sectnums:
+:sectanchors:
+:icons: font
+:imagesdir: ./images
+
 include::../_includes/default-attributes.inc.adoc[]
-// Platzhalter für weitere Dokumenten-Attribute
 
-
+// =====================================================================
 == Einführung
-In diesem Dokument werden die Benutzeroberflächen des Systems {project-system-name} beschrieben. Dies können sein:
+Dieses Dokument beschreibt die Benutzeroberflächen und Interaktionskonzepte der Software *{project-system-name}* für das UX-/UI-Design und die Entwicklung. Es umfasst:
 
 * Personas der wichtigsten Stakeholder
-* Nutzerkontext
-* Wireframes relevanter Benutzeroberflächen
-* Zusammenhänge mittels Taskflow-Diagrammen
-* Angaben über die Gestaltung der Benutzeroberfläche, z.B. Styling, Bedienbarkeit, ...
+* Nutzungskontext (Aufgaben, Umgebung, Plattformen)
+* Wireframes und Wireflows (Verweise auf Figma und Bildexporte)
+* Taskflows für zentrale Use Cases
+* Gestaltungsrichtlinien (Styling, Bedienbarkeit, Barrierefreiheit)
+* Risiken, Annahmen, Definition of Done und offene Punkte
 
+// =====================================================================
 == Personas
-// Fügen Sie hier als Tabelle oder Bild die Persons der wichtigsten Stakeholder ein
-*Nutzer: Hannes Krusch* _“Level up statt Rückfall – jeder rauchfreie Tag ist ein Erfolg!”_
 
-image::Persona-Hannes_Krusch.png[200,200]
-|===
-|Kategorie |Beschreibung
+// ----- Persona 1
+*Nutzer: Hannes Krusch* — *„Level up statt Rückfall – jeder rauchfreie Tag ist ein Erfolg!“*
 
-|Demografie
-|Alter: 20 Jahre +
-Wohnort: Braunschweig +
-Beruf: Studium der Medieninformatik an der Technischen Universität Braunschweig +
-Beziehungsstatus: ledig +
-Hobby: Gaming
+image::Persona-Hannes_Krusch.png[Hannes Krusch,200,200]
 
-|Verhaltensvariablen
-|Er ist eher extrovertiert, trotz vorhandener anfänglicher Motivation Schwierigkeiten, Routinen dauerhaft und beständig beizubehalten
-
-|Technische Fähigkeiten
-|Er ist viel am PC bzw. Handy, hat hohe technische Kompetenzen, passt sich schnell an UI-Design an und hat keine Probleme, Icons, Buttons und Reiter in kurzer Zeit zu finden
-
-|Bedürfnisse / Ziele
-|Er möchte langfristig rauchfrei leben und sucht nach einem System,  
-welches durch stetige und spielerische Fortschrittsvisualisierung Rückfälle zu alten Mustern vermeidet.  
-Wichtig ist Hannes vor allem, dass seine Aufmerksamkeit und sein Interesse auch über einen längeren Zeitraum aufrechterhalten bleiben.
-
-|Hindernisse
-|Er hat nach der ersten Zigarette wieder das Gefühl, bei Null anzufangen. + 
-Er hat schon mehrmals versucht aufzuhören. +
-Seine Freundesgruppe raucht, wodurch bei Treffen eine Art Gruppenzwang entsteht.  +
-Er hat früher schon Tagebuch geführt, in welchem er seine Rauchgewohnheiten dokumentierte und versuchte somit seinen Konsum einzuschränken, jedoch ohne Erfolg. Auch die Bilder auf den Zigarettenpackungen dämmen seine Nikotinsucht nicht ein. 
-|===
-
-*Lisa Maria Töpfer* _"Weniger ist Mehr"_
-
-image::Persona-Lisa_Maria_Töpfer.jpeg[200,200]
-|===
-|Demografie | Alter: 22 Jahre +
-Wohnhort: Dresden in einer WG mit 2 Freundinnen  +
-Beruf: Studium der Betriebswirtschaftslehre an der Hochschule für Technik und Wirtschaft Dresden (5. Semester) +
-Beziehungsstatus: single 
-|Verhaltensvariablen | Lisa ist extrovertiert, kontaktfreudig und ständig unterwegs  +
-Sie sagt zu allen Aktivitäten, die Ihr angeboten werden, zu und liebt Spontanität. +
-Lisa hat Angst, Dinge zu verpassen, was Sie dazu veranlässt, viele Dinge zu beginnen, jedoch kaum welche abzuschließen.
-|Technische Fähigkeiten | Lisa benutzt häufig Ihr Handy und Tablet vor allem für Social Media. Sie ist zwar vertraut mit Anwendungen auf mobilen Endgeräten, verliert aber schnell das Interesse, wenn Sie Reiter oder Icons nicht sofort findet. Im Zuge Ihres Studiums erlernte Sie Kenntnisse in Excel und Power Point. Ihr fehlen jedoch tiefgehende informatische Fähigkeiten.
-|Bedürfnisse/ Ziele | Lisa möchte sich mehr auf sich selbst konzentrieren, ihren Körper und Geist stärken. Sie möchte in Teilen Ihre Spontanität behalten, ist sich aber auch dessen bewusst, dass diese oft negative Auswirkungen auf Ihre persönliche Weiterentwicklung hat. 
-Lisa möchte regelmäßig Sport treiben, um körperlich fit zu bleiben und meditieren, um eine geistige Fitness zu erlangen. Sie weiß, dass eine mentale Stärke auch positive Auswirkungen auf Ihre Konzentrationsfähigkeit und Konzentrationsdauer hat, was sich weiterführend auch psoitiv auf andere Aspekte Ihres Lebens, wie z.B.: ihr Studium auswirken würde.
-Hierbei sucht Sie nach einer Balance, da Sie auch weiter ihren sozialen Hobbies nachgehen möchte.
-|Hindernisse | Lisa verliert sich im sozialen Trubel, was dazu führt, dass Sie kaum Zeit für sich selbst hat. Ihr fehlt eine gewisse grundlegende Struktur im Leben, weswegen Sie Gewohnheiten abbricht, sobald diese nicht mehr spannend sondern aufwändig sind. 
-Da Lisas Konzentrationsspanne zeitlich begrenzt ist, benötigt Sie ein einfaches UI- Design, wo Sie gleich die passenden Icons findet, ohne sich erst langfristig in die Anwendung einarbeiten zu müssen.
-|===
-
-*Lara Schneider* _"Fragen statt Umfragen"_
-
-image::Persona-Lara_Schneider.PNG[200,200]
-|===
-|Demografie|Alter: 21 Jahre +
-Wohnort: Bautzen +
-Beruf: Duales Studium der Medizintechnik mit einem ortsanssäsigen, mittelständischen Unternehmen als Praxispartner  +
-Beziehungsstatus: ledig +
-Besonderheiten: Farbenblindheit (Rot-Grün-Schwäche)
-
-|Verhaltensvariablen | Lara ist eher introvertiert, diszipliniert und prinzipiell willig, sich neue Dinge anzutrainieren und neue Gewohnheiten sukzessive aufzubauen. In stressigen Lebensphasen entstehen jedoch bei Ihr Probleme, den Habit- Aufbau beständig durchzuhalten.
-
-|Technische Fähigkeiten | Lara ist mit technischen Medien aufgewachsen und benutzt diese seit Ihrer Kindheit. Somit hat sie kaum Probleme bei der Bedienung von Apps und findet häufig intuitiv die richtigen Reiter. Lara hat eine Rot-Grün-Sehschwäche (Farbanomalie) und kann daher bestimmte Farbkombinationen – insbesondere Rot- und Grüntöne – schwer unterscheiden. Sie ist deshalb auf ein UI mit hohen Kontrasten, symbolischer Unterstützung (z. B. Icons statt reinfarbiger Statusanzeigen) und klaren, gut lesbaren Texten angewiesen. Lara nutzt hauptsächlich ein Samsung Galaxy S21 mit dem Betriebssystem Android. Sie nutzt Ihr Smartphone durchschnittlich 2-4 Stunden pro Tag. Ihre Präferenz liegt eindeutig bei nativen Apps, die Sie direkt aus dem Google Play Store herunterladen kann.
-|Bedürfnisse/ Ziele | Lara verfolgt mit dem Aufbau von Gewohnheiten vor allem das Ziel, einen gesünderen Lebensstil aufzubauen, insbesondere in den Bereichen Schlaf, Ernährung und Bewegung, sowie Stress im Alltag zu reduzieren. Lara wünscht sich klare und einfache Routinen, die ihr helfen, auch in stressigen Phasen am Ball zu bleiben.
-Lara benötigt eine flexible App, die sich an Ihre wechselnden Alltagssituationen anpasst, sodass sie auch bei höheren Stresslevel Erfolge feiern kann.
-|Hindernisse |Zeitmangel, ein hohes vorhandenes Stresspensum und eine daraus resultierende Prokrastination bei dem Erlernenen zusätzlicher Dinge, erschweren es Lara, ihre Ziele konsequent zu verfolgen.
-Lara möchte Ergebnisse schnell sehen und neigt dazu, sich zu hohe Ziele zu setzen, was zu Frustration führt, wenn diese nicht eintreten.
-|===
-
-*Tom Neumann* _"Alles auf einmal-oder gar nichts"_
-
-image::Persona-Tom_Neumann.png[200,200]
-
+[cols="1,3",options="header"]
 |===
 |Kategorie | Beschreibung
 
 |Demografie
-|Alter: 24 Jahre +
-Wohnort: Leipzig +
-Beruf: Internationaler Student aus England – Studium im Bereich Informatik an einer Leipziger Hochschule +
-Beziehungsstatus: in einer offenen Beziehung +
-Hobby: Musikproduktion und Urban Gardening
+|Alter: 20+ Jahre; Wohnort: Braunschweig; Beruf: Studium Medieninformatik an der TU Braunschweig; Beziehungsstatus: ledig; Hobby: Gaming
 
 |Verhaltensvariablen
-|Tom ist ein kreativer Kopf mit viel Energie, allerdings sehr impulsiv.
-Er hat ADHS, wodurch er oft sprunghaft handelt, sich schnell ablenken lässt und es ihm schwerfällt, über längere Zeit an einer Aufgabe konzentriert zu bleiben.
-Trotzdem ist er sehr begeisterungsfähig und kommt in einen produktiven "Hyperfokus", wenn ihn ein Thema wirklich interessiert.
+|Eher extrovertiert; anfängliche Motivation vorhanden; Schwierigkeiten, Routinen langfristig beizubehalten
 
 |Technische Fähigkeiten
-|Tom ist technisch sehr versiert. Er arbeitet täglich mit Software-Tools, programmiert kleinere Anwendungen und nutzt verschiedene Plattformen (PC, Tablet, Smartphone).
-Er findet sich schnell in neuen Systemen zurecht, verliert jedoch schnell die Geduld, wenn Ladezeiten oder zu viele Schritte nötig sind.
-Er bevorzugt klare Strukturen, eine visuell stimulierende Umgebung und kurze, direkte Rückmeldungen.
+|Hohe technische Kompetenz auf PC/Smartphone; findet sich schnell in UI-Designs zurecht
 
-|Bedürfnisse / Ziele
-|Tom möchte lernen, mit seiner ADHS besser umzugehen und gesunde Routinen in seinen Alltag zu integrieren – z. B. regelmäßiger Schlaf, Bewegung, feste Arbeitsblöcke und Pausen.
-Er sucht nach einer App, die ihm hilft, sich auf das Wesentliche zu fokussieren, ihn durch kleine Erfolge motiviert und ihm Flexibilität bietet, ohne ihn zu überfordern.
-Besonders wichtig ist ihm eine Gamification, die ihn mit Sounds, Fortschrittsbalken oder kleinen Animationen belohnt.
-Zusätzlich wünscht er sich, dass die App mehrsprachig ist, damit er die Sprache auf Englisch umstellen kann.
+|Bedürfnisse/Ziele
+|Langfristig rauchfrei bleiben; spielerische Fortschrittsvisualisierung zur Rückfallprävention; langfristige Aufrechterhaltung von Aufmerksamkeit und Interesse
 
 |Hindernisse
-|Tom neigt zur Überforderung durch zu viele gleichzeitige Aufgaben.
-Er vergisst schnell, was er sich vorgenommen hat, und springt zwischen verschiedenen Tätigkeiten hin und her.
-Klassische Kalender- oder Aufgaben-Apps empfindet er oft als langweilig oder zu restriktiv.
-Er hat Schwierigkeiten, Prioritäten zu setzen und wünscht sich visuelle Unterstützung und akustische Hinweise, um sich zu orientieren.
-Zudem ist sein Selbstwertgefühl manchmal belastet, wenn er das Gefühl hat, „mal wieder nichts geschafft zu haben“.
+|Gefühl, nach Rückfall „bei Null“ zu starten; sozialer Druck im Freundeskreis; frühere Ansätze (z. B. Tagebuch) ohne Erfolg
 |===
 
+// ----- Persona 2
+*Lisa Maria Töpfer* — *"Weniger ist mehr"*
 
+image::Persona-Lisa_Maria_Töpfer.jpeg[Lisa Maria Töpfer,200,200]
 
+[cols="1,3",options="header"]
+|===
+|Kategorie | Beschreibung
+
+|Demografie
+|Alter: 22 Jahre; Wohnort: Dresden (WG mit 2 Freundinnen); Studium BWL (HTW Dresden, 5. Semester); Beziehungsstatus: single
+
+|Verhaltensvariablen
+|Extrovertiert, kontaktfreudig, sehr aktiv; sagt oft spontan zu; startet viel, schließt wenig ab; starkes FOMO
+
+|Technische Fähigkeiten
+|Nutzt Handy/Tablet intensiv (v. a. Social Media); Grundkenntnisse in Excel/PowerPoint; verliert schnell Interesse bei schlechter Auffindbarkeit
+
+|Bedürfnisse/Ziele
+|Mehr Fokus auf sich selbst; körperliche und mentale Fitness (Sport, Meditation); Balance aus Spontanität und Struktur
+
+|Hindernisse
+|Verliert sich im sozialen Trubel; bricht Gewohnheiten bei steigender Aufwändigkeit ab; begrenzte Konzentrationsspanne ⇒ braucht sehr einfache, klare UI
+|===
+
+// ----- Persona 3
+*Lara Schneider* — *"Fragen statt Umfragen"*
+
+image::Persona-Lara_Schneider.PNG[Lara Schneider,200,200]
+
+[cols="1,3",options="header"]
+|===
+|Kategorie | Beschreibung
+
+|Demografie
+|Alter: 21 Jahre; Wohnort: Bautzen; Duales Studium Medizintechnik (mittelständ. Praxispartner); Beziehungsstatus: ledig; Besonderheit: Rot-Grün-Sehschwäche
+
+|Verhaltensvariablen
+|Introvertiert, diszipliniert; bereit, neue Gewohnheiten aufzubauen; unter Stress bröckelt Beständigkeit
+
+|Technische Fähigkeiten
+|Souverän im Umgang mit Apps; bevorzugt klare Kontraste, Icons und gut lesbare Texte; Gerät: Samsung Galaxy S21 (Android); tägliche Nutzung 2–4 h; Präferenz: native Apps
+
+|Bedürfnisse/Ziele
+|Gesünderer Lebensstil (Schlaf, Ernährung, Bewegung) und Stressreduktion; flexible App, die sich an wechselnde Alltagssituationen anpasst
+
+|Hindernisse
+|Zeitmangel, hohes Stresspensum, Prokrastination; neigt zu zu hohen Zielen ⇒ Frustration bei Ausbleiben schneller Ergebnisse
+|===
+
+// ----- Persona 4
+*Tom Neumann* — *"Alles auf einmal – oder gar nichts"*
+
+image::Persona-Tom_Neumann.png[Tom Neumann,200,200]
+
+[cols="1,3",options="header"]
+|===
+|Kategorie | Beschreibung
+
+|Demografie
+|Alter: 24 Jahre; Wohnort: Leipzig; Internationaler Student (Informatik, aus England); offene Beziehung; Hobbys: Musikproduktion, Urban Gardening
+
+|Verhaltensvariablen
+|Kreativ, impulsiv; ADHS; leicht ablenkbar; Hyperfokus bei starker intrinsischer Motivation
+
+|Technische Fähigkeiten
+|Sehr versiert; programmiert kleinere Anwendungen; ungeduldig bei Ladezeiten/zu vielen Schritten; bevorzugt klare Strukturen, visuelle Reize und kurze Feedbacks
+
+|Bedürfnisse/Ziele
+|Besserer Umgang mit ADHS; gesunde Routinen (Schlaf, Bewegung, Arbeitsblöcke); Gamification (Sounds, Progress Bars, Micro-Animationen); Mehrsprachigkeit (Englisch)
+
+|Hindernisse
+|Überforderung durch Parallelaufgaben; geringe Priorisierung; Bedarf an visuellen/akustischen Hinweisen; Selbstwert leidet bei gefühlter Erfolglosigkeit
+|===
+
+// =====================================================================
 == Nutzungskontext
 
-=== Arbeitsaufgaben:
-==== Wer nutzt das Produkt?  +  
-Das Produkt ist primär für Studierende in ihrem Alltag konzipiert um positive Gewohnheiten anzutrainieren oder negative Gewohnheiten abzugewöhnen, kann aber von prinzipiell allen Personengruppen genutzt werden, die die Technik und den Umgang mit Medien beherschen.
+=== Zielgruppe und Aufgaben
+*Primärnutzer:* Studierende (breit nutzbar für alle, die mit mobilen Endgeräten vertraut sind).
 
-==== Welche konkreten Aufgaben sollen die Nutzer mit der Anwendung ausführen?
-Die Nutzer können ihre gewünschten Gewohnheiten anlegen,ändern und löschen. Zudem können Sie persönliche Ziele einstellen und den aktuellen Wert jeweils eintragen. Außerdem müssen Sie ihre Erfolge und Ihren Ist-Stand kontrollieren und einsehen.  
-Außerdem könen Sie persönliche Habits konfigurieren (z.B.: Festlegung der genauen Schrittzahl, die man laufen möchte je Tag).
+*Zentrale Aufgaben:*
 
-==== In welchen Situationen wird die Anwendung verwendet?
-Die Anwendung soll im Alltag genutzt werden und kann somit überall und jederzeit eingesetzt werden.
+* Habits anlegen, ändern, löschen (inkl. Parameter wie Schrittzahl/Schwellwerte)
+* Ziele setzen; Ist-Werte erfassen; Fortschritt/Streaks einsehen
+* Persönliche Habits konfigurieren (z. B. Schrittziel/Tag)
+* Optional: Profil öffentlich schalten ⇒ Social Viewing/Wettbewerb
 
-==== Anzahl der Personen, die an der Erfüllung der Aufgabe beteiligt sind. Ändert sich das? 
-Prinzipiell ist die App für Einzelnutzer konzipiert. Der aktuelle Stand kann jedoch im Profil auf "öffentlich" gestellt werden und somit auch von anderen Nutzern eingesehen werden. Dies soll motivierend wirken und könnte somit Wettkampfcharakter annehmen.
+=== Nutzungssituationen
+Alltag, überall und jederzeit. Mindestnutzung: *täglich* (Reminder getrieben), idealerweise mehrmals pro Tag.
 
+=== Kollaboration
+Einzelnutzung mit optionaler öffentlicher Profilansicht zur Motivation (Wettbewerb/Sozialvergleich).
 
-=== Einzigartigkeit von Habittree:
-==== Was wird erleichtert durch das Programm?
-Das regelmäßige Habit- Tracking, die Nachverfolgung und Visualisierung in Diagrammen von Streaks und durch Gamification Elemente auf psychologischer Ebene auch das Dranbleiben am Habitaufbau.
-Somit ist unsere Anwendung sowohl effizienter als auch effektiver als herkömmliche Excel- Listen oder analoge  Tagebücher/ Notizen.  +
+=== Einzigartigkeit von *Habitree*
 
-==== Was wird durch die Anwendung ersetzt?
-Analoge Gewohnheits-Tracker wie z.B.: Kalender, Notizen, Tagebücher sind nicht mehr nötig, da unser Programm nicht nur Dokumentationsfunktionen besitzt, sondern auch über Visualisierungstools, einem Wissensbereich und Gamification- Elemente verfügt.
+*Erleichterung:* Kontinuierliches Habit-Tracking, Visualisierung (Streaks/Charts) und Gamification zur Motivation.
 
-==== Was wird durch die Anwendung ergänzt?
-Unser Programm basiert auf verhaltenspsychologischen Ansetzen um Nutzer aktiv zu motivieren und zu helfen ihr Verhalten gemäß ihrer Wünsche und wider ihrer Hindernisse dauerhaft anzupassen.
+*Ersatz:* Analoge Tracker (Kalender/Notizen) und reine Excel-Listen.
 
-=== Arbeitsmittel:
-==== Welche Endgeräte werden typischerweise genutzt?
-Die Anwendung ist auf die Nutzung mit Hilfe mobiler Endgeräte ausgelegt. Hierbei soll vor allem die Smartphone Nutzung im Vordergrund stehen.  +
-Handys sind für fast alle Menschen ein täglicher Begleiter im Alltag und somit macht es auch am meisten Sinn damit Habits und Gewohnheiten aufzuzeichnen und zu kontrollieren. 
+*Ergänzung:* Verhaltenspsychologische Ansätze (Nudging, Feedback-Loops), Wissensbereich, motivierende Micro-Interactions.
 
-==== Nutzt der Anwender zusätzliche Hilfmittel?
-Integration von Kalender Apps oder Smartwatches ist in der initialen Produktvisions Phase angedacht gewesen, bislang aber noch nicht umgesetzt wurden.  +
-Es wurde ein Kalender selber programmiert im Prototypen, der direkt deutlich effizienter auf die Bedürfnisse der Nutzer unserer Anwendung zugeschnitten ist als externe Programme.
+=== Arbeitsmittel und Schnittstellen
 
-==== Kommuniziert das Programm mit  anderen Programmen/ Schnittstellen?
-Die Expo-Go App, Frontend kommuniziert mit dem Nodejs Server mittels REST-API.
-Desweiteren werden Express Routen genutzt für den einfachen Austausch von Abfragen von der Datenbank. Für den Datenbankzugriff von Backend zu Datenbankserver nutzen wir Pirsma als ORM. 
-Für die Anmeldung, fragt der NodeJS Server Firebase Auth an, dieser schickt die Firebase-ID, welche einzigartig ist, an den Server zurück und dieser prüft ob diese im Datenbankserver (PostgreSQL) vorhanden ist. Falls dies nicht der Fall wird diese gespeichert und ein neuer Nutzer wird angelegt. 
+* Endgeräte: primär Smartphone (iOS/Android); Browsernutzung möglich, aber nicht primär unterstützt
+* Geplante Integrationen (später): Apple Fitness, Google/Apple Kalender, Wearables, Produktivitätstools
+* Technischer Überblick: Expo/React Native (Frontend) ⇄ Node.js/Express (Backend, REST) ⇄ PostgreSQL (DB via Prisma ORM); Auth via Firebase Auth (ID-Token Prüfung, bei Erstlogin Nutzeranlage)
 
+=== Physische/soziale Umgebung
+Mobile Nutzung in variablen Kontexten (Unterwegs, Zuhause, Campus). Öffentliche Profile fördern positive soziale Vergleichseffekte; Privatmodus verfügbar.
 
-==== Ist Prinzipiell eine Verbindung zu weiteren Diensten erfoderlich/ vorgesehen?
-Weitere Verbindungen könnten externe APIs wie Apple Fitness, Google Kalender, Apple Kalender, jegliche Fitness Apps (MCI) oder Produktivitätstools.
-Die Implementierungen sind erstmal nicht in diesem Projekt vorgesehen.
+=== Häufigkeit und Verlauf
+Tägliche Nutzung (Reminder). Ziel: Stabile Routinen bis mind. 66 Tagen (Richtwert); darüber hinaus freiwillige Protokollierung.
 
-=== Physische Umgebung:
-==== In welcher Umgebung wird die App genutzt?
-Da die App für mobile Endgeräte konzipiert ist, kann sie prinzipiell von überall aus genutzt werden. Benutzer können somit unabhängig von deren genauer Umgebung auf die Anwendung und die Daten zugreifen. Sie soll als portable und effiziente Alltagsüberwachung von Visualisierung aller Habits einschließlich deren Streaks gelten.
+=== Potenzielle Fehlerquellen
 
-==== Sind soziale Interaktionen zwischen den einzelnen Usern möglich?
-Es ist angedacht, dass Benutzer welcher in unserer App eingeloggt ist verfügt über ein Profil, welches er auf Privat oder öffentlich stellebn kann. Nutzer sollen untereinander die Erfolge anderer Akteure einsehen können, die auch ein öffentliches Profil haben. Unser Ansatz ist: Motivationssteigerung durch freiwilligen Wettkampf. Sollte ein Benutzer nicht wollen, dass andere seinen Stand einsehen können kann er dies verhindern dadurch, dass er sein Profil auf Privat stellt.
+* Keine Verbindung (z. B. HTW-Netz/VPN-Zwang) | Server-/DB-Ausfall | Datenpersistenzfehler
+* Push-Benachrichtigungen fehlen | App reagiert nicht
+* Android-spezifische UI-Darstellung fehlerhaft | falsche/duplizierte Habits
+* Falsche Erinnerungszeiten | Datums-/Zeitzonenfehler | Baumvisualisierung inkorrekt
 
-=== Ablauf und Häufigkeit:
-==== Wie häufig sollte die Anwendung verwendet werden?
-Die Anwendung kann beliebig häufig verwendet werden. Vorgesehen ist aber, dass jeder User zumindest einmal täglich einträgt, welche Habits er absolvierte. Dies wird ersichtlich in Form einer Benachrichtigung, ausgehend von der Anwendung.
+=== Aktuelle Stolpersteine (IST)
 
-==== Wie verändert sich die Nutzung über die Zeit?
-Nutzer sollen konstant ihre Gewohnheiten an- bzw. abtrainieren mindestens bis zum Erreichen eines Grenzwertes (z.B.: 66 Tage). Bis dahin ist es vorgesehen, dass die App zumindest einmal täglich genutzt wird. Ab dem Grenzdatum, ist es vorgesehen, dass die Habits weitestgehend abtrainiert sind, wobei der Benutzer natürlich gerne weiter seine Habiterfolge protokollieren kann.
+* Android-Darstellung einzelner UI-Elemente inkonsistent
+* Kontrastprobleme im Dark Mode
+* Placeholder-UI wirkt unübersichtlich
 
-=== Potentielle Fehlerquellen:
-==== Welche Fehler können bei der Bedienung auftreten?
-* App kann sich nicht verbinden wenn nicht im HTW-Netz (eduVPN) 
-* Backend Server kann ausfallen (Stromausfall, Updates, Wartungen)
-* Datenbankserver kann ausfallen (Stromausfall, Updates, Wartungen)
-* Daten werden nicht gespeichert 
-* Benachrichtigungen werden nicht angezeigt
-* App reagiert nicht aus Interaktion
-* Fehlerquelle Android (Buttons werden falsch/nicht angezeigt) trotz gleicher Codebasis
-* Falsche Habits werden angezeigt
-* Habits werden doppelt angelegt 
-* Erinnerungen zur falschen Zeit
-* Inkorekkte Datumsanzeige und Fehler mit von verbundenen Inhalten 
-* Baumanzeige ist falsch
+=== Nutzungseinschränkungen
 
-==== Existieren derzeit potenzielle Stolpersteine in der UI oder andere technische Einschränkungen?
-* Auf Android werden UI Elemente falsch dargestellt
-* Im Dark Mode sind Kontraste bei Texten nicht richtig angezeigt 
-* Teile der UI unüersichtlich da die momentan nur als Placeholder dienen
+* Offlinefähig nur eingeschränkt; Social Features (Profilsuche) benötigen Verbindung
+* Nutzerangaben werden nicht verifiziert ⇒ Wettbewerb basiert auf Ehrlichkeit
 
+=== Barrierefreiheit
 
-==== Welche Situationen könnten die Nutzung behindern?
-Unsere Anwendung kann in prinzipiell jeder Situation benutzt werden, solange man sich im HTW Netz befindet. Bei Fehlender Internetverbindung sind aber nicht alle Funktionen wie z.B.: die Profilsuche von öffentlichen Nutzern verfügbar. Somit kann man dann die Applikation nur eingeschränkt nutzen, Grundfunktionalitäten wie das anschauen des bisherigen Standes bleiben jedoch erhalten.   +
-Natürlich gehen wir auch davon aus, dass der Nutzer eine gewisse Grundehrlichkeit und Grundmotivation aufbringt, da die Angaben des Nutzers nicht von uns auf Korrektheit überprüft werden können.  Auch dies würde die Nutzung und den eventuellen Wettbewerb zwischen Usern beeinträchtigen. +
+* Ziel: WCAG 2.2 AA für mobile UIs (Kontrast ≥ 4.5:1; skalierbare Schrift; Touch-Ziel ≥ 44×44 px; Fokusindikatoren; Screenreader-Labels)
+* Rot‑Grün‑Schwäche berücksichtigen (keine allein farbcodierten Stati; redundante Iconografie/Text)
+* Einfache Sprache und progressive Offenlegung komplexer Funktionen
 
-==== Barrierefreiheit und Besonderheiten:
-==== Sollte die Anwendung für Menschen mit Einschränkungen nutzbar sein?
-In unserem Team  hat Inklusion einen hohen Stellenwert. Demnach achten wir sehr genau darauf, dass unsere App von möglichst vielen Nutzern unabhängig potenzieller Behinderungen und Barrieren nutzbar ist.  Laut dem statistischen Bundesamt leiden derzeit rund 9.4% aller deutschen Bürge an Einschränkungen. Diese untergliedern sich abermals wie folgt:  +
-- körperliche Behinderungen: 4,5 Millionen Menschen  +
-- seelisch/ geistige Behinderungen: 1.8 Millionen Menschen  +
-- weitere Behinderungen ohne genauere Spezifikation: 1.5 Millionen Menschen  +
-Bereits zu Beginn des Projektes haben wir mit Stakeholdern kommuniziert und uns über potenzielle Behinderungen informiert. Diese haben wir nun in Git Hub als Issue mit dem Label "Constraint" versehen.   +
-Diese Umfassen unter anderem Restriktionen hinsichtlich der Kontrastreiche, des Layouts und der Navigation auch in Anlehnung an den Nielsens Heuristiken.
-Wir verpflichten  uns diese mit  umzusetzen bei der Abarbeitung aller Task von den User Stories. Somit sind diese Voraussetzungen bevor eine User Story auf "done" gesetzt werden kann. Demnach probieren wir maximale Usability und Barrerefreiheit in unser Programm mit einzubringen, auch wenn wir uns darüber bewusst sind, dass wir nicht alle Menschen mit allen möglichen Einschränkungen inkludieren können. Grenzen liegen derzeit zum Beispiel bei einer Steuerung des Programmes via Spracherkennung oder nur über Gesten. Auch probieren wir einfache und verständliche Sprache zu nutzen um Personen mit geistigen Einschränkungen einen Zugang zu der App zu ermöglichen, dennoch können wir nicht jeden mit eingeschränkter kognitiver Fähigkeit eine problemlose Nutzung garantieren.
+=== Systeme und Plattformen
 
-==== Gibt es verschiedene Anpassungen/Mode?
-Unser Programm verfügt über einen Lightmode und einen Darkmode. Diese können in den Einstellungen umgestellt werden. 
+* Unterstützt: iOS & Android (React Native/Expo). Browser: optional (nicht primär)
 
-=== Systeme und Plattformen:
-==== Welche Plattformen werden unterstützt?
-Unterstütze Plattformen sind iOS und Android. 
-Es ist möglich die App im Browser zu benutzen, wird aber nicht unterstützt.
+=== Datensicherheit (Soll-Konzept)
 
+* Transport: TLS 1.2+; Auth: Firebase ID Token; Sitzungen mit Token-Refresh
+* Daten: Minimierung, Trennung PII/Nutzungsdaten; Hashing sensibler Tokens; Backups (verschlüsselt)
+* Rollen-/Rechtekonzept (später): Privat/Öffentlich je Profilfeld
 
-==== Kann eine Datensicherheit garantiert werden?
-Nein
+=== Verfügbarkeit
 
-==== Mit wie viel Ausfallzeit muss gerechnet werden?
-Da der Server immer online ist, wird mir Ausfallzeiten erstmal nicht gerechnet. Für Wartungen des Servers, auf dem der Datenbankserver läuft, gewartet wird können geringe Ausfallzeiten entstehen. 
+* Ziel SLA: 99,5 % (Entwicklungsphase: Best Effort); planbare Wartungsfenster mit Vorankündigung
 
-== Wireframes und Wireflow
-// Fügen Sie Wireframes als Bilder oder als Link (z.B. zu einem Miroboard) ein
-https://www.figma.com/design/Y2WTCzOev0BUor9mt8Ee6o/Habitree?node-id=0-1&t=TYwYh26QllyDRy4f-1 +
-// Beziehen Sie ihre Wireframes auf konkrete User Stories oder Epics.
+// =====================================================================
+== Wireframes & Wireflow
 
-=== Homescreen
+*Figma:* [https://www.figma.com/design/Y2WTCzOev0BUor9mt8Ee6o/Habitree?node-id=0-1](https://www.figma.com/design/Y2WTCzOev0BUor9mt8Ee6o/Habitree?node-id=0-1)
 
-image::Wireframe_Wireflow/Homescreen.PNG[200,200]
-image::Wireframe_Wireflow/Homescreen 2.PNG[200,200]
-image::Wireframe_Wireflow/Wochenstatistik.PNG[200,200]
+image::Wireframe_Wireflow/Homescreen.PNG[Homescreen,300,300]
+image::Wireframe_Wireflow/Homescreen 2.PNG[Homescreen 2,300,300]
+image::Wireframe_Wireflow/Wochenstatistik.PNG[Wochenstatistik,300,300]
 
-=== Habits abtrainieren
+image::Wireframe_Wireflow/Habit_abtrainieren.PNG[Habits abtrainieren,300,300]
+image::Wireframe_Wireflow/Habit_abtrainieren_2.PNG[Habits abtrainieren 2,300,300]
 
-image::Wireframe_Wireflow/Habit_abtrainieren.PNG[200,200]
-image::Wireframe_Wireflow/Habit_abtrainieren_2.PNG[200,200]
+image::Wireframe_Wireflow/Habit_hinzufügen.PNG[Habit hinzufügen,300,300]
+image::Wireframe_Wireflow/Habit_hinzufügen_2.PNG[Habit hinzufügen 2,300,300]
+image::Wireframe_Wireflow/Habit_hinzufügen_3.PNG[Habit hinzufügen 3,300,300]
+image::Wireframe_Wireflow/Habit_hinzufügen_4.PNG[Habit hinzufügen 4,300,300]
+image::Wireframe_Wireflow/Habit_hinzufügen_5.PNG[Habit hinzufügen 5,300,300]
+image::Wireframe_Wireflow/Habit_hinzufügen_6.PNG[Habit hinzufügen 6,300,300]
 
-=== Habits anlegen
+image::Wireframe_Wireflow/Habit_hinzufügen_eigen.PNG[Eigenes Habit,300,300]
 
-image::Wireframe_Wireflow/Habit_hinzufügen.PNG[200,200]
-image::Wireframe_Wireflow/Habit_hinzufügen_2.PNG[200,200]
-image::Wireframe_Wireflow/Habit_hinzufügen_3.PNG[200,200]
-image::Wireframe_Wireflow/Habit_hinzufügen_4.PNG[200,200]
-image::Wireframe_Wireflow/Habit_hinzufügen_5.PNG[200,200]
-image::Wireframe_Wireflow/Habit_hinzufügen_6.PNG[200,200]
+image::Wireframe_Wireflow/Baum_1.PNG[Baum 1,300,300]
+image::Wireframe_Wireflow/Baum_2.PNG[Baum 2,300,300]
+image::Wireframe_Wireflow/Baum_3.PNG[Baum 3,300,300]
+image::Wireframe_Wireflow/Baum_4.PNG[Baum 4,300,300]
 
+image::Wireframe_Wireflow/Achivement.PNG[Achievement,300,300]
+image::Wireframe_Wireflow/Achivement_2.PNG[Achievement 2,300,300]
 
-=== Eigenes Habit anlegen
-image::Wireframe_Wireflow/Habit_hinzufügen_eigen.PNG[200,200]
+image::Wireframe_Wireflow/Profile.PNG[Profil,300,300]
+image::Wireframe_Wireflow/Login.PNG[Login,300,300]
 
-=== Baum
-image::Wireframe_Wireflow/Baum_1.PNG[200,200]
-image::Wireframe_Wireflow/Baum_2.PNG[200,200]
-image::Wireframe_Wireflow/Baum_3.PNG[200,200]
-image::Wireframe_Wireflow/Baum_4.PNG[200,200]
+// Hinweis: Bitte Bildpfade prüfen; Schreibweisen vereinheitlicht.
 
-=== Achivements 
-image::Wireframe_Wireflow/Achivement.PNG[200,200]
-image::Wireframe_Wireflow/Achivement_2.PNG[200,200]
+// =====================================================================
+== Taskflows (zentrale Use Cases)
 
-=== Profil
-image::Wireframe_Wireflow/Profile.PNG[200,200]
+.**Habit anlegen (vordefiniert)**
+[arabic]
+. Homescreen → *+ Neues Habit*
+. Vorlagenliste → Vorlage wählen
+. Parameter setzen (z. B. Ziel/Schrittzahl, Häufigkeit, Erinnerung)
+. Bestätigen → Erfolgstoast + Rückkehr zum Homescreen
 
-=== Loginscreen
-image::Wireframe_Wireflow/Login.PNG[200,200]
+.**Eigenes Habit anlegen**
+[arabic]
+. Homescreen → *+ Neues Habit* → *Eigenes Habit*
+. Titel, Kategorie, Messgröße, Zielwert, Häufigkeit definieren
+. Erinnerung konfigurieren (Uhrzeit, Tage, stille Zeiten)
+. Bestätigen → Erfolgstoast + Onboarding‑Tip (Editierbarkeit)
 
+.**Habit abtrainieren (Rauchfrei‑Beispiel)**
+[arabic]
+. Detailansicht Habit → *Abtrainieren starten*
+. Ziel: Reduzierung/Null; tägliche Erfassung (Zig./Tag)
+. Visualisierung: Trend/Progress/Streak
+. Gamification: Badges für Meilensteine; Relapse‑Handling mit „Weitermachen statt Reset“
 
-//== Gestaltung der Benutzeroberfläche
+.**Öffentliches Profil aktivieren**
+[arabic]
+. Profil → Privatsphäre → *Profil öffentlich* (Opt‑in mit Erläuterung)
+. Auswahl: Sichtbare Felder + Username
+. Teilen-Link generieren
+
+// =====================================================================
+== Gestaltungsrichtlinien (UI)
+
+=== Designprinzipien
+*Einfachheit, Konsistenz, Zugänglichkeit, Feedback, Fehlertoleranz.*
+
+=== Typografie
+
+* System-Schriften (iOS/Android) oder Inter
+* Basisgröße 16 px; Skalierung gemäß Geräte-Einstellungen
+* Hierarchie: H1 28–32, H2 24, H3 20, Body 16, Caption 14
+
+=== Farben
+
+[cols="1,3"]
+|===
+|Primär | Blau (#2563EB) / Alternative: #3B6CF6
+|Akzent | Grün (#16A34A) *nur gemeinsam mit Icon/Text nutzen, nicht allein farbcodiert*
+|Warnung | Orange (#F59E0B)
+|Fehler | Rot (#DC2626) *zusätzliche Iconografie/Text*
+|Hintergründe | Hell: #FFFFFF / #F8FAFC; Dunkel: #0F172A / Karten: #111827
+|Kontrast | Ziel ≥ 4.5:1 (WCAG 2.2 AA)
+|===
+
+=== Iconografie & Status
+
+* Stati niemals nur über Farbe kommunizieren; immer Icon + Label
+* Check/Success, Info, Warning, Error konsistent verwenden
+
+=== Layout & Spacing
+
+* 4‑pt‑Raster; Card‑Design mit 12–16 px Innenabstand; Touch‑Ziele ≥ 44×44 px
+
+=== Komponenten (Beispiele)
+
+* *AppBar:* Titel zentriert, Primäraktion rechts, sekundäre Aktionen im Overflow
+* *Card:* Titel, optional Subtext, Primäraktion unten rechts, Schatten gering
+* *Input:* Label, Helper‑Text; Fehlermeldung mit Icon
+* *Chart:* Progressbar/Streaks; Farbakzente + Beschriftung; Legende sichtbar
+
+=== Interaktion & Feedback
+
+* Taps < 100 ms Feedback (Ripple/Highlight)
+* Ladeindikatoren bei > 500 ms
+* Undo für destruktive Aktionen (Snackbars mit *Rückgängig*)
+
+=== Dark Mode
+
+* Kontraste prüfen (Text auf #0F172A‑Hintergrund ≥ 4.5:1)
+* Keine gesättigten Rot/Grün‑Kombinationen ohne redundante Hinweise
+
+=== Lokalisierung
+
+* DE/EN vorbereitet; Datums-/Zahlformat gerätespezifisch
+
+=== Gamification
+
+* Streak‑Badges (7/14/30/66 Tage), XP‑Leiste, Mikro‑Animationen beim Erreichen von Zielen
+* Relapse‑Modell: „Rückfall ≠ Reset“ (Trend beibehalten, sanfte Hinweise)
+
+=== Notifications
+
+* Quiet Hours konfigurierbar; intelligente Erinnerung (verpasste Einträge gebündelt)
+
+=== Barrierefreiheit (A11y)
+
+* Screenreader‑Labels (aria‑), Fokusreihenfolge, dynamische Textgröße, Haptik optional
+
+// =====================================================================
+== Technischer Überblick (Kurz)
+
+* Frontend: Expo/React Native; State‑Management (z. B. Zustand/Redux) nach Bedarf
+* Backend: Node.js/Express; REST; Auth: Firebase; DB: PostgreSQL via Prisma ORM
+* Observability: Log‑Aggregation; Crashlytics; Performance‑Metriken (TTI, CLS analog)
+
+// =====================================================================
+== Qualitätssicherung
+
+=== Definition of Done (UI)
+[ ] Responsives Layout (iOS/Android)
+[ ] WCAG 2.2 AA geprüft
+[ ] Fehlerzustände & Edge Cases abgedeckt
+[ ] Leere Zustände gestaltet
+[ ] Loading‑/Skeleton‑Zustände vorhanden
+[ ] i18n‑Texte externisiert
+
+=== Testfälle (Auszug)
+
+* Habit anlegen/ändern/löschen inkl. Reminder
+* Zeitzonen/Datumsanzeige korrekt
+* Offline‑Fallback (Lesen; spätere Synchronisation)
+* Dark‑Mode‑Kontraste
+
+// =====================================================================
+== Risiken & Annahmen
+
+* Abhängigkeit vom HTW‑Netz/VPN (Verfügbarkeit/UX‑Risiko) ⇒ *Empfehlung:* Offline‑First + Public Endpoints mit Auth
+* Social Features erfordern Moderation/Reporting in späteren Phasen
+
+// =====================================================================
+== Offene Punkte
+
+* Konkrete Farbtokens und Tokensystem (Light/Dark) finalisieren
+* Notification‑Strategie verfeinern (Zeitfenster, Prioritäten)
+* Datenschutz‑Texte (Privacy Policy) und Einwilligungen
+
+// =====================================================================
+== Glossar
+
+* *Habit:* wiederkehrende Tätigkeit mit Zielwert
+* *Streak:* Anzahl aufeinanderfolgender Erfolgstage
+* *Relapse:* Rückfall – erneute Zielverfehlung ohne Reset des gesamten Fortschritts
+
+// =====================================================================
+== Referenzen
+
+* Figma‑Datei (s. oben)
+* Nielsen‑Heuristiken (Richtlinie), WCAG 2.2 (AA)
+
+// =====================================================================
+// Autorenattribut zur sauberen Ausgabe
+:authors: Laurenz Born [laurenz.born@stud.htw-dresden.de](mailto:laurenz.born@stud.htw-dresden.de); Alexander Chlebowski [alexander.chlebowski@stud.htw-dresden.de](mailto:alexander.chlebowski@stud.htw-dresden.de); Leonhard Hermann [leonhard.hermann@stud.htw-dresden.de](mailto:leonhard.hermann@stud.htw-dresden.de); Johann Schmidt [johann.schmidt@stud.htw-dresden.de](mailto:johann.schmidt@stud.htw-dresden.de); Kimi Jerke [kimi.jerke@stud.htw-dresden.de](mailto:kimi.jerke@stud.htw-dresden.de); Jannes Lehmann <[s86317@htw-dresden.de](mailto:s86317@htw-dresden.de)]
