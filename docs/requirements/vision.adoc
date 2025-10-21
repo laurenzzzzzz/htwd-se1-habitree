@@ -90,6 +90,10 @@ Aus betriebswirtschaftlicher Sicht kann der Habit Tracker zur Steigerung von Pro
 | Studierende mit stark schwankendem Tagesrhythmus, teils hoher Stressbelastung und dem Wunsch nach Selbstoptimierung im Alltag.
 | Unterstützung positiver Gewohnheitsbildung. Ihr Interesse liegt in einer intuitiven Bedienung, flexibler Zeitplanung, motivierender Rückmeldungen und sinnvoller sowie spielerischer Fortschrittsvisualisierung.  +
 Sie liefern Feedback zu Aspekten der Funktionalität, des Designs und der Performance.
+| Berufstätige (Sekundäre Nutzer)
+| Personen im Berufsleben mit festem oder flexiblem Arbeitsalltag, die Struktur in ihren Tagesablauf bringen und gesunde Routinen integrieren möchten.
+| Sie wünschen sich eine alltagstaugliche Lösung zur Gewohnheitsbildung, die mit Arbeitszeiten kompatibel ist. Sie legen Wert auf Effizienz, Klarheit, Datenschutz und mobile Verfügbarkeit.
+Ihr Feedback hilft dabei, das System auch außerhalb des Studierendenkontexts praxistauglich zu gestalten.
 | Projektgruppe
 | Projektgruppe, bestehend aus: Scrum- Master, Product- Owner und einem Entwicklerteam
 | Konzipieren, Entwicklung und Test des Systems. Das Team will ein stabiles und nutzerorientiertes System schaffen, das elementarsten Anforderungen aus der Vision und dem Backlog erfüllt. Das Team ist somit Stakeholder in Bezug auf technische Umsetzbarkeit, Planung , Konzipierung, Modifikation und Wartbarkeit
