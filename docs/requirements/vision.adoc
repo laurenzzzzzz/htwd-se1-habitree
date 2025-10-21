@@ -96,9 +96,6 @@ Sie liefern Feedback zu Aspekten der Funktionalität, des Designs und der Perfor
 | Wissenschaftliche Community
 | Experten für Verhaltenstherapie, auf deren Ansätze und Strategien sich die App-Logik stützt, unter anderem die Gamification und der Wissensbereich. 
 | Diese Personen liefern theoretische Grundlagen, die korrekt angewendet und verständlich erklärt werden müssen.
-| Teamvertreter im Sprint- Review
-| Mitglieder anderer Teams, die am Ende jeder Iteration Feedback geben.
-| Die Vertreter testen das System aus Nutzerperspektive und geben ein strukturiertes Feedback zu Bedienbarkeit, Verständlichkeit und Nützlichkeit der Features.
 | Behörden (Gesetzgeber)
 | Institutionen auf Bundes-, Landes- und kommunaler Ebene, die gesetzliche Vorgaben wie Datenschutz, Urheberrecht o.ä. Standards prüfen.
 | Diese Institutionen achten darauf, dass personenbezogene Daten korrekt verarbeitet werden, nach aktuellen gesetzlichen Bestimmungen (wie z.B.: der DSGVO). Ferner beurteilen Sie auch die Einhaltung des Urheberrechts bei Verwendung von z.B. externen Grafiken (z.B.: mittels UrhG) oder auch die Einhaltung der Standards des Bundesamts für Sicherheit in der Informationstechnik.
