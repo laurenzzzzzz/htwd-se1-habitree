@@ -161,7 +161,9 @@ Viele Tools für Selbstorganisation sind überladen, wenig motivierend oder nich
 
 ==== Robustheit & Ausfalltoleranz
 
-* Zielverfügbarkeit *99,5 %* (Entwicklungsphase: Best‑Effort); geplante Wartungsfenster
+* Während des Semesters ist das Backend meistens verfügbar, solange keine Updates oder Neustarts notwendig sind.  
+    Nach einem Neustart ist das Backend innerhalb von 2 min wieder erreichbar.
+* Da das Frontend über den lokalen Entwicklungsserver per QR-Code gestartet wird, ist die Nutzung nur möglich, wenn das Host-System (der Entwicklungsrechner) und das Endgerät direkten Zugriff auf das HTW-Netzwerk haben (oder beide über die VPN-Verbindung darauf zugreifen). Nach einem Neustart ist das Frontend innerhalb von 2 min wieder online.
 * Offline‑Lesefähigkeit wesentlicher Daten; Synchronisation bei Verbindung
 
 ==== Benutzbarkeit & Barrierefreiheit
@@ -188,10 +190,9 @@ Viele Tools für Selbstorganisation sind überladen, wenig motivierend oder nich
 |===
 | Anforderung | Priorität | Geplantes Release
 | Einfache Bedienbarkeit (kurze Wege, klare Labels) | Hoch | R1
-| Reaktionszeit lokal ≤ 100 ms; API P95 ≤ 500 ms | Mittel | R1–R2
+| Reaktionszeit lokal ≤ 500 ms; API P95 ≤ 1000 ms | Mittel | R1–R2
 | Mehrsprachigkeit (DE/EN) | Mittel | R2
 | Sicherheit (TLS, Auth‑Sperre nach Fehlversuchen, Privacy‑Kontrollen) | Mittel | R1–R2
-| Ausfallsicherheit 99,5 % (Dev‑Phase) | Hoch | R1–R2
 | Barrierefreiheit (WCAG 2.2 AA, Kontrast ≥ 4.5:1, Touch‑Ziele) | Mittel | R2
 | Übersichtlichkeit von Buttons/Icons (Mindestgrößen, Standard‑Piktogramme) | Hoch | R1
 |===
