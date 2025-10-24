@@ -136,48 +136,36 @@ Die Definition of Done legt fest, wann ein Backlog Item als vollständig abgesch
 //- Es existieren automatisierte Unit Tests/Alle Tests sind erfolgreich bestanden. +
 
 == Deployment
-//Outline the strategy for deploying the software (and its updates) into the production environment.
+// Beschreibt kurz, wie und wo die Software (und deren Updates) für das Projekt bereitgestellt wird.
 
-=== Frontend (Mobile App mit Expo/React Native)
+=== Frontend (Mobile App)
 
-- Die App wird mit *Expo* entwickelt
-- Die App wird über die *Expo Go App* gestartet, indem ein *QR-Code* aus dem lokalen Entwicklungsserver gescannt wird, dafür muss man aber in dem Netzwerk der Hochschule sein oder mit dem VPN der Hochschule (eduVPN) verbunden sein
-- Diese Methode ermöglicht eine einfache Nutzung und Demonstration innerhalb des Teams oder im Rahmen des Semesters
-- Änderungen im Code sind sofort sichtbar durch *Hot Reloading*
-- Keine Build- oder Release-Prozesse erforderlich
-- Es erfolgt keine Veröffentlichung im App- oder Playstore
-- eine APK-Erstellung ist möglich aber nicht vorgesehen
+- Die App wird entwickelt und bereitgestellt für die Nutzung über die **Expo Go App**.
+- Der Start erfolgt durch das Scannen eines **QR-Codes** vom lokalen Entwicklungsserver.
+- Die Nutzung ist ausschließlich im **Netzwerk der Hochschule** (oder über eduVPN) möglich.
+- Diese Methode dient zur einfachen Demonstration und schnellen Iteration während des Semesters.
+- Es ist **keine Veröffentlichung in öffentlichen Stores** (App Store, Play Store) vorgesehen.
 
+=== Backend (API-Server)
 
-=== Backend (Node.js + Express API)
+- Das Backend wird online auf einem **bereitgestellten Windows Server der HTW** gehostet.
+- Die Deployment-Aktualisierungen erfolgen manuell oder automatisiert über **GitHub**.
+- Die API ist **öffentlich erreichbar**, solange man sich im Hoschulnetz der HTW befindet.
+- Der Server bleibt **bis zum Ende des Wintersemesters 2026** erreichbar.
 
-- Das Backend wird online auf einem bereitgestellten Windows Server der HTW gehostet
-- Der Server bleibt *bis zum Ende des Wintersemesters 2026* erreichbar
-- Deployment erfolgt manuell oder automatisiert über *GitHub* 
-- Die API ist öffentlich erreichbar, solange man sich im Hoschulnetz der HTW befindet 
+=== Datenbank
 
-=== Authentifizierung (Firebase Auth)
-
-- Die Authentifizierung erfolgt über *Firebase Authentication*
-- Die Konfiguration erfolgt über die *Firebase Console*
-- Die Authentifizierungsdienste werden mit dem Ende des Wintersemesters 2026 eingestellt
-
-=== Datenbank (PostgreSQL + Prisma)
-
-- Die PostgreSQL-Datenbank wird auf dem bereitgestellten Windows Server der HTW gehostet
-- Die Datenbankmigrationen werden mit *Prisma Migrate* durchgeführt
-- Die Datenbank bleibt bis zum Projektabschluss(Wintersemester 2026) verfügbar
+- Die **Datenbank** wird ebenfalls auf dem bereitgestellten Windows Server der HTW bis zum Projektabschluss (Wintersemester 2026) gehostet.
 
 === Rollback und Wartung
 
-- Da es keine produktive Veröffentlichung gibt, sind keine komplexen Rollback-Mechanismen notwendig
-- Fehlerbehebungen erfolgen durch Codeänderungen und direktes Testen über die Expo Go App
+- Da es sich um eine interne Projektumgebung handelt und keine produktive Veröffentlichung erfolgt, sind **keine komplexen Rollback-Mechanismen** notwendig.
+- Fehlerbehebungen erfolgen durch direkte Codeänderungen und sofortiges Testen über die Entwicklungsumgebung.
 
 === Verfügbarkeit
 
-- Die App ist jederzeit über den *QR-Code in der Expo Go App* nutzbar
-- Das Backend bleibt bis *Ende des Wintersemesters 2026* aktiv und wird danach abgeschaltet
-
+- Die App ist während der Projektlaufzeit **jederzeit über den QR-Code in der Expo Go App** nutzbar.
+- Das Backend bleibt bis **Ende des Wintersemesters 2026** aktiv und wird danach abgeschaltet.
 
 
 == Diskussion zu Vorgehensweisen
