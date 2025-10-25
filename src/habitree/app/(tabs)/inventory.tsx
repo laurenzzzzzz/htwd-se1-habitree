@@ -21,7 +21,7 @@ const abzeichenZeilen = [
   ],
 ];
 
-export default function TabTwoScreen() {
+export default function InventoryScreen() {
   const backgroundColor = useThemeColor({}, 'background');
   const [modalVisible, setModalVisible] = useState<null | 'abzeichen5' | 'abzeichen6'>(null);
 

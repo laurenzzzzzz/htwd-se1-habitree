@@ -12,7 +12,7 @@ import { View } from 'react-native';
 import React from 'react';
 
 
-export default function TabTwoScreen() {
+export default function TreeScreen() {
   
   const backgroundColor = useThemeColor({}, 'background');
   

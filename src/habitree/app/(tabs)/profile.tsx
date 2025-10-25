@@ -26,7 +26,7 @@ Notifications.setNotificationHandler({
   }),
 });
 
-export default function TabTwoScreen() {
+export default function ProfileScreen() {
   const systemColorScheme = useColorScheme();
 
   const [isDarkMode, setIsDarkMode] = useState(systemColorScheme === 'dark');
