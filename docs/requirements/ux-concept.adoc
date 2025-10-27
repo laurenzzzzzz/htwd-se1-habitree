@@ -136,68 +136,79 @@ image::Persona-Tom_Neumann.png[Tom Neumann,200,200]
 == Nutzungskontext
 
 === Zielgruppe und Aufgaben
-*Primärnutzer:* Studierende (breit nutzbar für alle, die mit mobilen Endgeräten vertraut sind).
+*Primärnutzer:* Studierende (nutzbar für alle, die mit mobilen Endgeräten vertraut sind). +
+
+
 
 *Zentrale Aufgaben:*
 
-* Habits anlegen, ändern, löschen (inkl. Parameter wie Schrittzahl/Schwellwerte)
+* Habits anlegen, ändern, löschen (inkl. Parameter wie Schrittzahl/Schwellenwerte)
 * Ziele setzen; Ist-Werte erfassen; Fortschritt/Streaks einsehen
-* Persönliche Habits konfigurieren (z. B. Schrittziel/Tag)
-* Optional: Profil öffentlich schalten ⇒ Social Viewing/Wettbewerb
+* persönliche Habits konfigurieren (z. B. Schrittziel/Tag)
+* optional: Profil öffentlich schalten ⇒ Social Viewing/Wettbewerb
 
 === Nutzungssituationen
-Alltag, überall und jederzeit. Mindestnutzung: *täglich* (Reminder getrieben), idealerweise mehrmals pro Tag.
+
+* Alltag, überall und jederzeit +
+
+* Mindestnutzung: *täglich* (Reminder getrieben), idealerweise mehrmals pro Tag.
 
 === Kollaboration
-Einzelnutzung mit optionaler öffentlicher Profilansicht zur Motivation (Wettbewerb/Sozialvergleich).
+
+* Einzelnutzung mit optionaler öffentlicher Profilansicht zur Motivation (Wettbewerb/Sozialvergleich).
 
 === Einzigartigkeit von *Habitree*
 
-*Erleichterung:* Kontinuierliches Habit-Tracking, Visualisierung (Streaks/Charts) und Gamification zur Motivation.
+*Erleichterung:* kontinuierliches Habit-Tracking, Visualisierung (Streaks/Charts) und Gamification zur Motivation
 
-*Ersatz:* Analoge Tracker (Kalender/Notizen) und reine Excel-Listen.
+*Ersatz:* analoge Tracker (Kalender/Notizen) und reine Excel-Listen
 
-*Ergänzung:* Verhaltenspsychologische Ansätze (Nudging, Feedback-Loops), Wissensbereich, motivierende Micro-Interactions.
+*Ergänzung:* verhaltenspsychologische Ansätze (Nudging, Feedback-Loops), Wissensbereich, motivierende Micro-Interactions
 
 === Arbeitsmittel und Schnittstellen
 
 * Endgeräte: primär Smartphone (iOS/Android); Browsernutzung möglich, aber nicht primär unterstützt
-* Geplante Integrationen (später): Apple Fitness, Google/Apple Kalender, Wearables, Produktivitätstools
-* Technischer Überblick: Expo/React Native (Frontend) ⇄ Node.js/Express (Backend, REST) ⇄ PostgreSQL (DB via Prisma ORM); Auth via Firebase Auth (ID-Token Prüfung, bei Erstlogin Nutzeranlage)
+* geplante Integrationen (später): Apple Fitness, Google/Apple Kalender, Wearables, Produktivitätstools
+* technischer Überblick: Expo/React Native (Frontend) ⇄ Node.js/Express (Backend, REST) ⇄ PostgreSQL (DB via Prisma ORM); Auth via Firebase Auth (ID-Token Prüfung, bei Erstlogin Nutzeranlage)
 
 === Physische/soziale Umgebung
-Mobile Nutzung in variablen Kontexten (Unterwegs, Zuhause, Campus). Öffentliche Profile fördern positive soziale Vergleichseffekte; Privatmodus verfügbar.
+
+* mobile Nutzung in variablen Kontexten (unterwegs, zuhause, Campus) +
+* öffentliche Profile fördern positive soziale Vergleichseffekte +
+* verfügbarer Privatmodus
 
 === Häufigkeit und Verlauf
-Tägliche Nutzung (Reminder). Ziel: Stabile Routinen bis mind. 66 Tagen (Richtwert); darüber hinaus freiwillige Protokollierung.
+
+* tägliche Nutzung (Reminder) +
+* Ziel: stabile Routinen bis mind. 66 Tage (Richtwert); freiwillige Protokollierung möglich
 
 === Potenzielle Fehlerquellen
 
 * Keine Verbindung (z. B. HTW-Netz/VPN-Zwang) | Server-/DB-Ausfall | Datenpersistenzfehler
 * Push-Benachrichtigungen fehlen | App reagiert nicht
 * Android-spezifische UI-Darstellung fehlerhaft | falsche/duplizierte Habits
-* Falsche Erinnerungszeiten | Datums-/Zeitzonenfehler | Baumvisualisierung inkorrekt
+* falsche Erinnerungszeiten | Datums-/Zeitzonenfehler | inkorrekte Baumvisualisierung
 
 === Aktuelle Stolpersteine (IST)
 
-* Android-Darstellung einzelner UI-Elemente inkonsistent
+* inkonsistente Android-Darstellung einzelner UI-Elemente 
 * Kontrastprobleme im Dark Mode
-* Placeholder-UI wirkt unübersichtlich
+* unübersichtliche Placeholder-UI
 
 === Nutzungseinschränkungen
 
-* Offlinefähig nur eingeschränkt; Social Features (Profilsuche) benötigen Verbindung
-* Nutzerangaben werden nicht verifiziert ⇒ Wettbewerb basiert auf Ehrlichkeit
+* eingeschränkte Offlinefähigkeit; Social Features (Profilsuche) benötigen Verbindung
+* nicht verifizierte Nutzerangaben ⇒ Wettbewerb basiert auf Ehrlichkeit
 
 === Barrierefreiheit
 
 * Ziel: WCAG 2.2 AA für mobile UIs (Kontrast ≥ 4.5:1; skalierbare Schrift; Touch-Ziel ≥ 44×44 px; Fokusindikatoren; Screenreader-Labels)
 * Rot‑Grün‑Schwäche berücksichtigen (keine allein farbcodierten Stati; redundante Iconografie/Text)
-* Einfache Sprache und progressive Offenlegung komplexer Funktionen
+* einfache Sprache und progressive Offenlegung komplexer Funktionen
 
 === Systeme und Plattformen
 
-* Unterstützt: iOS & Android (React Native/Expo). Browser: optional (nicht primär)
+* unterstützt: iOS & Android (React Native/Expo). Browser: optional (nicht primär)
 
 === Datensicherheit (Soll-Konzept)
 
