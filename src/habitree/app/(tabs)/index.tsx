@@ -1,7 +1,6 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'; // React und Hooks in einem Import
 import { Image } from 'expo-image';
 import axios from 'axios';
-import React from 'react';
 import {Pressable,ScrollView,StyleSheet,View,Modal,TextInput,Button,} from 'react-native';
 import { HelloWave } from '@/components/HelloWave';
 import { ThemedText } from '@/components/ThemedText';

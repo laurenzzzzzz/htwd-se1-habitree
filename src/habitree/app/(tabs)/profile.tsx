@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react'; // <-- Default Import
+import { useState, useEffect } from 'react'; // <-- Benannte Exporte (Hooks)
+
 import {
   useColorScheme,
   Alert,
