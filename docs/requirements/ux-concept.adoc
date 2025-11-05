@@ -225,9 +225,9 @@ image::Persona-Tom_Neumann.png[Tom Neumann,200,200]
 
 *Figma:* [https://www.figma.com/design/Y2WTCzOev0BUor9mt8Ee6o/Habitree?node-id=0-1](https://www.figma.com/design/Y2WTCzOev0BUor9mt8Ee6o/Habitree?node-id=0-1)
 
-image::Wireframe_Wireflow/Homescreen.PNG[1. Hauptmenü: Streak & Tagesfortschritt,300,300]
+image::Wireframe_Wireflow/Homescreen.PNG[1. Hauptmenü: Streak & Tagesfortschritt (1. Menü),300,300]
 image::Wireframe_Wireflow/Homescreen 2.PNG[2. Habits erfüllen & Neues Habit einfügen,300,300]
-image::Wireframe_Wireflow/Wochenstatistik.PNG[3. Wochenstatistik (2. Menü),300,300]
+image::Wireframe_Wireflow/Wochenstatistik.PNG[3. Wochenstatistik / Kalender (2. Menü),300,300]
 
 image::Wireframe_Wireflow/Habit_hinzufügen.PNG[4. Habit hinzufügen Schritt 1,300,300]
 image::Wireframe_Wireflow/Habit_hinzufügen_2.PNG[5. Habit hinzufügen Schritt 2,300,300]
@@ -237,7 +237,7 @@ image::Wireframe_Wireflow/Habit_hinzufügen_5.PNG[8. Habit hinzufügen Schritt 5
 image::Wireframe_Wireflow/Habit_hinzufügen_6.PNG[9. Habit hinzufügen Schritt 6,300,300]
 image::Wireframe_Wireflow/Habit_hinzufügen_eigen.PNG[10. Eigenes Habit hinzufügen,300,300]
 
-image::Wireframe_Wireflow/Baum_1.PNG[11. Baumvisualisierung Schritt 1,300,300]
+image::Wireframe_Wireflow/Baum_1.PNG[11. Baumvisualisierung Schritt 1 (3. Menü),300,300]
 image::Wireframe_Wireflow/Baum_2.PNG[12. Baumvisualisierung Schritt 2,300,300]
 image::Wireframe_Wireflow/Baum_3.PNG[13. Baumvisualisierung Schritt 3,300,300]
 image::Wireframe_Wireflow/Baum_4.PNG[14. Baumvisualisierung Schritt 4,300,300]
@@ -245,8 +245,8 @@ image::Wireframe_Wireflow/Baum_4.PNG[14. Baumvisualisierung Schritt 4,300,300]
 image::Wireframe_Wireflow/Achivement.PNG[15. Errungenschaften (4. Menü),300,300]
 image::Wireframe_Wireflow/Achivement_2.PNG[16. Errungenschaften Detail,300,300]
 
-image::Wireframe_Wireflow/Profile.PNG[17. Konto/Profil,300,300]
-image::Wireframe_Wireflow/Login.PNG[18. Einstellungen/Settings (letztes Menü),300,300]
+image::Wireframe_Wireflow/Profile.PNG[17. Konto/Profil (5. Menü),300,300]
+image::Wireframe_Wireflow/Login.PNG[18. Einstellungen / Settings (5. Menü),300,300]
 
 // Hinweis: Bildpfade prüfen; Schreibweisen vereinheitlicht.
 
@@ -254,17 +254,15 @@ image::Wireframe_Wireflow/Login.PNG[18. Einstellungen/Settings (letztes Menü),3
 
 Die Wireframes visualisieren die **strukturierte Anordnung von Inhalten und Interaktionselementen** innerhalb der App. Die Nummerierung folgt der Nutzerreise:
 
-1. **Hauptmenü:** Anzeige von Streaks und Tagesfortschritt; Einstiegspunkt für alle Funktionen.
-2. **Habits erfüllen & Neues Habit:** Direkter Zugriff auf tägliche Aufgaben; Möglichkeit, neue Gewohnheiten anzulegen.
-3. **Wochenstatistik:** Überblick über wöchentliche Fortschritte und Auswertung.
-4.–10. **Habit hinzufügen:** Schritt-für-Schritt-Erfassung neuer Habits, inkl. Parameter, Erinnerungen und Eigenkreationen.
-11.–14. **Baumvisualisierung:** Wachsende Baum-Metapher visualisiert Fortschritt und Motivation.
-15.–16. **Errungenschaften:** Gamification-Elemente, Badges und Auszeichnungen als positives Feedback.
-17. **Konto/Profil:** Verwaltung persönlicher Daten, Übersicht eigener Habits und Streaks.
-18. **Einstellungen/Settings:** Personalisierung, App-Optionen, Notifications und Privatsphäre.
+1. **Hauptmenü (1. Menü):** Anzeige von Streaks und Tagesfortschritt; Einstiegspunkt für alle Funktionen.  
+2. **Habits erfüllen & Neues Habit:** Direkter Zugriff auf tägliche Aufgaben; Möglichkeit, neue Gewohnheiten anzulegen.  
+3. **Wochenstatistik / Kalender (2. Menü):** Überblick über wöchentliche Fortschritte und Auswertung.  
+4.–10. **Habit hinzufügen:** Schritt-für-Schritt-Erfassung neuer Habits, inkl. Parameter, Erinnerungen und Eigenkreationen.  
+11.–14. **Baumvisualisierung (3. Menü):** Wachsende Baum-Metapher visualisiert Fortschritt und Motivation.  
+15.–16. **Errungenschaften (4. Menü):** Gamification-Elemente, Badges und Auszeichnungen als positives Feedback.  
+17.–18. **Konto/Profil & Einstellungen (5. Menü):** Verwaltung persönlicher Daten, App-Optionen, Notifications und Privatsphäre.
 
-Die **Wireflows** zeigen die **Navigation und Interaktionspfade** zwischen den Screens. Sie dokumentieren, welche Aktionen zu welchem Bildschirm führen und verdeutlichen den **Fluss der Nutzung**.  
-Ziel: Nachvollziehbare Nutzerführung, konsistente UI-Elemente, Verbindung der funktionalen Anforderungen mit visueller Umsetzung, inklusive emotionaler Baum-Metapher zur Motivation und Fortschrittsdarstellung.
+Die **Wireflows** zeigen die **Navigation und Interaktionspfade** zwischen den Screens. Ziel: Nachvollziehbare Nutzerführung, konsistente UI-Elemente und Verbindung der funktionalen Anforderungen mit visueller Umsetzung, inklusive emotionaler Baum-Metapher zur Motivation und Fortschrittsdarstellung.
 
 // =====================================================================
 
