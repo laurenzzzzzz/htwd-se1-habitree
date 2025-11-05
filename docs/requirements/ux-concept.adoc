@@ -255,37 +255,37 @@ Die Wireframes visualisieren die **strukturierte Anordnung von Inhalten und Inte
 
 **Hauptmenü (Bild 1, Menü 1)**  
 
-Anzeige von **Streaks** und **Tagesfortschritt**; Einstiegspunkt für alle Funktionen.
+* Anzeige von **Streaks** und **Tagesfortschritt**; Einstiegspunkt für alle Funktionen.
 
 
 **Habits erfüllen & Neues Habit (Bilder 2–3)**  
 
-Direkter Zugriff auf tägliche Aufgaben; Möglichkeit, neue Gewohnheiten anzulegen.
+* Direkter Zugriff auf tägliche Aufgaben; Möglichkeit, neue Gewohnheiten anzulegen.
 
 
 **Wochenstatistik / Kalender (Bilder 4–5, Menü 2)**  
 
-Überblick über wöchentliche Fortschritte und Auswertung.
+* Überblick über wöchentliche Fortschritte und Auswertung.
 
 
 **Habit hinzufügen (Bilder 6–11, Menü 4)**  
 
-Schritt-für-Schritt-Erfassung neuer Habits, inkl. **Parameter**, **Erinnerungen** und **Eigenkreationen**.
+* Schritt-für-Schritt-Erfassung neuer Habits, inkl. **Parameter**, **Erinnerungen** und **Eigenkreationen**.
 
 
 **Baumvisualisierung (Bilder 12–15, Menü 3)**  
 
-Wachsende Baum-Metapher visualisiert **Fortschritt**, Motivation und individuelle Entwicklung.
+* Wachsende Baum-Metapher visualisiert **Fortschritt**, Motivation und individuelle Entwicklung.
 
 
 **Errungenschaften (Bilder 16–17, Menü 4)**  
 
-Gamification-Elemente, **Badges** und Auszeichnungen als positives Feedback für erreichte Ziele.
+* Gamification-Elemente, **Badges** und Auszeichnungen als positives Feedback für erreichte Ziele.
 
 
 **Konto/Profil & Einstellungen (Bilder 18–19, Menü 5)**  
 
-Verwaltung persönlicher Daten, App-Optionen, Notifications und Privatsphäre.
+* Verwaltung persönlicher Daten, App-Optionen, Notifications und Privatsphäre.
 
 
 Die **Wireflows** zeigen die **Navigation und Interaktionspfade** zwischen den Bildern. Ziel ist eine nachvollziehbare Nutzerführung, konsistente UI-Elemente und die Verbindung der funktionalen Anforderungen mit der visuellen Umsetzung – inklusive der emotionalen Baum-Metapher zur Motivation und Fortschrittsdarstellung.
