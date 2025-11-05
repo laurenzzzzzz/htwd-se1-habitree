@@ -254,27 +254,34 @@ image::Wireframe_Wireflow/Login.PNG[18. Einstellungen / Settings (5. Menü),300,
 Die Wireframes visualisieren die **strukturierte Anordnung von Inhalten und Interaktionselementen** innerhalb der App. Sie zeigen, wie die Nutzer durch die App navigieren und mit den Funktionen interagieren.  
 
 **Hauptmenü (Screens 1, Menü 1)**  
+
 Anzeige von **Streaks** und **Tagesfortschritt**; Einstiegspunkt für alle Funktionen.
+
 
 **Habits erfüllen & Neues Habit (Screens 2–3)**  
 
 Direkter Zugriff auf tägliche Aufgaben; Möglichkeit, neue Gewohnheiten anzulegen.
 
+
 **Wochenstatistik / Kalender (Screens 4–5, Menü 2)**  
 
 Überblick über wöchentliche Fortschritte und Auswertung.
+
 
 **Habit hinzufügen (Screens 6–11, Menü 4)**  
 
 Schritt-für-Schritt-Erfassung neuer Habits, inkl. **Parameter**, **Erinnerungen** und **Eigenkreationen**.
 
+
 **Baumvisualisierung (Screens 12–15, Menü 3)**  
 
 Wachsende Baum-Metapher visualisiert **Fortschritt**, Motivation und individuelle Entwicklung.
 
+
 **Errungenschaften (Screens 16–17, Menü 4)**  
 
 Gamification-Elemente, **Badges** und Auszeichnungen als positives Feedback für erreichte Ziele.
+
 
 **Konto/Profil & Einstellungen (Screens 18–19, Menü 5)**  
 
