@@ -255,6 +255,46 @@ image::Wireframe_Wireflow/Login.PNG[Login,300,300]
 // Hinweis: Bitte Bildpfade prüfen; Schreibweisen vereinheitlicht.
 
 // =====================================================================
+
+== Baum-Metapher (Habitree)
+
+Die zentrale Metapher von *Habitree* ist der wachsende Baum, der den Fortschritt des Nutzers symbolisiert. 
+Der Baum dient als lebendige Visualisierung für persönliche Entwicklung, Beständigkeit und Pflege – 
+Kernelemente erfolgreicher Habit-Bildung.
+
+=== Symbolik und UX-Begründung
+
+* **Wachstum über Zeit:**  
+  Gewohnheiten entstehen schrittweise – wie ein Baum, der aus einem Samen zu einem stabilen Stamm heranwächst. 
+  Jeder abgeschlossene Habit-Tag fördert dieses Wachstum sichtbar, wodurch der Nutzer Fortschritt intuitiv wahrnimmt.
+
+* **Pflege und Beständigkeit:**  
+  Ein Baum gedeiht nur durch regelmäßige Pflege. 
+  Analog dazu stärken tägliche Routinen die eigene Disziplin und Selbstwirksamkeit. 
+  Vernachlässigung führt zu stagnierendem oder rückläufigem Wachstum, was als sanftes Feedback dient.
+
+* **Sichtbares Feedback:**  
+  Das visuelle Wachsen des Baumes (z. B. neue Äste, Blätter, Blüten) ersetzt abstrakte Zahlen durch ein 
+  emotionales Erfolgserlebnis. 
+  Fortschritt wird unmittelbar erkennbar und motiviert zur Fortsetzung.
+
+* **Individualität:**  
+  Jeder Nutzer „zieht“ seinen eigenen Baum. 
+  Unterschiedliche Gewohnheiten, Dauer und Erfolge formen ein einzigartiges Erscheinungsbild – 
+  ein persönlicher Spiegel des Wachstums.
+
+* **Psychologische Wirkung:**  
+  Naturmetaphern fördern nachhaltige Motivation. 
+  Der Baum vermittelt Ruhe und Geduld: Wachstum braucht Zeit, Ausdauer und Aufmerksamkeit. 
+  So ersetzt Habitree leistungsorientierten Druck durch ein positives, wachstumsorientiertes Selbstbild.
+
+=== Ziel der Metapher
+
+Die Baum-Metapher transformiert abstrakte Daten (z. B. Streaks, Fortschrittswerte) in eine emotionale, 
+visuell ansprechende Erfahrung. Sie schafft Verbindung zwischen digitalem Verhalten und natürlichem Wachstum – 
+und macht die Bildung gesunder Gewohnheiten erlebbar.
+// =====================================================================
+
 == Taskflows (zentrale Use Cases)
 
 .**Habit anlegen (vordefiniert)**
@@ -285,6 +325,8 @@ image::Wireframe_Wireflow/Login.PNG[Login,300,300]
 . Teilen-Link generieren
 
 // =====================================================================
+
+
 == Gestaltungsrichtlinien (UI)
 
 === Designprinzipien
