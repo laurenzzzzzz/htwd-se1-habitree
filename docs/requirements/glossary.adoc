@@ -40,11 +40,45 @@ In diesem Dokument werden die wesentlichen Begriffe aus dem Anwendungsgebiet (Fa
 
 |===
 
-== Verzeichnis der Datenstrukturen 
-[%header] 
-|=== 
-| Bezeichnung | Definition | Format | Gültigkeitsregeln | Aliase 
-| Email | Email des Nutzers die in Firebase hinterlegt ist | String | Emailadresse muss `@`-Zeichen und `.` Punkt enthalten. | Firebase_UID | Passwort | Passwort des Nutzers das in Firebase hinterlegt ist | String | Not NULL | Passwort | userId | Von Firebase generierte UID aus Email und Passwort | String | von Firebase vorgegeben | U_ID |username |Name vom Nutzer |String |not NULL |Nutzername |createdAt |Zeitpunkt der Erstellung des Nutzerkontos |Date |jjjj-mm-dd hh:mm:ss: |Erstellungdatum |name |Name des Habits |String |Not NULL |Habit Name |description |Erklärung des Habits |String |Not NULL |Beschreibung |frequency |Beschreibung wie offt man das habit machen möchte (daily, weekly, monthly) |string |Not Null |Häufigkeit |habitId |id vom Habit |int |Primary Key, uniqe |habitID |date |Beinhaltet das Datum der jeweiligen Habits an jedem Tag |Date |NOT NULL |Datum |status |Status des Habits am jeweiligen Tag, standartmäßig auf false -> wird auf true gesetzt wenn erledigt |boolean |NOT NULL |Status |note |Notiz des Nutzers zum Habit am Tag |String |/ |Notizen |quote |Beinhaltet motivierende Sprüche |String | |Motivationssprüche 
+== Verzeichnis der Datenstrukturen
+
+[%header]
+|===
+| Datenstruktur | Beschreibung | Attribute | Typ | Gültigkeitsregeln
+
+| *User* | Repräsentiert eine:n registrierte:n Nutzer:in der App. |
+| userId | Von Firebase generierte eindeutige UID | String | Wird automatisch vergeben |
+| email | E-Mail-Adresse des Nutzers | String | Muss ein `@`-Zeichen und einen Punkt enthalten |
+| password | Passwort (verschlüsselt gespeichert) | String | Nicht NULL |
+| username | Anzeigename des Nutzers | String | Nicht NULL |
+| createdAt | Zeitpunkt der Kontoerstellung | DateTime | Format: `YYYY-MM-DD hh:mm:ss` |
+
+| *Habit* | Eine vom User angelegte Gewohnheit, die regelmäßig verfolgt wird. |
+| habitId | Eindeutige ID des Habits | Int | Primary Key |
+| userId | Zugehöriger Nutzer | String (FK) | Referenziert `User.userId` |
+| name | Name des Habits | String | Nicht NULL |
+| description | Beschreibung des Habits | String | Optional |
+| frequency | Ausführungsintervall (daily, weekly, monthly) | String | Nicht NULL |
+| createdAt | Erstellungsdatum des Habits | DateTime | Format: `YYYY-MM-DD hh:mm:ss` |
+
+| *HabitEntry* | Einzelner Tagebucheintrag zur Durchführung eines Habits. |
+| entryId | Eindeutige ID des Eintrags | Int | Primary Key |
+| habitId | Zugehöriger Habit | Int (FK) | Referenziert `Habit.habitId` |
+| date | Datum des Eintrags | Date | NOT NULL |
+| status | Ausführungsstatus (erledigt/offen) | Boolean | Standard: `false` |
+| note | Freitext-Notiz des Nutzers | String | Optional |
+
+| *Achievement* | Repräsentiert erreichte Meilensteine oder Auszeichnungen. |
+| achievementId | Eindeutige ID | Int | Primary Key |
+| userId | Zugehöriger Nutzer | String (FK) | Referenziert `User.userId` |
+| title | Name der Auszeichnung | String | Nicht NULL |
+| description | Beschreibung des Erfolgs | String | Optional |
+| achievedAt | Zeitpunkt des Erreichens | DateTime | NOT NULL |
+
+| *Quote* | Enthält motivierende Sprüche, die im System angezeigt werden. |
+| quoteId | Eindeutige ID | Int | Primary Key |
+| text | Der motivierende Spruch | String | Nicht NULL |
+| author | Urheber (falls vorhanden) | String | Optional |
 |=== 
 
 
