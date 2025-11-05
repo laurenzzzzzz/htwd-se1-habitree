@@ -254,13 +254,29 @@ image::Wireframe_Wireflow/Login.PNG[18. Einstellungen / Settings (5. Menü),300,
 
 Die Wireframes visualisieren die **strukturierte Anordnung von Inhalten und Interaktionselementen** innerhalb der App. Die Nummerierung folgt der Nutzerreise:
 
-1. **Hauptmenü (1. Menü):** Anzeige von Streaks und Tagesfortschritt; Einstiegspunkt für alle Funktionen.  
-2. **Habits erfüllen & Neues Habit:** Direkter Zugriff auf tägliche Aufgaben; Möglichkeit, neue Gewohnheiten anzulegen.  
-3. **Wochenstatistik / Kalender (2. Menü):** Überblick über wöchentliche Fortschritte und Auswertung.  
-4.–10. **Habit hinzufügen:** Schritt-für-Schritt-Erfassung neuer Habits, inkl. Parameter, Erinnerungen und Eigenkreationen.  
-11.–14. **Baumvisualisierung (3. Menü):** Wachsende Baum-Metapher visualisiert Fortschritt und Motivation.  
-15.–16. **Errungenschaften (4. Menü):** Gamification-Elemente, Badges und Auszeichnungen als positives Feedback.  
-17.–18. **Konto/Profil & Einstellungen (5. Menü):** Verwaltung persönlicher Daten, App-Optionen, Notifications und Privatsphäre.
+== Wireframes & Wireflows Erklärung
+
+.**Hauptmenü (1. Menü)**
+. Anzeige von Streaks und Tagesfortschritt; Einstiegspunkt für alle Funktionen.
+
+.**Habits erfüllen & Neues Habit**
+. Direkter Zugriff auf tägliche Aufgaben; Möglichkeit, neue Gewohnheiten anzulegen.
+
+.**Wochenstatistik / Kalender (2. Menü)**
+. Überblick über wöchentliche Fortschritte und Auswertung.
+
+.**Habit hinzufügen (4.–10.)**
+. Schritt-für-Schritt-Erfassung neuer Habits, inkl. Parameter, Erinnerungen und Eigenkreationen.
+
+.**Baumvisualisierung (3. Menü, 11.–14.)**
+. Wachsende Baum-Metapher visualisiert Fortschritt und Motivation.
+
+.**Errungenschaften (4. Menü, 15.–16.)**
+. Gamification-Elemente, Badges und Auszeichnungen als positives Feedback.
+
+.**Konto/Profil & Einstellungen (5. Menü, 17.–18.)**
+. Verwaltung persönlicher Daten, App-Optionen, Notifications und Privatsphäre.
+
 
 Die **Wireflows** zeigen die **Navigation und Interaktionspfade** zwischen den Screens. Ziel: Nachvollziehbare Nutzerführung, konsistente UI-Elemente und Verbindung der funktionalen Anforderungen mit visueller Umsetzung, inklusive emotionaler Baum-Metapher zur Motivation und Fortschrittsdarstellung.
 
