@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'; // React und Hooks in einem Import
+import React, { useState, useEffect, } from 'react'; 
 import { Image } from 'expo-image';
 import axios from 'axios';
 import {Pressable,ScrollView,StyleSheet,View,Modal,TextInput,Button,} from 'react-native';
@@ -6,8 +6,6 @@ import { HelloWave } from '@/components/HelloWave';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { useThemeColor } from '@/hooks/useThemeColor';
-import { getAuthSafe } from '@/constants/firebase';
-import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
 
 
 
@@ -16,24 +14,33 @@ type FilterKey = 'alle' | 'klimmzuege' | 'liegestuetze' | 'schritte';
 
 export default function HomeScreen() {
 
-
   const backgroundColor = useThemeColor({}, 'background');
   const borderColor = useThemeColor({}, 'border');
-  const API_URL = 'http://iseproject01.informatik.htw-dresden.de:8000/habits';
+
+  // ---------- API's ----------
+  const API_BASE_URL = 'http://iseproject01.informatik.htw-dresden.de:8000';
+  const HABITS_API_URL = `${API_BASE_URL}/habits`;
+  const LOGIN_API_URL = `${API_BASE_URL}/auth/login`;
+  const QUOTES_API_URL = `${API_BASE_URL}/quotes`;
+
   const [habitMode, setHabitMode] = useState<'menu' | 'custom' | 'predefined' | null>(null);
   const [selectedFilter, setSelectedFilter] = useState<FilterKey>('alle');
+  const [authToken, setAuthToken] = useState<string | null>(null);
+  const [todayQuote, setTodayQuote] = useState<string>('Lade Tagesspruch...');
 
+
+  // ---------- Datenstrukturen ----------
   interface HabitEntry {
     id: number;
     habitId: number;
     date: string;
     status: boolean;
-    note: string;
+    note: string | null; 
   }
 
   interface HabitFromBackend {
     id: number;
-    userId: string;
+    userId: number; 
     name: string;
     description: string;
     frequency: string;
@@ -46,7 +53,13 @@ export default function HomeScreen() {
     label: string;
     description: string;
     checked: boolean;
-  } 
+  }
+
+  interface QuoteFromBackend {
+  id: number;
+  quote: string;
+  }
+  
 
   const chartMap: Record<FilterKey, any> = {
     alle: require('@/assets/images/chart1.png'),
@@ -65,66 +78,107 @@ export default function HomeScreen() {
   const [habits, setHabits] = useState<HabitView[]>([]);
   const [loading, setLoading] = useState(true);
   const today = new Date();
-  const todayDateOnly = today.toISOString().split('T')[0];
+  
+  // const todayDateOnly = today.toISOString().split('T')[0];
   const isSameDay = (a: Date, b: Date) =>
     a.getFullYear() === b.getFullYear() &&
     a.getMonth() === b.getMonth() &&
     a.getDate() === b.getDate();
 
-
+  // Datenabruf mit JWT-Authentifizierung
   useEffect(() => {
-  const waitForAuthReady = async () => {
-    const auth = await getAuthSafe(); // ✅ await notwendig!
+    const loginTestUser = async () => {
+      try {
+        const email = 'test@example.com'; // Hardcoded
+        const password = 'password123'; // Hardcoded
 
-    let tries = 10;
-    while (!auth.currentUser && tries > 0) {
-      await new Promise((res) => setTimeout(res, 300));
-      tries--;
+        const response = await axios.post(LOGIN_API_URL, { email, password });
+        const token = response.data.token;
+
+        if (token) {
+          console.log(' Testuser angemeldet, JWT erhalten.');
+          setAuthToken(token); // JWT im State speichern
+        } else {
+          console.error(' Login erfolgreich, aber kein Token erhalten.');
+        }
+      } catch (error: any) {
+        console.error(' Fehler beim automatischen JWT-Login:', error.response?.data?.error || error.message);
+      }
+    };
+    loginTestUser();
+  }, []);
+
+  // NEU: Quotes abrufen und zufälliges Quote auswählen
+  useEffect(() => {
+    const fetchQuote = async () => {
+      try {
+        const response = await axios.get<QuoteFromBackend[]>(QUOTES_API_URL);
+        const quotes = response.data;
+        
+        if (quotes.length > 0) {
+          // Wähle einen zufälligen Index
+          const randomIndex = Math.floor(Math.random() * quotes.length);
+          // Setze das zufällige Quote in den State
+          setTodayQuote(quotes[randomIndex].quote);
+        } else {
+          setTodayQuote("Keine Zitate verfügbar. Bleib trotzdem motiviert!");
+        }
+      } catch (error) {
+        console.error('Fehler beim Abrufen der Quotes:', error);
+        setTodayQuote("Fehler beim Laden des Spruchs.");
+      }
+    };
+
+    fetchQuote();
+  }, []); 
+
+
+  // Habits abrufen, wenn der Token gesetzt ist
+  useEffect(() => {
+    if (!authToken) return; // Warten, bis der Token gesetzt ist
+
+    const fetchHabits = async () => {
+        setLoading(true);
+        try {
+            // Verwende den gespeicherten JWT-Token
+            const token = authToken; 
+
+            const response = await axios.get<HabitFromBackend[]>(HABITS_API_URL, {
+                headers: {
+                    Authorization: `Bearer ${token}`, // Token im Header senden
+                },
+            });
+
+            console.log('📦 Daten vom Server:', response.data);
+
+            const loadedHabits: HabitView[] = response.data.map((habit) => {
+                // Suchen des Eintrags für heute
+                const entryForToday = habit.entries.find((entry) =>
+                  isSameDay(new Date(entry.date), today)
+                );
+
+                return {
+                    id: habit.id,
+                    label: habit.name,
+                    description: habit.description,
+                    checked: entryForToday?.status ?? false, // Setze checked basierend auf dem heutigen Eintrag
+                };
+            });
+
+            setHabits(loadedHabits);
+        } catch (error) {
+            console.error('Fehler beim Abrufen der Habits:', error);
+        } finally {
+            setLoading(false);
+        }
     }
 
-    const user = auth.currentUser;
-    if (!user) {
-      console.warn('⚠️ Kein eingeloggter Benutzer verfügbar (nach Timeout)');
-      return;
-    }
+    fetchHabits();
+  }, [authToken]); 
 
-    try {
-      const token = await user.getIdToken();
-      console.log('✅ Auth-Token:', token);
-
-      const response = await axios.get<HabitFromBackend[]>(API_URL, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      console.log('📦 Daten vom Server:', response.data);
-
-      const loadedHabits: HabitView[] = response.data.map((habit) => {
-        const entryForToday = habit.entries.find((entry) =>
-          isSameDay(new Date(entry.date), today)
-        );
-
-        return {
-          id: habit.id,
-          label: habit.name,
-          description: habit.description,
-          checked: entryForToday?.status ?? false,
-        };
-      });
-
-      setHabits(loadedHabits);
-    } catch (error) {
-      console.error('❌ Fehler beim Abrufen der Habits:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  waitForAuthReady();
-}, []);
-
-    const toggleHabit = async (id: number) => {
+  // Toggle-Funktion für Habits
+  const toggleHabit = async (id: number) => {
+    // Optimistisches Update
     setHabits((prev) =>
       prev.map((habit) =>
         habit.id === id ? { ...habit, checked: !habit.checked } : habit
@@ -132,63 +186,42 @@ export default function HomeScreen() {
     );
 
     try {
-      const auth = await getAuthSafe();
-      const user = auth.currentUser;
-      if (!user) return;
-      const token = await user.getIdToken();
+      if (!authToken) {
+        console.error('Kein Auth-Token vorhanden, kann Status nicht aktualisieren.');
+        return;
+      }
+      const token = authToken; 
 
       // Status umschalten im Backend
       await axios.put(
-        `http://iseproject01.informatik.htw-dresden.de:8000/habits/${id}/toggle`,
+        `${HABITS_API_URL}/${id}/toggle`,
         { date: today }, // heutiges Datum senden
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`, // Token im Header senden
           },
         }
       );
     } catch (error) {
-      //console.error('Fehler beim Aktualisieren des Status:', error);
-      }
-    };
+      console.error('Fehler beim Aktualisieren des Status:', error);
+      // Rollback bei Fehler (optional)
+      setHabits((prev) =>
+        prev.map((habit) =>
+          habit.id === id ? { ...habit, checked: !habit.checked } : habit
+        )
+      );
+    }
+  };
 
-  useEffect(() => {
-    const loginTestUser = async () => {
-      try {
-        const auth = await getAuthSafe();
-        const email = 'testnutzer2@gmail.com';
-        const password = 'abc123'; 
 
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        console.log('✅ Testuser angemeldet', userCredential.user);
-
-        const token = await userCredential.user.getIdToken();
-        console.log('✅ Authentifizierter Token:', token);
-      } catch (error) {
-        console.error('❌ Fehler beim automatischen Testuser-Login:', error);
-      }
-    };
-
-    loginTestUser();
-  }, []);
-
-  const motivationalQuotes = [
-    "Heute ist ein guter Tag, um stark zu sein.",
-    "Jeder Schritt zählt, auch der kleine!",
-    "Gib niemals auf – du bist näher am Ziel als du denkst.",
-    "Disziplin schlägt Motivation – bleib dran!",
-    "Dein zukünftiges Ich wird dir danken.",
-    "Stärke kommt nicht von Siegen, sondern vom Durchhalten.",
-    "Der Weg zum Erfolg beginnt mit dem ersten Schritt.",
-  ];
-
-  const todayQuote = motivationalQuotes[new Date().getDay()];
   const [modalVisible, setModalVisible] = useState(false);
   const [newHabit, setNewHabit] = useState('');
   const [newDescription, setNewDescription] = useState('');
 
   const addHabit = () => {
     if (newHabit.trim() === '') return;
+
+    // Erstelle ein Dummy-Habit für die sofortige Anzeige
     const nextId = habits.length > 0 ? Math.max(...habits.map(h => h.id)) + 1 : 1;
     setHabits(prev => [
       ...prev,
@@ -197,21 +230,51 @@ export default function HomeScreen() {
         label: newHabit.trim(),
         description: newDescription.trim(),
         checked: false,
-      }
+      } as HabitView,
     ]);
+
+    // *** Habit-Speicher-Logik auf JWT umgestellt ***
+    const saveHabit = async () => {
+      try {
+        if (!authToken) {
+          console.error('Kein Auth-Token vorhanden, kann Habit nicht speichern.');
+          return;
+        }
+        const token = authToken; // Verwende den gespeicherten JWT
+
+        await axios.post(
+          HABITS_API_URL,
+          {
+            name: newHabit.trim(),
+            description: newDescription.trim(),
+            frequency: 'daily', // Hardcodiert auf 'daily'
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`, // Token im Header senden
+            },
+          }
+        );
+        // Nach dem Speichern wird die Liste beim nächsten useEffect-Lauf (nachdem der Token gesetzt ist) aktualisiert
+        // Für sofortige Konsistenz müsste man hier fetchHabits erneut aufrufen oder die Antwort verarbeiten.
+      } catch (error) {
+        console.error('Fehler beim Speichern des neuen Habits:', error);
+      }
+    };
+   
+
+    saveHabit();
     setNewHabit('');
     setNewDescription('');
-    setModalVisible(false);
-    setHabitMode(null);
+    setHabitMode(null); // Modal schließen
   };
 
-
   const predefinedHabits = [
-  { label: '6000 Schritte', description: 'Gehe heute mindestens 6000 Schritte.' },
-  { label: '1,5h Uni', description: 'Verbringe 1,5 Stunden mit Uni-Aufgaben.' },
-  { label: '40 Liegestütze', description: 'Mache 40 saubere Liegestütze.' },
-  { label: '10 Klimmzüge', description: 'Schaffe heute 10 Klimmzüge.' },
-];
+    { label: '6000 Schritte', description: 'Gehe heute mindestens 6000 Schritte.' },
+    { label: '1,5h Uni', description: 'Verbringe 1,5 Stunden mit Uni-Aufgaben.' },
+    { label: '40 Liegestütze', description: 'Mache 40 saubere Liegestütze.' },
+    { label: '10 Klimmzüge', description: 'Schaffe heute 10 Klimmzüge.' },
+  ];
 
 
   return (
