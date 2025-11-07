@@ -11,6 +11,9 @@ import { View } from 'react-native';
 
 import React from 'react';
 
+import { Dimensions } from 'react-native';
+const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
+
 
 export default function TabTwoScreen() {
   
@@ -36,8 +39,8 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   treeImage: {
-    width: '100%',
-    height: 300,
+    width: windowWidth * 0.8,  
+    height: windowHeight * 0.35,
     alignSelf: 'center',
     marginVertical: 24,
   },

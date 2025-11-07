@@ -7,6 +7,8 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { useThemeColor } from '@/hooks/useThemeColor';
 
+import { Dimensions } from 'react-native';
+const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
 
 
 // Typ für die Filter-Schlüssel
@@ -533,7 +535,7 @@ const styles = StyleSheet.create({
   // FAB-Style mit Theme
   fab: {
     position: 'absolute',
-    bottom: 54,
+    bottom: windowHeight * 0.06,
     right: 20,
     width: 56,
     height: 56,
@@ -605,7 +607,7 @@ const styles = StyleSheet.create({
   },
   chartImage: {
     width: '100%',
-    height: 200,
+    height: windowHeight * 0.2,
     marginBottom: 20,
     borderRadius: 12,
   },
@@ -618,7 +620,7 @@ const styles = StyleSheet.create({
   habitItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 12,
+    paddingVertical: windowHeight * 0.015,
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: '#e0e0e0',
   },
