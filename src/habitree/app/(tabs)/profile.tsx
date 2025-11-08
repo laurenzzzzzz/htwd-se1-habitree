@@ -237,7 +237,7 @@ export default function ProfileScreen() {
   if (!isLoggedIn) {
     return (
       <ThemedView style={styles.loadingContainer}>
-        <ThemedText type="title" style={{ marginBottom: 20 }}>
+        <ThemedText type="title" style={{ marginBottom: 20, textAlign: 'center' }} >
           Anmeldung erforderlich
         </ThemedText>
         <ThemedText style={{ textAlign: 'center', marginHorizontal: 30, opacity: 0.8 }}>
