@@ -18,14 +18,14 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import * as SecureStore from 'expo-secure-store';
-import { useFocusEffect } from '@react-navigation/native'; // Wichtig für das Polling
+import { useFocusEffect } from '@react-navigation/native';
 
-// --- KONSTANTEN FÜR DEN TOKEN-SPEICHER ---
+// --- SECURESTORE KONSTANTEN & FUNKTIONEN ---
 const AUTH_TOKEN_KEY = 'userAuthToken';
 const USER_DATA_KEY = 'currentAuthUser'; 
 
-// --- SecureStore Ladefunktion ---
 type CurrentUser = { id: number; email: string; username: string };
+
 const loadAuthData = async (): Promise<{ token: string | null, user: CurrentUser | null }> => {
     const token = await SecureStore.getItemAsync(AUTH_TOKEN_KEY);
     const userJson = await SecureStore.getItemAsync(USER_DATA_KEY);
@@ -40,19 +40,17 @@ const loadAuthData = async (): Promise<{ token: string | null, user: CurrentUser
     return { token, user };
 };
 
-// --- SecureStore Speicherfunktion ---
 const saveAuthData = async (token: string, user: CurrentUser) => {
   await SecureStore.setItemAsync(AUTH_TOKEN_KEY, token);
   await SecureStore.setItemAsync(USER_DATA_KEY, JSON.stringify(user));
 };
 
-// --- SecureStore Löschfunktion ---
 const deleteAuthData = async () => {
     await SecureStore.deleteItemAsync(AUTH_TOKEN_KEY);
     await SecureStore.deleteItemAsync(USER_DATA_KEY);
 };
 
-// Typen (wie in Ihrer Originaldatei)
+// --- TYPEN ---
 type FilterKey = 'alle' | 'klimmzuege' | 'liegestuetze' | 'schritte';
 type Habit = {
   id: number;
@@ -70,23 +68,22 @@ type Quote = {
 export default function HomeScreen() {
 
   const backgroundColor = useThemeColor({}, 'background');
-  const borderColor = useThemeColor({}, 'border');
 
-  // ---------- API's ----------
+  // --- API KONSTANTEN ---
   const API_BASE_URL = 'http://iseproject01.informatik.htw-dresden.de:8000';
   const HABITS_API_URL = `${API_BASE_URL}/habits`;
   const QUOTES_API_URL = `${API_BASE_URL}/quotes`;
   const LOGIN_API_URL = `${API_BASE_URL}/auth/login`;
-   const REGISTER_API_URL = `${API_BASE_URL}/auth/register`; 
+  const REGISTER_API_URL = `${API_BASE_URL}/auth/register`; 
 
 
-  // ---------- AUTHENTIFIZIERUNGS-STATES ----------
+  // --- AUTHENTIFIZIERUNGS STATES ---
   const [authToken, setAuthToken] = useState<string | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null);
   const [isLoadingAuth, setIsLoadingAuth] = useState(true);
 
-  // ---------- HABIT STATES ----------
+  // --- HABIT STATES ---
   const [habitMode, setHabitMode] = useState<'menu' | 'custom' | 'predefined' | null>(null);
   const [selectedFilter, setSelectedFilter] = useState<FilterKey>('alle');
   const [habits, setHabits] = useState<Habit[]>([]);
@@ -96,208 +93,29 @@ export default function HomeScreen() {
   const [newHabitName, setNewHabitName] = useState('');
   const [newHabitDescription, setNewHabitDescription] = useState('');
 
-  // --- Login Screen States (für den Home-Tab, wenn abgemeldet) ---
+  // --- LOGIN/REGISTER STATES ---
   const [authEmail, setAuthEmail] = useState('');
   const [authPassword, setAuthPassword] = useState('');
   const [authMessage, setAuthMessage] = useState('');
   const [isLoadingLogin, setIsLoadingLogin] = useState(false);
-
-  // ---------- States für Registrieung ----------
   const [isRegistering, setIsRegistering] = useState(false); 
   const [registerUsername, setRegisterUsername] = useState('');
 
-
+  // --- UTILITY ---
   const today = new Date();
   const isSameDay = (a: Date, b: Date) =>
     a.getFullYear() === b.getFullYear() &&
     a.getMonth() === b.getMonth() &&
     a.getDate() === b.getDate();
 
+  const predefinedHabits = [
+    { id: 1, label: '6000 Schritte', description: 'Gehe heute mindestens 6000 Schritte.', frequency: 'Täglich' },
+    { id: 2, label: '1,5h Uni', description: 'Verbringe 1,5 Stunden mit Uni-Aufgaben.', frequency: 'Wöchentlich' },
+    { id: 3, label: '40 Liegestütze', description: 'Mache 40 saubere Liegestütze.', frequency: '2x Pro Woche' },
+    { id: 4, label: '10 Klimmzüge', description: 'Schaffe heute 10 Klimmzüge.', frequency: '3x Pro Woche' },
+  ];
 
-
-
-  // ---------- AUTHENTIFIZIERUNGS-LOGIK ----------
-
-const checkLoginStatus = useCallback(async () => {
-  setIsLoadingAuth(true);
-  const { token, user } = await loadAuthData();
-
-  setAuthToken(token);
-  setCurrentUser(user);
-
-  if (token) {
-      // Prüfe den Token gegen das Backend (optional)
-      try {
-          
-          setIsLoggedIn(true);
-          /*
-          const response = await axios.get(USER_STATUS_API_URL, {
-                headers: { Authorization: `Bearer ${token}` },
-            });
-            setIsLoggedIn(response.data.isLoggedIn);
-            if (!response.data.isLoggedIn) {
-                await SecureStore.deleteItemAsync(AUTH_TOKEN_KEY);
-                await SecureStore.deleteItemAsync(USER_DATA_KEY);
-            }
-          */
-      } catch (error) {
-          console.error("Token-Validierung fehlgeschlagen:", error);
-          setIsLoggedIn(false);
-          await SecureStore.deleteItemAsync(AUTH_TOKEN_KEY); // Ungültigen Token löschen
-          await SecureStore.deleteItemAsync(USER_DATA_KEY);
-      }
-  } else {
-      setIsLoggedIn(false);
-  }
-  setIsLoadingAuth(false);
-}, []);
-
-// Führe die Prüfung nur einmal aus, wenn der Tab fokussiert wird
-useFocusEffect(
-  useCallback(() => {
-    checkLoginStatus();
-    // Entferne Polling: Es wird kein setInterval mehr benötigt
-  }, [checkLoginStatus])
-);
-  
-  // Polling/Re-Check, wenn der Home-Tab fokussiert wird oder initial lädt
-  useFocusEffect(
-    useCallback(() => {
-      // 1. Status sofort prüfen
-      checkLoginStatus();
-    
-      // Die Rückgabe-Funktion ist leer, da kein Timer aufgeräumt werden muss.
-      return () => {
-        // Cleanup-Funktion (wird beim Verlassen des Tabs ausgeführt)
-      };
-    }, [checkLoginStatus])
-  );
-
-
-  // --- Eigener Login-Handler für den Home-Tab (wenn abgemeldet) ---
-  const handleHomeLogin = async () => {
-    if (!authEmail || !authPassword) {
-      setAuthMessage('Bitte E-Mail und Passwort eingeben.');
-      return;
-    }
-
-    setIsLoadingLogin(true);
-    setAuthMessage('');
-
-    try {
-      const response = await axios.post(LOGIN_API_URL, {
-        email: authEmail.trim(),
-        password: authPassword,
-      });
-
-      const { token, message, userId, email, username } = response.data;
-      
-      const user: CurrentUser = {
-          id: userId,
-          email: email,
-          username: username || email.split('@')[0]
-      };
-
-      // *** Globale Speicherung (damit Profile.tsx den Login erkennt) ***
-      await SecureStore.setItemAsync(AUTH_TOKEN_KEY, token);
-      await SecureStore.setItemAsync(USER_DATA_KEY, JSON.stringify(user));
-
-      // Lokalen State aktualisieren
-      setAuthToken(token);
-      setCurrentUser(user);
-      setIsLoggedIn(true);
-
-      // UI aufräumen
-      setAuthEmail('');
-      setAuthPassword('');
-      
-      // Daten laden
-      fetchQuote();
-      fetchHabits(); 
-
-    } catch (error) {
-      const errorMessage = axios.isAxiosError(error)
-        ? (error.response?.data?.error || 'Unbekannter API-Fehler.')
-        : 'Netzwerkfehler oder unerwarteter Fehler.';
-
-      setAuthMessage(errorMessage);
-    } finally {
-      setIsLoadingLogin(false);
-    }
-  };
-
-    const handleHomeRegister = async () => {
-    if (!authEmail || !authPassword) {
-      setAuthMessage('Bitte E-Mail und Passwort eingeben.');
-      return;
-    }
-
-    setIsLoadingLogin(true); // Verwenden des gleichen Lade-States
-    setAuthMessage('');
-
-    try {
-      // POST-Request zum Registrierungs-Endpunkt
-      const response = await axios.post(REGISTER_API_URL, {
-        email: authEmail.trim(),
-        password: authPassword,
-        username: registerUsername.trim() || undefined, // Optionalen Username senden
-      });
-
-      const { token, message, userId, email, username } = response.data;
-      
-      const user: CurrentUser = {
-        id: userId,
-        email: email,
-        username: username || email.split('@')[0]
-      };
-
-      // *** Globale Speicherung (damit Profile.tsx den Login erkennt) ***
-      await SecureStore.setItemAsync(AUTH_TOKEN_KEY, token);
-      await SecureStore.setItemAsync(USER_DATA_KEY, JSON.stringify(user));
-
-      // Lokalen State aktualisieren
-      setAuthToken(token);
-      setCurrentUser(user);
-      setIsLoggedIn(true);
-
-      // UI aufräumen
-      setAuthEmail('');
-      setAuthPassword('');
-      setRegisterUsername('');
-      setIsRegistering(false);
-      Alert.alert('Erfolg', message || 'Registrierung erfolgreich. Du bist jetzt eingeloggt.');
-      
-      // Daten laden
-      fetchQuote();
-      fetchHabits(); 
-
-    } catch (error) {
-      const errorMessage = axios.isAxiosError(error)
-        ? (error.response?.data?.error || 'Fehler bei der Registrierung.')
-        : 'Netzwerkfehler oder unerwarteter Fehler.';
-
-      setAuthMessage(errorMessage);
-    } finally {
-      setIsLoadingLogin(false);
-    }
-  };
-
-  // ---------- API-FUNKTIONEN  ----------
-
-  const fetchHabits = useCallback(async () => {
-    if (!authToken || !isLoggedIn) return;
-    setIsLoadingHabits(true);
-    try {
-      const response = await axios.get<Habit[]>(HABITS_API_URL, {
-        headers: { Authorization: `Bearer ${authToken}` },
-      });
-      setHabits(response.data);
-    } catch (error) {
-      console.error('Fehler beim Laden der Habits:', error);
-    } finally {
-      setIsLoadingHabits(false);
-    }
-  }, [authToken, isLoggedIn]);
+  // --- DATENLADE FUNKTIONEN ---
 
   const fetchQuote = useCallback(async () => {
     try {
@@ -313,31 +131,177 @@ useFocusEffect(
       console.error('Fehler beim Abrufen der Quotes:', error);
       setQuote({ id: 0, quote: "Fehler beim Laden des Spruchs." });
     }
+  }, [QUOTES_API_URL]);
+
+  const fetchHabits = useCallback(async () => {
+    if (!authToken || !isLoggedIn) return;
+    setIsLoadingHabits(true);
+    try {
+      const response = await axios.get<Habit[]>(HABITS_API_URL, {
+        headers: { Authorization: `Bearer ${authToken}` },
+      });
+      setHabits(response.data);
+    } catch (error) {
+      console.error('Fehler beim Laden der Habits:', error);
+    } finally {
+      setIsLoadingHabits(false);
+    }
+  }, [authToken, isLoggedIn, HABITS_API_URL]);
+
+  // --- AUTHENTIFIZIERUNGS LOGIK ---
+
+  const checkLoginStatus = useCallback(async () => {
+    setIsLoadingAuth(true);
+    const { token, user } = await loadAuthData();
+
+    setAuthToken(token);
+    setCurrentUser(user);
+
+    if (token) {
+        // Optionale Token-Validierung (auskommentiert in Originaldatei)
+        setIsLoggedIn(true);
+    } else {
+        setIsLoggedIn(false);
+    }
+    setIsLoadingAuth(false);
   }, []);
 
-  const addHabit = () => {
-      // ... (Ihre bestehende Logik zum Hinzufügen von Habits, mit AuthToken-Check)
-      if (newHabitName.trim() === '' || newHabitDescription.trim() === '') return;
+  useFocusEffect(
+    useCallback(() => {
+      checkLoginStatus();
+      // Die Rückgabe-Funktion ist leer, da kein Timer aufgeräumt werden muss.
+      return () => {};
+    }, [checkLoginStatus])
+  );
+  
+  // Lade Daten nach erfolgreichem Login
+  useEffect(() => {
+    if (isLoggedIn) {
+      fetchHabits();
+      fetchQuote();
+    }
+  }, [isLoggedIn, fetchHabits, fetchQuote]);
 
-      const saveHabit = async (name: string, description: string) => {
-      try {
-        if (!authToken) {
-          Alert.alert('Fehler', 'Nicht angemeldet. Bitte melden Sie sich an.');
-          return;
-        }
-          await axios.post(
-            HABITS_API_URL,
-            { name: name.trim(), description: description.trim(), frequency: 'Täglich' },
-            { headers: { Authorization: `Bearer ${authToken}` } }
-          );
-          fetchHabits();
-        } catch (error) {
-          console.error('Fehler beim Speichern des neuen Habits:', error);
-          Alert.alert('Fehler', 'Speichern des Habits fehlgeschlagen.');
-        }
+
+  const handleHomeLogin = async () => {
+    if (!authEmail || !authPassword) {
+      setAuthMessage('Bitte E-Mail und Passwort eingeben.');
+      return;
+    }
+
+    setIsLoadingLogin(true);
+    setAuthMessage('');
+
+    try {
+      const response = await axios.post(LOGIN_API_URL, {
+        email: authEmail.trim(),
+        password: authPassword,
+      });
+
+      const { token, userId, email, username } = response.data;
+      
+      const user: CurrentUser = {
+          id: userId,
+          email: email,
+          username: username || email.split('@')[0]
       };
 
-      saveHabit(newHabitName, newHabitDescription);
+      await saveAuthData(token, user);
+
+      setAuthToken(token);
+      setCurrentUser(user);
+      setIsLoggedIn(true);
+
+      setAuthEmail('');
+      setAuthPassword('');
+      
+      fetchQuote();
+      fetchHabits(); 
+
+    } catch (error) {
+      const errorMessage = axios.isAxiosError(error)
+        ? (error.response?.data?.error || 'Unbekannter API-Fehler.')
+        : 'Netzwerkfehler oder unerwarteter Fehler.';
+
+      setAuthMessage(errorMessage);
+    } finally {
+      setIsLoadingLogin(false);
+    }
+  };
+
+  const handleHomeRegister = async () => {
+    if (!authEmail || !authPassword) {
+      setAuthMessage('Bitte E-Mail und Passwort eingeben.');
+      return;
+    }
+
+    setIsLoadingLogin(true);
+    setAuthMessage('');
+
+    try {
+      const response = await axios.post(REGISTER_API_URL, {
+        email: authEmail.trim(),
+        password: authPassword,
+        username: registerUsername.trim() || undefined,
+      });
+
+      const { token, message, userId, email, username } = response.data;
+      
+      const user: CurrentUser = {
+        id: userId,
+        email: email,
+        username: username || email.split('@')[0]
+      };
+
+      await saveAuthData(token, user);
+
+      setAuthToken(token);
+      setCurrentUser(user);
+      setIsLoggedIn(true);
+
+      setAuthEmail('');
+      setAuthPassword('');
+      setRegisterUsername('');
+      setIsRegistering(false);
+      Alert.alert('Erfolg', message || 'Registrierung erfolgreich. Du bist jetzt eingeloggt.');
+      
+      fetchQuote();
+      fetchHabits(); 
+
+    } catch (error) {
+      const errorMessage = axios.isAxiosError(error)
+        ? (error.response?.data?.error || 'Fehler bei der Registrierung.')
+        : 'Netzwerkfehler oder unerwarteter Fehler.';
+
+      setAuthMessage(errorMessage);
+    } finally {
+      setIsLoadingLogin(false);
+    }
+  };
+
+  // --- HABIT FUNKTIONEN ---
+  
+  const saveHabit = async (name: string, description: string, frequency: string) => {
+    try {
+      if (!authToken) {
+        Alert.alert('Fehler', 'Nicht angemeldet. Bitte melden Sie sich an.');
+        return;
+      }
+        await axios.post(
+          HABITS_API_URL,
+          { name: name.trim(), description: description.trim(), frequency },
+          { headers: { Authorization: `Bearer ${authToken}` } }
+        );
+        fetchHabits();
+      } catch (error) {
+        console.error('Fehler beim Speichern des neuen Habits:', error);
+        Alert.alert('Fehler', 'Speichern des Habits fehlgeschlagen.');
+      }
+    };
+
+  const addHabit = () => {
+      if (newHabitName.trim() === '' || newHabitDescription.trim() === '') return;
+      saveHabit(newHabitName, newHabitDescription, 'Täglich');
       setNewHabitName('');
       setNewHabitDescription('');
       setModalVisible(false);
@@ -345,32 +309,12 @@ useFocusEffect(
   };
   
   const addPredefinedHabit = (label: string, description: string, frequency: string) => {
-      // ... (Ihre bestehende Logik für vordefinierte Habits, mit AuthToken-Check)
-      const saveHabit = async (name: string, description: string, frequency: string) => {
-        try {
-          if (!authToken) {
-            Alert.alert('Fehler', 'Nicht angemeldet. Bitte melden Sie sich an.');
-            return;
-          }
-          await axios.post(
-            HABITS_API_URL,
-            { name, description, frequency },
-            { headers: { Authorization: `Bearer ${authToken}` } }
-          );
-          fetchHabits();
-        } catch (error) {
-          console.error('Fehler beim Speichern des vordefinierten Habits:', error);
-          Alert.alert('Fehler', 'Speichern fehlgeschlagen.');
-        }
-      };
-
       saveHabit(label, description, frequency);
       setModalVisible(false);
       setHabitMode(null);
   }
 
   const toggleHabit = async (id: number) => {
-    // Stellen Sie sicher, dass der Benutzer angemeldet ist
     if (!authToken) return;
 
     const habitToToggle = habits.find(h => h.id === id);
@@ -381,8 +325,8 @@ useFocusEffect(
         return;
     }
     
-    // Optimistische UI-Aktualisierung (vor dem API-Call)
     const newStatus = !entryForToday.status;
+    // Optimistische UI-Aktualisierung
     setHabits((prev) =>
         prev.map((habit) =>
             habit.id === id ? {
@@ -395,13 +339,11 @@ useFocusEffect(
     );
 
     try {
-        // *** KORRIGIERT: Verwende die Route /:id/toggle und sende das Datum im Body ***
         await axios.put(
-            `${HABITS_API_URL}/${id}/toggle`, // <--- Korrigierte URL (Backend erwartet /toggle)
-            { date: today.toISOString() },    // <--- Backend erwartet das Datum im Body 
+            `${HABITS_API_URL}/${id}/toggle`,
+            { date: today.toISOString() },
             { headers: { Authorization: `Bearer ${authToken}` } }
         );
-        // Die API-Antwort enthält nun den aktualisierten Eintrag, was bestätigt, dass der Toggle erfolgreich war.
         
     } catch (error) {
         console.error('Fehler beim Aktualisieren des Status:', error);
@@ -421,18 +363,9 @@ useFocusEffect(
     }
 };
 
-
-  // Daten laden, sobald sich der Zustand ändert
-  useEffect(() => {
-    if (isLoggedIn) {
-      fetchHabits();
-      fetchQuote();
-    }
-  }, [isLoggedIn, fetchHabits, fetchQuote]);
-
+  // --- USEMEMO UND HILFSFUNKTIONEN ---
 
   const filterOptions: { key: FilterKey; label: string }[] = [
-    // ... (Ihre bestehenden Filter-Optionen)
     { key: 'alle', label: 'Alle' },
     { key: 'klimmzuege', label: 'Klimmzüge' },
     { key: 'liegestuetze', label: 'Liegestütze' },
@@ -444,12 +377,6 @@ useFocusEffect(
     liegestuetze: require('@/assets/images/chart3.png'),
     schritte: require('@/assets/images/chart4.png'),
   };
-  const predefinedHabits = [
-    { id: 1, label: '6000 Schritte', description: 'Gehe heute mindestens 6000 Schritte.', frequency: 'Täglich' },
-    { id: 2, label: '1,5h Uni', description: 'Verbringe 1,5 Stunden mit Uni-Aufgaben.', frequency: 'Wöchentlich' },
-    { id: 3, label: '40 Liegestütze', description: 'Mache 40 saubere Liegestütze.', frequency: '2x Pro Woche' },
-    { id: 4, label: '10 Klimmzüge', description: 'Schaffe heute 10 Klimmzüge.', frequency: '3x Pro Woche' },
-  ];
 
   const filteredHabits = useMemo(() => {
     const activeHabits = habits.map(habit => {
@@ -469,7 +396,6 @@ useFocusEffect(
   }, [habits, selectedFilter, today]);
 
 
-  // Hilfsfunktion zum Öffnen des Modals (mit behobenem Typfehler)
   const openHabitModal = (mode: 'menu' | 'custom' | 'predefined') => {
     if (!isLoggedIn) {
         Alert.alert('Login erforderlich', 'Bitte melde dich zuerst an, um Habits zu erstellen.');
@@ -479,7 +405,8 @@ useFocusEffect(
     setModalVisible(true);
   };
   
-  // Funktion zum Rendern des Modals (Hier ist der Typfehler behoben)
+  // --- RENDERING FUNKTIONEN ---
+
   const renderModals = () => {
     return (
       <Modal
@@ -558,8 +485,6 @@ useFocusEffect(
     );
   };
   
-  // ---------- BEDINGTES RENDERING FÜR LOGIN ----------
-
   const renderLoginScreen = () => (
     <View style={[styles.container, styles.loadingContainer]}>
         <ThemedText type="title" style={{ textAlign: 'center', marginBottom: 20 }}>
@@ -582,7 +507,6 @@ useFocusEffect(
                 editable={!isLoadingLogin}
             />
             
-            {/* 🆕 NEUES FELD NUR FÜR REGISTRIERUNG */}
             {isRegistering && (
                 <TextInput
                     style={styles.authInput}
@@ -607,10 +531,9 @@ useFocusEffect(
             
             {authMessage ? <ThemedText style={styles.authMessage}>{authMessage}</ThemedText> : null}
 
-            {/* Haupt-Button: ANMELDEN oder REGISTRIEREN */}
             <TouchableOpacity
                 style={[styles.authButton, isLoadingLogin && styles.authButtonDisabled]}
-                onPress={isRegistering ? handleHomeRegister : handleHomeLogin} // 🔄 Wählt Handler
+                onPress={isRegistering ? handleHomeRegister : handleHomeLogin}
                 disabled={isLoadingLogin}
             >
                 {isLoadingLogin ? (
@@ -622,12 +545,11 @@ useFocusEffect(
                 )}
             </TouchableOpacity>
             
-            {/* 🆕 Umschalt-Button */}
             <TouchableOpacity
                 style={styles.switchAuthButton}
                 onPress={() => {
                     setIsRegistering(prev => !prev);
-                    setAuthMessage(''); // Nachricht beim Wechsel löschen
+                    setAuthMessage('');
                 }}
                 disabled={isLoadingLogin}
             >
@@ -639,6 +561,9 @@ useFocusEffect(
     </View>
 );
 
+
+  // --- MAIN RENDER ---
+  
   if (isLoadingAuth) {
     return (
       <View style={[styles.container, styles.loadingContainer]}>
@@ -649,7 +574,7 @@ useFocusEffect(
   }
 
   if (!isLoggedIn) {
-    return renderLoginScreen(); // Zeige Login-Screen, wenn nicht eingeloggt
+    return renderLoginScreen();
   }
 
 
@@ -667,7 +592,7 @@ useFocusEffect(
         </View>
 
         <ThemedText style={styles.motivationQuote}>
-          💬 Tagesspruch: "{quote?.quote || 'Lade Tagesspruch...'}"
+          Tagesspruch: "{quote?.quote || 'Lade Tagesspruch...'}"
         </ThemedText>
 
         <ThemedText type="subtitle" style={styles.sectionTitle}>
@@ -766,8 +691,9 @@ useFocusEffect(
   );
 }
 
+// --- STYLESHEET ---
+
 const styles = StyleSheet.create({
-  // --- NEUE/GEÄNDERTE STYLES FÜR LOGIN-SCREEN ---
   authContainer: {
     width: '100%',
     padding: 20,
@@ -810,7 +736,15 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginBottom: 10,
   },
-  // --- BESTEHENDE STYLES (wie in der letzten Version) ---
+  switchAuthButton: {
+    marginTop: 15,
+    paddingVertical: 10,
+  },
+  switchAuthButtonText: {
+    color: 'rgb(25, 145, 137)',
+    textAlign: 'center',
+    fontSize: 14,
+  },
   noHabitsText: {
     color: '#888',
     fontStyle: 'italic',
@@ -971,15 +905,5 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: '600',
     fontSize: 16,
-  },
-  // --- NEUE STYLES FÜR LOGIN/REGISTER-UMSCHALTUNG ---
-  switchAuthButton: {
-    marginTop: 15,
-    paddingVertical: 10,
-  },
-  switchAuthButtonText: {
-    color: 'rgb(25, 145, 137)', // Passend zur Akzentfarbe
-    textAlign: 'center',
-    fontSize: 14,
   },
 });
