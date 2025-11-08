@@ -1,7 +1,7 @@
 import React, { useState, useEffect, } from 'react'; 
 import { Image } from 'expo-image';
 import axios from 'axios';
-import {Pressable,ScrollView,StyleSheet,View,Modal,TextInput,Button,} from 'react-native';
+import {Pressable,ScrollView,StyleSheet,View,Modal,TextInput,Button,Text} from 'react-native';
 import { HelloWave } from '@/components/HelloWave';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
@@ -27,7 +27,7 @@ export default function HomeScreen() {
   const [selectedFilter, setSelectedFilter] = useState<FilterKey>('alle');
   const [authToken, setAuthToken] = useState<string | null>(null);
   const [todayQuote, setTodayQuote] = useState<string>('Lade Tagesspruch...');
-
+  const [streakModalVisible, setStreakModalVisible] = useState(false);
 
   // ---------- Datenstrukturen ----------
   interface HabitEntry {
@@ -337,15 +337,67 @@ export default function HomeScreen() {
         />
 
         {/* Streak-Bild */}
-        <Image
-          source={require('@/assets/images/streak.png')}
-          style={[styles.chartImage, { height: 280 }]}
-          contentFit="contain"
-        />
+        
+        {/* 
+          <Image
+            source={require('@/assets/images/streak.png')}
+            style={[styles.chartImage, { height: 280 }]}
+            contentFit="contain"
+          /> 
+          */}
+        
 
         {/* Gewohnheiten-Liste */}
         <ThemedView style={styles.habitListContainer}>
+          
           <ThemedText type="subtitle" style={styles.habitTitle}>
+            Deine Streak:
+          </ThemedText>
+
+          {/* Streak-Zahl mit transparenten Wassertropfen-Bild */}
+          <Pressable style={styles.streakContainer} onPress={() => setStreakModalVisible(true)}>
+            <Image
+              source={require('@/assets/images/wassertropfen.png')}
+              style={styles.streakBackgroundImage}
+              contentFit="contain"
+            />
+            <ThemedText style={styles.streakNumber}>14</ThemedText>
+          </Pressable>
+          
+
+          {/* Neue Profilbilder-Leiste mit gelbem Rahmen für den heutigen Tag */}
+          <View style={styles.weekdayRow}>
+            {['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'].map((day, index) => {
+              const today = new Date();
+              const jsDay = today.getDay(); // Sonntag = 0, Montag = 1, ...
+              const mappedDay = jsDay === 0 ? 6 : jsDay - 1; // Montag = 0, Sonntag = 6
+
+              const isToday = index === mappedDay;
+              const isPastOrToday = index <= mappedDay; // alles bis einschließlich heute
+
+              return (
+                <View
+                  key={index}
+                  style={[
+                    styles.weekdayCircle,
+                    isPastOrToday && styles.weekdayFilled,
+                    isToday && styles.weekdayToday,
+                  ]}
+                >
+                  <ThemedText
+                    style={[
+                      styles.weekdayText,
+                      isToday && styles.weekdayTextToday,
+                    ]}
+                  >
+                    {day}
+                  </ThemedText>
+                </View>
+              );
+            })}
+          </View>
+
+          <ThemedText type="subtitle" style={[styles.habitTitle, { marginTop: 40 }]}>
             Heutige Ziele:
           </ThemedText>
 
@@ -489,8 +541,42 @@ export default function HomeScreen() {
               </View>
             </View>
           </View>
+          
         </Modal>
+        
+        {/* Modal für Streak-Info */}
+        <Modal
+          visible={streakModalVisible}
+          animationType="fade"
+          transparent
+          onRequestClose={() => setStreakModalVisible(false)}
+        >
+          <View style={styles.streakModalOverlay}>
+            <View style={styles.streakModalContainer}>
+              <Text style={styles.streakModalTitle}>Wow – 14 Tage am Stück!</Text>
+              <Text style={styles.streakModalText}>
+                Super gemacht! 🎉 Du hast bereits 14 Tage in Folge deine Streak gehalten. 
+                Bleib dran – dein Durchhaltevermögen zahlt sich aus!
+              </Text>
+
+              <Image
+                source={require('@/assets/images/wassertropfen.png')}
+                style={styles.streakModalImage}
+                contentFit="contain"
+              />
+
+              <Pressable
+                style={styles.streakCloseButton}
+                onPress={() => setStreakModalVisible(false)}
+              >
+                <Text style={styles.streakCloseButtonText}>Weiter motiviert bleiben</Text>
+              </Pressable>
+            </View>
+          </View>
+        </Modal>
+        
     </View>
+    
   );
 }
 
@@ -657,5 +743,133 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     fontSize: 16,
   },
-});
+  profileRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 12,
+    gap: 6,
+  },
+  profileImageWrapper: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 20,
+    borderColor: 'transparent',
+  },
+  profileImageToday: {
+    borderColor: 'rgb(25, 145, 137)', // gelber Rahmen für den heutigen Tag
+  },
+  profileImage: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+  },
+  streakContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'relative',
+    marginVertical: 20,
+    marginTop: 10,     // optional: etwas nach oben rücken im Layout
+  },
+  streakBackgroundImage: {
+    position: 'absolute',
+    width: 85,
+    height: 85,
+    top: -27,          // Tropfen leicht nach oben verschieben
+    opacity: 0.25,
+  },
+  streakNumber: {
+    fontSize: 40,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: 'rgb(25, 145, 137)',
+    lineHeight: 40,
+    includeFontPadding: false,
+    textAlignVertical: 'center',
+    zIndex: 1,
+  },
+  weekdayRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 12,
+    marginTop: 24,     // 👈 extra Platz zwischen Tropfen/Zahl und Wochentagen
+    gap: 8,
+  },
+  weekdayCircle: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    borderWidth: 2,
+    borderColor: '#ccc',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'white',
+  },
+  weekdayFilled: {
+    backgroundColor: 'rgba(25, 145, 137, 0.2)',
+    borderColor: 'rgba(25, 145, 137, 0.3)',
+  },
+  weekdayToday: {
+    borderColor: 'rgb(25, 145, 137)',
+    borderWidth: 3,
+    backgroundColor: 'rgba(25, 145, 137, 0.35)',
+  },
+  weekdayText: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: '#333',
+  },
+  weekdayTextToday: {
+    color: 'rgb(25, 145, 137)',
+    fontWeight: '700',
+  },
+   streakModalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  streakModalContainer: {
+    backgroundColor: '#fff',
+    borderRadius: 16,
+    padding: 24,
+    width: '85%',
+    alignItems: 'center',
+  },
+   streakModalTitle: {
+    fontSize: 20,
+    fontWeight: '700',
+    textAlign: 'center',
+    marginBottom: 10,
+    color: 'rgb(25, 145, 137)',
+  },
+  streakModalText: {
+    fontSize: 15,
+    textAlign: 'center',
+    color: '#444',
+    marginBottom: 16,
+  },
+  streakModalImage: {
+    width: 100,
+    height: 100,
+    opacity: 0.8,
+    marginBottom: 12,
+  },
+  streakCloseButton: {
+    marginTop: 8,
+    backgroundColor: 'rgb(25, 145, 137)',
+    paddingHorizontal: 18,
+    paddingVertical: 10,
+    borderRadius: 10,
+  },
+  streakCloseButtonText: {
+    color: '#fff',
+    fontWeight: '600',
+    textAlign: 'center',
+  },
 
+});
