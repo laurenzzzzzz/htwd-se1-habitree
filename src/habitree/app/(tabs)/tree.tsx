@@ -54,12 +54,20 @@ export default function TabTwoScreen() {
     return () => animatedValue.removeAllListeners();
   }, []);
 
+  // Farb-Logik: Wenn bei 66 Tagen (treeIndex === 7), alles golden
+  const isGolden = treeIndex === 7;
+  const accentColor = isGolden ? '#FFD700' : '#199189'; // Gold oder Türkis
+
   return (
     <View style={[styles.container, { backgroundColor }]}>
       {/* Header mit Streak-Anzeige */}
       <View style={styles.header}>
-        <Text style={styles.streakLabel}>Deine Streak:</Text>
-        <Text style={styles.streakNumber}>{displayValue}</Text>
+        <Text style={[styles.streakLabel, { color: accentColor }]}>
+          Deine Streak:
+        </Text>
+        <Text style={[styles.streakNumber, { color: accentColor }]}>
+          {displayValue}
+        </Text>
       </View>
 
       {/* Baum-Bild */}
@@ -77,9 +85,9 @@ export default function TabTwoScreen() {
         step={1}
         value={treeIndex}
         onValueChange={(val) => setTreeIndex(val as 1 | 2 | 3 | 4 | 5 | 6 | 7)}
-        minimumTrackTintColor="rgb(25, 145, 137)"
+        minimumTrackTintColor={accentColor}
         maximumTrackTintColor="#ccc"
-        thumbTintColor="rgb(25, 145, 137)"
+        thumbTintColor={accentColor}
       />
     </View>
   );
@@ -99,12 +107,10 @@ const styles = StyleSheet.create({
   streakLabel: {
     fontSize: 20,
     fontWeight: '500',
-    color: '#199189',
   },
   streakNumber: {
     fontSize: 60,
     fontWeight: 'bold',
-    color: '#199189',
   },
   treeImage: {
     width: '100%',
