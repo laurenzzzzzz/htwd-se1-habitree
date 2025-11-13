@@ -167,7 +167,7 @@ image::Persona-Tom_Neumann.png[Tom Neumann,200,200]
 
 === Arbeitsmittel und Schnittstellen
 
-* Endgeräte: primär Smartphone (iOS/Android); Browsernutzung möglich, aber nicht primär unterstützt
+* Endgeräte: primär für Smartphone, nur für IOS; Browsernutzung möglich, aber nicht primär unterstützt
 * geplante Integrationen (später): Apple Fitness, Google/Apple Kalender, Wearables, Produktivitätstools
 * technischer Überblick: Expo/React Native (Frontend) ⇄ Node.js/Express (Backend, REST) ⇄ PostgreSQL (DB via Prisma ORM); Auth via Firebase Auth (ID-Token Prüfung, bei Erstlogin Nutzeranlage)
 
@@ -186,12 +186,11 @@ image::Persona-Tom_Neumann.png[Tom Neumann,200,200]
 
 * Keine Verbindung (z. B. HTW-Netz/VPN-Zwang) | Server-/DB-Ausfall | Datenpersistenzfehler
 * Push-Benachrichtigungen fehlen | App reagiert nicht
-* Android-spezifische UI-Darstellung fehlerhaft | falsche/duplizierte Habits
 * falsche Erinnerungszeiten | Datums-/Zeitzonenfehler | inkorrekte Baumvisualisierung
 
 === Aktuelle Stolpersteine (IST)
 
-* inkonsistente Android-Darstellung einzelner UI-Elemente 
+
 * Kontrastprobleme im Dark Mode
 * unübersichtliche Placeholder-UI
 
@@ -208,7 +207,7 @@ image::Persona-Tom_Neumann.png[Tom Neumann,200,200]
 
 === Systeme und Plattformen
 
-* unterstützt: iOS & Android (React Native/Expo). Browser: optional (nicht primär)
+* unterstützt: iOS (React Native/Expo). Browser: optional (nicht primär)
 
 === Datensicherheit (Soll-Konzept)
 
@@ -253,37 +252,37 @@ image::Wireframe_Wireflow/Login.PNG[18. Einstellungen / Settings (5. Menü),300,
 
 Die Wireframes visualisieren die **strukturierte Anordnung von Inhalten und Interaktionselementen** innerhalb der App. Sie zeigen, wie die Nutzer durch die App navigieren und mit den Funktionen interagieren.
 
-**Hauptmenü (Bild 1, Menü 1)**  
+**Hauptmenü (Bild 1, Menü 1)**
 
 * Anzeige von **Streaks** und **Tagesfortschritt**; Einstiegspunkt für alle Funktionen.
 
 
-**Habits erfüllen & Neues Habit (Bilder 2–3)**  
+**Habits erfüllen & Neues Habit (Bilder 2–3)**
 
 * Direkter Zugriff auf tägliche Aufgaben; Möglichkeit, neue Gewohnheiten anzulegen.
 
 
-**Wochenstatistik / Kalender (Bilder 4–5, Menü 2)**  
+**Wochenstatistik / Kalender (Bilder 4–5, Menü 2)**
 
 * Überblick über wöchentliche Fortschritte und Auswertung.
 
 
-**Habit hinzufügen (Bilder 6–11, Menü 4)**  
+**Habit hinzufügen (Bilder 6–11, Menü 4)**
 
 * Schritt-für-Schritt-Erfassung neuer Habits, inkl. **Parameter**, **Erinnerungen** und **Eigenkreationen**.
 
 
-**Baumvisualisierung (Bilder 12–15, Menü 3)**  
+**Baumvisualisierung (Bilder 12–15, Menü 3)**
 
 * Wachsende Baum-Metapher visualisiert **Fortschritt**, Motivation und individuelle Entwicklung.
 
 
-**Errungenschaften (Bilder 16–17, Menü 4)**  
+**Errungenschaften (Bilder 16–17, Menü 4)**
 
 * Gamification-Elemente, **Badges** und Auszeichnungen als positives Feedback für erreichte Ziele.
 
 
-**Konto/Profil & Einstellungen (Bilder 18–19, Menü 5)**  
+**Konto/Profil & Einstellungen (Bilder 18–19, Menü 5)**
 
 * Verwaltung persönlicher Daten, App-Optionen, Notifications und Privatsphäre.
 
@@ -295,40 +294,40 @@ Die **Wireflows** zeigen die **Navigation und Interaktionspfade** zwischen den B
 
 == Baum-Metapher (Habitree)
 
-Die zentrale Metapher von *Habitree* ist der wachsende Baum, der den Fortschritt des Nutzers symbolisiert. 
-Der Baum dient als lebendige Visualisierung für persönliche Entwicklung, Beständigkeit und Pflege – 
+Die zentrale Metapher von *Habitree* ist der wachsende Baum, der den Fortschritt des Nutzers symbolisiert.
+Der Baum dient als lebendige Visualisierung für persönliche Entwicklung, Beständigkeit und Pflege –
 Kernelemente erfolgreicher Habit-Bildung.
 
 === Symbolik und UX-Begründung
 
-* **Wachstum über Zeit:**  
-  Gewohnheiten entstehen schrittweise – wie ein Baum, der aus einem Samen zu einem stabilen Stamm heranwächst. 
+* **Wachstum über Zeit:**
+  Gewohnheiten entstehen schrittweise – wie ein Baum, der aus einem Samen zu einem stabilen Stamm heranwächst.
   Jeder abgeschlossene Habit-Tag fördert dieses Wachstum sichtbar, wodurch der Nutzer Fortschritt intuitiv wahrnimmt.
 
-* **Pflege und Beständigkeit:**  
-  Ein Baum gedeiht nur durch regelmäßige Pflege. 
-  Analog dazu stärken tägliche Routinen die eigene Disziplin und Selbstwirksamkeit. 
+* **Pflege und Beständigkeit:**
+  Ein Baum gedeiht nur durch regelmäßige Pflege.
+  Analog dazu stärken tägliche Routinen die eigene Disziplin und Selbstwirksamkeit.
   Vernachlässigung führt zu stagnierendem oder rückläufigem Wachstum, was als sanftes Feedback dient.
 
-* **Sichtbares Feedback:**  
-  Das visuelle Wachsen des Baumes (z. B. neue Äste, Blätter, Blüten) ersetzt abstrakte Zahlen durch ein 
-  emotionales Erfolgserlebnis. 
+* **Sichtbares Feedback:**
+  Das visuelle Wachsen des Baumes (z. B. neue Äste, Blätter, Blüten) ersetzt abstrakte Zahlen durch ein
+  emotionales Erfolgserlebnis.
   Fortschritt wird unmittelbar erkennbar und motiviert zur Fortsetzung.
 
-* **Individualität:**  
-  Jeder Nutzer „zieht“ seinen eigenen Baum. 
-  Unterschiedliche Gewohnheiten, Dauer und Erfolge formen ein einzigartiges Erscheinungsbild – 
+* **Individualität:**
+  Jeder Nutzer „zieht“ seinen eigenen Baum.
+  Unterschiedliche Gewohnheiten, Dauer und Erfolge formen ein einzigartiges Erscheinungsbild –
   ein persönlicher Spiegel des Wachstums.
 
-* **Psychologische Wirkung:**  
-  Naturmetaphern fördern nachhaltige Motivation. 
-  Der Baum vermittelt Ruhe und Geduld: Wachstum braucht Zeit, Ausdauer und Aufmerksamkeit. 
+* **Psychologische Wirkung:**
+  Naturmetaphern fördern nachhaltige Motivation.
+  Der Baum vermittelt Ruhe und Geduld: Wachstum braucht Zeit, Ausdauer und Aufmerksamkeit.
   So ersetzt Habitree leistungsorientierten Druck durch ein positives, wachstumsorientiertes Selbstbild.
 
 === Ziel der Metapher
 
-Die Baum-Metapher transformiert abstrakte Daten (z. B. Streaks, Fortschrittswerte) in eine emotionale, 
-visuell ansprechende Erfahrung. Sie schafft Verbindung zwischen digitalem Verhalten und natürlichem Wachstum – 
+Die Baum-Metapher transformiert abstrakte Daten (z. B. Streaks, Fortschrittswerte) in eine emotionale,
+visuell ansprechende Erfahrung. Sie schafft Verbindung zwischen digitalem Verhalten und natürlichem Wachstum –
 und macht die Bildung gesunder Gewohnheiten erlebbar.
 // =====================================================================
 
@@ -371,7 +370,7 @@ und macht die Bildung gesunder Gewohnheiten erlebbar.
 
 === Typografie
 
-* System-Schriften (iOS/Android) oder Inter
+* System-Schriften (iOS) oder Inter
 * Basisgröße 16 px; Skalierung gemäß Geräte-Einstellungen
 * Hierarchie: H1 28–32, H2 24, H3 20, Body 16, Caption 14
 
@@ -442,7 +441,7 @@ und macht die Bildung gesunder Gewohnheiten erlebbar.
 == Qualitätssicherung
 
 === Definition of Done (UI)
-[ ] Responsives Layout (iOS/Android)
+[ ] Responsives Layout (iOS)
 [ ] WCAG 2.2 AA geprüft
 [ ] Fehlerzustände & Edge Cases abgedeckt
 [ ] Leere Zustände gestaltet
