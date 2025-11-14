@@ -1,74 +1,374 @@
-import React, { useState, useEffect, } from 'react'; 
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Image } from 'expo-image';
 import axios from 'axios';
-import {Pressable,ScrollView,StyleSheet,View,Modal,TextInput,Button,} from 'react-native';
+import {
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  View,
+  Modal,
+  TextInput,
+  Text,
+  Button,
+  ActivityIndicator,
+  Alert,
+  TouchableOpacity
+} from 'react-native';
 import { HelloWave } from '@/components/HelloWave';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { useThemeColor } from '@/hooks/useThemeColor';
+import * as SecureStore from 'expo-secure-store';
+import { useFocusEffect } from '@react-navigation/native';
 
 import { Dimensions } from 'react-native';
 const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
+// --- SECURESTORE KONSTANTEN & FUNKTIONEN ---
+const AUTH_TOKEN_KEY = 'userAuthToken';
+const USER_DATA_KEY = 'currentAuthUser'; 
 
+type CurrentUser = { id: number; email: string; username: string };
 
-// Typ für die Filter-Schlüssel
+const loadAuthData = async (): Promise<{ token: string | null, user: CurrentUser | null }> => {
+    const token = await SecureStore.getItemAsync(AUTH_TOKEN_KEY);
+    const userJson = await SecureStore.getItemAsync(USER_DATA_KEY);
+    let user: CurrentUser | null = null;
+    if (userJson) {
+        try {
+            user = JSON.parse(userJson);
+        } catch (e) {
+            console.error("Fehler beim Parsen der User-Daten:", e);
+        }
+    }
+    return { token, user };
+};
+
+const saveAuthData = async (token: string, user: CurrentUser) => {
+  await SecureStore.setItemAsync(AUTH_TOKEN_KEY, token);
+  await SecureStore.setItemAsync(USER_DATA_KEY, JSON.stringify(user));
+};
+
+const deleteAuthData = async () => {
+    await SecureStore.deleteItemAsync(AUTH_TOKEN_KEY);
+    await SecureStore.deleteItemAsync(USER_DATA_KEY);
+};
+
+// --- TYPEN ---
 type FilterKey = 'alle' | 'klimmzuege' | 'liegestuetze' | 'schritte';
+type Habit = {
+  id: number;
+  name: string;
+  description: string;
+  frequency: string;
+  entries: { id: number; date: string; status: boolean; note: string | null }[];
+};
+type Quote = {
+  id: number;
+  quote: string;
+};
+
 
 export default function HomeScreen() {
 
   const backgroundColor = useThemeColor({}, 'background');
-  const borderColor = useThemeColor({}, 'border');
 
-  // ---------- API's ----------
+  // --- API KONSTANTEN ---
   const API_BASE_URL = 'http://iseproject01.informatik.htw-dresden.de:8000';
   const HABITS_API_URL = `${API_BASE_URL}/habits`;
-  const LOGIN_API_URL = `${API_BASE_URL}/auth/login`;
   const QUOTES_API_URL = `${API_BASE_URL}/quotes`;
+  const LOGIN_API_URL = `${API_BASE_URL}/auth/login`;
+  const REGISTER_API_URL = `${API_BASE_URL}/auth/register`; 
 
+
+  // --- AUTHENTIFIZIERUNGS STATES ---
+  const [authToken, setAuthToken] = useState<string | null>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null);
+  const [isLoadingAuth, setIsLoadingAuth] = useState(true);
+
+  // --- HABIT STATES ---
   const [habitMode, setHabitMode] = useState<'menu' | 'custom' | 'predefined' | null>(null);
   const [selectedFilter, setSelectedFilter] = useState<FilterKey>('alle');
-  const [authToken, setAuthToken] = useState<string | null>(null);
+  const [habits, setHabits] = useState<Habit[]>([]);
+  const [quote, setQuote] = useState<Quote | null>(null);
+  const [isLoadingHabits, setIsLoadingHabits] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [newHabitName, setNewHabitName] = useState('');
+  const [newHabitDescription, setNewHabitDescription] = useState('');
   const [todayQuote, setTodayQuote] = useState<string>('Lade Tagesspruch...');
+  const [streakModalVisible, setStreakModalVisible] = useState(false);
 
+  // --- LOGIN/REGISTER STATES ---
+  const [authEmail, setAuthEmail] = useState('');
+  const [authPassword, setAuthPassword] = useState('');
+  const [authMessage, setAuthMessage] = useState('');
+  const [isLoadingLogin, setIsLoadingLogin] = useState(false);
+  const [isRegistering, setIsRegistering] = useState(false); 
+  const [registerUsername, setRegisterUsername] = useState('');
 
-  // ---------- Datenstrukturen ----------
-  interface HabitEntry {
-    id: number;
-    habitId: number;
-    date: string;
-    status: boolean;
-    note: string | null; 
-  }
+  // --- UTILITY ---
+  const today = new Date();
+  const isSameDay = (a: Date, b: Date) =>
+    a.getFullYear() === b.getFullYear() &&
+    a.getMonth() === b.getMonth() &&
+    a.getDate() === b.getDate();
 
-  interface HabitFromBackend {
-    id: number;
-    userId: number; 
-    name: string;
-    description: string;
-    frequency: string;
-    createdAt: string;
-    entries: HabitEntry[];
-  }
+  const predefinedHabits = [
+    { id: 1, label: '6000 Schritte', description: 'Gehe heute mindestens 6000 Schritte.', frequency: 'Täglich' },
+    { id: 2, label: '1,5h Uni', description: 'Verbringe 1,5 Stunden mit Uni-Aufgaben.', frequency: 'Wöchentlich' },
+    { id: 3, label: '40 Liegestütze', description: 'Mache 40 saubere Liegestütze.', frequency: '2x Pro Woche' },
+    { id: 4, label: '10 Klimmzüge', description: 'Schaffe heute 10 Klimmzüge.', frequency: '3x Pro Woche' },
+  ];
 
-  interface HabitView {
-    id: number;
-    label: string;
-    description: string;
-    checked: boolean;
-  }
+  // --- DATENLADE FUNKTIONEN ---
 
-  interface QuoteFromBackend {
-  id: number;
-  quote: string;
-  }
+  const fetchQuote = useCallback(async () => {
+    try {
+      const response = await axios.get<Quote[]>(QUOTES_API_URL);
+      const quotes = response.data;
+      if (quotes.length > 0) {
+        const randomIndex = Math.floor(Math.random() * quotes.length);
+        setQuote(quotes[randomIndex]);
+      } else {
+        setQuote({ id: 0, quote: "Keine Zitate verfügbar. Bleib trotzdem motiviert!" });
+      }
+    } catch (error) {
+      console.error('Fehler beim Abrufen der Quotes:', error);
+      setQuote({ id: 0, quote: "Fehler beim Laden des Spruchs." });
+    }
+  }, [QUOTES_API_URL]);
+
+  const fetchHabits = useCallback(async () => {
+    if (!authToken || !isLoggedIn) return;
+    setIsLoadingHabits(true);
+    try {
+      const response = await axios.get<Habit[]>(HABITS_API_URL, {
+        headers: { Authorization: `Bearer ${authToken}` },
+      });
+      setHabits(response.data);
+    } catch (error) {
+      console.error('Fehler beim Laden der Habits:', error);
+    } finally {
+      setIsLoadingHabits(false);
+    }
+  }, [authToken, isLoggedIn, HABITS_API_URL]);
+
+  // --- AUTHENTIFIZIERUNGS LOGIK ---
+
+  const checkLoginStatus = useCallback(async () => {
+    setIsLoadingAuth(true);
+    const { token, user } = await loadAuthData();
+
+    setAuthToken(token);
+    setCurrentUser(user);
+
+    if (token) {
+        // Optionale Token-Validierung (auskommentiert in Originaldatei)
+        setIsLoggedIn(true);
+    } else {
+        setIsLoggedIn(false);
+    }
+    setIsLoadingAuth(false);
+  }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      checkLoginStatus();
+      // Die Rückgabe-Funktion ist leer, da kein Timer aufgeräumt werden muss.
+      return () => {};
+    }, [checkLoginStatus])
+  );
   
+  // Lade Daten nach erfolgreichem Login
+  useEffect(() => {
+    if (isLoggedIn) {
+      fetchHabits();
+      fetchQuote();
+    }
+  }, [isLoggedIn, fetchHabits, fetchQuote]);
 
-  const chartMap: Record<FilterKey, any> = {
-    alle: require('@/assets/images/chart1.png'),
-    klimmzuege: require('@/assets/images/chart2.png'),
-    liegestuetze: require('@/assets/images/chart3.png'),
-    schritte: require('@/assets/images/chart4.png'),
+
+  const handleHomeLogin = async () => {
+    if (!authEmail || !authPassword) {
+      setAuthMessage('Bitte E-Mail und Passwort eingeben.');
+      return;
+    }
+
+    setIsLoadingLogin(true);
+    setAuthMessage('');
+
+    try {
+      const response = await axios.post(LOGIN_API_URL, {
+        email: authEmail.trim(),
+        password: authPassword,
+      });
+
+      const { token, userId, email, username } = response.data;
+      
+      const user: CurrentUser = {
+          id: userId,
+          email: email,
+          username: username || email.split('@')[0]
+      };
+
+      await saveAuthData(token, user);
+
+      setAuthToken(token);
+      setCurrentUser(user);
+      setIsLoggedIn(true);
+
+      setAuthEmail('');
+      setAuthPassword('');
+      
+      fetchQuote();
+      fetchHabits(); 
+
+    } catch (error) {
+      const errorMessage = axios.isAxiosError(error)
+        ? (error.response?.data?.error || 'Unbekannter API-Fehler.')
+        : 'Netzwerkfehler oder unerwarteter Fehler.';
+
+      setAuthMessage(errorMessage);
+    } finally {
+      setIsLoadingLogin(false);
+    }
   };
+
+  const handleHomeRegister = async () => {
+    if (!authEmail || !authPassword) {
+      setAuthMessage('Bitte E-Mail und Passwort eingeben.');
+      return;
+    }
+
+    setIsLoadingLogin(true);
+    setAuthMessage('');
+
+    try {
+      const response = await axios.post(REGISTER_API_URL, {
+        email: authEmail.trim(),
+        password: authPassword,
+        username: registerUsername.trim() || undefined,
+      });
+
+      const { token, message, userId, email, username } = response.data;
+      
+      const user: CurrentUser = {
+        id: userId,
+        email: email,
+        username: username || email.split('@')[0]
+      };
+
+      await saveAuthData(token, user);
+
+      setAuthToken(token);
+      setCurrentUser(user);
+      setIsLoggedIn(true);
+
+      setAuthEmail('');
+      setAuthPassword('');
+      setRegisterUsername('');
+      setIsRegistering(false);
+      Alert.alert('Erfolg', message || 'Registrierung erfolgreich. Du bist jetzt eingeloggt.');
+      
+      fetchQuote();
+      fetchHabits(); 
+
+    } catch (error) {
+      const errorMessage = axios.isAxiosError(error)
+        ? (error.response?.data?.error || 'Fehler bei der Registrierung.')
+        : 'Netzwerkfehler oder unerwarteter Fehler.';
+
+      setAuthMessage(errorMessage);
+    } finally {
+      setIsLoadingLogin(false);
+    }
+  };
+
+  // --- HABIT FUNKTIONEN ---
+  
+  const saveHabit = async (name: string, description: string, frequency: string) => {
+    try {
+      if (!authToken) {
+        Alert.alert('Fehler', 'Nicht angemeldet. Bitte melden Sie sich an.');
+        return;
+      }
+        await axios.post(
+          HABITS_API_URL,
+          { name: name.trim(), description: description.trim(), frequency },
+          { headers: { Authorization: `Bearer ${authToken}` } }
+        );
+        fetchHabits();
+      } catch (error) {
+        console.error('Fehler beim Speichern des neuen Habits:', error);
+        Alert.alert('Fehler', 'Speichern des Habits fehlgeschlagen.');
+      }
+    };
+
+  const addHabit = () => {
+      if (newHabitName.trim() === '' || newHabitDescription.trim() === '') return;
+      saveHabit(newHabitName, newHabitDescription, 'Täglich');
+      setNewHabitName('');
+      setNewHabitDescription('');
+      setModalVisible(false);
+      setHabitMode(null);
+  };
+  
+  const addPredefinedHabit = (label: string, description: string, frequency: string) => {
+      saveHabit(label, description, frequency);
+      setModalVisible(false);
+      setHabitMode(null);
+  }
+
+  const toggleHabit = async (id: number) => {
+    if (!authToken) return;
+
+    const habitToToggle = habits.find(h => h.id === id);
+    const entryForToday = habitToToggle?.entries.find(entry => isSameDay(new Date(entry.date), today));
+
+    if (!entryForToday) {
+        Alert.alert('Fehler', 'Kein heutiger Eintrag zum Umschalten gefunden.');
+        return;
+    }
+    
+    const newStatus = !entryForToday.status;
+    // Optimistische UI-Aktualisierung
+    setHabits((prev) =>
+        prev.map((habit) =>
+            habit.id === id ? {
+                ...habit,
+                entries: habit.entries.map(e =>
+                    e.id === entryForToday.id ? {...e, status: newStatus} : e
+                )
+            } : habit
+        )
+    );
+
+    try {
+        await axios.put(
+            `${HABITS_API_URL}/${id}/toggle`,
+            { date: today.toISOString() },
+            { headers: { Authorization: `Bearer ${authToken}` } }
+        );
+        
+    } catch (error) {
+        console.error('Fehler beim Aktualisieren des Status:', error);
+        
+        // Rollback der UI bei Fehler
+        setHabits((prev) =>
+            prev.map((habit) =>
+                habit.id === id ? {
+                    ...habit,
+                    entries: habit.entries.map(e =>
+                        e.id === entryForToday.id ? {...e, status: !newStatus} : e
+                    )
+                } : habit
+            )
+        );
+        Alert.alert('Fehler', 'Status-Update fehlgeschlagen. Bitte erneut versuchen.');
+    }
+};
+
+  // --- USEMEMO UND HILFSFUNKTIONEN ---
 
   const filterOptions: { key: FilterKey; label: string }[] = [
     { key: 'alle', label: 'Alle' },
@@ -76,234 +376,234 @@ export default function HomeScreen() {
     { key: 'liegestuetze', label: 'Liegestütze' },
     { key: 'schritte', label: 'Schritte' },
   ];
-
-  const [habits, setHabits] = useState<HabitView[]>([]);
-  const [loading, setLoading] = useState(true);
-  const today = new Date();
-  
-  // const todayDateOnly = today.toISOString().split('T')[0];
-  const isSameDay = (a: Date, b: Date) =>
-    a.getFullYear() === b.getFullYear() &&
-    a.getMonth() === b.getMonth() &&
-    a.getDate() === b.getDate();
-
-  // Datenabruf mit JWT-Authentifizierung
-  useEffect(() => {
-    const loginTestUser = async () => {
-      try {
-        const email = 'test@example.com'; // Hardcoded
-        const password = 'password123'; // Hardcoded
-
-        const response = await axios.post(LOGIN_API_URL, { email, password });
-        const token = response.data.token;
-
-        if (token) {
-          console.log(' Testuser angemeldet, JWT erhalten.');
-          setAuthToken(token); // JWT im State speichern
-        } else {
-          console.error(' Login erfolgreich, aber kein Token erhalten.');
-        }
-      } catch (error: any) {
-        console.error(' Fehler beim automatischen JWT-Login:', error.response?.data?.error || error.message);
-      }
-    };
-    loginTestUser();
-  }, []);
-
-  // NEU: Quotes abrufen und zufälliges Quote auswählen
-  useEffect(() => {
-    const fetchQuote = async () => {
-      try {
-        const response = await axios.get<QuoteFromBackend[]>(QUOTES_API_URL);
-        const quotes = response.data;
-        
-        if (quotes.length > 0) {
-          // Wähle einen zufälligen Index
-          const randomIndex = Math.floor(Math.random() * quotes.length);
-          // Setze das zufällige Quote in den State
-          setTodayQuote(quotes[randomIndex].quote);
-        } else {
-          setTodayQuote("Keine Zitate verfügbar. Bleib trotzdem motiviert!");
-        }
-      } catch (error) {
-        console.error('Fehler beim Abrufen der Quotes:', error);
-        setTodayQuote("Fehler beim Laden des Spruchs.");
-      }
-    };
-
-    fetchQuote();
-  }, []); 
-
-
-  // Habits abrufen, wenn der Token gesetzt ist
-  useEffect(() => {
-    if (!authToken) return; // Warten, bis der Token gesetzt ist
-
-    const fetchHabits = async () => {
-        setLoading(true);
-        try {
-            // Verwende den gespeicherten JWT-Token
-            const token = authToken; 
-
-            const response = await axios.get<HabitFromBackend[]>(HABITS_API_URL, {
-                headers: {
-                    Authorization: `Bearer ${token}`, // Token im Header senden
-                },
-            });
-
-            console.log('📦 Daten vom Server:', response.data);
-
-            const loadedHabits: HabitView[] = response.data.map((habit) => {
-                // Suchen des Eintrags für heute
-                const entryForToday = habit.entries.find((entry) =>
-                  isSameDay(new Date(entry.date), today)
-                );
-
-                return {
-                    id: habit.id,
-                    label: habit.name,
-                    description: habit.description,
-                    checked: entryForToday?.status ?? false, // Setze checked basierend auf dem heutigen Eintrag
-                };
-            });
-
-            setHabits(loadedHabits);
-        } catch (error) {
-            console.error('Fehler beim Abrufen der Habits:', error);
-        } finally {
-            setLoading(false);
-        }
-    }
-
-    fetchHabits();
-  }, [authToken]); 
-
-  // Toggle-Funktion für Habits
-  const toggleHabit = async (id: number) => {
-    // Optimistisches Update
-    setHabits((prev) =>
-      prev.map((habit) =>
-        habit.id === id ? { ...habit, checked: !habit.checked } : habit
-      )
-    );
-
-    try {
-      if (!authToken) {
-        console.error('Kein Auth-Token vorhanden, kann Status nicht aktualisieren.');
-        return;
-      }
-      const token = authToken; 
-
-      // Status umschalten im Backend
-      await axios.put(
-        `${HABITS_API_URL}/${id}/toggle`,
-        { date: today }, // heutiges Datum senden
-        {
-          headers: {
-            Authorization: `Bearer ${token}`, // Token im Header senden
-          },
-        }
-      );
-    } catch (error) {
-      console.error('Fehler beim Aktualisieren des Status:', error);
-      // Rollback bei Fehler (optional)
-      setHabits((prev) =>
-        prev.map((habit) =>
-          habit.id === id ? { ...habit, checked: !habit.checked } : habit
-        )
-      );
-    }
+  const chartMap: Record<FilterKey, any> = {
+    alle: require('@/assets/images/chart1.png'),
+    klimmzuege: require('@/assets/images/chart2.png'),
+    liegestuetze: require('@/assets/images/chart3.png'),
+    schritte: require('@/assets/images/chart4.png'),
   };
 
-
-  const [modalVisible, setModalVisible] = useState(false);
-  const [newHabit, setNewHabit] = useState('');
-  const [newDescription, setNewDescription] = useState('');
-
-  const addHabit = () => {
-    if (newHabit.trim() === '') return;
-
-    // Erstelle ein Dummy-Habit für die sofortige Anzeige
-    const nextId = habits.length > 0 ? Math.max(...habits.map(h => h.id)) + 1 : 1;
-    setHabits(prev => [
-      ...prev,
-      {
-        id: nextId,
-        label: newHabit.trim(),
-        description: newDescription.trim(),
-        checked: false,
-      } as HabitView,
-    ]);
-
-    // *** Habit-Speicher-Logik auf JWT umgestellt ***
-    const saveHabit = async () => {
-      try {
-        if (!authToken) {
-          console.error('Kein Auth-Token vorhanden, kann Habit nicht speichern.');
-          return;
-        }
-        const token = authToken; // Verwende den gespeicherten JWT
-
-        await axios.post(
-          HABITS_API_URL,
-          {
-            name: newHabit.trim(),
-            description: newDescription.trim(),
-            frequency: 'daily', // Hardcodiert auf 'daily'
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`, // Token im Header senden
-            },
-          }
+  const filteredHabits = useMemo(() => {
+    const activeHabits = habits.map(habit => {
+        const entryForToday = habit.entries.find((entry) =>
+            isSameDay(new Date(entry.date), today)
         );
-        // Nach dem Speichern wird die Liste beim nächsten useEffect-Lauf (nachdem der Token gesetzt ist) aktualisiert
-        // Für sofortige Konsistenz müsste man hier fetchHabits erneut aufrufen oder die Antwort verarbeiten.
-      } catch (error) {
-        console.error('Fehler beim Speichern des neuen Habits:', error);
-      }
-    };
-   
+        return {
+            ...habit,
+            checked: entryForToday?.status ?? false,
+        };
+    }).filter(habit => {
+      if (selectedFilter === 'alle') return true;
+      return habit.name.toLowerCase().includes(selectedFilter);
+    });
 
-    saveHabit();
-    setNewHabit('');
-    setNewDescription('');
-    setHabitMode(null); // Modal schließen
+    return activeHabits;
+  }, [habits, selectedFilter, today]);
+
+
+  const openHabitModal = (mode: 'menu' | 'custom' | 'predefined') => {
+    if (!isLoggedIn) {
+        Alert.alert('Login erforderlich', 'Bitte melde dich zuerst an, um Habits zu erstellen.');
+        return;
+    }
+    setHabitMode(mode);
+    setModalVisible(true);
   };
+  
+  // --- RENDERING FUNKTIONEN ---
 
-  const predefinedHabits = [
-    { label: '6000 Schritte', description: 'Gehe heute mindestens 6000 Schritte.' },
-    { label: '1,5h Uni', description: 'Verbringe 1,5 Stunden mit Uni-Aufgaben.' },
-    { label: '40 Liegestütze', description: 'Mache 40 saubere Liegestütze.' },
-    { label: '10 Klimmzüge', description: 'Schaffe heute 10 Klimmzüge.' },
-  ];
+  const renderModals = () => {
+    return (
+      <Modal
+        visible={modalVisible}
+        transparent
+        animationType="fade"
+        onRequestClose={() => { setModalVisible(false); setHabitMode(null); }}
+      >
+        <View style={styles.modalBackdrop}>
+          <View style={styles.modalContent}>
+            {/* Modal-Menü */}
+            {habitMode === 'menu' && (
+              <>
+                <ThemedText type="subtitle" style={{ marginBottom: 12 }}>Was möchtest du tun?</ThemedText>
+                <Button title="Vordefiniertes Ziel wählen" onPress={() => setHabitMode('predefined')} />
+                <View style={{ height: 12 }} />
+                <Button title="Eigenes Ziel erstellen" onPress={() => setHabitMode('custom')} />
+              </>
+            )}
+
+            {/* Vordefinierte Habits */}
+            {habitMode === 'predefined' && (
+              <>
+                <ThemedText type="subtitle" style={{ marginBottom: 12 }}>Vordefiniertes Ziel auswählen:</ThemedText>
+                {predefinedHabits.map(({ id,label, description, frequency }) => (
+                  <Pressable
+                    key={id}
+                    onPress={() => addPredefinedHabit(label, description, frequency)}
+                    style={styles.predefinedItem}
+                  >
+                    <ThemedText style={{ fontWeight: '500' }}>{label}</ThemedText>
+                    <ThemedText style={{ opacity: 0.7, marginTop: 4 }}>{description}</ThemedText>
+                  </Pressable>
+                ))}
+              </>
+            )}
+
+            {/* Eigene Habit */}
+            {habitMode === 'custom' && (
+              <>
+                <ThemedText type="subtitle" style={{ marginBottom: 12 }}>Eigenes Ziel erstellen</ThemedText>
+                <TextInput
+                  placeholder="Kurzname (z. B. Kniebeugen)"
+                  value={newHabitName}
+                  onChangeText={setNewHabitName}
+                  style={styles.textInput}
+                />
+                <TextInput
+                  placeholder="Beschreibung"
+                  value={newHabitDescription}
+                  onChangeText={setNewHabitDescription}
+                  style={styles.textInput}
+                />
+                <View style={{ flexDirection: 'row', gap: 12, marginTop: 16 }}>
+                  <Button title="Hinzufügen" onPress={addHabit} />
+                </View>
+              </>
+            )}
+
+            <View style={{ marginTop: 24 }}>
+              <Button
+                title="Zurück"
+                onPress={() => {
+                  if (habitMode === 'menu') {
+                    setModalVisible(false);
+                    setHabitMode(null);
+                  } else {
+                    setHabitMode('menu');
+                  }
+                }}
+              />
+            </View>
+          </View>
+        </View>
+      </Modal>
+    );
+  };
+  
+  const renderLoginScreen = () => (
+    <View style={[styles.container, styles.loadingContainer]}>
+        <ThemedText type="title" style={{ textAlign: 'center', marginBottom: 20 }}>
+            Willkommen bei Habitree!
+        </ThemedText>
+
+        <ThemedView style={styles.authContainer}>
+            <ThemedText type="subtitle" style={{ marginBottom: 10 }}>
+                {isRegistering ? 'Neuen Account erstellen' : 'Anmelden'}
+            </ThemedText>
+            
+            <TextInput
+                style={styles.authInput}
+                placeholder="E-Mail"
+                placeholderTextColor="#888"
+                value={authEmail}
+                onChangeText={setAuthEmail}
+                keyboardType="email-address"
+                autoCapitalize="none"
+                editable={!isLoadingLogin}
+            />
+            
+            {isRegistering && (
+                <TextInput
+                    style={styles.authInput}
+                    placeholder="Benutzername"
+                    placeholderTextColor="#888"
+                    value={registerUsername}
+                    onChangeText={setRegisterUsername}
+                    autoCapitalize="words"
+                    editable={!isLoadingLogin}
+                />
+            )}
+
+            <TextInput
+                style={styles.authInput}
+                placeholder="Passwort"
+                placeholderTextColor="#888"
+                value={authPassword}
+                onChangeText={setAuthPassword}
+                secureTextEntry
+                editable={!isLoadingLogin}
+            />
+            
+            {authMessage ? <ThemedText style={styles.authMessage}>{authMessage}</ThemedText> : null}
+
+            <TouchableOpacity
+                style={[styles.authButton, isLoadingLogin && styles.authButtonDisabled]}
+                onPress={isRegistering ? handleHomeRegister : handleHomeLogin}
+                disabled={isLoadingLogin}
+            >
+                {isLoadingLogin ? (
+                    <ActivityIndicator color="white" />
+                ) : (
+                    <ThemedText style={styles.authButtonText}>
+                        {isRegistering ? 'Registrieren' : 'Anmelden'} 
+                    </ThemedText>
+                )}
+            </TouchableOpacity>
+            
+            <TouchableOpacity
+                style={styles.switchAuthButton}
+                onPress={() => {
+                    setIsRegistering(prev => !prev);
+                    setAuthMessage('');
+                }}
+                disabled={isLoadingLogin}
+            >
+                <ThemedText style={styles.switchAuthButtonText}>
+                    {isRegistering ? 'Schon registriert? Hier anmelden' : 'Noch keinen Account? Hier registrieren'}
+                </ThemedText>
+            </TouchableOpacity>
+        </ThemedView>
+    </View>
+);
+
+
+  // --- MAIN RENDER ---
+  
+  if (isLoadingAuth) {
+    return (
+      <View style={[styles.container, styles.loadingContainer]}>
+        <ActivityIndicator size="large" color="rgb(25, 145, 137)" />
+        <ThemedText style={{ marginTop: 10 }}>Lade Authentifizierungsstatus...</ThemedText>
+      </View>
+    );
+  }
+
+  if (!isLoggedIn) {
+    return renderLoginScreen();
+  }
 
 
   return (
     <View style={{ flex: 1, backgroundColor }}>
-      <ScrollView 
+      <ScrollView
         style={{ flex: 1, backgroundColor }}
         contentContainerStyle={styles.contentContainer}
       >
-        {/* Begrüßungsbereich */}
         <View style={styles.titleContainer}>
           <ThemedText type="title" style={styles.greetingText}>
-            Hallo, Calvin!
+            Hallo, {currentUser?.username || 'Nutzer'}!
           </ThemedText>
           <HelloWave />
         </View>
 
-        {/* Tagesspruch */}
         <ThemedText style={styles.motivationQuote}>
-          💬 Tagesspruch: "{todayQuote}"
+          Tagesspruch: "{quote?.quote || 'Lade Tagesspruch...'}"
         </ThemedText>
 
-        {/* Statistikbereich */}
         <ThemedText type="subtitle" style={styles.sectionTitle}>
           Deine Statistiken:
         </ThemedText>
 
-        {/* Filter-Buttons */}
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -331,7 +631,6 @@ export default function HomeScreen() {
           ))}
         </ScrollView>
 
-        {/* Chart-Bild */}
         <Image
           source={chartMap[selectedFilter]}
           style={styles.chartImage}
@@ -339,20 +638,76 @@ export default function HomeScreen() {
         />
 
         {/* Streak-Bild */}
-        <Image
-          source={require('@/assets/images/streak.png')}
-          style={[styles.chartImage, { height: 280 }]}
-          contentFit="contain"
-        />
+        
+        {/* 
+          <Image
+            source={require('@/assets/images/streak.png')}
+            style={[styles.chartImage, { height: 280 }]}
+            contentFit="contain"
+          /> 
+          */}
+        
 
-        {/* Gewohnheiten-Liste */}
         <ThemedView style={styles.habitListContainer}>
+          
           <ThemedText type="subtitle" style={styles.habitTitle}>
+            Deine Streak:
+          </ThemedText>
+
+          {/* Streak-Zahl mit transparenten Wassertropfen-Bild */}
+          <Pressable style={styles.streakContainer} onPress={() => setStreakModalVisible(true)}>
+            <Image
+              source={require('@/assets/images/wassertropfen.png')}
+              style={styles.streakBackgroundImage}
+              contentFit="contain"
+            />
+            <ThemedText style={styles.streakNumber}>14</ThemedText>
+          </Pressable>
+          
+
+          {/* Neue Profilbilder-Leiste mit gelbem Rahmen für den heutigen Tag */}
+          <View style={styles.weekdayRow}>
+            {['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'].map((day, index) => {
+              const today = new Date();
+              const jsDay = today.getDay(); // Sonntag = 0, Montag = 1, ...
+              const mappedDay = jsDay === 0 ? 6 : jsDay - 1; // Montag = 0, Sonntag = 6
+
+              const isToday = index === mappedDay;
+              const isPastOrToday = index <= mappedDay; // alles bis einschließlich heute
+
+              return (
+                <View
+                  key={index}
+                  style={[
+                    styles.weekdayCircle,
+                    isPastOrToday && styles.weekdayFilled,
+                    isToday && styles.weekdayToday,
+                  ]}
+                >
+                  <ThemedText
+                    style={[
+                      styles.weekdayText,
+                      isToday && styles.weekdayTextToday,
+                    ]}
+                  >
+                    {day}
+                  </ThemedText>
+                </View>
+              );
+            })}
+          </View>
+
+          <ThemedText type="subtitle" style={[styles.habitTitle, { marginTop: 40 }]}>
             Heutige Ziele:
           </ThemedText>
 
-          {habits && habits.length > 0 ? (
-            habits.map((habit) => (
+          {isLoadingHabits ? (
+             <View style={{ padding: 20 }}>
+                <ActivityIndicator size="small" color="rgb(25, 145, 137)" />
+                <ThemedText style={{ textAlign: 'center', marginTop: 5 }}>Lade Habits...</ThemedText>
+            </View>
+          ) : filteredHabits.length > 0 ? (
+            filteredHabits.map((habit) => (
               <Pressable
                 key={habit.id}
                 onPress={() => toggleHabit(habit.id)}
@@ -369,9 +724,9 @@ export default function HomeScreen() {
                   )}
                 </View>
                 <View style={styles.habitTextContainer}>
-                  <ThemedText style={styles.habitLabel}>{habit.label}</ThemedText>
+                  <ThemedText style={styles.habitLabel}>{habit.name}</ThemedText>
                   <ThemedText style={styles.habitDescription}>
-                    {habit.description}
+                    {habit.description} ({habit.frequency})
                   </ThemedText>
                 </View>
               </Pressable>
@@ -383,18 +738,9 @@ export default function HomeScreen() {
           )}
         </ThemedView>
 
-
-
       </ScrollView>
-      
-        {/* Floating Action Button */}
-      <Pressable
-          style={styles.fab}
-          onPress={() => {
-            setHabitMode('menu');
-            setModalVisible(true);
-          }}
-        >
+
+      <Pressable style={styles.fab} onPress={() => openHabitModal('menu')}>
           <ThemedText style={styles.fabText}>＋</ThemedText>
       </Pressable>
 
@@ -491,29 +837,121 @@ export default function HomeScreen() {
               </View>
             </View>
           </View>
+          
         </Modal>
+        
+        {/* Modal für Streak-Info */}
+        <Modal
+          visible={streakModalVisible}
+          animationType="fade"
+          transparent
+          onRequestClose={() => setStreakModalVisible(false)}
+        >
+          <View style={styles.streakModalOverlay}>
+            <View style={styles.streakModalContainer}>
+              <Text style={styles.streakModalTitle}>Wow – 14 Tage am Stück!</Text>
+              <Text style={styles.streakModalText}>
+                Super gemacht! 🎉 Du hast bereits 14 Tage in Folge deine Streak gehalten. 
+                Bleib dran – dein Durchhaltevermögen zahlt sich aus!
+              </Text>
+
+              <Image
+                source={require('@/assets/images/wassertropfen.png')}
+                style={styles.streakModalImage}
+                contentFit="contain"
+              />
+
+              <Pressable
+                style={styles.streakCloseButton}
+                onPress={() => setStreakModalVisible(false)}
+              >
+                <Text style={styles.streakCloseButtonText}>Weiter motiviert bleiben</Text>
+              </Pressable>
+            </View>
+          </View>
+        </Modal>
+        
     </View>
+    
   );
 }
 
-const styles = StyleSheet.create({
-  
-    noHabitsText: {
-      color: '#888',           // Grauton
-      fontStyle: 'italic',     // Optional: kursiv
-      textAlign: 'center',
-      marginVertical: 16,
-    },
+// --- STYLESHEET ---
 
-  
-  // Neue Styles für Modal
+const styles = StyleSheet.create({
+  authContainer: {
+    width: '100%',
+    padding: 20,
+    borderRadius: 12,
+    backgroundColor: '#f9f9f9',
+    alignItems: 'center',
+  },
+  authInput: {
+    height: 50,
+    width: '100%',
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 15,
+    backgroundColor: 'white',
+    fontSize: 16,
+    marginBottom: 10,
+    color: '#333',
+  },
+  authButton: {
+    backgroundColor: 'rgb(25, 145, 137)',
+    paddingVertical: 12,
+    paddingHorizontal: 40,
+    borderRadius: 8,
+    width: '100%',
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  authButtonDisabled: {
+    backgroundColor: '#9e9e9e',
+  },
+  authButtonText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  authMessage: {
+    color: '#d32f2f',
+    textAlign: 'center',
+    marginTop: 5,
+    marginBottom: 10,
+  },
+  switchAuthButton: {
+    marginTop: 15,
+    paddingVertical: 10,
+  },
+  switchAuthButtonText: {
+    color: 'rgb(25, 145, 137)',
+    textAlign: 'center',
+    fontSize: 14,
+  },
+  noHabitsText: {
+    color: '#888',
+    fontStyle: 'italic',
+    textAlign: 'center',
+    marginVertical: 16,
+  },
+  container: {
+    flex: 1,
+    padding: 16,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
+  },
   modalBackdrop: {
     flex: 1,
     backgroundColor: '#00000088',
     justifyContent: 'center',
     alignItems: 'center',
   },
-
   modalContent: {
     backgroundColor: 'white',
     padding: 24,
@@ -530,9 +968,14 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 8,
     fontSize: 16,
+    marginBottom: 10,
   },
-
-  // FAB-Style mit Theme
+  predefinedItem: {
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    borderBottomColor: '#ddd',
+    borderBottomWidth: 1,
+  },
   fab: {
     position: 'absolute',
     bottom: windowHeight * 0.02,
@@ -554,7 +997,6 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     lineHeight: 40,
   },
-  // Layout Styles
   contentContainer: {
     padding: 16,
   },
@@ -567,8 +1009,6 @@ const styles = StyleSheet.create({
   greetingText: {
     fontSize: 28,
   },
-  
-  // Text Styles
   motivationQuote: {
     marginBottom: 20,
     fontSize: 16,
@@ -583,8 +1023,6 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     fontSize: 20,
   },
-  
-  // Chart Filter Styles
   chartSelector: {
     marginBottom: 16,
   },
@@ -603,7 +1041,7 @@ const styles = StyleSheet.create({
   },
   chartButtonTextSelected: {
     fontWeight: 'bold',
-    color: '#1D3D47',
+    color: 'white',
   },
   chartImage: {
     width: '100%',
@@ -611,8 +1049,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     borderRadius: 12,
   },
-  
-  // Habit List Styles
   habitListContainer: {
     borderRadius: 12,
     padding: 16,
@@ -650,14 +1086,138 @@ const styles = StyleSheet.create({
     backgroundColor: '#A1CEDC',
     borderColor: '#A1CEDC',
   },
-  //checkboxChecked: {
-    //backgroundColor: '#34C759',
-    //borderColor: '#34C759',
-  //},
   checkmark: {
     color: 'white',
     fontWeight: '600',
     fontSize: 16,
   },
-});
+  profileRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 12,
+    gap: 6,
+  },
+  profileImageWrapper: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 20,
+    borderColor: 'transparent',
+  },
+  profileImageToday: {
+    borderColor: 'rgb(25, 145, 137)', // gelber Rahmen für den heutigen Tag
+  },
+  profileImage: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+  },
+  streakContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'relative',
+    marginVertical: 20,
+    marginTop: 10,     // optional: etwas nach oben rücken im Layout
+  },
+  streakBackgroundImage: {
+    position: 'absolute',
+    width: 85,
+    height: 85,
+    top: -27,          // Tropfen leicht nach oben verschieben
+    opacity: 0.25,
+  },
+  streakNumber: {
+    fontSize: 40,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: 'rgb(25, 145, 137)',
+    lineHeight: 40,
+    includeFontPadding: false,
+    textAlignVertical: 'center',
+    zIndex: 1,
+  },
+  weekdayRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 12,
+    marginTop: 24,     // 👈 extra Platz zwischen Tropfen/Zahl und Wochentagen
+    gap: 8,
+  },
+  weekdayCircle: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    borderWidth: 2,
+    borderColor: '#ccc',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'white',
+  },
+  weekdayFilled: {
+    backgroundColor: 'rgba(25, 145, 137, 0.2)',
+    borderColor: 'rgba(25, 145, 137, 0.3)',
+  },
+  weekdayToday: {
+    borderColor: 'rgb(25, 145, 137)',
+    borderWidth: 3,
+    backgroundColor: 'rgba(25, 145, 137, 0.35)',
+  },
+  weekdayText: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: '#333',
+  },
+  weekdayTextToday: {
+    color: 'rgb(25, 145, 137)',
+    fontWeight: '700',
+  },
+   streakModalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  streakModalContainer: {
+    backgroundColor: '#fff',
+    borderRadius: 16,
+    padding: 24,
+    width: '85%',
+    alignItems: 'center',
+  },
+   streakModalTitle: {
+    fontSize: 20,
+    fontWeight: '700',
+    textAlign: 'center',
+    marginBottom: 10,
+    color: 'rgb(25, 145, 137)',
+  },
+  streakModalText: {
+    fontSize: 15,
+    textAlign: 'center',
+    color: '#444',
+    marginBottom: 16,
+  },
+  streakModalImage: {
+    width: 100,
+    height: 100,
+    opacity: 0.8,
+    marginBottom: 12,
+  },
+  streakCloseButton: {
+    marginTop: 8,
+    backgroundColor: 'rgb(25, 145, 137)',
+    paddingHorizontal: 18,
+    paddingVertical: 10,
+    borderRadius: 10,
+  },
+  streakCloseButtonText: {
+    color: '#fff',
+    fontWeight: '600',
+    textAlign: 'center',
+  },
 
+});
