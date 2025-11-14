@@ -70,7 +70,7 @@ export default function TabLayout() {
           headerTitle: () => (
             <Image
               source={require('@/assets/images/header.png')}
-              style={{ width: Math.min(windowWidth * 0.25, 100), height: 40, resizeMode: 'contain', marginTop:-responsiveMarginTop }}
+              style={{ width: Math.min(windowWidth * 0.35, 140), height: 56, resizeMode: 'contain', marginTop: -responsiveMarginTop }}
             />
           ),
           tabBarIcon: ({ color }) => (
