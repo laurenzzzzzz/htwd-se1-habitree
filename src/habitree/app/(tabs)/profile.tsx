@@ -60,8 +60,9 @@ Notifications.setNotificationHandler({
     shouldShowAlert: true,
     shouldPlaySound: false,
     shouldSetBadge: false,
-    shouldShowBanner: false, 
-    shouldShowList: false,
+    // Diese beiden Eigenschaften beheben den Fehler:
+    shouldShowBanner: true, // Ob ein Banner angezeigt werden soll (oben auf dem Bildschirm)
+    shouldShowList: true,   // Ob in der Benachrichtigungsliste angezeigt werden soll
   }),
 });
 
