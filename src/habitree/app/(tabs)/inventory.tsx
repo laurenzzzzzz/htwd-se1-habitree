@@ -5,6 +5,11 @@ import React, { useState } from 'react';
 import { ThemedText } from '@/components/ThemedText';
 import { useThemeColor } from '@/hooks/useThemeColor';
 
+import { Dimensions } from 'react-native';
+const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
+
+
+
 const abzeichenZeilen = [
   [
     require('@/assets/images/abzeichen1.png'),
@@ -113,8 +118,8 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   badge: {
-    width: 100,
-    height: 100,
+    width: windowWidth * 0.2,
+    height: windowWidth * 0.2,
   },
   modalOverlay: {
     flex: 1,

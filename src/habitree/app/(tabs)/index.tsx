@@ -21,6 +21,8 @@ import { useThemeColor } from '@/hooks/useThemeColor';
 import * as SecureStore from 'expo-secure-store';
 import { useFocusEffect } from '@react-navigation/native';
 
+import { Dimensions } from 'react-native';
+const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
 // --- SECURESTORE KONSTANTEN & FUNKTIONEN ---
 const AUTH_TOKEN_KEY = 'userAuthToken';
 const USER_DATA_KEY = 'currentAuthUser'; 
@@ -765,23 +767,17 @@ export default function HomeScreen() {
                 </>
               )}
 
+              
               {habitMode === 'predefined' && (
                 <>
                   <ThemedText type="subtitle" style={{ marginBottom: 12 }}>
                     Vordefiniertes Ziel auswählen:
                   </ThemedText>
-                  {predefinedHabits.map(({ label, description }, index) => (
+                  {predefinedHabits.map(({ label, description, frequency }, index) => (
                     <Pressable
                       key={index}
-                      onPress={() => {
-                        const nextId = habits.length > 0 ? Math.max(...habits.map(h => h.id)) + 1 : 1;
-                        setHabits(prev => [
-                          ...prev,
-                          { id: nextId, label, description, checked: false }
-                        ]);
-                        setModalVisible(false);
-                        setHabitMode(null);
-                      }}
+                      
+                      onPress={() => addPredefinedHabit(label, description, frequency)}
                       style={{
                         paddingVertical: 10,
                         paddingHorizontal: 16,
@@ -803,14 +799,14 @@ export default function HomeScreen() {
                   </ThemedText>
                   <TextInput
                     placeholder="Kurzname (z. B. Kniebeugen)"
-                    value={newHabit}
-                    onChangeText={setNewHabit}
+                    value={newHabitName}
+                    onChangeText={setNewHabitName}
                     style={styles.textInput}
                   />
                   <TextInput
                     placeholder="Beschreibung"
-                    value={newDescription}
-                    onChangeText={setNewDescription}
+                    value={newHabitDescription}
+                    onChangeText={setNewHabitDescription}
                     style={styles.textInput}
                   />
                   <View style={{ flexDirection: 'row', gap: 12, marginTop: 16 }}>
@@ -976,7 +972,7 @@ const styles = StyleSheet.create({
   },
   fab: {
     position: 'absolute',
-    bottom: 54,
+    bottom: windowHeight * 0.02,
     right: 20,
     width: 56,
     height: 56,
@@ -1043,7 +1039,7 @@ const styles = StyleSheet.create({
   },
   chartImage: {
     width: '100%',
-    height: 200,
+    height: windowHeight * 0.2,
     marginBottom: 20,
     borderRadius: 12,
   },
@@ -1054,7 +1050,7 @@ const styles = StyleSheet.create({
   habitItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 12,
+    paddingVertical: windowHeight * 0.015,
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: '#e0e0e0',
   },

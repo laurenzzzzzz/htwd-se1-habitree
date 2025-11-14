@@ -1,6 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
+
+import { Dimensions } from 'react-native';
+const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
+
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import * as SecureStore from 'expo-secure-store';
+
 import {
   useColorScheme,
   Switch,
@@ -498,7 +503,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: 20,
     width: '100%',
-    height: 300,
+    height: windowHeight * 0.3,
   },
   sectionContainer: {
     marginVertical: 20,
@@ -525,10 +530,10 @@ const styles = StyleSheet.create({
   },
   authButton: {
     backgroundColor: 'rgb(25, 145, 137)',
-    paddingVertical: 10,
+    paddingVertical: windowHeight * 0.012,
     paddingHorizontal: 40,
     borderRadius: 8,
-    width: '70%',
+    width: windowWidth * 0.7,
     alignItems: 'center',
   },
   authButtonText: {
@@ -542,8 +547,8 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   friendImage: {
-    width: 50,
-    height: 50,
+    width: windowWidth * 0.12,  // statt: 50
+    height: windowWidth * 0.12,
     borderRadius: 25,
   },
   memberSince: {

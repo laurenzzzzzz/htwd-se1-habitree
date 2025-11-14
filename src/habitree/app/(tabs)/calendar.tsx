@@ -11,8 +11,9 @@ import { View } from 'react-native';
 
 import { useThemeColor } from '@/hooks/useThemeColor';
 
+//ResponsiveDesign
+const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
 
-const screenWidth = Dimensions.get('window').width;
 
 const transparentImage = {
   uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=',
@@ -74,7 +75,7 @@ export default function TabTwoScreen() {
       {/* Interaktives Liniendiagramm */}
       <LineChart
         data={data}
-        width={screenWidth - 32}
+        width={windowWidth - 32}
         height={220}
         yAxisLabel=""
         chartConfig={{

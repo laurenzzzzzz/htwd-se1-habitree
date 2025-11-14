@@ -3,6 +3,9 @@ import { StyleSheet, View, Text, Animated } from 'react-native';
 import { Image } from 'expo-image';
 import Slider from '@react-native-community/slider';
 import { useThemeColor } from '@/hooks/useThemeColor';
+import { Dimensions } from 'react-native';
+const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
+
 
 export default function TabTwoScreen() {
   const backgroundColor = useThemeColor({}, 'background');
@@ -113,8 +116,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   treeImage: {
-    width: '100%',
-    height: 300,
+    width: windowWidth * 0.8,  
+    height: windowHeight * 0.35,
+    alignSelf: 'center',
     marginVertical: 24,
   },
   slider: {
