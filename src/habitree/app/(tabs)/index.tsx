@@ -535,7 +535,7 @@ const styles = StyleSheet.create({
   // FAB-Style mit Theme
   fab: {
     position: 'absolute',
-    bottom: windowHeight * 0.06,
+    bottom: windowHeight * 0.02,
     right: 20,
     width: 56,
     height: 56,
