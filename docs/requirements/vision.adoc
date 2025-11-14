@@ -26,7 +26,7 @@ Kompakte, nutzerzentrierte Beschreibung der zentralen Anforderungen in der Sprac
 === Gültigkeitsbereich (Scope)
 Dieses Visionsdokument bezieht sich auf *{project-system-name}*, entwickelt von *Team 3A*. Das System unterstützt primär Studierende und junge Berufstätige beim Aufbau positiver Routinen sowie beim Abtrainieren unerwünschter Verhaltensweisen.
 
-*Formfaktor:* Mobile Anwendung (iOS/Android). Nutzer können Gewohnheiten erstellen, verfolgen und reflektieren; Statistiken und Erinnerungen unterstützen die Selbstreflexion.
+*Formfaktor:* Mobile Anwendung (iOS). Nutzer können Gewohnheiten erstellen, verfolgen und reflektieren; Statistiken und Erinnerungen unterstützen die Selbstreflexion.
 
 *Im Umfang:* Funktionale Fähigkeiten (Habits anlegen/bearbeiten/verfolgen; grundlegende Benutzerverwaltung) sowie ausgewählte nicht‑funktionale Ziele (Benutzerfreundlichkeit, Barrierefreiheit, Datenschutz/Sicherheit, plattformübergreifende Nutzung).
 
@@ -151,7 +151,7 @@ Viele Tools für Selbstorganisation sind überladen, wenig motivierend oder nich
 
 ==== Standards & Plattformen
 
-* iOS/Android (React Native/Expo); App‑Stores (Google/Apple)
+* iOS (React Native/Expo); App‑Store (Apple)
 * Relevante Leitlinien: WCAG 2.2 (AA), DSGVO, App‑Store‑Richtlinien
 
 ==== Leistungsziele (Richtwerte)
@@ -161,7 +161,7 @@ Viele Tools für Selbstorganisation sind überladen, wenig motivierend oder nich
 
 ==== Robustheit & Ausfalltoleranz
 
-* Während des Semesters ist das Backend meistens verfügbar, solange keine Updates oder Neustarts notwendig sind.  
+* Während des Semesters ist das Backend meistens verfügbar, solange keine Updates oder Neustarts notwendig sind.
     Nach einem Neustart ist das Backend innerhalb von 2 min wieder erreichbar.
 * Da das Frontend über den lokalen Entwicklungsserver per QR-Code gestartet wird, ist die Nutzung nur möglich, wenn das Host-System (der Entwicklungsrechner) und das Endgerät direkten Zugriff auf das HTW-Netzwerk haben (oder beide über die VPN-Verbindung darauf zugreifen). Nach einem Neustart ist das Frontend innerhalb von 2 min wieder online.
 * Offline‑Lesefähigkeit wesentlicher Daten; Synchronisation bei Verbindung

@@ -5,7 +5,11 @@
     "scheme": "habittracker",
     "version": "1.0.0",
     "orientation": "portrait",
-    "platforms": ["ios", "android", "web"],
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
     "icon": "assets/images/icon.png",
     "splash": {
       "image": "assets/images/splash-icon.png",
@@ -15,10 +19,13 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "plugins": [
       "expo-web-browser",
-      "expo-router"
+      "expo-router",
+      "expo-secure-store"
     ]
   }
 }
