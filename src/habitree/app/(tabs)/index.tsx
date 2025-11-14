@@ -21,6 +21,8 @@ import { useThemeColor } from '@/hooks/useThemeColor';
 import * as SecureStore from 'expo-secure-store';
 import { useFocusEffect } from '@react-navigation/native';
 
+import { Dimensions } from 'react-native';
+const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
 // --- SECURESTORE KONSTANTEN & FUNKTIONEN ---
 const AUTH_TOKEN_KEY = 'userAuthToken';
 const USER_DATA_KEY = 'currentAuthUser'; 
@@ -976,7 +978,7 @@ const styles = StyleSheet.create({
   },
   fab: {
     position: 'absolute',
-    bottom: 54,
+    bottom: windowHeight * 0.02,
     right: 20,
     width: 56,
     height: 56,
@@ -1043,7 +1045,7 @@ const styles = StyleSheet.create({
   },
   chartImage: {
     width: '100%',
-    height: 200,
+    height: windowHeight * 0.2,
     marginBottom: 20,
     borderRadius: 12,
   },
@@ -1054,7 +1056,7 @@ const styles = StyleSheet.create({
   habitItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 12,
+    paddingVertical: windowHeight * 0.015,
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: '#e0e0e0',
   },
