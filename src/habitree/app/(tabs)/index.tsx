@@ -767,23 +767,17 @@ export default function HomeScreen() {
                 </>
               )}
 
+              
               {habitMode === 'predefined' && (
                 <>
                   <ThemedText type="subtitle" style={{ marginBottom: 12 }}>
                     Vordefiniertes Ziel auswählen:
                   </ThemedText>
-                  {predefinedHabits.map(({ label, description }, index) => (
+                  {predefinedHabits.map(({ label, description, frequency }, index) => (
                     <Pressable
                       key={index}
-                      onPress={() => {
-                        const nextId = habits.length > 0 ? Math.max(...habits.map(h => h.id)) + 1 : 1;
-                        setHabits(prev => [
-                          ...prev,
-                          { id: nextId, label, description, checked: false }
-                        ]);
-                        setModalVisible(false);
-                        setHabitMode(null);
-                      }}
+                      
+                      onPress={() => addPredefinedHabit(label, description, frequency)}
                       style={{
                         paddingVertical: 10,
                         paddingHorizontal: 16,
@@ -805,14 +799,14 @@ export default function HomeScreen() {
                   </ThemedText>
                   <TextInput
                     placeholder="Kurzname (z. B. Kniebeugen)"
-                    value={newHabit}
-                    onChangeText={setNewHabit}
+                    value={newHabitName}
+                    onChangeText={setNewHabitName}
                     style={styles.textInput}
                   />
                   <TextInput
                     placeholder="Beschreibung"
-                    value={newDescription}
-                    onChangeText={setNewDescription}
+                    value={newHabitDescription}
+                    onChangeText={setNewHabitDescription}
                     style={styles.textInput}
                   />
                   <View style={{ flexDirection: 'row', gap: 12, marginTop: 16 }}>
