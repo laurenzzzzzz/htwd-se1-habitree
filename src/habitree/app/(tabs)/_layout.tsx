@@ -30,7 +30,7 @@ export default function TabLayout() {
 
 
   // Responsive TabBar Höhe
-  const TAB_BAR_HEIGHT = Math.max(50, windowHeight * 0.050);
+  const TAB_BAR_HEIGHT = Math.max(48, windowHeight * 0.050);
 
   const baseMargin = 8; // Basiswert in Pixel
   const responsiveMarginTop = Math.max(insets.top * 0.9, baseMargin); 
