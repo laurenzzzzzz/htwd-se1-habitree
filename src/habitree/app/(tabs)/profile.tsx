@@ -394,8 +394,8 @@ export default function ProfileScreen() {
           <ThemedText type="subtitle">Freunde</ThemedText>
           <View style={styles.friendsRow}>
             <Image source={require('@/assets/images/profil1.png')} style={styles.friendImage} />
-            <Image source={require('@/assets/images/profil2.png')} style={styles.friendImage} />
-            <Image source={require('@/assets/images/profil3.png')} style={styles.friendImage} />
+            <Image source={require('@/assets/images/profil4.png')} style={styles.friendImage} />
+            <Image source={require('@/assets/images/profil5.png')} style={styles.friendImage} />
           </View>
         </ThemedView>
 
