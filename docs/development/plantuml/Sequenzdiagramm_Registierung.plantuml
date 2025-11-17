@@ -1,0 +1,33 @@
+@startuml Sequenzdiagramm_Registrierung
+title Registrierung eines neuen Nutzers
+
+actor "Nutzer" as User
+participant "Mobile App (Expo/Client)" as App
+participant "Backend Service (Express)" as Backend
+participant "Prisma ORM" as Prisma
+database "PostgreSQL DB" as DB
+
+User -> App: 1. Eingabe von E-Mail & Passwort
+App -> Backend: 2. POST /users/register \n(E-Mail, Klartext-Passwort)
+
+activate Backend
+Backend -> Backend: 3. Passwort Hashing (z.B. bcrypt)
+alt Fehler 
+    Backend -> App: 4a. 409 Conflict / 400 Bad Request
+else Erfolg
+    Backend -> Prisma: 4b. user.create()
+    activate Prisma
+    Prisma -> DB: 5. INSERT INTO User ()
+    activate DB
+    DB --> Prisma: 6. Erfolgsmeldung
+    deactivate DB
+    Prisma --> Backend: 7. Neuer User-Datensatz
+    deactivate Prisma
+    
+    Backend -> Backend: 8. JWT-Token erstellen
+    Backend -> App: 9. 201 Created & Auth-Token
+end
+deactivate Backend
+App -> User: 10. Erfolgsmeldung / Login-Bereitschaft
+
+@enduml

@@ -5,18 +5,16 @@ Person(Nutzer, "Nutzer")
 
 Container(frontend, "Mobile App", "Expo (React Native)", "Frontend läuft auf dem Handy")
 Container(backend, "Backend Service", "Node.js, Express", "Backend läuft auf dem externen Hochschulserver")
-Container(auth, "Firebase Auth", "Firebase Service", "Authentifizierung der Nutzer")
+
 Container(db, "PostgreSQL Datenbank", "PostgreSQL", "Speichert Nutzerdaten, Gewohnheiten, etc.")
 Container(prisma, "Prisma ORM", "Node.js Modul", "Schnittstelle zwischen Backend und Datenbank")
 
 Nutzer --> frontend : nutzt
-frontend -> auth : meldet Nutzer an
-frontend -> backend : kommuniziert via REST API 
 
-Rel_D(backend, auth, "verifiziert ID-Token\nund erhält UID")
+frontend -> backend : kommuniziert via REST API 
+prisma --> db : ORM-Zugriff auf Datenbank
 
 backend -> prisma : persistiert Daten und greift über ORM auf DB zu
-prisma --> db : ORM-Zugriff auf Datenbank
 
 
 

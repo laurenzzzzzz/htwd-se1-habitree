@@ -10,8 +10,13 @@ Dieses Dokument beschreibt wesentliche Entwurfsentscheidungen auf Ebene der Komp
  
 == Ausgewählte Sichten
 //Entwurfsklassendiagramme, Sequenzdiagramme
+=== Sequenzdiagramme Regisitreigung
+image::Sequenzdiagramm_Registrierung.png[]
 
+=== Sequenzdiagramme Login
+image::Sequenzdiagramm_Login.png[]
 == Schnittstellen
 //Dokumentation oder Verweise auf Schnittstellen, z.B. REST-APIs
 
 == Datenmodell
+image::Datenmodell_Datenbank.png[]

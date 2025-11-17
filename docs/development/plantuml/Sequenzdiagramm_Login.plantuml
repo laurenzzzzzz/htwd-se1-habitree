@@ -1,0 +1,38 @@
+@startuml Sequenzdiagramm_Anmeldung
+title Anmeldung eines bestehenden Nutzers
+
+actor "Nutzer" as User
+participant "Mobile App (Expo/Client)" as App
+participant "Express Router (/auth)" as Backend
+participant "Prisma ORM" as Prisma
+database "PostgreSQL DB" as DB
+
+User -> App: 1. Eingabe von E-Mail & Passwort
+App -> Backend: 2. POST /auth/login \n(E-Mail, Klartext-Passwort)
+
+activate Backend
+Backend -> Prisma: 3. prisma.user.findUnique()\n  (where: {email: ...})
+activate Prisma
+Prisma -> DB: 4. SELECT passwordHash FROM "user" WHERE email = ?
+activate DB
+DB --> Prisma: 5. passwordHash
+deactivate DB
+Prisma --> Backend: 6. User-Daten
+deactivate Prisma
+
+alt User nicht gefunden
+    Backend -> App: 7a. 401 Unauthorized
+else User gefunden
+    Backend -> Backend: 7b. Passwort-Vergleich \n(bcrypt.compare(Klartext, Hash))
+
+    alt Vergleich erfolgreich
+        Backend -> Backend: 8. JWT-Token (Auth-Token) erstellen
+        Backend -> App: 9. 200 OK & Auth-Token
+    else Vergleich fehlgeschlagen
+        Backend -> App: 8a. 401 Unauthorized
+    end
+end
+deactivate Backend
+App -> User: 10. Zugriff auf das Dashboard
+
+@enduml
