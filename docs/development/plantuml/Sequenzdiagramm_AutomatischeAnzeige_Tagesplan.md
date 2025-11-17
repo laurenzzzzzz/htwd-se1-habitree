@@ -1,5 +1,4 @@
 ```mermaid
-----
 sequenceDiagram
     autonumber
 
@@ -27,4 +26,3 @@ sequenceDiagram
     else Keine Habits vorhanden
         Mobile-->>User: Dashboard ohne Tagesplan-Bereich
     end
-----
