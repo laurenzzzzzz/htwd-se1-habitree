@@ -14,7 +14,7 @@ Dieses Dokument beschreibt wesentliche Entwurfsentscheidungen auf Ebene der Komp
 image::Sequenzdiagramm_Registrierung.png[]
 
 === Sequenzdiagramme Login
-image::Sequenzdiagramm_Login.png[]
+image::Sequenzdiagramm_Anmeldung.png[]
 == Schnittstellen
 //Dokumentation oder Verweise auf Schnittstellen, z.B. REST-APIs
 

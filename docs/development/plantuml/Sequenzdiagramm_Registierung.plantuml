@@ -2,16 +2,16 @@
 title Registrierung eines neuen Nutzers
 
 actor "Nutzer" as User
-participant "Mobile App (Expo/Client)" as App
-participant "Backend Service (Express)" as Backend
+participant "Mobile App (Expo Client)" as App
+participant "Backend (Express)" as Backend
 participant "Prisma ORM" as Prisma
 database "PostgreSQL DB" as DB
 
-User -> App: 1. Eingabe von E-Mail & Passwort
+User -> App: 1. Eingabe von \n    Username, E-Mail & Passwort
 App -> Backend: 2. POST /users/register \n(E-Mail, Klartext-Passwort)
 
 activate Backend
-Backend -> Backend: 3. Passwort Hashing (z.B. bcrypt)
+Backend -> Backend: 3. Passwort Hashing (bcrypt)
 alt Fehler 
     Backend -> App: 4a. 409 Conflict / 400 Bad Request
 else Erfolg
