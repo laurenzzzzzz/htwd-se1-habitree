@@ -26,11 +26,18 @@ Kompakte, nutzerzentrierte Beschreibung der zentralen Anforderungen in der Sprac
 === Gültigkeitsbereich (Scope)
 Dieses Visionsdokument bezieht sich auf *{project-system-name}*, entwickelt von *Team 3A*. Das System unterstützt primär Studierende und junge Berufstätige beim Aufbau positiver Routinen sowie beim Abtrainieren unerwünschter Verhaltensweisen.
 
-*Formfaktor:* Mobile Anwendung (iOS). Nutzer können Gewohnheiten erstellen, verfolgen und reflektieren; Statistiken und Erinnerungen unterstützen die Selbstreflexion.
+*Im Umfang:* +
+1. Erstellen, Bearbeiten und Verfolgen persönlicher Gewohnheiten +
+2. Visuelle Statistik und Fortschrittsdarstellungen +
+3. Nutzerkontenverwaltung  +
+4. Motivationselemente in Forms von Streak- Tracking und Feedback- Mechanismen
 
-*Im Umfang:* Funktionale Fähigkeiten (Habits anlegen/bearbeiten/verfolgen; grundlegende Benutzerverwaltung) sowie ausgewählte nicht‑funktionale Ziele (Benutzerfreundlichkeit, Barrierefreiheit, Datenschutz/Sicherheit, plattformübergreifende Nutzung).
-
-*Außerhalb des Umfangs:* Psychologische Beratung oder medizinische Empfehlungen.
+*Außerhalb des Umfanges:* +
+1. Therapeutische, psychologische oder medizinische Diagnostik +
+2. Professionelles/Zertifiziertes Coaching +
+3. Unternehmensweite Produktivitätssysteme +
+4. Komplexe Trainings oder Ernährungspläne +
+ 
 
 === Definitionen, Akronyme und Abkürzungen
 Siehe <<#glossary, Glossar>>.
@@ -48,9 +55,10 @@ Viele Tools für Selbstorganisation sind überladen, wenig motivierend oder nich
 | die | ihre Gewohnheiten systematisch verfolgen, verbessern und reflektieren möchten
 | ist | {project-system-name}
 | eine | mobile Habit‑Tracking‑App
-| die | durch smarte Erinnerungen, Gamification und kontinuierliche visuelle Fortschrittsverfolgung motiviert
+| die |  durch klare Visualisierungen, motivierende Fortschrittsdarstellungen (z. B. Streaks, Verlaufsgrafiken) und eine intuitive Bedienung unterstützt.
 | Anders als | herkömmliche Kalender/Notiz‑Apps mit einfachen Erinnerungen oder klassische Tagebücher
-| kann unser Produkt | Verhalten anhand von Zielen/Streaks analysieren, automatisiertes Feedback geben, Wissen zur Verhaltensänderung bereitstellen und sich spielerisch an individuelle Ziele anpassen
+| konzentriert sich unser Produkt | 
+auf eine digitale, leichtgewichtige und motivierende Nutzungserfahrung, die den täglichen Fortschritt sichtbar macht, anhand einer Baumgrafik visualisiert und somit den Aufbau persönlicher Routinen erleichtert.
 |===
 
 // =====================================================================
@@ -69,13 +77,11 @@ Viele Tools für Selbstorganisation sind überladen, wenig motivierend oder nich
 | Fester oder flexibler Arbeitsalltag; Wunsch nach Struktur und gesunden Routinen
 | Fordern Effizienz, Klarheit, Datenschutz und mobile Verfügbarkeit; erweitern den Blick über den Studierendenkontext
 
-| Projektgruppe
+| Projektgruppe (Team 3A)
 | Scrum‑Master, Product‑Owner, Entwicklungsteam
-| Konzeption, Entwicklung, Test; Sicherstellung von Nutzungswert, Qualität, Wartbarkeit und Planbarkeit
+| Iterative Konzeption, Entwicklung, Test; Sicherstellung von Nutzungswert, Qualität, Wartbarkeit und Planbarkeit
 
-| Wissenschaft/Expert*innen
-| Fachleute zu Verhaltenstherapie/Verhaltensökonomie
-| Validieren Ansätze (Gamification, Wissensbereich) und liefern belastbare Grundlagen
+| Wissenschaft/Expert*innen| Fachleute zu Verhaltenstherapie/Verhaltensökonomie| Validieren Ansätze (Gamification, Wissensbereich) und liefern belastbare Grundlagen
 
 | Behörden/Compliance
 | DSGVO/UrhG/BSI‑relevante Institutionen
@@ -96,105 +102,148 @@ Viele Tools für Selbstorganisation sind überladen, wenig motivierend oder nich
 == Produktüberblick
 
 === Bedarfe und Hauptfunktionen
-// Reihenfolge: Bedarf (Warum) → Fähigkeit (Was) mit Priorität & Release
+
 [%header, cols="4,1,4,1"]
 |===
-| Bedarf (Warum) | Priorität | Fähigkeit/Feature (Was) | Geplantes Release
+| Bedarf (Warum) | Priorität | Fähigkeit/Feature (Was) | (Geplantes) Release
 
-| *Langfristige Motivation*
+| *Routine leichter aufbauen und langfristig motiviert bleiben*
 | Hoch
-| Gamification (Streak‑Badges 7/14/30/66, XP‑Leiste, Micro‑Animationen), sanftes Relapse‑Modell („Rückfall ≠ Reset“)
-| R1–R2
+|- Streak Tracking +
+- einfach Fortschrittsvisualisierungen (z.B.: Baumwachstum, Wochenübersicht)
+| 30.05.2025
 
-| *Transparenz über Fortschritt*
+| *Klarheit über eigenen Fortschritt und Gewohnheiten gewinnen*
 | Hoch
-| Dashboards (Tages/Wochen‑Streaks, Trends, Zielerreichung), exportierbare Verlaufsansicht
-| R1
+|- Dashboard mit Tages-/Wochenübersicht +
+- Verlaufsgrafiken
+| 27.06.2025
 
-| *Schnelle Habit‑Erstellung/Planung*
+| Schnelles Erfassen und Verwalten von Gewohnheiten
 | Hoch
-| Vorlagen & Quick‑Add, flexible Frequenzen, Erinnerungen (inkl. Quiet Hours), Editierbarkeit
-| R1
+|- Einfaches Anlegen/Bearbeiten +
+- flexible Wiederholungsintervalle +
+- Erinnerungsfunktion
+| 27.06.2025
 
-| *Barrierefreiheit & Konsistenz*
+| *Barrierearme Nutzung*
 | Mittel
-| WCAG 2.2 AA: Kontraste ≥ 4.5:1, Touch‑Ziele ≥ 44×44 px, Screenreader‑Labels; Dark Mode; keine reine Farbcodierung
-| R2
+|- App ist zweisprachig (Deutsch, Englisch) +
+- UI ist klar strukturiert und Übersichtlich (Testen durch 
+- Durchführung von Nutzer- Tests in Sprint Review) +
+- Gewährleisten von guter Lesbarkeit und Benutzerfreundlichkeit durch Bereitstellung hoher Kontraste und geeigneter Schriftart und Schriftform
+| 28.11.2025
 
-| *Fokus & Ablenkungsreduktion*
-| Mittel
-| Fokus‑Modus (stille Zeiten, reduzierte UI), optionale Haptik/Audiosignale, DND‑Integration
-| R2
+| *Vertrauenswürdiger Umgang mit persönlichen Daten*
+| Hoch
+| - Anmeldung über ein Nutzerkonto +
+ - datensparsame Speicherung (nur notwendige Habit- und Fortschrittsdaten) +
+ - keine Weitergabe an Dritte +
+ - technische Details (z. B. Verschlüsselung) werden in der Architektur spezifiziert.
+| xxx
 
-| *Soziale Motivation*
-| Mittel
-| Öffentliches Profil (Opt‑in), Teilen‑Links, optionale Ranglisten; granularer Datenschutz
-| R3
-
-| *Wissens‑/Lernbereich*
+| *Verstehen, warum Gewohnheiten funktionieren oder scheitern*
 | Niedrig
-| Kuratierte Inhalte (Tipps, Mikro‑Lerneinheiten) zur Verhaltensänderung
-| R3
-
-| *Mehrsprachigkeit*
-| Mittel
-| DE/EN (Internationalisierung, lokales Zahlen/Datumsformat)
-| R2
-
-| *Datenschutz & Sicherheit*
-| Hoch
-| Minimalprinzip; TLS; sichere Auth; Backups verschlüsselt; Privacy‑Kontrollen (Privat/Öffentlich)
-| R1
+|- Optionaler Wissensbereich mit kurzen, leicht verständlichen Hinweißen zu Grundlagen der Habit- Bildung,
+| xxx
 |===
 
 === Zusätzliche Produktanforderungen
 
 ==== Standards & Plattformen
 
-* iOS (React Native/Expo); App‑Store (Apple)
-* Relevante Leitlinien: WCAG 2.2 (AA), DSGVO, App‑Store‑Richtlinien
+* iOS (React Native/Expo); App-Store (Apple)
+* Relevante Leitlinien: +
+WCAG 2.2 (AA): Barrierefreiheit und Usability +
+DSGVO: Speicherung personenbezogener Daten +
+App-Store Richtlinien: jedoch erst einmal kein produktiver Store- Release angedacht
 
-==== Leistungsziele (Richtwerte)
+==== Leistungsziele:
 
-* *Interaktion lokal:* visuelles Feedback ≤ 100 ms
-* *Netzwerk P95:* API‑Antwort ≤ 500 ms; Start bis erster nutzbarer Screen ≤ 2 s (Warmstart)
+* *Interaktion lokal:* +
+visuelles Feedback weniger als 300 ms +
+* *Netzwerk P95:* +
+API-Antwort weniger als 1000 ms +
+Start bis erster nutzbarer Screen weniger als 3 Sekunden +
 
 ==== Robustheit & Ausfalltoleranz
 
-* Während des Semesters ist das Backend meistens verfügbar, solange keine Updates oder Neustarts notwendig sind.
-    Nach einem Neustart ist das Backend innerhalb von 2 min wieder erreichbar.
-* Da das Frontend über den lokalen Entwicklungsserver per QR-Code gestartet wird, ist die Nutzung nur möglich, wenn das Host-System (der Entwicklungsrechner) und das Endgerät direkten Zugriff auf das HTW-Netzwerk haben (oder beide über die VPN-Verbindung darauf zugreifen). Nach einem Neustart ist das Frontend innerhalb von 2 min wieder online.
-* Offline‑Lesefähigkeit wesentlicher Daten; Synchronisation bei Verbindung
+* Das System soll für Nutzer während der regulären Nutzung stabil funktionieren. Kurzzeitige Unterbrechungen etwa durch Neustart sollen innerhalb von maximal 2 Minuten behoben sein. +
+* Zentrale Nutzungsdaten (z.B.: heutige Gewohnheiten, letzte Streak- Werte) sollen offline lesbar sein. Sobald wieder eine Internetverbindung besteht erfolgt eine automatische Synchronisation. +
+* Fehlerzustände werden verständlich kommuniziert durch geeignete, präzise und verständliche Statusmeldungen.
 
 ==== Benutzbarkeit & Barrierefreiheit
 
-* Einfache Sprache; konsistente Navigation; leere/Fehlerzustände gestaltet (mit Undo, wo sinnvoll)
-* Keine Statuskommunikation ausschließlich über Farbe; klare Labels/Icons
+* Einfache Sprache +
+* konsistente Navigation +
+* bei kritischen Aktionen (z.B.: Löschen von Habits), sol es Rückgängig- Möglichkeit geben +
+* Keine Statuskommunikation ausschließlich über Farbe +
+* klare Labels/Icons
 
 ==== Entwurfseinschränkungen & Annahmen
 
-* *Primärzielgruppe:* 16–60 Jahre; grundlegende Medienkompetenz wird angenommen
-* *Nutzungsmuster:* tägliche Nutzung (Reminder‑getrieben); frühe sichtbare Erfolge erhöhen Bindung
-* *Onboarding:* Einrichtung in ≤ 2 Minuten; Vorlagen senken kognitive Last
+* *Primärzielgruppe:* +
+- 16–60 Jahre +
+- grundlegende Medienkompetenz wird angenommen
+* *Nutzungsmuster:* +
+- tägliche Nutzung (Reminder- getrieben) +
+- frühe sichtbare Erfolge erhöhen Bindung
+* *Onboarding:* +
+- Einrichtung in in weniger als 2 Minuten +
+- Habit- Vorlagen sollen vorhanden sein, um Nutzer Inspiration zu geben und zeitgleich Arbeit abzunehmen
 
-==== Dokumentationsanforderungen
 
-* *vision.adoc:* Zweck, Scope, Positionierung, Stakeholder, Bedarfe/Fähigkeiten, Qualitätsziele
-* *ux‑concept.adoc:* Personas, Nutzungskontext, Wireframes/Wireflows, Gestaltungsrichtlinien
-* *glossary.adoc:* Begriffe, Abkürzungen, Datenstrukturen, Domänenmodell
-* *project_plan.adoc:* Vorgehen (Scrum), Deployment, Entscheidungen, Lessons Learned
-* *architecture_notebook.adoc:* Architekturziele, Annahmen, Entscheidungen, C4‑Modell, techn. Glossar
+==== Qualitätsanforderungen
 
-==== Qualitätsanforderungen (Auszug)
-[%header, cols="4,1,1"]
+[%header, cols="4,1"]
 |===
-| Anforderung | Priorität | Geplantes Release
-| Einfache Bedienbarkeit (kurze Wege, klare Labels) | Hoch | R1
-| Reaktionszeit lokal ≤ 500 ms; API P95 ≤ 1000 ms | Mittel | R1–R2
-| Mehrsprachigkeit (DE/EN) | Mittel | R2
-| Sicherheit (TLS, Auth‑Sperre nach Fehlversuchen, Privacy‑Kontrollen) | Mittel | R1–R2
-| Barrierefreiheit (WCAG 2.2 AA, Kontrast ≥ 4.5:1, Touch‑Ziele) | Mittel | R2
-| Übersichtlichkeit von Buttons/Icons (Mindestgrößen, Standard‑Piktogramme) | Hoch | R1
+| Anforderung | Priorität 
+
+| *Einfache Bedienbarkeit*  +
+  - Kurze Wege zu zentralen Funktionen +
+  - klare Labels und konsistente Navigation +  
+  - Wichtige Aktionen (z. B. Habit anlegen, abhaken) sollen in weniger als 3 Interaktionen erreichbar sein.
+| Hoch
+
+
+| *Reaktionszeiten*  +
+  - Lokale UI-Interaktionen (Tippen, Button-Feedback): maximal 300 ms  +
+  - API-Antwortzeiten (P95): maximal 1000 ms + 
+  - Warmstart bis erster nutzbarer Screen: maximal 3 s +  
+  **(Werte müssen durch Testen validiert werden!)** +
+| Mittel
+
+
+| *Mehrsprachigkeit (DE/EN)*  +
+  - Alle sichtbaren UI- Elemente sollen sowohl in Deutsch als auch in Englisch vorliegen +
+  - Der Nutzer kann einstellen, in welcher der beiden Sprachen er seine UI- Bedienen kann
+| Mittel
+
+
+| *Sicherheit & Datenschutz*  +
+  - Nutzung von Firebase Authentication +
+  - Daten werden im Backend verschlüsselt übertragen (???) +  
+  - Privatsphäre-Option: Nutzerprofil kann auf „privat“ oder „öffentlich“ gestellt werden.
+| Mittel
+
+
+| *Barrierefreiheit (orientiert an WCAG 2.2 AA)*  +
+  - Mindestkontrast 4.5:1  +
+  - keine Statuskommunikation ausschließlich über Farbe  + 
+| Mittel
+
+
+| *Übersichtlichkeit von Layout & Icons*  
+  - Einheitliche Icon-Sprache +
+  - konsistente Abstände und Strukturierung +  
+  - Mobile-optimierte Darstellung (Responsive Design)
+| Hoch
+
+| *Fehlertoleranz & Robustheit*  +
+  - Lokale Daten (heutige Habits, letzte Streaks) sind auch ohne Internet verfügbar +  
+  - Synchronisation erfolgt automatisch bei Wiederverbindung.
+| Mittel
+
 |===
 
 // =====================================================================
@@ -203,6 +252,5 @@ Viele Tools für Selbstorganisation sind überladen, wenig motivierend oder nich
 
 * *Habit:* Wiederkehrende Tätigkeit mit Ziel‑/Frequenzvorgabe
 * *Streak:* Anzahl aufeinanderfolgender Erfolgstage
-* *Relapse:* Rückfall; Zielverfehlung ohne kompletten Progress‑Reset
 
 // EOF
