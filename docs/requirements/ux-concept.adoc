@@ -33,7 +33,7 @@ Dieses Dokument beschreibt die Benutzeroberflächen und Interaktionskonzepte der
 == Personas
 
 // ----- Persona 1
-*Nutzer: Hannes Krusch* — *„Level up statt Rückfall – jeder rauchfreie Tag ist ein Erfolg!“*
+*Nutzer: Hannes Krusch* - *„Level up statt Rückfall – jeder rauchfreie Tag ist ein Erfolg!“*
 
 image::Persona-Hannes_Krusch.png[Hannes Krusch,200,200]
 
@@ -58,7 +58,7 @@ image::Persona-Hannes_Krusch.png[Hannes Krusch,200,200]
 |===
 
 // ----- Persona 2
-*Lisa Maria Töpfer* — *"Weniger ist mehr"*
+*Lisa Maria Töpfer* - *"Weniger ist mehr"*
 
 image::Persona-Lisa_Maria_Töpfer.jpeg[Lisa Maria Töpfer,200,200]
 
@@ -83,7 +83,7 @@ image::Persona-Lisa_Maria_Töpfer.jpeg[Lisa Maria Töpfer,200,200]
 |===
 
 // ----- Persona 3
-*Lara Schneider* — *"Fragen statt Umfragen"*
+*Lara Schneider* - *"Fragen statt Umfragen"*
 
 image::Persona-Lara_Schneider.PNG[Lara Schneider,200,200]
 
@@ -108,7 +108,7 @@ image::Persona-Lara_Schneider.PNG[Lara Schneider,200,200]
 |===
 
 // ----- Persona 4
-*Tom Neumann* — *"Alles auf einmal – oder gar nichts"*
+*Tom Neumann* - *"Alles auf einmal – oder gar nichts"*
 
 image::Persona-Tom_Neumann.png[Tom Neumann,200,200]
 
@@ -136,7 +136,7 @@ image::Persona-Tom_Neumann.png[Tom Neumann,200,200]
 == Nutzungskontext
 
 === Zielgruppe und Aufgaben
-*Primärnutzer:* Studierende (nutzbar für alle, die mit mobilen Endgeräten vertraut sind). +
+*Primärnutzer:* Studierende (nutzbar für alle, die mit mobilen Endgeräten vertraut sind) +
 
 
 
@@ -144,18 +144,18 @@ image::Persona-Tom_Neumann.png[Tom Neumann,200,200]
 
 * Habits anlegen, ändern, löschen (inkl. Parameter wie Schrittzahl/Schwellenwerte)
 * Ziele setzen; Ist-Werte erfassen; Fortschritt/Streaks einsehen
-* persönliche Habits konfigurieren (z. B. Schrittziel/Tag)
-* optional: Profil öffentlich schalten ⇒ Social Viewing/Wettbewerb
+* persönliche Habits konfigurieren (z. B. Schrittziel pro Tag)
+* optional: Profil öffentlich schalten => Social Viewing/Wettbewerb
 
 === Nutzungssituationen
 
 * Alltag, überall und jederzeit +
 
-* Mindestnutzung: *täglich* (Reminder getrieben), idealerweise mehrmals pro Tag.
+* Mindestnutzung: *täglich* (Reminder getrieben), idealerweise mehrmals pro Tag
 
 === Kollaboration
 
-* Einzelnutzung mit optionaler öffentlicher Profilansicht zur Motivation (Wettbewerb/Sozialvergleich).
+* Einzelnutzung mit optionaler öffentlicher Profilansicht zur Motivation (Wettbewerb/Sozialvergleich)
 
 === Einzigartigkeit von *Habitree*
 
@@ -180,16 +180,15 @@ image::Persona-Tom_Neumann.png[Tom Neumann,200,200]
 === Häufigkeit und Verlauf
 
 * tägliche Nutzung (Reminder) +
-* Ziel: stabile Routinen bis mind. 66 Tage (Richtwert); freiwillige Protokollierung möglich
+* Ziel: stabile Routinen bis mind. 66 Tage (Richtwert) und darüber hinaus; freiwillige Protokollierung möglich
 
 === Potenzielle Fehlerquellen
 
-* Keine Verbindung (z. B. HTW-Netz/VPN-Zwang) | Server-/DB-Ausfall | Datenpersistenzfehler
-* Push-Benachrichtigungen fehlen | App reagiert nicht
-* falsche Erinnerungszeiten | Datums-/Zeitzonenfehler | inkorrekte Baumvisualisierung
+* Keine Verbindung (z. B. HTW-Netz/VPN-Zwang), Server-/DB-Ausfall, Datenpersistenzfehler
+* Push-Benachrichtigungen fehlen, App reagiert nicht
+* falsche Erinnerungszeiten, Datums-/Zeitzonenfehler, inkorrekte Baumvisualisierung
 
 === Aktuelle Stolpersteine (IST)
-
 
 * Kontrastprobleme im Dark Mode
 * unübersichtliche Placeholder-UI
@@ -197,7 +196,7 @@ image::Persona-Tom_Neumann.png[Tom Neumann,200,200]
 === Nutzungseinschränkungen
 
 * eingeschränkte Offlinefähigkeit; Social Features (Profilsuche) benötigen Verbindung
-* nicht verifizierte Nutzerangaben ⇒ Wettbewerb basiert auf Ehrlichkeit
+* nicht verifizierte Nutzerangaben => Wettbewerb basiert auf Ehrlichkeit
 
 === Barrierefreiheit
 
@@ -254,40 +253,40 @@ Die Wireframes visualisieren die **strukturierte Anordnung von Inhalten und Inte
 
 **Hauptmenü (Bild 1, Menü 1)**
 
-* Anzeige von **Streaks** und **Tagesfortschritt**; Einstiegspunkt für alle Funktionen.
+* Anzeige von **Streaks** und **Tagesfortschritt**; Einstiegspunkt für alle Funktionen
 
 
 **Habits erfüllen & Neues Habit (Bilder 2–3)**
 
-* Direkter Zugriff auf tägliche Aufgaben; Möglichkeit, neue Gewohnheiten anzulegen.
+* Direkter Zugriff auf tägliche Aufgaben; Möglichkeit, neue Gewohnheiten anzulegen
 
 
 **Wochenstatistik / Kalender (Bilder 4–5, Menü 2)**
 
-* Überblick über wöchentliche Fortschritte und Auswertung.
+* Überblick über wöchentliche Fortschritte und Auswertung
 
 
 **Habit hinzufügen (Bilder 6–11, Menü 4)**
 
-* Schritt-für-Schritt-Erfassung neuer Habits, inkl. **Parameter**, **Erinnerungen** und **Eigenkreationen**.
+* Schritt-für-Schritt-Erfassung neuer Habits, inkl. **Parameter**, **Erinnerungen** und **Eigenkreationen**
 
 
 **Baumvisualisierung (Bilder 12–15, Menü 3)**
 
-* Wachsende Baum-Metapher visualisiert **Fortschritt**, Motivation und individuelle Entwicklung.
+* Wachsende Baum-Metapher visualisiert **Fortschritt**, Motivation und individuelle Entwicklung
 
 
 **Errungenschaften (Bilder 16–17, Menü 4)**
 
-* Gamification-Elemente, **Badges** und Auszeichnungen als positives Feedback für erreichte Ziele.
+* Gamification-Elemente, **Badges** und Auszeichnungen als positives Feedback für erreichte Ziele
 
 
 **Konto/Profil & Einstellungen (Bilder 18–19, Menü 5)**
 
-* Verwaltung persönlicher Daten, App-Optionen, Notifications und Privatsphäre.
+* Verwaltung persönlicher Daten, App-Optionen, Notifications und Privatsphäre
 
 
-Die **Wireflows** zeigen die **Navigation und Interaktionspfade** zwischen den Bildern. Ziel ist eine nachvollziehbare Nutzerführung, konsistente UI-Elemente und die Verbindung der funktionalen Anforderungen mit der visuellen Umsetzung – inklusive der emotionalen Baum-Metapher zur Motivation und Fortschrittsdarstellung.
+Die **Wireflows** zeigen die **Navigation und Interaktionspfade** zwischen den Bildern. Ziel ist eine nachvollziehbare Nutzerführung, konsistente UI-Elemente und die Verbindung der funktionalen Anforderungen mit der visuellen Umsetzung inklusive der emotionalen Baum-Metapher zur Motivation und Fortschrittsdarstellung.
 
 
 // =====================================================================
@@ -295,13 +294,13 @@ Die **Wireflows** zeigen die **Navigation und Interaktionspfade** zwischen den B
 == Baum-Metapher (Habitree)
 
 Die zentrale Metapher von *Habitree* ist der wachsende Baum, der den Fortschritt des Nutzers symbolisiert.
-Der Baum dient als lebendige Visualisierung für persönliche Entwicklung, Beständigkeit und Pflege –
-Kernelemente erfolgreicher Habit-Bildung.
+Der Baum dient als lebendige Visualisierung für persönliche Entwicklung, Beständigkeit und Pflege, die
+Kernelemente einer erfolgreichen Habit-Bildung.
 
 === Symbolik und UX-Begründung
 
 * **Wachstum über Zeit:**
-  Gewohnheiten entstehen schrittweise – wie ein Baum, der aus einem Samen zu einem stabilen Stamm heranwächst.
+  Gewohnheiten entstehen schrittweise wie ein Baum, der aus einem Samen zu einem stabilen Stamm heranwächst.
   Jeder abgeschlossene Habit-Tag fördert dieses Wachstum sichtbar, wodurch der Nutzer Fortschritt intuitiv wahrnimmt.
 
 * **Pflege und Beständigkeit:**
@@ -316,26 +315,24 @@ Kernelemente erfolgreicher Habit-Bildung.
 
 * **Individualität:**
   Jeder Nutzer „zieht“ seinen eigenen Baum.
-  Unterschiedliche Gewohnheiten, Dauer und Erfolge formen ein einzigartiges Erscheinungsbild –
-  ein persönlicher Spiegel des Wachstums.
+  Unterschiedliche Gewohnheiten, Dauer und Erfolge formen ein einzigartiges Erscheinungsbild als persönlichen Spiegel des Wachstums.
 
 * **Psychologische Wirkung:**
   Naturmetaphern fördern nachhaltige Motivation.
   Der Baum vermittelt Ruhe und Geduld: Wachstum braucht Zeit, Ausdauer und Aufmerksamkeit.
-  So ersetzt Habitree leistungsorientierten Druck durch ein positives, wachstumsorientiertes Selbstbild.
+  So ersetzt Habitree leistungsorientierten Druck durch ein positives und wachstumsorientiertes Selbstbild.
 
 === Ziel der Metapher
 
 Die Baum-Metapher transformiert abstrakte Daten (z. B. Streaks, Fortschrittswerte) in eine emotionale,
-visuell ansprechende Erfahrung. Sie schafft Verbindung zwischen digitalem Verhalten und natürlichem Wachstum –
-und macht die Bildung gesunder Gewohnheiten erlebbar.
+visuell ansprechende Erfahrung. Sie schafft Verbindung zwischen digitalem Verhalten und natürlichem Wachstum und macht die Bildung gesunder Gewohnheiten erlebbar.
 // =====================================================================
 
 == Taskflows (zentrale Use Cases)
 
 .**Habit anlegen (vordefiniert)**
 [arabic]
-. Homescreen → *+ Neues Habit*
+. Homescreen -> *+ Neues Habit*
 . Vorlagenliste → Vorlage wählen
 . Parameter setzen (z. B. Ziel/Schrittzahl, Häufigkeit, Erinnerung)
 . Bestätigen → Erfolgstoast + Rückkehr zum Homescreen
