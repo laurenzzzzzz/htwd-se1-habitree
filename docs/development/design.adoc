@@ -10,8 +10,45 @@ Dieses Dokument beschreibt wesentliche Entwurfsentscheidungen auf Ebene der Komp
  
 == Ausgewählte Sichten
 //Entwurfsklassendiagramme, Sequenzdiagramme
+=== Sequenzdiagramme Regisitreigung
+image::Sequenzdiagramm_Registrierung.png[]
 
+=== Sequenzdiagramme Login
+image::Sequenzdiagramm_Anmeldung.png[]
 == Schnittstellen
 //Dokumentation oder Verweise auf Schnittstellen, z.B. REST-APIs
 
 == Datenmodell
+image::Datenmodell_Datenbank.png[]
+
+
+
+== Umsetzungen und Erweiterungen der Architektur durch User Stories:
+
+=== User Story 1: Automatische Anzeige des Tagesplanes
+
+[quote]
+____
+Als Tom möchte ich, dass mir beim Öffnen der App automatisch mein Tagesplan angezeigt wird, 
+damit ich sofort weiß, was als Nächstes ansteht.
+____
+
+==== Beschreibung:
+Diese User Story beschreibt, dass beim Öffnen der App automatisch der Tagesplan für den aktuellen Tag angezeigt wird. 
+Es sollen nur Habits berücksichtigt werden, die für heute geplant sind und eine Startzeit besitzen. 
+Der Nutzer soll unmittelbar nach App-Start eine chronologische Übersicht seiner heutigen Gewohnheiten erhalten.
+
+==== Akzeptanzkriterien:
+* Die App zeigt den Tagesplan direkt nach dem Öffnen.
+* Es werden nur Habits für den aktuellen Tag angezeigt.
+* Es werden nur Habits berücksichtigt, die eine Startzeit besitzen.
+* Wenn keine anstehenden Habits vorhanden sind, erscheint kein Tagesplan-Bereich.
+
+==== Zerlegung in Tasks
+
+* Task #170: Tagesplan bei App-Start anzeigen
+* Task #171: Filterlogik für geplante Habits
+* Task #172: Design der Tagesplan-Anzeige
+
+==== Link zum Sequenzdiagramm:
+link:plantuml/Sequenzdiagramm_AutomatischeAnzeige_Tagesplan.md[]
