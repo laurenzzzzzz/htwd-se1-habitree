@@ -37,7 +37,7 @@ include::../_includes/default-attributes.inc.adoc[]
 - Arbeit in festen Zyklen (Sprints) von jeweils 4 Wochen +
 - Weekly-Meetings (30–45 Minuten) zur Besprechung und Aufzeigung des aktuellen Arbeitsstatus der Mitglieder, Aufgabenverteilung und operativer Planung für die nächste Woche und Identifikation von Hindernissen +
 - Aufgaben werden als Issues und Tasks angelegt und in einem Git-Projekt mithilfe von Eigenschaften strukturiert, um eine Gesamtübersicht sowie eine iterationsbasierte und personengebundene Darstellung zu ermöglichen +
-- Aufgabenverteilung erfolgt zum großen Teil nach dem Prinzip der Freiwilligkeit zur Förderung eines positiven Arbeitsklimas in einem Team mit flachen Hierarchien  
+- Aufgabenverteilung erfolgt zum großen Teil nach dem Prinzip der Freiwilligkeit zur Förderung eines positiven Arbeitsklimas in einem Team mit flachen Hierarchien
 | Cross Functional Team | Unser Team besteht aus Personen verschiedener Fachbereiche, die gemeinsam an unserem Projekt zusammenarbeiten. Hierfür definierten wir für unsere Mitglieder Scrum- Rollen:  +
 **- Product Owner:**  +
 Dieser ließt sich in die Domäne ein und kommuniziert mit Stakeholdern.  +
@@ -46,7 +46,7 @@ Kommunikation mit Stakeholdern erfolgt mit dem Durchforsten von Kommentaren in F
 In unserem Team kümmert er maßgeblich sich um die Vision  sowie  um die User Stories.  +
 **- Scrum Master:** +
 Der Scrum Master organisiert und protokolliert die Meetings hilft dem Teammitgliedern bei der Konfliktbewältigung.  Dies bedeutet dass er alle wichtigen Dinge, welche in Meetings thematisiert wurden aufnimmt und anschließend in Discord oder ins Miro- Board schreibt, Meetingräume reserviert, Schwerpunkte festlegt und ständig vor allem mit den Entwicklern potenzielle Probleme bespricht. +
-Er ermöglicht ein effizientes Arbeiten innerhalb des Teams bei einer hohen Mitarbeiterzufriedenheit. + 
+Er ermöglicht ein effizientes Arbeiten innerhalb des Teams bei einer hohen Mitarbeiterzufriedenheit. +
 Seine Ergebnisse schreibt der Scrum Master im  project_plan.adoc nieder.  +
 Zudem unterstützt er auch den Product Owner in seinen Tätigkeiten.  +
 **-Entwickler- Team: **
@@ -55,7 +55,7 @@ Das Entwickler- Team ist bei uns in der Planung und der konkreten Umsetzung der 
 - Erstellung und Planung des Domänenmodelles +
 - Festlegung von User Stories (mit dem PO) und Absprache darüber welche nochmals konkretisiert werden müssen  +
 - Herausarbeiten von Task aus den User Stories  +
-- Programmierung eines Prototypen  +  
+- Programmierung eines Prototypen  +
 
 Sinn ist, dass jeder der Mitglieder seine Aufgaben genau kennt, versteht, dass er unersetzbar und wichtig für das Team ist und dementsprechend gemäß seiner spezialisierung Verantwortung übernimmt. Somit macht nicht jeder alles, da alle Rollen spezifische, ihnen zugeordnete Aufgaben besitzen.
 
@@ -75,8 +75,8 @@ Sinn ist, dass jeder der Mitglieder seine Aufgaben genau kennt, versteht, dass e
 - Konkrete Maßnahmen zur Verbesserung werden abgeleitet und im "Lessons Learned"-Teil der Dokumentation dokumentiert.  +
 - Wie alle weiteren Meetings wird die Retrospektive im Miro- Board aus Gründen der Transparenz im Team, jedem sichtbar gemacht.  +
 - Zum Ende der Retrospektive soll jedes Mitglied seine Hapiness bewerten. Hierfür haben wir einen Hapiness- Index eingeführt. Diesen protokollieren wir auch, um Entiwcklungen und Trends in den Emotionen einzelner Mitglieder sehen zu können.
-| Review von Ergebnissen | Am Ende jeder Iteration werden unsere bisherigen Ergebnisse Stakeholdern vorgestellt. Am Ende der zweiten Iteration wurden so z.B. unser Prototyp sowie Wireframes und Wireflows einer anderen Gruppe in einem Microsofft Teams- Meeting dargelegt. Wir holten uns über diesen Weg Feedback, Verbesserungsvorschläge und Ideen für weitere User Stories und Personas ein. Zudem wurde auch ein Meeting mit unseren Coach und den Professor durchgeführt um unseren bisherigen Arbeitsstand und Arbeitsphilosophie zu bewerten. Nach jedem Meeting mit weiteren Stakeholdern besprechen wir im Anschluss noch einmal kurz die Resultate, Protokollieren diese und leiten Aufgabe/Änderungen daran ab. 
-| Entwicklung | Unser Entwicklerteam arbeitet häufig zusammen und kommuniziert auch untereinander viel. Hierbei legt es individuelle Aufgaben nochmals fest und unterstützt sich gegenseitig auch bei Problemen. 
+| Review von Ergebnissen | Am Ende jeder Iteration werden unsere bisherigen Ergebnisse Stakeholdern vorgestellt. Am Ende der zweiten Iteration wurden so z.B. unser Prototyp sowie Wireframes und Wireflows einer anderen Gruppe in einem Microsofft Teams- Meeting dargelegt. Wir holten uns über diesen Weg Feedback, Verbesserungsvorschläge und Ideen für weitere User Stories und Personas ein. Zudem wurde auch ein Meeting mit unseren Coach und den Professor durchgeführt um unseren bisherigen Arbeitsstand und Arbeitsphilosophie zu bewerten. Nach jedem Meeting mit weiteren Stakeholdern besprechen wir im Anschluss noch einmal kurz die Resultate, Protokollieren diese und leiten Aufgabe/Änderungen daran ab.
+| Entwicklung | Unser Entwicklerteam arbeitet häufig zusammen und kommuniziert auch untereinander viel. Hierbei legt es individuelle Aufgaben nochmals fest und unterstützt sich gegenseitig auch bei Problemen.
 |===
 
 === Technische Praktiken
@@ -84,7 +84,7 @@ Sinn ist, dass jeder der Mitglieder seine Aufgaben genau kennt, versteht, dass e
 | *Kategorie* | *Praktik*
 | Ergebnisübertragung | Ziel ist eine Softwareentwicklung unter Nutzung einer versionsverwaltenden Plattform. Hierfür wird Git- Hub verwendet. Ergebnisse in den Dokumenten oder auch im Code werden per standardisierter Commits in das Repository übertragen. Die Vorlage für die Commits wurde im Miro- Board öffentlich jedem Mitglied zur verfügung gestellt. +
 Update/Delete/Add {Beschreibungstext(Deutsch)} (Datei)
-| Dokumentation 
+| Dokumentation
 | Projektdokumentation in Ascii Doc  +
 -  Strukturierte Gliederung und Unterteilung des Projektes gemäß seiner einzelnen Komponenten(vision.adoc, project_plan.adoc, glossary.adoc etc.) +
 - Gemeinsame Ablage aller Dokumente im Git Repository für eine sinnvolle und effiziente Versionierung  +
@@ -92,13 +92,13 @@ Update/Delete/Add {Beschreibungstext(Deutsch)} (Datei)
 |UI/UX- Design
 |Erstellung von Wireframes und darauf aufbauend Wireflows mit Hilfe von Figma und penpot durch das Entwicklerteam +
 - Bewertung der Wireframes und Wireflows durch das gesamte Team und durch Stakeholder in Reviews. +
-- Feedback wird systematisch dokumentiert, gruppiert und fließt in die Weiterentwicklung ein. 
+- Feedback wird systematisch dokumentiert, gruppiert und fließt in die Weiterentwicklung ein.
 | Fehler und Risikomangement
 | Initiale Dokumentation von Risiken in separaten Git Risk Board. Hierbei werden die Risiken möglichst genau defniert.  +
 - Das Risiko- Board wird bei Bedarf geupdatet und um neue Risiken ergänzt. Bestehende Risiken werden in regelmäßigen Abständen durchgangen und verwaltet hisnichtlich des Aufwandes und Einflusses.  +
 - Auftretende Fehler und Risiken werden direkt in Meetings besprochen und nach Dringlichkeit priorisiert +
 - Fehler und Bug-Fixes werden als eigene Tasks verwaltet und in die Iteration mit aufgenommen. (z.B.: Issues mit dem Label "Defect")
-| Entwicklungstechnologie 
+| Entwicklungstechnologie
 | Verwendung von Expo mit React Native zur plattformübergreifenden Entwicklung +
 - Entwicklung in Java Script und in Type- Script  +
 - Nutzung der Expo Go App zur Live Vorschau auf echter Hardware +
@@ -110,14 +110,14 @@ Update/Delete/Add {Beschreibungstext(Deutsch)} (Datei)
 
 === Definition of Ready
 [none]
-Die Definition of Ready beschreibt, wann ein Backlog Item als “bereit zur Umsetzung” gilt. Dazu müssen folgende Inhalte stimmen: 
+Die Definition of Ready beschreibt, wann ein Backlog Item als “bereit zur Umsetzung” gilt. Dazu müssen folgende Inhalte stimmen:
 
-- Die Akzeptanzkriterien sind klar formuliert 
-- Die Abhängigkeiten zu anderen Issues sind geklärt 
-- Story ist klein genug, um in einem Sprint abgeschlossen zu werden 
-- Das Team versteht die Issue/Story inhaltlich und technisch 
-- Design/Ui liegt vor, falls nötig 
-- Testkriterien oder Hinweise sind definiert 
+- Die Akzeptanzkriterien sind klar formuliert
+- Die Abhängigkeiten zu anderen Issues sind geklärt
+- Story ist klein genug, um in einem Sprint abgeschlossen zu werden
+- Das Team versteht die Issue/Story inhaltlich und technisch
+- Design/Ui liegt vor, falls nötig
+- Testkriterien oder Hinweise sind definiert
 
 
 
@@ -202,7 +202,7 @@ Problem: Frederic war Teil des Development-Teams, hatte jedoch bis zu seinem Aus
 | **Mitteilungen über unbeachteten Kommunikationskanal, was dazu führte, dass der Empfänger die Nachrichten nicht gelesen hatte und dadurch wichtige Sachen im Sprint- Review nicht dargestellt werden konnten**
 |- Vereinbarung von gemeinsamen Kommunikationskanälen, die allen Teammitgliedern bekannt sind, und von jedem regelmäßig genutzt werden und genutzt werden können. (z.B.: keine Plattformabhängigkeit)  +
 - Festlegung von wenigen, bestenfalls einen bis zwei festen Kommunikationswegen. In unserem Team nutzen wir WhatsApp für den täglichen Nachrichtenaustausch und Git-Hub für den Transfer umfangreicher Dokumente und Discord für Online- Meetings.  +
-| - Vorab- Festelegung der genutzten Kommunikationsplattformen und dessen zeitlicher Nutzung.  
+| - Vorab- Festelegung der genutzten Kommunikationsplattformen und dessen zeitlicher Nutzung.
 
 | **Unkenntniss über Reihenfolge des Arbeitens gemäß des Scrum- Frameworks und den Prinzipien der iterativen und agilen Entwicklung:**  +
 - Verzögerungen bei der Rollenbildung  +
@@ -219,7 +219,7 @@ Problem: Frederic war Teil des Development-Teams, hatte jedoch bis zu seinem Aus
     (1) Kleinere FRagen jeweils direkt im Anschluss an der Lehrveranstaltung  +
     (2) Größere Fragen und Anliegen nach Terminabsprache in einem längeren Gespräch
 - Ein guter und regelmäßiger Kontakt zu den Betreuern und Stakeholdern ist für ein erfolgreiches Projekt unabdingbar
-|Zu viele Bewertungsfelder und Kategorisierungsfelder in Git Hub für einzelne Issues/Boards. +
+| ** Zu viele Bewertungsfelder und Kategorisierungsfelder in Git Hub für einzelne Issues/Boards.** +
 Dies steigerte die Unübersichtlichkeit innerhalb des Git Hub- Projects, da zum Beispiel es für User Stories 3 Bewertungsfelder "Aufwand" gab.  +
 Es war unstrukturiert, wo welche Bewertung erfolgen sollte.
 | - Standardisierung aller Kategorien zur Bewertung von Labels  +
@@ -228,13 +228,16 @@ Es war unstrukturiert, wo welche Bewertung erfolgen sollte.
 |- Zu viele gleichzeitige Bewertungsfelder (z.B.: Kategorien für "Priorität", "Aufwand", "Größe"...) führten zu Unübersichtlichkeit bei der Pflege, Erstellund und Konkretisierung der Issues und User Stories.   +
 - Eigentliche Aussagen von Issues gingen dadurch unter. +
 - Bewertung der Issues haben mehr Arbeit mit sich gebracht als Vorteile.
+|**Mit dem Update von Expo SDK 53 auf 54 kam es zu erheblichen Unterschieden im Entwicklungs- und Build-Verhalten zwischen iOS und Android.**
+|Um die technische Komplexität zu reduzieren und die Stabilität sowie Planbarkeit des Projekts sicherzustellen, hat das Team beschlossen, die Android-Entwicklung vorerst zu streichen. Das Projekt wird ab diesem Zeitpunkt ausschließlich für iOS weitergeführt und optimiert.
+|Die Migration auf Expo SDK 54 hat gezeigt, dass Cross-Platform-Entwicklung trotz gemeinsamer Basis stark divergieren kann, sobald Plattformen unterschiedlich auf Framework-Änderungen reagieren. Für das Team wurde deutlich, dass der Aufwand zum Erhalt echter Plattformparität in keinem sinnvollen Verhältnis zu den verfügbaren Ressourcen steht.
 |===
 
 === Positive Ereignisse
 |===
 |*Ereignis* |*Erkenntnis*
-| Schnelle Teambildung 
-|Alle Teilnehmer außer Frederic haben sich sofort mit der Gruppe und der 
+| Schnelle Teambildung
+|Alle Teilnehmer außer Frederic haben sich sofort mit der Gruppe und der
 Gruppendynamik identifiziert und fühlten sich zur Gruppe zugehörig.  +
 Es entstand ein freundschaftliches Verhältnis auf Augenhöhe und alle Mitglieder sind gleichberechtigt.  +
 Durch die schnelle Teambildung konnten fast alle Mitglieder gleich schon von Beginn an harmonisch zusammenarbeiten ohne größere Konflikte.
@@ -243,8 +246,8 @@ Durch die schnelle Teambildung konnten fast alle Mitglieder gleich schon von Beg
 | Ist- Standsanalyse und Befragung von Coach und Professor führten dazu, dass die einzelnen Mitglieder ihren eigenen Wissensstand reflektierten und aktiv sich Wissen über das agile Projektmanagement aneigneten.  +
 Schlussendlich führte dies dann dazu, dass alle Beteiligten erkannten, dass die Regelungen hilfreich und sinnvoll sind und diese dann zeitnah umsetzten.
 | Wenn man Probleme hat, sollte man sich nicht scheuen nachzufragen.  +
-Es ist außerdem sinnvoll auf dem Wissens- und Erfahrungsschatz von Experten prinzipiell aufzubauen. 
-| Erfolgreiches Einbringen eigener Ideen  zur effizienten Modifizierung 
+Es ist außerdem sinnvoll auf dem Wissens- und Erfahrungsschatz von Experten prinzipiell aufzubauen.
+| Erfolgreiches Einbringen eigener Ideen  zur effizienten Modifizierung
 des Projektes. Projekt  enthält eigene Gedanken und Ideen und ist somit hinsichtlich der Gestaltung und Arbeitsweise individuell.  +
 - Einführung unterschiedlicher Labels für Aufgaben auf Git Hub um klar zwschen den durch User Stories entstehenden Task und den vom Professor vorgegebenen Iterationsaufgaben zu differenzieren +
 -  Flexible Kommunikationswege:   +
