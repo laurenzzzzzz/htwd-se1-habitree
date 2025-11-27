@@ -3,7 +3,7 @@
 {revdate}
 :project-name: Habitree
 :project-system-name: Habitree
-:authors: Laurenz Born [laurenz.born@stud.htw-dresden.de](mailto:laurenz.born@stud.htw-dresden.de); Alexander Chlebowski [alexander.chlebowski@stud.htw-dresden.de](mailto:alexander.chlebowski@stud.htw-dresden.de); Leonhard Hermann [leonhard.hermann@stud.htw-dresden.de](mailto:leonhard.hermann@stud.htw-dresden.de); Johann Schmidt [johann.schmidt@stud.htw-dresden.de](mailto:johann.schmidt@stud.htw-dresden.de); Kimi Jerke [kimi.jerke@stud.htw-dresden.de](mailto:kimi.jerke@stud.htw-dresden.de); Jannes Lehmann [s86317@htw-dresden.de](mailto:s86317@htw-dresden.de)
+:authors: Laurenz Born [laurenz.born@stud.htw-dresden.de](mailto:laurenz.born@stud.htw-dresden.de); Alexander Chlebowski [alexander.chlebowski@stud.htw-dresden.de](mailto:alexander.chlebowski@stud.htw-dresden.de); Leonhard Hermann [leonhard.hermann@stud.htw-dresden.de](mailto:leonhard.hermann@stud.htw-dresden.de); Johann Schmidt [johann.schmidt@stud.htw-dresden.de](mailto:johann.schmidt@stud.htw-dresden.de); Kimi Jerke [kimi.jerke@stud.htw-dresden.de](mailto:kimi.jerke@stud.htw-dresden.de); Jannes Lehmann [s86317@htw-dresden.de](mailto:s86317@htw-dresden.de); 
 :author: Maurice Harnisch
 :email: [s87128@htw-dresden.de](mailto:s87128@htw-dresden.de)
 :authorinitials: MH
@@ -333,27 +333,27 @@ visuell ansprechende Erfahrung. Sie schafft Verbindung zwischen digitalem Verhal
 .**Habit anlegen (vordefiniert)**
 [arabic]
 . Homescreen -> *+ Neues Habit*
-. Vorlagenliste → Vorlage wählen
+. Vorlagenliste -> Vorlage wählen
 . Parameter setzen (z. B. Ziel/Schrittzahl, Häufigkeit, Erinnerung)
-. Bestätigen → Erfolgstoast + Rückkehr zum Homescreen
+. Bestätigen -> Feedback + Rückkehr zum Homescreen
 
 .**Eigenes Habit anlegen**
 [arabic]
-. Homescreen → *+ Neues Habit* → *Eigenes Habit*
+. Homescreen -> *+ Neues Habit* -> *Eigenes Habit*
 . Titel, Kategorie, Messgröße, Zielwert, Häufigkeit definieren
 . Erinnerung konfigurieren (Uhrzeit, Tage, stille Zeiten)
-. Bestätigen → Erfolgstoast + Onboarding‑Tip (Editierbarkeit)
+. Bestätigen -> Erfolgstoast + Onboarding‑Tip (Editierbarkeit)
 
 .**Habit abtrainieren (Rauchfrei‑Beispiel)**
 [arabic]
-. Detailansicht Habit → *Abtrainieren starten*
+. Detailansicht Habit -> *Abtrainieren starten*
 . Ziel: Reduzierung/Null; tägliche Erfassung (Zig./Tag)
 . Visualisierung: Trend/Progress/Streak
 . Gamification: Badges für Meilensteine; Relapse‑Handling mit „Weitermachen statt Reset“
 
 .**Öffentliches Profil aktivieren**
 [arabic]
-. Profil → Privatsphäre → *Profil öffentlich* (Opt‑in mit Erläuterung)
+. Profil -> Privatsphäre -> *Profil öffentlich* (Opt‑in mit Erläuterung)
 . Auswahl: Sichtbare Felder + Username
 . Teilen-Link generieren
 
@@ -416,7 +416,7 @@ visuell ansprechende Erfahrung. Sie schafft Verbindung zwischen digitalem Verhal
 
 === Gamification
 
-* Streak‑Badges (7/14/30/66 Tage), XP‑Leiste, Mikro‑Animationen beim Erreichen von Zielen
+* Streak‑Badges (11,22,33,44,55 & 66 Tage), XP‑Leiste, Mikro‑Animationen beim Erreichen von Zielen
 * Relapse‑Modell: „Rückfall ≠ Reset“ (Trend beibehalten, sanfte Hinweise)
 
 === Notifications
@@ -431,7 +431,7 @@ visuell ansprechende Erfahrung. Sie schafft Verbindung zwischen digitalem Verhal
 == Technischer Überblick (Kurz)
 
 * Frontend: Expo/React Native; State‑Management (z. B. Zustand/Redux) nach Bedarf
-* Backend: Node.js/Express; REST; Auth: Firebase; DB: PostgreSQL via Prisma ORM
+* Backend: Node.js/Express; REST; DB: PostgreSQL via Prisma ORM
 * Observability: Log‑Aggregation; Crashlytics; Performance‑Metriken (TTI, CLS analog)
 
 // =====================================================================
@@ -455,7 +455,7 @@ visuell ansprechende Erfahrung. Sie schafft Verbindung zwischen digitalem Verhal
 // =====================================================================
 == Risiken & Annahmen
 
-* Abhängigkeit vom HTW‑Netz/VPN (Verfügbarkeit/UX‑Risiko) ⇒ *Empfehlung:* Offline‑First + Public Endpoints mit Auth
+* Abhängigkeit vom HTW‑Netz/VPN (Verfügbarkeit/UX‑Risiko) => *Empfehlung:* Offline‑First + Public Endpoints mit Auth
 * Social Features erfordern Moderation/Reporting in späteren Phasen
 
 // =====================================================================

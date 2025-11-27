@@ -141,32 +141,32 @@ Die Definition of Done legt fest, wann ein Backlog Item als vollständig abgesch
 
 === Frontend (Mobile App)
 
-- Die App wird entwickelt und bereitgestellt für die Nutzung über die **Expo Go App**.
-- Der Start erfolgt durch das Scannen eines **QR-Codes** vom lokalen Entwicklungsserver.
-- Die Nutzung ist ausschließlich im **Netzwerk der Hochschule** (oder über eduVPN) möglich.
-- Diese Methode dient zur einfachen Demonstration und schnellen Iteration während des Semesters.
-- Es ist **keine Veröffentlichung in öffentlichen Stores** (App Store, Play Store) vorgesehen.
+- Die App wird entwickelt und bereitgestellt für die Nutzung über die **Expo Go App**
+- Der Start erfolgt durch das Scannen eines **QR-Codes** vom lokalen Entwicklungsserver
+- Die Nutzung ist ausschließlich im **Netzwerk der Hochschule** (oder über eduVPN) möglich
+- Diese Methode dient zur einfachen Demonstration und schnellen Iteration während des Semesters
+- Es ist **keine Veröffentlichung in öffentlichen Stores** (App Store, Play Store) vorgesehen
 
 === Backend (API-Server)
 
-- Das Backend wird online auf einem **bereitgestellten Windows Server der HTW** gehostet.
-- Die Deployment-Aktualisierungen erfolgen manuell oder automatisiert über **GitHub**.
-- Die API ist **öffentlich erreichbar**, solange man sich im Hoschulnetz der HTW befindet.
-- Der Server bleibt **bis zum Ende des Wintersemesters 2026** erreichbar.
+- Das Backend wird online auf einem **bereitgestellten Windows Server der HTW** gehostet
+- Die Deployment-Aktualisierungen erfolgen manuell oder automatisiert über **GitHub**
+- Die API ist **öffentlich erreichbar**, solange man sich im Hoschulnetz der HTW befindet
+- Der Server bleibt **bis zum Ende des Wintersemesters 2026** erreichbar
 
 === Datenbank
 
-- Die **Datenbank** wird ebenfalls auf dem bereitgestellten Windows Server der HTW bis zum Projektabschluss (Wintersemester 2026) gehostet.
+- Die **Datenbank** wird ebenfalls auf dem bereitgestellten Windows Server der HTW bis zum Projektabschluss (Wintersemester 2026) gehostet
 
 === Rollback und Wartung
 
-- Da es sich um eine interne Projektumgebung handelt und keine produktive Veröffentlichung erfolgt, sind **keine komplexen Rollback-Mechanismen** notwendig.
-- Fehlerbehebungen erfolgen durch direkte Codeänderungen und sofortiges Testen über die Entwicklungsumgebung.
+- Da es sich um eine interne Projektumgebung handelt und keine produktive Veröffentlichung erfolgt, sind **keine komplexen Rollback-Mechanismen** notwendig
+- Fehlerbehebungen erfolgen durch direkte Codeänderungen und sofortiges Testen über die Entwicklungsumgebung
 
 === Verfügbarkeit
 
-- Die App ist während der Projektlaufzeit **jederzeit über den QR-Code in der Expo Go App** nutzbar.
-- Das Backend bleibt bis **Ende des Wintersemesters 2026** aktiv und wird danach abgeschaltet.
+- Die App ist während der Projektlaufzeit **jederzeit über den QR-Code in der Expo Go App** nutzbar
+- Das Backend bleibt bis **Ende des Wintersemesters 2026** aktiv und wird danach abgeschaltet
 
 
 == Diskussion zu Vorgehensweisen
@@ -179,49 +179,50 @@ Die Definition of Done legt fest, wann ein Backlog Item als vollständig abgesch
 |**Ausstieg aus der Gruppe von Frederic Egle (Developer)**  +
 Problem: Frederic war Teil des Development-Teams, hatte jedoch bis zu seinem Austritt keine Beiträge geleistet.
 | - Gruppenberatung in der ersten Retrospektive  +
-- Neuverteilung von Frederics Aufgaben auf andere Teammitglieder, besonders bezogen auf das Development- Team  +
+- Neuverteilung von Frederics Aufgaben auf andere Teammitglieder, besonders bezogen auf das Development-Team  +
 - Ist- Stand- Analyse, von Frederics bisherigem Arbeitsstand
 | - Ausstieg eines Gruppenmitgliedes ist nicht unmöglich  +
 - Es entsteht Mehrarbeit für die verbleidenden Gruppenmitglieder, insbesonders die Entwickler  +
-- Es müssen zeitliche Puffer existieren in der taktischen Planung um den Erfolg des Projektes nicht zu gefährden und um in den angegebenen Zeiträumen alle Aufgaben abarbeiten zu können +
-- Strategische Planung im Vorhinein und Abwägung potenzieller Risiken vor allem bei der Teamstruktur sind unabdingbar. Hierfür eignet sich eine Visualisierung im Git Hub Risk- Board.
+- In der taktischen Planung müssen zeitliche Puffer existieren um den Erfolg des Projektes nicht zu gefährden und um in den angegebenen Zeiträumen alle Aufgaben abarbeiten zu können +
+- Strategische Planung im Vorhinein und Abwägung potenzieller Risiken vor allem bei der Teamstruktur sind unabdingbar. Hierfür eignet sich eine Visualisierung im GitHub Risk- Board.
 - Wöchentliche  Meetings mit kurzer Arbeitsstandangabe und nächster Schritte sind elementar um zu sehen dass jeder Mitarbeiter effizient arbeitet und das Projekt nicht gefährdet wird.
 |**Terminfindung, vor allem bei außerplanmäßigen Meetings ist schwer**  | - Termine zeitig und langfristig planen  +
-- Erinnerungen nochmals im Vorhinein absetzen (z.B.: über Whats- App)  +
-- Nutzen von Abstimmungen oder Ereignis- Objekten  +
-- Einführung eines Team- Kalenders, z.B.: im Miro Board
+- Erinnerungen nochmals im Vorhinein absetzen (z.B.: über WhatsApp)  +
+- Nutzen von Abstimmungen oder Ereignis-Objekten  +
+- Einführung eines Team-Kalenders, z.B.: im Miro Board
 | - Je größer die Gruppe ist, desto langfristiger muss die Planung erfolgen.  +
 -  Nicht jeder Beteiligte muss in jedem Meeting zwangsläufig anwesend sein. So reicht es z.B.: wenn das Sprint- Review nur von 3 Personen durchgeführt wird. Hierbei ist wichtig dass die Mitarbeitenden sich abwechseln, damit jeder Mitarbeiter in einem ausgewogenen Maße entlastet werden kann, aber dennoch seine Bedeutung für die Gruppe erkennt. Dies führt dazu, dass alle Akteure sich mit der Gruppe, der Aufgabe und dem Projekt identifizieren können.  +
 - Es braucht einen Organisator, der alle Meetings und Treffen sowohl innerhalb der Gruppe, als auch zwischen den Mitarbeitenden und weiteren Stakeholdern plant und organisiert. Dies ist im Scrum- Framework der Scrum Master.  +
 
 | **Konflikte innerhalb des Teams hinsichtlich Arbeitsverteilung, Engagement und Verlässlichkeit**
-| - Regelmäßige kurze Standup- Meetings, wo jeder Mitarbeitende seine Arbeitsstand, Herausforderungen und Probleme der letzten und der kommenden Woche dem Team mitteilt.  +
-- Bei Konflikten ist Kommunikation das A und O. Dabei ist es wichtig die Konflikte bereits in Ihrer Entstehung anzusprechen und zu charakterisieren. Sonst stauen diese sich immer weiter auf und werden schwerer lösbar. Als Negativbeispiel lässt sich hier ebenfalls unser ehemaliger Entwickler Frederic anbringen.   +
+| - Regelmäßige kurze Standup-Meetings, wo jeder Mitarbeitende seine Arbeitsstand, Herausforderungen und Probleme der letzten und der kommenden Woche dem Team mitteilt.  +
+- Bei Konflikten ist die Kommunikation essentiell. Dabei ist es wichtig, die Konflikte bereits in Ihrer Entstehung anzusprechen und zu charakterisieren. Sonst stauen diese sich immer weiter auf und werden schwerer lösbar. Als Negativbeispiel lässt sich hier ebenfalls unser ehemaliger Entwickler Frederic anbringen.   +
 |- Jeder Akteur des Teams sollte erkennen, dass er ein wichtiger und unersetzlicher Bestandteil des Teams ist, welchen Vertrauen und Wertschätzung entgegengebracht wird. Dies schafft ein Zusammenheitsgefühl, gegenseitigen Respekt, Unterstützung und Motivationssteigerung.  +
 - Bewältigungen von Konflikten haben auch positive Auswirkungen, da dadurch der Gruppenzusammenhalt wächst und neue Strategien entwickelt werden können. Somit können Konflikte auch indirekt die Gruppe voran bringen.
 
 | **Mitteilungen über unbeachteten Kommunikationskanal, was dazu führte, dass der Empfänger die Nachrichten nicht gelesen hatte und dadurch wichtige Sachen im Sprint- Review nicht dargestellt werden konnten**
 |- Vereinbarung von gemeinsamen Kommunikationskanälen, die allen Teammitgliedern bekannt sind, und von jedem regelmäßig genutzt werden und genutzt werden können. (z.B.: keine Plattformabhängigkeit)  +
-- Festlegung von wenigen, bestenfalls einen bis zwei festen Kommunikationswegen. In unserem Team nutzen wir WhatsApp für den täglichen Nachrichtenaustausch und Git-Hub für den Transfer umfangreicher Dokumente und Discord für Online- Meetings.  +
-| - Vorab- Festelegung der genutzten Kommunikationsplattformen und dessen zeitlicher Nutzung.  
+- Festlegung von wenigen, bestenfalls einen bis zwei festen Kommunikationswegen. In unserem Team nutzen wir WhatsApp für den täglichen Nachrichtenaustausch und GitHub für den Transfer umfangreicher Dokumente und Discord für Online-Meetings.  +
+| - Vorab-Festelegung der genutzten Kommunikationsplattformen und dessen zeitlicher Nutzung.  
 
 | **Unkenntniss über Reihenfolge des Arbeitens gemäß des Scrum- Frameworks und den Prinzipien der iterativen und agilen Entwicklung:**  +
 - Verzögerungen bei der Rollenbildung  +
 - Neuverteilungen von Rollen  +
 - Fehlende Koordination
 | - Studieren der empfohlenen Fachliteratur   +
-- Nutzung aller Hinweise und fortführender Materialien (Z.B.: Anschauen des vom Professors empfohlenen YouTube- Videos )  +
+- Nutzung aller Hinweise und fortführender Materialien (Z.B.: Anschauen des vom Professors empfohlenen YouTube-Videos )  +
 - Konstanter Besuch der Vorlesungen und Praktika  +
 - Nacharbeitung der Lehrveranstaltungen und des behandelten Stoffes  +
 - Kontaktaufnahme bei Fragen zu Professor Anke und Herrn Zirkelbach
 | - Ein Regelmäßiger Besuch der Lehrveranstaltungen schafft das Fundament und gibt Reihenfolge und Inhalt der zu erledigenden Aufgaben an.  +
 - Besuch der Praktika vermittelt anhand eines kleinen Cocktailversand- Fallbeispieles grundlegendes praktisch anwandbares Wissen.  +
 - Klärung von ungelösten Fragen in persönlichen Gesprächen:  +
-    (1) Kleinere FRagen jeweils direkt im Anschluss an der Lehrveranstaltung  +
+    (1) Kleinere Fragen jeweils direkt im Anschluss an der Lehrveranstaltung  +
     (2) Größere Fragen und Anliegen nach Terminabsprache in einem längeren Gespräch
 - Ein guter und regelmäßiger Kontakt zu den Betreuern und Stakeholdern ist für ein erfolgreiches Projekt unabdingbar
-|Zu viele Bewertungsfelder und Kategorisierungsfelder in Git Hub für einzelne Issues/Boards. +
-Dies steigerte die Unübersichtlichkeit innerhalb des Git Hub- Projects, da zum Beispiel es für User Stories 3 Bewertungsfelder "Aufwand" gab.  +
+| Zu viele Bewertungsfelder und Kategorisierungsfelder in Git 
+Hub für einzelne Issues/Boards. +
+Dies steigerte die Unübersichtlichkeit innerhalb des GitHub-Projects, da zum Beispiel es für User Stories 3 Bewertungsfelder "Aufwand" gab.  +
 Es war unstrukturiert, wo welche Bewertung erfolgen sollte.
 | - Standardisierung aller Kategorien zur Bewertung von Labels  +
 - Abstimmung im Team welche Kategorien wichtig sind und welche eher weniger.  +
@@ -247,9 +248,9 @@ Schlussendlich führte dies dann dazu, dass alle Beteiligten erkannten, dass die
 Es ist außerdem sinnvoll auf dem Wissens- und Erfahrungsschatz von Experten prinzipiell aufzubauen. 
 | Erfolgreiches Einbringen eigener Ideen  zur effizienten Modifizierung 
 des Projektes. Projekt  enthält eigene Gedanken und Ideen und ist somit hinsichtlich der Gestaltung und Arbeitsweise individuell.  +
-- Einführung unterschiedlicher Labels für Aufgaben auf Git Hub um klar zwschen den durch User Stories entstehenden Task und den vom Professor vorgegebenen Iterationsaufgaben zu differenzieren +
+- Einführung unterschiedlicher Labels für Aufgaben auf GitHub um klar zwschen den durch User Stories entstehenden Task und den vom Professor vorgegebenen Iterationsaufgaben zu differenzieren +
 -  Flexible Kommunikationswege:   +
-(1) Git-Hub für Austausch größere Dokumente und Aufgabenverteilung  +
+(1) GitHub für Austausch größere Dokumente und Aufgabenverteilung  +
 (2) Whats- App für spontane Kommuikation und Meetingplanung  +
 (3) Miro- Board für Festlegung von Zufriedenheit nach Meetings und Templates (z.B.: für Git Commit- Messages)  +
 - Einführung Hapiness- Index für alle Mitarbeiter nach Retrospektiven und transparente Darstellung im Miro- Board.
