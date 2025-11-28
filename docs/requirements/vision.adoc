@@ -108,7 +108,7 @@ auf eine digitale, leichtgewichtige und motivierende Nutzungserfahrung, die den 
 - Verlaufsgrafiken
 | 27.06.2025
 
-| Schnelles Erfassen und Verwalten von Gewohnheiten
+| *Schnelles Erfassen und Verwalten von Gewohnheiten*
 | Hoch
 |- Einfaches Anlegen/Bearbeiten +
 - flexible Wiederholungsintervalle +
