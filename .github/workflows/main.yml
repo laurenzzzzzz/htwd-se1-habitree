@@ -35,5 +35,5 @@ jobs:
         cd src/habitree
         npm install expo  # Install Expo for the first time
         npx expo install --fix  # Install and update all packages
-        npx expo start --tunnel --go --clear  # Start the app
+        npx expo start --go --clear  # --tunnel Start the app
 
