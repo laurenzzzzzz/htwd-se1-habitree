@@ -2,17 +2,6 @@
 :project-name: Habitree
 :project-system-name: Habitree
 :authors: Laurenz Born [laurenz.born@stud.htw-dresden.de](mailto:laurenz.born@stud.htw-dresden.de); Alexander Chlebowski [alexander.chlebowski@stud.htw-dresden.de](mailto:alexander.chlebowski@stud.htw-dresden.de); Leonhard Hermann [leonhard.hermann@stud.htw-dresden.de](mailto:leonhard.hermann@stud.htw-dresden.de); Johann Schmidt [johann.schmidt@stud.htw-dresden.de](mailto:johann.schmidt@stud.htw-dresden.de); Kimi Jerke [kimi.jerke@stud.htw-dresden.de](mailto:kimi.jerke@stud.htw-dresden.de); Jannes Lehmann [s86317@htw-dresden.de](mailto:s86317@htw-dresden.de); Maurice Harnisch [s87128@htw-dresden.de](mailto:s87128@htw-dresden.de)
-:author: Maurice Harnisch
-:email: [s87128@htw-dresden.de](mailto:s87128@htw-dresden.de)
-:authorinitials: MH
-:revnumber: 1.0
-:revdate: {docdate} {doctime}
-:toc: left
-:toclevels: 3
-:sectnums:
-:sectanchors:
-:icons: font
-:imagesdir: ./images
 
 include::../_includes/default-attributes.inc.adoc[]
 
