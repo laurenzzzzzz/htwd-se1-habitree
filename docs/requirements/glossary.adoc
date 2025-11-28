@@ -12,21 +12,31 @@ In diesem Dokument werden die wesentlichen Begriffe aus dem Anwendungsgebiet (Fa
 [%header]
 |===
 | Begriff | Definition und Erläuterung | Synonyme
-//| Kommissionierung | Bereitstellung von Waren aus einem Lager entsprechend eines Kundenauftrags | (keine)
-| Habit  | Eine wiederkehrende Gewohnheit, welche in regelmäßigen Abständen praktiziert wird. Häufig ist diese bereits im Menschlichen Unterbewusstsein fest verankert und wird somit automatisiert ausgeführt. | Routine, Gewohnheit
-| Habit Tracker | Eine Anwendung zur systematischen Nachverfolgung und Dokumentation der Habits. Nutzer sollten sowohl in der Lage sein gute Gewohnheiten anzutrainieren als auch sich schlechte Habits abzutrainieren. Ziel ist eine Selbstreflexion und Verhaltensänderung bei dem User herbeizuführen.  |  Gewohnheits- Verfolger, Gewohnheits- Aufzeichner, Gewohnheits- Tracker
-| Habit Stacking | Technik, bei welcher neue Gewohnheiten an bestehende angeknüpft werden. Es entsteht dabei eine Form der Kopplung zwischen den Gewohnheiten. | Verknüpfen von Gewohnheiten
 
-| Streak | Anzahl der aufeinanderfolgenden Tage, an denem eine Gewohnheit durch den entsprechenden Nutzer erfolgreich durchgeführt wurde. | Serie, Kette
-| Streak Tracking  | Visualisierung kontinuierlicher Durchführung. (z.B.: Erreichen des 10- Tage Zieles.). | Erfolgsserie
-| Reminder | Notifikation, die dem User an die Ausführung seiner Habits erinnert. | Benachrichtigung, Erinnerung
-| Gamification | Spielerische und Nutzerabhängige Fortschrittsvisualisierung. | Spielifizierung
-| Recovery Mode | Modus/Funktion zur Reduktion von Aufgaben bei Stress/Überforderung. | Erholungsmodus
-| Season Challenge | Extra Herausforderungen für bestimmte Zeiträume. | Saisonale Herausforderungen
+| Achievements - View | Übersicht aller antrainierten Habits | Achievements
+| Automatic Behavior | Handlungen/Gewohnheiten, die ohne bewusstes Nachdenken ablaufen, da sie bereits als Gewohnheit geprägt sind. | Routineverhalten
+| Belohnung | visuelle Darstellung der Erfolge zur Motivation des Nutzers | (keine)
+| Calendar - View | Kalenderansicht, in der Habits farbig markiert werden | Calendar
+| Dashboard | Übersicht der Kennzahlen zur Fortschrittskontrolle | Homescreen
 | Daily Routine | Fester Ablauf von wiederkehrenden Tätigkeiten im Alltag. | Alltagsschema, Gewohnheitsmuster
+| Eintrag | Habit, der am aktuellen Tag erledigt werden soll | Habit
+| Frequency | Häufigkeit eines Habits bezogen auf Tag/Woche/Monat/Jahr | (keine)
+| Gamification | Spielerische und Nutzerabhängige Fortschrittsvisualisierung. | Spielifizierung
+| Habit | Eine wiederkehrende Gewohnheit, welche in regelmäßigen Abständen praktiziert wird. Häufig ist diese bereits im menschlichen Unterbewusstsein fest verankert und wird somit automatisiert ausgeführt. | Routine, Gewohnheit
+| Habit Stacking | Technik, bei welcher neue Gewohnheiten an bestehende angeknüpft werden. Es entsteht dabei eine Form der Kopplung zwischen den Gewohnheiten. | Verknüpfen von Gewohnheiten
+| Habit Tracker | Eine Anwendung zur systematischen Nachverfolgung und Dokumentation der Habits. Nutzer sollten sowohl in der Lage sein, gute Gewohnheiten anzutrainieren als auch sich schlechte Habits abzutrainieren. Ziel ist eine Selbstreflexion und Verhaltensänderung bei dem User herbeizuführen. | Gewohnheits- Verfolger, Gewohnheits- Aufzeichner, Gewohnheits- Tracker
+| Habitree - View | Visualisierung der Fortschritte als wachsender Baum pro Habit | Tree
+| Homescreen | Anzeige aller Habits und Übersicht über wichtigste Statistiken | (keine)
+| Offline-Funktion | Handlungen, die auch ohne Verbindung zum Internet ausgeführt werden können | (keine)
+| Performance | Gemessene Leistung eines Nutzers in Bezug auf bestimmte Aufgaben und Abzeichen | (keine)
+| Positive Verstärkung | Methode, bei der erwünschtes Verhalten durch positive Reize oder Belohnungen gefördert und gefestigt wird | (keine)
+| Profile - View | Profilansicht, in der Persönliche Informationen geändert und gelöscht werden können sowie Design-Anpassungen vorgenommen werden können | (keine)
+| Recovery Mode | Modus/Funktion zur Reduktion von Aufgaben bei Stress/Überforderung. | Erholungsmodus
+| Reminder | Notifikation, die den User an die Ausführung seiner Habits erinnert. | Benachrichtigung, Erinnerung
+| Season Challenge | Extra Herausforderungen für bestimmte Zeiträume. | Saisonale Herausforderungen
 | Self-control | Fähigkeit, Impulse zu steuern und langfristige Ziele über kurzfristige Wünsche zu stellen. | Selbstdiziplin, Impulskontrolle
-| Automatic Behavior | Handlungen/Gewohnheiten die ohne bewusstes Nachdenken ablaufen, da sie bereits durch als Gewohnheit geprägt sind. | Routineverhalten
-
+| Streak | Anzahl der aufeinanderfolgenden Tage, an denen eine Gewohnheit durch den entsprechenden Nutzer erfolgreich durchgeführt wurde. | Serie, Kette
+| Streak Tracking | Visualisierung kontinuierlicher Durchführung. (z.B.: Erreichen des 10-Tage Zieles.). | Erfolgsserie
 |===
 
 
@@ -41,42 +51,32 @@ In diesem Dokument werden die wesentlichen Begriffe aus dem Anwendungsgebiet (Fa
 |===
 
 == Verzeichnis der Datenstrukturen
-== Verzeichnis der Datenstrukturen
 
 [%header]
 |===
-| Datenstruktur | Beschreibung | Attribute | Typ | Gültigkeitsregeln
+| Bezeichnung | Definition | Format | Gültigkeitsregeln | Aliase
 
-| User | Repräsentiert eine:n registrierte:n Nutzer:in der App. | userId | String | Wird automatisch vergeben
-| | | email | String | Muss ein @-Zeichen und einen Punkt enthalten
-| | | password | String | Nicht NULL
-| | | username | String | Nicht NULL
-| | | createdAt | DateTime | Format: YYYY-MM-DD hh:mm:ss
+| User | Repräsentiert eine:n registrierte:n Nutzer:in der App. | Objekt (id, email, username, passwordHash, createdAt) | 
+email ist einzigartig,
+passwordHash ist Pflichtfeld (Nicht NULL),
+| Nutzer, App-Nutzer
 
-| Habit | Eine vom User angelegte Gewohnheit, die regelmäßig verfolgt wird. | habitId | Int | Primary Key
-| | | userId | String (FK) | Referenziert User.userId
-| | | name | String | Nicht NULL
-| | | description | String | Optional
-| | | frequency | String | Nicht NULL (daily, weekly, monthly)
-| | | createdAt | DateTime | Format: YYYY-MM-DD hh:mm:ss
+| PredefinedHabit | Eine Vorlage für ein Habit, die allen Usern zur Auswahl steht. | Objekt (id, name, description, frequency) |
+name ist einzigartig (`@unique`), description und frequency sind Pflichtfelder. | Vorlagen-Habit, Master-Habit
 
-| HabitEntry | Einzelner Tagebucheintrag zur Durchführung eines Habits. | entryId | Int | Primary Key
-| | | habitId | Int (FK) | Referenziert Habit.habitId
-| | | date | Date | NOT NULL
-| | | status | Boolean | Standard: false
-| | | note | String | Optional
+| Habit | Eine vom User angelegte oder von einer Vorlage abgeleitete Gewohnheit, die regelmäßig verfolgt wird. | Objekt (id, userId, predefinedHabitId, name, description, frequency, createdAt) |
+name, description und frequency sind Pflichtfelder
+| Gewohnheit, Ziel
 
-| Achievement | Repräsentiert erreichte Meilensteine oder Auszeichnungen. | achievementId | Int | Primary Key
-| | | userId | String (FK) | Referenziert User.userId
-| | | title | String | Nicht NULL
-| | | description | String | Optional
-| | | achievedAt | DateTime | NOT NULL
+| HabitEntry | Einzelner Tagebucheintrag zur Durchführung eines Habits. | Objekt (id, habitId, date, status, note, userId) | 
+date ist Pflichtfeld,
+Die Kombination aus `habitId` und `date` ist einzigartig (`@@unique`),
+note ist optional
+| Eintrag, Log
 
-| Quote | Enthält motivierende Sprüche, die im System angezeigt werden. | quoteId | Int | Primary Key
-| | | text | String | Nicht NULL
-| | | author | String | Optional
+| Quote | Enthält motivierende Sprüche, die im System angezeigt werden. | Objekt (id, quote) | 
+quote ist Pflichtfeld | Zitat, Spruch
 |===
-
 
 
 == Domänenmodell
