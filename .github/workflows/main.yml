@@ -18,7 +18,7 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '18.x'  # Set to Node.js version >= 18
+        node-version: '20.x'  # Set to Node.js version >= 18
 
     # Cache node_modules for faster builds (optional)
     - name: Cache node_modules
