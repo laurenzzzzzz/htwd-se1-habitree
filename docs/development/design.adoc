@@ -1,45 +1,45 @@
 = Design: {project-name}
-Laurenz Born <laurenz.born@stud.htw-dresden.de>; Alexander Chlebowski <alexander.chlebowski@stud.htw-dresden.de>; Leonhard Hermann <leonhard.hermann@stud.htw-dresden.de>; Johann Schmidt <johann.schmidt@stud.htw-dresden.de>; Kimi Jerke <kimi.jerke@stud.htw-dresden.de>; Jannes Lehmann <s86317@htw-dresden.de>
+Laurenz Born [laurenz.born@stud.htw-dresden.de](mailto:laurenz.born@stud.htw-dresden.de); Alexander Chlebowski [alexander.chlebowski@stud.htw-dresden.de](mailto:alexander.chlebowski@stud.htw-dresden.de); Leonhard Hermann [leonhard.hermann@stud.htw-dresden.de](mailto:leonhard.hermann@stud.htw-dresden.de); Johann Schmidt [johann.schmidt@stud.htw-dresden.de](mailto:johann.schmidt@stud.htw-dresden.de); Kimi Jerke [kimi.jerke@stud.htw-dresden.de](mailto:kimi.jerke@stud.htw-dresden.de); Jannes Lehmann [s86317@htw-dresden.de](mailto:s86317@htw-dresden.de)
 {localdatetime}
 include::../_includes/default-attributes.inc.adoc[]
-// Platzhalter für weitere Dokumenten-Attribute
-
 
 == Zweck
 Dieses Dokument beschreibt wesentliche Entwurfsentscheidungen auf Ebene der Komponenten und Module. Diese dienen als Vorgabe für die Implementierung und erleichtern das Systemverständnis.
- 
-== Ausgewählte Sichten
-//Entwurfsklassendiagramme, Sequenzdiagramme
-=== Sequenzdiagramme Regisitreigung
-image::Sequenzdiagramm_Registrierung.png[]
 
-=== Sequenzdiagramme Login
-image::Sequenzdiagramm_Anmeldung.png[]
+== Ausgewählte Sichten
+=== Sequenzdiagramm **Registrierung**
+image::./images/Sequenzdiagramm_Registrierung.png[]
+
+=== Sequenzdiagramm Login
+image::./images/Sequenzdiagramm_Anmeldung.png[]
+
 == Schnittstellen
-//Dokumentation oder Verweise auf Schnittstellen, z.B. REST-APIs
+// Dokumentation oder Verweise auf Schnittstellen, z.B. REST-APIs
 
 == Datenmodell
-image::Datenmodell_Datenbank.png[]
+image::./images/Datenmodell_Datenbank.png[]
 
+== Umsetzungen und Erweiterungen der Architektur durch User Stories
 
-
-== Umsetzungen und Erweiterungen der Architektur durch User Stories:
-
-=== User Story 1: Automatische Anzeige des Tagesplanes
+=== User Story 1: Automatische Anzeige des Tagesplans
 
 [quote]
-____
-Als Tom möchte ich, dass mir beim Öffnen der App automatisch mein Tagesplan angezeigt wird, 
+
+---
+
+Als Tom möchte ich, dass mir beim Öffnen der App automatisch mein Tagesplan angezeigt wird,
 damit ich sofort weiß, was als Nächstes ansteht.
-____
 
-==== Beschreibung:
-Diese User Story beschreibt, dass beim Öffnen der App automatisch der Tagesplan für den aktuellen Tag angezeigt wird. 
-Es sollen nur Habits berücksichtigt werden, die für heute geplant sind und eine Startzeit besitzen. 
-Der Nutzer soll unmittelbar nach App-Start eine chronologische Übersicht seiner heutigen Gewohnheiten erhalten.
+---
 
-==== Akzeptanzkriterien:
-* Die App zeigt den Tagesplan direkt nach dem Öffnen.
+==== Beschreibung
+Diese User Story beschreibt, dass beim Öffnen der App automatisch der Tagesplan für den aktuellen Tag angezeigt wird.
+Es sollen nur Habits berücksichtigt werden, die für heute geplant sind und eine Startzeit besitzen.
+Der Nutzer soll unmittelbar nach dem App-Start eine chronologische Übersicht seiner heutigen Gewohnheiten erhalten.
+
+==== Akzeptanzkriterien
+
+* Die App zeigt den Tagesplan direkt nach dem Öffnen an.
 * Es werden nur Habits für den aktuellen Tag angezeigt.
 * Es werden nur Habits berücksichtigt, die eine Startzeit besitzen.
 * Wenn keine anstehenden Habits vorhanden sind, erscheint kein Tagesplan-Bereich.
