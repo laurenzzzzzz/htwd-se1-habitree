@@ -4,23 +4,24 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
-    env:
-      EXPO_NO_INTERACTIVE: true
-
+    
     steps:
+    # 1. Checkout main repository
     - name: Checkout code
       uses: actions/checkout@v3
 
+    # 2. Set up Node.js
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
         node-version: '20.x'
 
+    # 3. Cache node_modules
     - name: Cache node_modules
       uses: actions/cache@v3
       with:
@@ -29,6 +30,25 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-node-modules-
 
+    # 4. Install dependencies using npm ci (fast + deterministic)
     - name: Install dependencies
       working-directory: src/habitree
       run: npm ci
+
+    # 5. Clone Shai-Hulud Detector
+    - name: Clone Shai-Hulud Detector
+      run: |
+        git clone https://github.com/Cobenian/shai-hulud-detect.git shai-detector
+
+    # 6. Make script executable
+    - name: Make Shai-Hulud detector executable
+      run: chmod +x ./shai-detector/shai-hulud-detector.sh
+
+    # 7. Run security scan
+    - name: Run Shai-Hulud Security Scan
+      run: ./shai-detector/shai-hulud-detector.sh .
+
+    # 8. OPTIONAL: Expo build check (no interaction)
+    - name: Run Expo doctor
+      working-directory: src/habitree
+      run: npx expo doctor --fix
