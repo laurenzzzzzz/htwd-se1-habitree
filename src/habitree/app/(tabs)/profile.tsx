@@ -2,10 +2,6 @@ import React, { useState, useEffect, useCallback } from 'react';
 
 import { Dimensions } from 'react-native';
 const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
-
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import * as SecureStore from 'expo-secure-store';
-
 import {
   useColorScheme,
   Switch,
@@ -25,39 +21,12 @@ import { ThemedView } from '@/components/ThemedView';
 import { StatusBar } from 'expo-status-bar';
 import * as Notifications from 'expo-notifications';
 import axios from 'axios';
+import { useRouter } from 'expo-router';
+import { useAuth, CurrentUser } from '../_context/AuthContext';
+import { styles } from './_style/profile_style';
 
 // --- AUTH UND API KONSTANTEN ---
-const AUTH_TOKEN_KEY = 'userAuthToken';
-const USER_DATA_KEY = 'currentAuthUser';
 const API_BASE_URL = 'http://iseproject01.informatik.htw-dresden.de:8000';
-
-// --- TYPEN ---
-type CurrentUser = { id: number; email: string; username: string };
-
-// --- SECURE STORE FUNKTIONEN ---
-const loadAuthData = async (): Promise<{ token: string | null; user: CurrentUser | null }> => {
-  const token = await SecureStore.getItemAsync(AUTH_TOKEN_KEY);
-  const userJson = await SecureStore.getItemAsync(USER_DATA_KEY);
-  let user: CurrentUser | null = null;
-  if (userJson) {
-    try {
-      user = JSON.parse(userJson);
-    } catch (e) {
-      console.error('Fehler beim Parsen der User-Daten:', e);
-    }
-  }
-  return { token, user };
-};
-
-const saveAuthData = async (token: string, user: CurrentUser) => {
-  await SecureStore.setItemAsync(AUTH_TOKEN_KEY, token);
-  await SecureStore.setItemAsync(USER_DATA_KEY, JSON.stringify(user));
-};
-
-const deleteAuthData = async () => {
-  await SecureStore.deleteItemAsync(AUTH_TOKEN_KEY);
-  await SecureStore.deleteItemAsync(USER_DATA_KEY);
-};
 
 // --- BENACHRICHTIGUNGSHANDLER ---
 Notifications.setNotificationHandler({
@@ -73,14 +42,17 @@ Notifications.setNotificationHandler({
 
 // --- HAUPTKOMPONENTE ---
 export default function ProfileScreen() {
-  const navigation = useNavigation();
+  const router = useRouter();
   const systemColorScheme = useColorScheme();
 
-  // --- AUTH STATES ---
-  const [authToken, setAuthToken] = useState<string | null>(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null);
-  const [isLoadingAuth, setIsLoadingAuth] = useState(true);
+  const { 
+    isLoggedIn, 
+    currentUser, 
+    authToken, 
+    isLoading, // Für den Ladezustand des AuthContext
+    signOut,   // Globale Logout-Funktion
+    signIn     // Globale Login/Save-Funktion (wird für User-Updates wiederverwendet)
+  } = useAuth();
 
   // --- PROFILEINSTELLUNGEN ---
   const [isDarkMode, setIsDarkMode] = useState(systemColorScheme === 'dark');
@@ -111,36 +83,10 @@ export default function ProfileScreen() {
     })();
   }, []);
 
-  // --- AUTHENTIFIZIERUNG PRÜFEN ---
-  useFocusEffect(
-    useCallback(() => {
-      const checkStoredAuth = async () => {
-        setIsLoadingAuth(true);
-        const { token, user } = await loadAuthData();
-        if (token && user) {
-          setAuthToken(token);
-          setCurrentUser(user);
-          setIsLoggedIn(true);
-        } else {
-          setAuthToken(null);
-          setCurrentUser(null);
-          setIsLoggedIn(false);
-        }
-        setIsLoadingAuth(false);
-      };
-      checkStoredAuth();
-    }, [])
-  );
-
   // --- LOGOUT ---
   const handleLogout = async () => {
-    setIsLoadingAuth(true);
-    await deleteAuthData();
-    setAuthToken(null);
-    setCurrentUser(null);
-    setIsLoggedIn(false);
-    setIsLoadingAuth(false);
-    navigation.navigate('index' as never);
+    await signOut();
+  
   };
 
   // --- TOGGLES ---
@@ -186,8 +132,7 @@ export default function ProfileScreen() {
         username: response.data.username || newUsername,
       };
 
-      setCurrentUser(updatedUser);
-      await saveAuthData(authToken, updatedUser);
+      await signIn(authToken, updatedUser);
 
       Alert.alert('Erfolg', `Benutzername geändert zu '${updatedUser.username}'.`);
     } catch (error) {
@@ -462,98 +407,3 @@ export default function ProfileScreen() {
     </>
   );
 }
-
-// --- STYLES ---
-const styles = StyleSheet.create({
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'white',
-    padding: 20,
-  },
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.7)',
-  },
-  modalContent: {
-    width: '80%',
-    padding: 20,
-    borderRadius: 10,
-  },
-  modalTitle: {
-    marginBottom: 20,
-    textAlign: 'center',
-  },
-  input: {
-    width: '100%',
-    padding: 10,
-    marginBottom: 20,
-    borderWidth: 1,
-    borderRadius: 5,
-    fontSize: 16,
-  },
-  buttonRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
-  },
-  headerImage: {
-    alignSelf: 'center',
-    marginTop: 20,
-    width: '100%',
-    height: windowHeight * 0.3,
-  },
-  sectionContainer: {
-    marginVertical: 20,
-    gap: 12,
-  },
-  settingRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingVertical: 8,
-  },
-  settingRowButton: {
-    paddingVertical: 12,
-  },
-  settingRowTopBorder: {
-    borderTopWidth: 1,
-    borderColor: '#ccc',
-  },
-  authButtonsContainer: {
-    marginTop: 40,
-    alignItems: 'center',
-    gap: 12,
-    paddingBottom: 40,
-  },
-  authButton: {
-    backgroundColor: 'rgb(25, 145, 137)',
-    paddingVertical: windowHeight * 0.012,
-    paddingHorizontal: 40,
-    borderRadius: 8,
-    width: windowWidth * 0.7,
-    alignItems: 'center',
-  },
-  authButtonText: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 16,
-  },
-  friendsRow: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    gap: 12,
-  },
-  friendImage: {
-    width: windowWidth * 0.12,  // statt: 50
-    height: windowWidth * 0.12,
-    borderRadius: 25,
-  },
-  memberSince: {
-    fontSize: 14,
-    color: '#888',
-  },
-});

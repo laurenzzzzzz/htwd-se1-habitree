@@ -12,46 +12,14 @@ import {
   Button,
   ActivityIndicator,
   Alert,
-  TouchableOpacity
 } from 'react-native';
 import { HelloWave } from '@/components/HelloWave';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { useThemeColor } from '@/hooks/useThemeColor';
-import * as SecureStore from 'expo-secure-store';
-import { useFocusEffect } from '@react-navigation/native';
+import {styles} from './_style/index_style';
+import { useAuth } from '../_context/AuthContext';
 
-import { Dimensions } from 'react-native';
-const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
-// --- SECURESTORE KONSTANTEN & FUNKTIONEN ---
-const AUTH_TOKEN_KEY = 'userAuthToken';
-const USER_DATA_KEY = 'currentAuthUser'; 
-
-type CurrentUser = { id: number; email: string; username: string };
-
-const loadAuthData = async (): Promise<{ token: string | null, user: CurrentUser | null }> => {
-    const token = await SecureStore.getItemAsync(AUTH_TOKEN_KEY);
-    const userJson = await SecureStore.getItemAsync(USER_DATA_KEY);
-    let user: CurrentUser | null = null;
-    if (userJson) {
-        try {
-            user = JSON.parse(userJson);
-        } catch (e) {
-            console.error("Fehler beim Parsen der User-Daten:", e);
-        }
-    }
-    return { token, user };
-};
-
-const saveAuthData = async (token: string, user: CurrentUser) => {
-  await SecureStore.setItemAsync(AUTH_TOKEN_KEY, token);
-  await SecureStore.setItemAsync(USER_DATA_KEY, JSON.stringify(user));
-};
-
-const deleteAuthData = async () => {
-    await SecureStore.deleteItemAsync(AUTH_TOKEN_KEY);
-    await SecureStore.deleteItemAsync(USER_DATA_KEY);
-};
 
 // --- TYPEN ---
 type FilterKey = 'alle' | 'klimmzuege' | 'liegestuetze' | 'schritte';
@@ -71,20 +39,13 @@ type Quote = {
 export default function HomeScreen() {
 
   const backgroundColor = useThemeColor({}, 'background');
+  const { isLoggedIn, authToken, currentUser } = useAuth();
 
   // --- API KONSTANTEN ---
   const API_BASE_URL = 'http://iseproject01.informatik.htw-dresden.de:8000';
   const HABITS_API_URL = `${API_BASE_URL}/habits`;
   const QUOTES_API_URL = `${API_BASE_URL}/quotes`;
-  const LOGIN_API_URL = `${API_BASE_URL}/auth/login`;
-  const REGISTER_API_URL = `${API_BASE_URL}/auth/register`; 
 
-
-  // --- AUTHENTIFIZIERUNGS STATES ---
-  const [authToken, setAuthToken] = useState<string | null>(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null);
-  const [isLoadingAuth, setIsLoadingAuth] = useState(true);
 
   // --- HABIT STATES ---
   const [habitMode, setHabitMode] = useState<'menu' | 'custom' | 'predefined' | null>(null);
@@ -95,16 +56,7 @@ export default function HomeScreen() {
   const [modalVisible, setModalVisible] = useState(false);
   const [newHabitName, setNewHabitName] = useState('');
   const [newHabitDescription, setNewHabitDescription] = useState('');
-  const [todayQuote, setTodayQuote] = useState<string>('Lade Tagesspruch...');
   const [streakModalVisible, setStreakModalVisible] = useState(false);
-
-  // --- LOGIN/REGISTER STATES ---
-  const [authEmail, setAuthEmail] = useState('');
-  const [authPassword, setAuthPassword] = useState('');
-  const [authMessage, setAuthMessage] = useState('');
-  const [isLoadingLogin, setIsLoadingLogin] = useState(false);
-  const [isRegistering, setIsRegistering] = useState(false); 
-  const [registerUsername, setRegisterUsername] = useState('');
 
   // --- UTILITY ---
   const today = new Date();
@@ -121,7 +73,6 @@ export default function HomeScreen() {
   ];
 
   // --- DATENLADE FUNKTIONEN ---
-
   const fetchQuote = useCallback(async () => {
     try {
       const response = await axios.get<Quote[]>(QUOTES_API_URL);
@@ -153,139 +104,15 @@ export default function HomeScreen() {
     }
   }, [authToken, isLoggedIn, HABITS_API_URL]);
 
-  // --- AUTHENTIFIZIERUNGS LOGIK ---
-
-  const checkLoginStatus = useCallback(async () => {
-    setIsLoadingAuth(true);
-    const { token, user } = await loadAuthData();
-
-    setAuthToken(token);
-    setCurrentUser(user);
-
-    if (token) {
-        // Optionale Token-Validierung (auskommentiert in Originaldatei)
-        setIsLoggedIn(true);
-    } else {
-        setIsLoggedIn(false);
-    }
-    setIsLoadingAuth(false);
-  }, []);
-
-  useFocusEffect(
-    useCallback(() => {
-      checkLoginStatus();
-      // Die Rückgabe-Funktion ist leer, da kein Timer aufgeräumt werden muss.
-      return () => {};
-    }, [checkLoginStatus])
-  );
-  
-  // Lade Daten nach erfolgreichem Login
   useEffect(() => {
-    if (isLoggedIn) {
-      fetchHabits();
-      fetchQuote();
-    }
-  }, [isLoggedIn, fetchHabits, fetchQuote]);
+    fetchQuote();
+  }, [fetchQuote]);
 
-
-  const handleHomeLogin = async () => {
-    if (!authEmail || !authPassword) {
-      setAuthMessage('Bitte E-Mail und Passwort eingeben.');
-      return;
-    }
-
-    setIsLoadingLogin(true);
-    setAuthMessage('');
-
-    try {
-      const response = await axios.post(LOGIN_API_URL, {
-        email: authEmail.trim(),
-        password: authPassword,
-      });
-
-      const { token, userId, email, username } = response.data;
-      
-      const user: CurrentUser = {
-          id: userId,
-          email: email,
-          username: username || email.split('@')[0]
-      };
-
-      await saveAuthData(token, user);
-
-      setAuthToken(token);
-      setCurrentUser(user);
-      setIsLoggedIn(true);
-
-      setAuthEmail('');
-      setAuthPassword('');
-      
-      fetchQuote();
-      fetchHabits(); 
-
-    } catch (error) {
-      const errorMessage = axios.isAxiosError(error)
-        ? (error.response?.data?.error || 'Unbekannter API-Fehler.')
-        : 'Netzwerkfehler oder unerwarteter Fehler.';
-
-      setAuthMessage(errorMessage);
-    } finally {
-      setIsLoadingLogin(false);
-    }
-  };
-
-  const handleHomeRegister = async () => {
-    if (!authEmail || !authPassword) {
-      setAuthMessage('Bitte E-Mail und Passwort eingeben.');
-      return;
-    }
-
-    setIsLoadingLogin(true);
-    setAuthMessage('');
-
-    try {
-      const response = await axios.post(REGISTER_API_URL, {
-        email: authEmail.trim(),
-        password: authPassword,
-        username: registerUsername.trim() || undefined,
-      });
-
-      const { token, message, userId, email, username } = response.data;
-      
-      const user: CurrentUser = {
-        id: userId,
-        email: email,
-        username: username || email.split('@')[0]
-      };
-
-      await saveAuthData(token, user);
-
-      setAuthToken(token);
-      setCurrentUser(user);
-      setIsLoggedIn(true);
-
-      setAuthEmail('');
-      setAuthPassword('');
-      setRegisterUsername('');
-      setIsRegistering(false);
-      Alert.alert('Erfolg', message || 'Registrierung erfolgreich. Du bist jetzt eingeloggt.');
-      
-      fetchQuote();
-      fetchHabits(); 
-
-    } catch (error) {
-      const errorMessage = axios.isAxiosError(error)
-        ? (error.response?.data?.error || 'Fehler bei der Registrierung.')
-        : 'Netzwerkfehler oder unerwarteter Fehler.';
-
-      setAuthMessage(errorMessage);
-    } finally {
-      setIsLoadingLogin(false);
-    }
-  };
+  useEffect(() => { 
+    fetchHabits();
+  }, [fetchHabits]);
 
   // --- HABIT FUNKTIONEN ---
-  
   const saveHabit = async (name: string, description: string, frequency: string) => {
     try {
       if (!authToken) {
@@ -331,7 +158,6 @@ export default function HomeScreen() {
     }
     
     const newStatus = !entryForToday.status;
-    // Optimistische UI-Aktualisierung
     setHabits((prev) =>
         prev.map((habit) =>
             habit.id === id ? {
@@ -342,14 +168,12 @@ export default function HomeScreen() {
             } : habit
         )
     );
-
     try {
         await axios.put(
             `${HABITS_API_URL}/${id}/toggle`,
             { date: today.toISOString() },
             { headers: { Authorization: `Bearer ${authToken}` } }
         );
-        
     } catch (error) {
         console.error('Fehler beim Aktualisieren des Status:', error);
         
@@ -369,7 +193,6 @@ export default function HomeScreen() {
 };
 
   // --- USEMEMO UND HILFSFUNKTIONEN ---
-
   const filterOptions: { key: FilterKey; label: string }[] = [
     { key: 'alle', label: 'Alle' },
     { key: 'klimmzuege', label: 'Klimmzüge' },
@@ -411,7 +234,6 @@ export default function HomeScreen() {
   };
   
   // --- RENDERING FUNKTIONEN ---
-
   const renderModals = () => {
     return (
       <Modal
@@ -490,99 +312,8 @@ export default function HomeScreen() {
     );
   };
   
-  const renderLoginScreen = () => (
-    <View style={[styles.container, styles.loadingContainer]}>
-        <ThemedText type="title" style={{ textAlign: 'center', marginBottom: 20 }}>
-            Willkommen bei Habitree!
-        </ThemedText>
-
-        <ThemedView style={styles.authContainer}>
-            <ThemedText type="subtitle" style={{ marginBottom: 10 }}>
-                {isRegistering ? 'Neuen Account erstellen' : 'Anmelden'}
-            </ThemedText>
-            
-            <TextInput
-                style={styles.authInput}
-                placeholder="E-Mail"
-                placeholderTextColor="#888"
-                value={authEmail}
-                onChangeText={setAuthEmail}
-                keyboardType="email-address"
-                autoCapitalize="none"
-                editable={!isLoadingLogin}
-            />
-            
-            {isRegistering && (
-                <TextInput
-                    style={styles.authInput}
-                    placeholder="Benutzername"
-                    placeholderTextColor="#888"
-                    value={registerUsername}
-                    onChangeText={setRegisterUsername}
-                    autoCapitalize="words"
-                    editable={!isLoadingLogin}
-                />
-            )}
-
-            <TextInput
-                style={styles.authInput}
-                placeholder="Passwort"
-                placeholderTextColor="#888"
-                value={authPassword}
-                onChangeText={setAuthPassword}
-                secureTextEntry
-                editable={!isLoadingLogin}
-            />
-            
-            {authMessage ? <ThemedText style={styles.authMessage}>{authMessage}</ThemedText> : null}
-
-            <TouchableOpacity
-                style={[styles.authButton, isLoadingLogin && styles.authButtonDisabled]}
-                onPress={isRegistering ? handleHomeRegister : handleHomeLogin}
-                disabled={isLoadingLogin}
-            >
-                {isLoadingLogin ? (
-                    <ActivityIndicator color="white" />
-                ) : (
-                    <ThemedText style={styles.authButtonText}>
-                        {isRegistering ? 'Registrieren' : 'Anmelden'} 
-                    </ThemedText>
-                )}
-            </TouchableOpacity>
-            
-            <TouchableOpacity
-                style={styles.switchAuthButton}
-                onPress={() => {
-                    setIsRegistering(prev => !prev);
-                    setAuthMessage('');
-                }}
-                disabled={isLoadingLogin}
-            >
-                <ThemedText style={styles.switchAuthButtonText}>
-                    {isRegistering ? 'Schon registriert? Hier anmelden' : 'Noch keinen Account? Hier registrieren'}
-                </ThemedText>
-            </TouchableOpacity>
-        </ThemedView>
-    </View>
-);
-
 
   // --- MAIN RENDER ---
-  
-  if (isLoadingAuth) {
-    return (
-      <View style={[styles.container, styles.loadingContainer]}>
-        <ActivityIndicator size="large" color="rgb(25, 145, 137)" />
-        <ThemedText style={{ marginTop: 10 }}>Lade Authentifizierungsstatus...</ThemedText>
-      </View>
-    );
-  }
-
-  if (!isLoggedIn) {
-    return renderLoginScreen();
-  }
-
-
   return (
     <View style={{ flex: 1, backgroundColor }}>
       <ScrollView
@@ -845,7 +576,7 @@ export default function HomeScreen() {
             <View style={styles.streakModalContainer}>
               <Text style={styles.streakModalTitle}>Wow – 14 Tage am Stück!</Text>
               <Text style={styles.streakModalText}>
-                Super gemacht! 🎉 Du hast bereits 14 Tage in Folge deine Streak gehalten. 
+                Super gemacht!  Du hast bereits 14 Tage in Folge deine Streak gehalten. 
                 Bleib dran – dein Durchhaltevermögen zahlt sich aus!
               </Text>
 
@@ -870,348 +601,4 @@ export default function HomeScreen() {
   );
 }
 
-// --- STYLESHEET ---
 
-const styles = StyleSheet.create({
-  authContainer: {
-    width: '100%',
-    padding: 20,
-    borderRadius: 12,
-    backgroundColor: '#f9f9f9',
-    alignItems: 'center',
-  },
-  authInput: {
-    height: 50,
-    width: '100%',
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 15,
-    backgroundColor: 'white',
-    fontSize: 16,
-    marginBottom: 10,
-    color: '#333',
-  },
-  authButton: {
-    backgroundColor: 'rgb(25, 145, 137)',
-    paddingVertical: 12,
-    paddingHorizontal: 40,
-    borderRadius: 8,
-    width: '100%',
-    alignItems: 'center',
-    marginTop: 10,
-  },
-  authButtonDisabled: {
-    backgroundColor: '#9e9e9e',
-  },
-  authButtonText: {
-    color: 'white',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  authMessage: {
-    color: '#d32f2f',
-    textAlign: 'center',
-    marginTop: 5,
-    marginBottom: 10,
-  },
-  switchAuthButton: {
-    marginTop: 15,
-    paddingVertical: 10,
-  },
-  switchAuthButtonText: {
-    color: 'rgb(25, 145, 137)',
-    textAlign: 'center',
-    fontSize: 14,
-  },
-  noHabitsText: {
-    color: '#888',
-    fontStyle: 'italic',
-    textAlign: 'center',
-    marginVertical: 16,
-  },
-  container: {
-    flex: 1,
-    padding: 16,
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'white',
-  },
-  modalBackdrop: {
-    flex: 1,
-    backgroundColor: '#00000088',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  modalContent: {
-    backgroundColor: 'white',
-    padding: 24,
-    borderRadius: 12,
-    width: '80%',
-    shadowColor: '#000',
-    shadowOpacity: 0.2,
-    shadowRadius: 8,
-    elevation: 5,
-  },
-  textInput: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    padding: 8,
-    fontSize: 16,
-    marginBottom: 10,
-  },
-  predefinedItem: {
-    paddingVertical: 10,
-    paddingHorizontal: 16,
-    borderBottomColor: '#ddd',
-    borderBottomWidth: 1,
-  },
-  fab: {
-    position: 'absolute',
-    bottom: windowHeight * 0.02,
-    right: 20,
-    width: 56,
-    height: 56,
-    borderRadius: 28,
-    backgroundColor: 'rgb(25, 145, 137)',
-    alignItems: 'center',
-    justifyContent: 'center',
-    elevation: 6,
-    shadowColor: '#000',
-    shadowOpacity: 0.3,
-    shadowRadius: 6,
-  },
-  fabText: {
-    color: 'white',
-    fontSize: 32,
-    fontWeight: '600',
-    lineHeight: 40,
-  },
-  contentContainer: {
-    padding: 16,
-  },
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-    marginBottom: 20,
-  },
-  greetingText: {
-    fontSize: 28,
-  },
-  motivationQuote: {
-    marginBottom: 20,
-    fontSize: 16,
-    fontStyle: 'italic',
-  },
-  sectionTitle: {
-    marginBottom: 12,
-    fontSize: 22,
-    fontWeight: '600',
-  },
-  habitTitle: {
-    marginBottom: 16,
-    fontSize: 20,
-  },
-  chartSelector: {
-    marginBottom: 16,
-  },
-  chartButton: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 20,
-    marginRight: 8,
-    backgroundColor: '#e0e0e0',
-  },
-  chartButtonSelected: {
-    backgroundColor: 'rgb(25, 145, 137)',
-  },
-  chartButtonText: {
-    fontSize: 14,
-  },
-  chartButtonTextSelected: {
-    fontWeight: 'bold',
-    color: 'white',
-  },
-  chartImage: {
-    width: '100%',
-    height: windowHeight * 0.2,
-    marginBottom: 20,
-    borderRadius: 12,
-  },
-  habitListContainer: {
-    borderRadius: 12,
-    padding: 16,
-  },
-  habitItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: windowHeight * 0.015,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#e0e0e0',
-  },
-  habitTextContainer: {
-    marginLeft: 12,
-  },
-  habitLabel: {
-    fontSize: 16,
-    fontWeight: '500',
-  },
-  habitDescription: {
-    fontSize: 14,
-    opacity: 0.7,
-    marginTop: 4,
-  },
-  checkbox: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
-    borderWidth: 2,
-    borderColor: '#ccc',
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  checkboxChecked: {
-    backgroundColor: '#A1CEDC',
-    borderColor: '#A1CEDC',
-  },
-  checkmark: {
-    color: 'white',
-    fontWeight: '600',
-    fontSize: 16,
-  },
-  profileRow: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 12,
-    gap: 6,
-  },
-  profileImageWrapper: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 20,
-    borderColor: 'transparent',
-  },
-  profileImageToday: {
-    borderColor: 'rgb(25, 145, 137)', // gelber Rahmen für den heutigen Tag
-  },
-  profileImage: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-  },
-  streakContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'relative',
-    marginVertical: 20,
-    marginTop: 10,     // optional: etwas nach oben rücken im Layout
-  },
-  streakBackgroundImage: {
-    position: 'absolute',
-    width: 85,
-    height: 85,
-    top: -27,          // Tropfen leicht nach oben verschieben
-    opacity: 0.25,
-  },
-  streakNumber: {
-    fontSize: 40,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    color: 'rgb(25, 145, 137)',
-    lineHeight: 40,
-    includeFontPadding: false,
-    textAlignVertical: 'center',
-    zIndex: 1,
-  },
-  weekdayRow: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 12,
-    marginTop: 24,     // 👈 extra Platz zwischen Tropfen/Zahl und Wochentagen
-    gap: 8,
-  },
-  weekdayCircle: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    borderWidth: 2,
-    borderColor: '#ccc',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'white',
-  },
-  weekdayFilled: {
-    backgroundColor: 'rgba(25, 145, 137, 0.2)',
-    borderColor: 'rgba(25, 145, 137, 0.3)',
-  },
-  weekdayToday: {
-    borderColor: 'rgb(25, 145, 137)',
-    borderWidth: 3,
-    backgroundColor: 'rgba(25, 145, 137, 0.35)',
-  },
-  weekdayText: {
-    fontSize: 14,
-    fontWeight: '500',
-    color: '#333',
-  },
-  weekdayTextToday: {
-    color: 'rgb(25, 145, 137)',
-    fontWeight: '700',
-  },
-   streakModalOverlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  streakModalContainer: {
-    backgroundColor: '#fff',
-    borderRadius: 16,
-    padding: 24,
-    width: '85%',
-    alignItems: 'center',
-  },
-   streakModalTitle: {
-    fontSize: 20,
-    fontWeight: '700',
-    textAlign: 'center',
-    marginBottom: 10,
-    color: 'rgb(25, 145, 137)',
-  },
-  streakModalText: {
-    fontSize: 15,
-    textAlign: 'center',
-    color: '#444',
-    marginBottom: 16,
-  },
-  streakModalImage: {
-    width: 100,
-    height: 100,
-    opacity: 0.8,
-    marginBottom: 12,
-  },
-  streakCloseButton: {
-    marginTop: 8,
-    backgroundColor: 'rgb(25, 145, 137)',
-    paddingHorizontal: 18,
-    paddingVertical: 10,
-    borderRadius: 10,
-  },
-  streakCloseButtonText: {
-    color: '#fff',
-    fontWeight: '600',
-    textAlign: 'center',
-  },
-
-});
