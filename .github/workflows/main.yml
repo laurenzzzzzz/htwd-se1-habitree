@@ -8,32 +8,27 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
+    env:
+      EXPO_NO_INTERACTIVE: true
+
     steps:
-    # Checkout the code
     - name: Checkout code
       uses: actions/checkout@v3
 
-    # Set up Node.js with the desired version
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '20.x'  # Set to Node.js version >= 18
+        node-version: '20.x'
 
-    # Cache node_modules for faster builds (optional)
     - name: Cache node_modules
       uses: actions/cache@v3
       with:
-        path: node_modules
-        key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+        path: src/habitree/node_modules
+        key: ${{ runner.os }}-node-modules-${{ hashFiles('src/habitree/package-lock.json') }}
         restore-keys: |
           ${{ runner.os }}-node-modules-
 
-    # Install dependencies and start the expo app
     - name: Install dependencies
-      run: |
-        cd src/habitree
-        npm install expo  # Install Expo for the first time
-        npx expo install --fix  # Install and update all packages
-        #npx expo start --go --clear  --tunnel Start the app
-
+      working-directory: src/habitree
+      run: npm ci
