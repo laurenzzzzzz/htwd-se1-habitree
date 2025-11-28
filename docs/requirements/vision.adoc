@@ -221,7 +221,7 @@ Start bis erster nutzbarer Screen weniger als 3 Sekunden +
 
 
 | *Sicherheit & Datenschutz*  +
-  - Nutzung von Firebase Authentication +
+  - Nutzung von JWT Authentication +
   - Daten werden im Backend verschlüsselt übertragen (???) +  
   - Privatsphäre-Option: Nutzerprofil kann auf „privat“ oder „öffentlich“ gestellt werden.
 | Mittel

@@ -169,7 +169,7 @@ image::Persona-Tom_Neumann.png[Tom Neumann,200,200]
 
 * Endgeräte: primär für Smartphone, nur für IOS; Browsernutzung möglich, aber nicht primär unterstützt
 * geplante Integrationen (später): Apple Fitness, Google/Apple Kalender, Wearables, Produktivitätstools
-* technischer Überblick: Expo/React Native (Frontend) ⇄ Node.js/Express (Backend, REST) ⇄ PostgreSQL (DB via Prisma ORM); Auth via Firebase Auth (ID-Token Prüfung, bei Erstlogin Nutzeranlage)
+* technischer Überblick: Expo/React Native (Frontend) ⇄ Node.js/Express (Backend, REST) ⇄ PostgreSQL (DB via Prisma ORM); Auth via JWT + PasswordHashing
 
 === Physische/soziale Umgebung
 
@@ -210,7 +210,7 @@ image::Persona-Tom_Neumann.png[Tom Neumann,200,200]
 
 === Datensicherheit (Soll-Konzept)
 
-* Transport: TLS 1.2+; Auth: Firebase ID Token; Sitzungen mit Token-Refresh
+* Transport: TLS 1.2+; Auth:JWT; Sitzungen mit Token-Refresh
 * Daten: Minimierung, Trennung PII/Nutzungsdaten; Hashing sensibler Tokens; Backups (verschlüsselt)
 * Rollen-/Rechtekonzept (später): Privat/Öffentlich je Profilfeld
 

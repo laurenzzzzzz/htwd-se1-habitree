@@ -8,17 +8,16 @@ node "Smartphone\n(Studierende)" {
   [Mobile App\nReact Native (Expo)] <<Mobile App>>
 }
 
-' Firebase Auth (externer Dienst)
-cloud "Firebase Cloud\n(externer Dienst)" {
-  [Firebase Auth\nAuthentifizierung]
-}
-
 ' Hochschulserver mit Backend
 node "Hochschulserver\n(Backend Server)" {
   [Backend Service\nNode.js + Express]
+  [JWT Authentifizierung\nLogik] <<Authentifizierung>>
   [Prisma ORM\nORM-Modul]
 
-  '[Backend Service] --> [Prisma ORM] : nutzt
+  ' Beziehungen innerhalb des Servers
+  ' Der Backend Service nutzt die JWT Logik für Login/Registrierung und Token-Check
+  [Backend Service\nNode.js + Express] -> [JWT Authentifizierung\nLogik] : nutzt zur Vergabe/Validierung
+  [Backend Service\nNode.js + Express] --> [Prisma ORM\nORM-Modul] : nutzt
 }
 
 ' PostgreSQL Datenbank (eigener Server oder gehostet)
@@ -27,10 +26,12 @@ database "Hochschulserver\n(PostgreSQL Server)" {
 }
 
 ' Verbindungen
+' Die Mobile App kommuniziert nur noch mit dem Backend
 [Mobile App\nReact Native (Expo)] --> [Backend Service\nNode.js + Express] : REST API (HTTPS)
-[Backend Service\nNode.js + Express] -> [Firebase Auth\nAuthentifizierung] : Authentifizierung
-[Mobile App\nReact Native (Expo)] --> [Firebase Auth\nAuthentifizierung] : meldet Nutzer an
+
+' Die Authentifizierung läuft vollständig über den Backend Service, der bei erfolgreichem Login den JWT an die App zurückgibt.
+' Die JWT-Logik greift auf die Datenbank zu, um die Nutzerdaten zu prüfen (z.B. beim Login).
+[JWT Authentifizierung\nLogik] --> [PostgreSQL Datenbank\nNutzerdaten, Gewohnheiten] : prüft/liest Nutzerdaten (bcrypt/JWT Payload)
 [Prisma ORM\nORM-Modul] --> [PostgreSQL Datenbank\nNutzerdaten, Gewohnheiten] : SQL-Zugriff
-[Backend Service\nNode.js + Express] --> [Prisma ORM\nORM-Modul] : nutzt
 
 @enduml
