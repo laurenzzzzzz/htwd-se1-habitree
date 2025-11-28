@@ -21,12 +21,12 @@ Dieses Dokument beschreibt die Philosophie, Entscheidungen, Nebenbedingungen, Be
 Die Architektur der Habit-Tracking-App verfolgt das Ziel, eine robuste, nutzerfreundliche und wartbare mobile Anwendung bereitzustellen. Sie muss auch unter mobilen Bedingungen zuverlässig funktionieren, inklusive Offline-Nutzung, sicherem Umgang mit Nutzerdaten und reibungsloser Benutzererfahrung. Im Fokus stehen dabei folgende zentrale Ziele:
 
 * **Performance**
-** *Geringe Latenz bei UI-Interaktionen:* Die App soll sofort auf Benutzereingaben reagieren, ohne Ruckler beim Scrollen oder Wechseln zwischen Ansichten.
+** *Geringe Latenz bei UI-Interaktionen:* Die App soll möglichst sofort auf Benutzereingaben reagieren, ohne Ruckler beim Scrollen oder Wechseln zwischen Ansichten.
 ** *Schnelle Ladezeiten:* Daten sollen lokal vorgehalten oder effizient über das Netzwerk geladen werden.
 
 * **Zuverlässigkeit**
-** *Robuste Services:* Bei Dienstausfällen auf Serverseite (z. B. Neustarts) darf es nicht zu langfristigen Funktionsverlust kommen.
-** *Health-Checks und Rollback:* Das System soll bei Inkonsistenzen in Datenbeständen o. ä. automatisch einen Rollback durchführen.
+** *Robuste Services:* Bei Dienstausfällen auf Serverseite (z. B. Neustarts) darf es nicht zu sehr langfristigen Funktionsverlust kommen.
+** *Health-Checks und Rollback:* Das System soll bei Inkonsistenzen in Datenbeständen o. ä. automatisch einen Rollback durchführen bzw. diesen beheben.
 
 * **Sicherheit**
 ** *Authentifizierung:* Nutzerregistrierung und -login sollen über ein sicheres Auth-System einerfolgen.
@@ -34,7 +34,7 @@ Die Architektur der Habit-Tracking-App verfolgt das Ziel, eine robuste, nutzerfr
 ** *Anmeldung & Sessions:* Nutzer bleiben über Sessions angemeldet. Session laufen nach vordefiniertem Zeitraum (z. B. 2 Wochen) automatisch ab.
 
 * **Portabilität**
-** *Gemeinsame Code-Basis (Android & iOS):* Pflege einer einzigen Codebasis für beide Plattformen.
+** *Gemeinsame Code-Basis (Android & iOS):* Pflege einer einzigen Codebasis für beide Plattformen. (Auch wenn sich der Fokus im Rahmen des Moduls aus zeitgründen auf der Entwicklung der iOS Version fokussiert)
 ** *Plattformunabhängige Schnittstellen* 
 
 * **Echtzeit-Updates**
@@ -62,15 +62,15 @@ Die Architektur der Habit-Tracking-App verfolgt das Ziel, eine robuste, nutzerfr
 == Annahmen und Abhängigkeiten
 //[List the assumptions and dependencies that drive architectural decisions. This could include sensitive or critical areas, dependencies on legacy interfaces, the skill and experience of the team, the availability of important resources, and so forth]
 * Zugriff auf eigenen Server.
-* Die App wird als mobile Anwendung umgesetzt, welche iOS und Android gleichermaßen  unterstützen soll.
+* Die App wird als mobile Anwendung umgesetzt, welche iOS (und Android gleichermaßen)  unterstützen soll.
 * Die Zielgruppe sind vor allem Einzelpersonen, die persönliche Routinen tracken wollen, eine Mehrbenutzerfähigkeit (z.B. Teams oder Gruppenfunktionen) ist  nicht vorgesehen.
 * Die initiale Entwicklung erfolgt durch ein kleines Team mit begrenzter Programmiererfahrung, daher sind einfache Tools, gute Dokumentation und Typsicherheit wichtig.
 * Es ist vorgesehen, dass die App offlinefähig ist mittels lokalem Caching und späterer Synchronisation.
 * Datenschutz ist wichtig: DSGVO-Konformität sollte berücksichtigt werden, weshalb persönliche Daten sicher gespeichert werden müssen und auf Wunsch vollständig löschbar sind.
-* Benutzerverwaltung und Authentifizierung werden aufgrund hohem Arbeitsaufwand nicht selbst entwickelt.
+* Benutzerverwaltung und Authentifizierung werden selbst entwickelt.
 * Das Backend wird auf einem selbstverwalteten Server betrieben – eigene Datenbank zur Speicherung der Nutzdaten der jeweiligen Nutzer (Fortschritte etc.).
 * Die App setzt keine Legacy-Systeme oder bestehende Datenbanken voraus, da es sich um eine Neuentwicklung ohne Altsystem handelt.
-* Die geplanten Nutzerzahlen sind zunächst gering, was anfangs keine groß skalierte Architektur und vorallem Serverinfrastruktur voraussetzt.
+* Die geplanten Nutzerzahlen sind zunächst gering, was anfangs keine groß skalierte Architektur und vorallem Serverinfrastruktur voraussetzt. Trotzdem soll die Infastruktur so ausgerichtet sein, dass diese mit steigender Nutzerzahl technisch leicht skalierbar ist.
 * Für den Anfang bestehen erstmal keine besonderen Anforderungen an spezielle Hardware-Sensoren oder Hintergrunddienste (z.B. HealthKit, Schrittzähler).  Erweiterungen sind aber technisch denkbar.
 * Push-Benachrichtigungen oder Reminder sind im MVP (Minimum Viable Product) vorgesehen.
 * Anfängliche Überlegungen zur Nutzung von R für die Erstellung von statisitischen Grafiken wurden aufgrund von Implementierungsaufwand verworfen. 
@@ -85,7 +85,7 @@ Die Architektur der Habit-Tracking-App verfolgt das Ziel, eine robuste, nutzerfr
 * Die Lösung muss modular aufgebaut sein, um eine Trennung zwischen Präsentation, Logik und Datenzugriff zu ermöglichen.
 * Es muss eine Schnittstelle zur Kommunikation zwischen Frontend und Backend bereitgestellt werden 
 * Die Architektur soll wartbar und erweiterbar sein.
-* Die Anwendung muss mehrere Nutzer gleichzeitig unterstützen 
+//* Die Anwendung muss mehrere Nutzer gleichzeitig unterstützen 
 
 == Entscheidungen, Nebenbedingungen und Begründungen
 //[List the decisions that have been made regarding architectural approaches and the constraints being placed on the way that the developers build the system. These will serve as guidelines for defining architecturally significant parts of the system. Justify each decision or constraint so that developers understand the importance of building the system according to the context created by those decisions and constraints. This may include a list of DOs and DON’Ts to guide the developers in building the system.]
@@ -107,7 +107,7 @@ Die Architektur der Habit-Tracking-App verfolgt das Ziel, eine robuste, nutzerfr
 
 ---
 
-=== Alternative bewertet: Flutter
+=== Alternative bewertet: Flutter (Nicht verwendet)
 
 *Begründung für Verwerfung:* +
 - Nur virtuelle Testumgebung, kein direkter Test auf physischer Hardware +
@@ -145,7 +145,15 @@ Die Architektur der Habit-Tracking-App verfolgt das Ziel, eine robuste, nutzerfr
 
 ---
 
-=== Authentifizierung: Firebase Auth
+=== Authentifizierung: Firebase Auth (nichtmehr verwendet)
+
+
+*Begründung für die Entfernung von Firebase Auth:* +
+- Aufgrund von Kompatibilitätsproblemen mit der EXPO GO APP unter iOS kann Firebase Auth leider nicht im Rahmen unserer Entwicklung weiter verwendet werden und wurde durch eine eigenes entwickelte Authentifizierungslösung ersetzt.
+
+[.deprecated]
+====
+*Ursprüngliche Begründung für Nutzung von Firebase Auth:*
 
 *Begründung:*  +
 - Sichere und skalierbare Lösung mit minimalem Implementierungsaufwand  +
@@ -158,8 +166,9 @@ Die Architektur der Habit-Tracking-App verfolgt das Ziel, eine robuste, nutzerfr
 *DON’T:* +
 - Passwörter selbst speichern oder eigene Authentifizierung entwickeln +
 
----
 
+====
+---
 === Internationalisierung (i18next) 
 
 *Begründung:* +
@@ -182,7 +191,7 @@ Die Architektur der Habit-Tracking-App verfolgt das Ziel, eine robuste, nutzerfr
 
 *Problem:* +
 - Native Entwicklung (Swift/Xcode oder Kotlin/Android Studio) war aufgrund fehlender macOS- bzw. Android-Hardware nicht praktikabel +
-- Testen auf echten Geräten nur eingeschränkt möglich +
+- Testen auf echten Geräten wäre nur eingeschränkt möglich +
 
 *Entscheidung:* +
 - Nutzung von *Expo* für Frontend-Entwicklung und Testing auf echter Hardware +
@@ -191,7 +200,7 @@ Die Architektur der Habit-Tracking-App verfolgt das Ziel, eine robuste, nutzerfr
 *Vorgehensweise:* +
 - Express.js-Server aufgesetzt und über *Prisma* an *PostgreSQL* angebunden +
 - Kommunikation erfolgt über REST-API +
-- *Firebase Auth* integriert für Nutzerverwaltung +
+//- *Firebase Auth* integriert für Nutzerverwaltung +
 - Setup wurde dokumentiert, sodass Teammitglieder es lokal reproduzieren und erweitern +
 
 
@@ -212,7 +221,7 @@ Für die Umsetzung der Habit-Tracking-App wird eine klassische mehrschichtige Ar
 
 Zur besseren Kommunikation und Dokumentation der Architektur werden folgende Sichten genutzt:
 
-* **Kontextsicht:** Darstellung der wichtigsten externen Akteure (z. B. Benutzer, Firebase Auth) und deren Beziehung zum System. Zeigt, in welchem Umfeld sich die App bewegt.
+* **Kontextsicht:** Darstellung der wichtigsten externen Akteure (z. B. Benutzer) und deren Beziehung zum System. Zeigt, in welchem Umfeld sich die App bewegt.
 * **Bausteinsicht:** Zeigt die interne Struktur der Anwendung auf Modulebene – z. B. Trennung von Komponenten, Services, Routen und Datenzugriff.
 * **Laufzeitsicht:** Veranschaulicht typische Abläufe wie die Erstellung eines Habits oder das Abrufen von Logs – wichtig zur Analyse von Performance und Nebenläufigkeit.
 * **Verteilungssicht:** Zeigt, welche Teile des Systems wo laufen – z. B. Backend auf eigenem Server, Datenbank auf dediziertem Datenbankserver, Frontend auf mobilen Geräten.
@@ -234,7 +243,7 @@ Das C4-Level-2-Container-Diagramm zeigt die technische Struktur der Habitreee-An
 
 * Die Mobile App, das Frontend programmiert mit React Native, wird direkt von den Studierenden genutzt
 * Das Backend basiert auf Node.js mit Express und läuft auf einem externen Server der Hochschule
-* Zur Nutzer-Authentifizierung wird der externe Dienst Firebase Auth eingebunden
+* Zur Nutzer-Authentifizierung wird auf das Backend zugegriffen.
 * Prisma ORM dient als Vermittler zwischen dem Backend und der PostgreSQL-Datenbank, in der Nutzerdaten und Gewohnheiten gespeichert werden
 * Die Kommunikation zwischen Frontend und Backend erfolgt über eine REST API
 === Components
