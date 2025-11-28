@@ -1,33 +1,39 @@
-name: Habitree Expo App Workflow
+name: Expo App Workflow
 
 on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
 
 jobs:
-  setup:
+  build:
     runs-on: ubuntu-latest
-
+    
     steps:
+    # Checkout the code
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
+    # Set up Node.js with the desired version
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '16'  # Wähle die Node.js Version, die du benötigst
+        node-version: '18.x'  # Set to Node.js version >= 18
 
+    # Cache node_modules for faster builds (optional)
+    - name: Cache node_modules
+      uses: actions/cache@v3
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-modules-
+
+    # Install dependencies and start the expo app
     - name: Install dependencies
       run: |
         cd src/habitree
-        npm install expo  # Installiert Expo beim ersten Mal
-        npx expo install --fix  # Installiert und aktualisiert alle benötigten Packages
+        npm install expo  # Install Expo for the first time
+        npx expo install --fix  # Install and update all packages
+        npx expo start --tunnel --go --clear  # Start the app
 
-    - name: Start Expo app
-      run: |
-        cd src/habitree
-        npx expo start --tunnel --go --clear  # Startet Expo im Tunnel-Modus, öffnet automatisch den Browser und löscht den Cache
