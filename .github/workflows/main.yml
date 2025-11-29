@@ -46,7 +46,7 @@ jobs:
 
     # 7. Run security scan
     - name: Run Shai-Hulud Security Scan
-      run: ./shai-detector/shai-hulud-detector.sh .
+      run: ./shai-detector/shai-hulud-detector.sh src/habitree
 
     # 8. OPTIONAL: Expo build check (no interaction)
     - name: Run Expo doctor
