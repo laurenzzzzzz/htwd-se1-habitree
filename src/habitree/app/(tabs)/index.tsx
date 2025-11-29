@@ -17,8 +17,8 @@ import { HelloWave } from '@/components/HelloWave';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { useThemeColor } from '@/hooks/useThemeColor';
-import {styles} from './_style/index_style';
-import { useAuth } from '../_context/AuthContext';
+import {styles} from '../../styles/index_style';
+import { useAuth } from '../../context/AuthContext';
 
 
 // --- TYPEN ---

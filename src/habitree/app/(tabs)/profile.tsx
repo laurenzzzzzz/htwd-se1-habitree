@@ -22,8 +22,8 @@ import { StatusBar } from 'expo-status-bar';
 import * as Notifications from 'expo-notifications';
 import axios from 'axios';
 import { useRouter } from 'expo-router';
-import { useAuth, CurrentUser } from '../_context/AuthContext';
-import { styles } from './_style/profile_style';
+import { useAuth, CurrentUser } from '../../context/AuthContext';
+import { styles } from '../../styles/profile_style';
 
 // --- AUTH UND API KONSTANTEN ---
 const API_BASE_URL = 'http://iseproject01.informatik.htw-dresden.de:8000';

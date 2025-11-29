@@ -14,8 +14,8 @@ import {
   Dimensions,
   Image, // <-- Wichtig: Image-Komponente importieren (ist bereits in deinem Original-Code enthalten)
 } from 'react-native';
-import { useAuth, CurrentUser } from '../_context/AuthContext';
-import { styles } from './_style/login_style';
+import { useAuth, CurrentUser } from '../../context/AuthContext';
+import { styles } from '../../styles/login_style';
 
 // --- AUTH UND API KONSTANTEN & TYPEN (aus index.tsx und profile.tsx extrahiert) ---
 const API_BASE_URL = 'http://iseproject01.informatik.htw-dresden.de:8000';
@@ -104,7 +104,7 @@ export default function LoginScreen() {
 
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <View style={styles.container}>
       
 
       <Image 
@@ -112,9 +112,7 @@ export default function LoginScreen() {
         style={styles.logo} // Definiere 'logo' in login_style.ts
       /> 
  
-      <Text style={styles.title}>
-        {isRegisterMode ? 'Konto erstellen' : 'Anmelden'}
-      </Text>
+      {/*<Text style={styles.title}>{isRegisterMode ? 'Konto erstellen' : 'Anmelden'}</Text>*/}
 
       {isRegisterMode && (
         <TextInput
@@ -165,6 +163,6 @@ export default function LoginScreen() {
         </Text>
       </Pressable>
 
-    </ScrollView>
+    </View>
   );
 }

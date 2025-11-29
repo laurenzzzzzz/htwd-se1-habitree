@@ -1,6 +1,6 @@
 import { Stack, Redirect, useSegments } from 'expo-router';
 import { Text } from 'react-native';
-import { useAuth, AuthProvider } from './_context/AuthContext'; 
+import { useAuth, AuthProvider } from '../context/AuthContext'; 
 import React from 'react';
 
 function RootLayoutContent() {
@@ -11,8 +11,18 @@ function RootLayoutContent() {
   const inAuthGroup = segments[0] === '(auth)';
 
   if (isLoading) {
-    // Anzeigen eines Ladebildschirms, während der initiale Auth-Status geprüft wird
-    return <Text style={{ flex: 1, textAlign: 'center', marginTop: 50 }}>Laden...</Text>; 
+    return (
+      <Text
+        style={{
+          flex: 1,
+          textAlign: "center",
+          textAlignVertical: "center",
+          fontSize: 18,
+        }}
+      >
+        Laden...
+      </Text>
+    );
   }
 
  
