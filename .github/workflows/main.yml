@@ -53,4 +53,4 @@ jobs:
     # 8. OPTIONAL: Expo build check (no interaction)
     - name: Run Expo doctor
       working-directory: src/habitree
-      run: npx expo doctor --fix
+      run: npx expo-doctor --fix
