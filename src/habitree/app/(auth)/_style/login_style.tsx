@@ -24,7 +24,7 @@ export const styles = StyleSheet.create({
       borderRadius: 8,
     },
     authButton: {
-      backgroundColor: '#007AFF', // Button-Farbe anpassen
+      backgroundColor: 'rgb(25, 145, 137)', // Button-Farbe anpassen
       padding: 15,
       borderRadius: 8,
       width: '100%',
@@ -36,8 +36,14 @@ export const styles = StyleSheet.create({
       fontWeight: 'bold',
     },
     switchButtonText: {
-        color: '#007AFF',
+        color: 'rgb(25, 145, 137)',
         marginTop: 20,
+    },
+    logo: {
+      width: 150,
+      height: 150,
+      resizeMode: 'contain',
+      marginBottom: 20,
     },
     // Fügen Sie hier alle anderen benötigten Styles (z.B. für Ihr Logo/Image) ein
   });
