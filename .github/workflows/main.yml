@@ -15,6 +15,20 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
+
+    # 5. Clone Shai-Hulud Detector
+    - name: Clone Shai-Hulud Detector
+      run: |
+        git clone https://github.com/Cobenian/shai-hulud-detect.git shai-detector
+
+    # 6. Make script executable
+    - name: Make Shai-Hulud detector executable
+      run: chmod +x ./shai-detector/shai-hulud-detector.sh
+
+    # 7. Run security scan
+    - name: Run Shai-Hulud Security Scan
+      run: ./shai-detector/shai-hulud-detector.sh src/habitree
+
     # 2. Set up Node.js
     - name: Set up Node.js
       uses: actions/setup-node@v3
@@ -35,18 +49,6 @@ jobs:
       working-directory: src/habitree
       run: npm ci
 
-    # 5. Clone Shai-Hulud Detector
-    - name: Clone Shai-Hulud Detector
-      run: |
-        git clone https://github.com/Cobenian/shai-hulud-detect.git shai-detector
-
-    # 6. Make script executable
-    - name: Make Shai-Hulud detector executable
-      run: chmod +x ./shai-detector/shai-hulud-detector.sh
-
-    # 7. Run security scan
-    - name: Run Shai-Hulud Security Scan
-      run: ./shai-detector/shai-hulud-detector.sh src/habitree
 
     # 8. OPTIONAL: Expo build check (no interaction)
     - name: Run Expo doctor
