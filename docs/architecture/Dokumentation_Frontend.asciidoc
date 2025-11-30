@@ -28,7 +28,7 @@ npm -v
 [source,shell]
 ----
 cd src/habitree
-npm install expo <- ausführen beim ersten mal
+npm ci
 npx expo install --fix <- Installiert und Updatet alle Packages
 npx expo start --tunnel --go --clear
 ----
