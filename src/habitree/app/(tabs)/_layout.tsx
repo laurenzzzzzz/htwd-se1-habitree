@@ -18,28 +18,29 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
 const TAB_BAR_HEIGHT = Math.max(65, windowHeight * 0.09);
+// const TAB_BAR_HEIGHT = Math.max(65, windowHeight * 0.09); // 
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
   const insets = useSafeAreaInsets();
 
-  // Responsive Header Höhe
-  //const HEADER_HEIGHT = Math.max(44 + insets.top*0.0, windowHeight * 0.13);
-  //onst HEADER_HEIGHT = 44 + insets.top * 1.09;
-  const HEADER_HEIGHT = Math.max(44 + insets.top * 0.1, 60); // Minimum 60px Reserve
+  // Responsive Header Höhe 
 
+  const HEADER_HEIGHT = Math.max(70 + insets.top, 60);
 
-  // Responsive TabBar Höhe
+  // Responsive TabBar Höhe (Beibehalten der Korrektur von vorhin)
   const TAB_BAR_HEIGHT = Math.max(48, windowHeight * 0.050);
 
-  const baseMargin = 8; // Basiswert in Pixel
-  const responsiveMarginTop = Math.max(insets.top * 0.9, baseMargin); 
-  //const responsiveMarginTop = Math.min(windowHeight * 0.03, 30); // max 10px, skaliert etwas mit Bildschirmhöhe
+ 
+
+  //const responsiveMarginTop = Math.max(insets.top * 0.1, baseMargin);
+  const responsiveMarginTop = insets.top * 0.2;
 
   const largeHeaderTitleStyle = {
     fontSize: Math.min(windowWidth * 0.08, 34),
     fontWeight: 'bold' as 'bold',
   };
+
 
   return (
     <Tabs
@@ -51,15 +52,12 @@ export default function TabLayout() {
           backgroundColor: Colors[colorScheme ?? 'light'].background,
           borderBottomColor: Colors[colorScheme ?? 'light'].border,
           height: HEADER_HEIGHT,
-          //paddingTop: insets.top * 0.2,
         },
         tabBarButton: HapticTab,
         headerTitleStyle: largeHeaderTitleStyle,
         tabBarStyle: {
-          height: TAB_BAR_HEIGHT + 1,
-          //paddingBottom: insets.bottom,
-          paddingBottom: Math.max(insets.bottom - 5, 0),
-
+          height: TAB_BAR_HEIGHT + insets.bottom,
+          paddingBottom: insets.bottom,
         },
       }}
     >
@@ -70,7 +68,12 @@ export default function TabLayout() {
           headerTitle: () => (
             <Image
               source={require('@/assets/images/header.png')}
-              style={{ width: Math.min(windowWidth * 0.35, 140), height: 56, resizeMode: 'contain', marginTop: -responsiveMarginTop }}
+              style={{ 
+                width: Math.min(windowWidth * 0.35, 140), 
+                height: windowHeight * 0.07, 
+                resizeMode: 'contain', 
+                marginTop: responsiveMarginTop
+              }}
             />
           ),
           tabBarIcon: ({ color }) => (
@@ -87,7 +90,7 @@ export default function TabLayout() {
               style={{
                 fontSize: Math.min(windowWidth * 0.08, 34),
                 fontWeight: 'bold',
-                marginTop: -responsiveMarginTop,
+                marginTop: responsiveMarginTop,
                 textAlign: 'center',
               }}
             >
@@ -106,7 +109,7 @@ export default function TabLayout() {
               style={{
                 fontSize: Math.min(windowWidth * 0.08, 34),
                 fontWeight: 'bold',
-                marginTop: -responsiveMarginTop,
+                marginTop: responsiveMarginTop,
                 textAlign: 'center',
               }}
             >
@@ -116,8 +119,6 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="tree.fill" color={color} />,
         }}
       />
-
-
       <Tabs.Screen
         name="inventory"
         options={{
@@ -127,7 +128,7 @@ export default function TabLayout() {
               style={{
                 fontSize: Math.min(windowWidth * 0.08, 34),
                 fontWeight: 'bold',
-                marginTop: -responsiveMarginTop,
+                marginTop: responsiveMarginTop,
                 textAlign: 'center',
               }}
             >
@@ -146,7 +147,7 @@ export default function TabLayout() {
               style={{
                 fontSize: Math.min(windowWidth * 0.08, 34),
                 fontWeight: 'bold',
-                marginTop: -responsiveMarginTop,
+                marginTop: responsiveMarginTop,
                 textAlign: 'center',
               }}
             >
