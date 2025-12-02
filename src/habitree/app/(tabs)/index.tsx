@@ -181,22 +181,88 @@ export default function HomeScreen() {
 
   return (
     <View style={{ flex: 1, backgroundColor }}>
-      <FlatList
-        data={filteredHabits}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={renderHabitItem}
-        ListHeaderComponent={ListHeader}
-        ListEmptyComponent={() => (
-          !isLoadingHabits ? <ThemedText style={styles.noHabitsText}>Keine Habits angelegt.</ThemedText> : null
-        )}
-        contentContainerStyle={styles.contentContainer}
-        showsVerticalScrollIndicator={false}
-      />
+      <ScrollView contentContainerStyle={styles.contentContainer} showsVerticalScrollIndicator={false}>
+        {/* Header, Quote, Statistiken, Chart-Filter, Chart */}
+        <View style={styles.titleContainer}>
+          <ThemedText type="title" style={styles.greetingText}>Hallo, {currentUser?.username || 'Nutzer'}!</ThemedText>
+          <HelloWave />
+        </View>
+        <QuoteBanner quote={quote} />
+        <ThemedText type="subtitle" style={styles.sectionTitle}>Deine Statistiken:</ThemedText>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.chartSelector}>
+          {filterOptions.map((option) => (
+            <Pressable key={option.key} style={[styles.chartButton, selectedFilter === option.key && styles.chartButtonSelected]} onPress={() => setSelectedFilter(option.key)}>
+              <ThemedText style={[styles.chartButtonText, { color: '#000' }, selectedFilter === option.key && styles.chartButtonTextSelected]}>{option.label}</ThemedText>
+            </Pressable>
+          ))}
+        </ScrollView>
+        <Image source={chartMap[selectedFilter]} style={styles.chartImage} contentFit="contain" />
 
+        {/* Streak + Wochentage */}
+        <ThemedView style={styles.habitListContainer}>
+          <ThemedText type="subtitle" style={styles.habitTitle}>Deine Streak:</ThemedText>
+          <Pressable style={styles.streakContainer} onPress={() => setStreakModalVisible(true)}>
+            <Image source={require('@/assets/images/wassertropfen.png')} style={styles.streakBackgroundImage} contentFit="contain" />
+            <ThemedText style={styles.streakNumber}>14</ThemedText>
+          </Pressable>
+          <View style={styles.weekdayRow}>
+            {['Mo','Di','Mi','Do','Fr','Sa','So'].map((day, index) => {
+              const todayDay = new Date();
+              const jsDay = todayDay.getDay();
+              const mappedDay = jsDay === 0 ? 6 : jsDay - 1;
+              const isToday = index === mappedDay;
+              const isPastOrToday = index <= mappedDay;
+              return (
+                <View key={index} style={[styles.weekdayCircle, isPastOrToday && styles.weekdayFilled, isToday && styles.weekdayToday]}>
+                  <ThemedText style={[styles.weekdayText, isToday && styles.weekdayTextToday]}>{day}</ThemedText>
+                </View>
+              );
+            })}
+          </View>
+
+          {/* Heutige Ziele mit Checkboxen */}
+          <ThemedText type="subtitle" style={[styles.habitTitle, { marginTop: 40 }]}>Heutige Ziele:</ThemedText>
+          {isLoadingHabits ? (
+            <View style={{ padding: 20 }}>
+              <ActivityIndicator size="small" color="rgb(25, 145, 137)" />
+              <ThemedText style={{ textAlign: 'center', marginTop: 5 }}>Lade Habits...</ThemedText>
+            </View>
+          ) : filteredHabits.length > 0 ? (
+            filteredHabits.map((habit) => (
+              <Pressable
+                key={habit.id}
+                onPress={() => toggleHabit(habit.id, today.toISOString())}
+                style={styles.habitItem}
+              >
+                <View
+                  style={[
+                    styles.checkbox,
+                    habit.checked && styles.checkboxChecked,
+                  ]}
+                >
+                  {habit.checked && (
+                    <ThemedText style={styles.checkmark}>✓</ThemedText>
+                  )}
+                </View>
+                <View style={styles.habitTextContainer}>
+                  <ThemedText style={styles.habitLabel}>{habit.name}</ThemedText>
+                  <ThemedText style={styles.habitDescription}>
+                    {habit.description} ({habit.frequency})
+                  </ThemedText>
+                </View>
+              </Pressable>
+            ))
+          ) : (
+            <ThemedText style={styles.noHabitsText}>
+              Keine Habits angelegt.
+            </ThemedText>
+          )}
+        </ThemedView>
+      </ScrollView>
+      {/* FAB, Modal, Streak-Modal */}
       <Pressable style={styles.fab} onPress={() => { setHabitMode('menu'); setModalVisible(true); }}>
         <ThemedText style={styles.fabText}>＋</ThemedText>
       </Pressable>
-
       <HabitModal
         visible={modalVisible}
         mode={habitMode}
@@ -210,7 +276,6 @@ export default function HomeScreen() {
         onAddPredefined={addPredefinedHabit}
         onAddCustom={addHabit}
       />
-
       <Modal visible={streakModalVisible} animationType="fade" transparent onRequestClose={() => setStreakModalVisible(false)}>
         <View style={styles.streakModalOverlay}>
           <View style={styles.streakModalContainer}>
