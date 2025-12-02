@@ -32,10 +32,30 @@ export function useHabitsController() {
   const toggleHabit = async (id: number, dateIso: string) => {
     if (!authToken) return;
     try {
+      // Optimistic update: update local state immediately to avoid UI jump
+      const toggleDate = new Date(dateIso);
+      const isSameDay = (a: Date, b: Date) => a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+      setHabits(prev => prev.map(h => {
+        if (h.id !== id) return h;
+        const entries = h.entries.map(e => {
+          try {
+            const d = new Date(e.date);
+            if (isSameDay(d, toggleDate)) return { ...e, status: !e.status };
+          } catch (_){ }
+          return e;
+        });
+        return { ...h, entries };
+      }));
+
+      // send request in background; if it fails, revert by refetching
       await habitService.toggleHabit(authToken, id, dateIso);
-      // optimistic re-fetch to keep data in sync
-      await fetchHabits();
     } catch (error) {
+      // revert local state by refetching from server
+      try {
+        await fetchHabits();
+      } catch (e) {
+        // swallow secondary error and rethrow original
+      }
       throw error;
     }
   };
