@@ -117,8 +117,8 @@ Die Definition of Ready beschreibt, wann ein Backlog Item als “bereit zur Umse
 - Die Abhängigkeiten zu anderen Issues sind geklärt 
 - Story ist klein genug, um in einem Sprint abgeschlossen zu werden 
 - Das Team versteht die Issue/Story inhaltlich und technisch 
-- Falls nötig liegt Design/UI vor
-- Testkriterien oder Hinweise sind definiert 
+- Falls nötig liegt Wireframes/UI-Skizzen vor
+//- Testkriterien oder Hinweise sind definiert 
 
 
 

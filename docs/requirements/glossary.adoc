@@ -37,6 +37,7 @@ In diesem Dokument werden die wesentlichen Begriffe aus dem Anwendungsgebiet (Fa
 | Self-control | Fähigkeit, Impulse zu steuern und langfristige Ziele über kurzfristige Wünsche zu stellen. | Selbstdiziplin, Impulskontrolle
 | Streak | Anzahl der aufeinanderfolgenden Tage, an denen eine Gewohnheit durch den entsprechenden Nutzer erfolgreich durchgeführt wurde. | Serie, Kette
 | Streak Tracking | Visualisierung kontinuierlicher Durchführung. (z.B.: Erreichen des 10-Tage Zieles.). | Erfolgsserie
+| Aktivierung eines Habits | Der Moment, andem Erinnerungen für das Habit bei dem entsprechenden Nutzer freigeschalten werden und der Nutzer seine Streak aufbauen kann. | ---
 |===
 
 
