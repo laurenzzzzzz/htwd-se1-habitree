@@ -256,3 +256,77 @@ des Projektes. Projekt  enthält eigene Gedanken und Ideen und ist somit hinsich
 - Einführung Hapiness- Index für alle Mitarbeiter nach Retrospektiven und transparente Darstellung im Miro- Board.
 | Wissen und Kenntnisse sind anwendbar und können individuell angepasst werden, sodass diese nochmals mehr den Bedürfnissen des Teams entsprechen.
 |===
+
+== Software Engineering 2
+=== Negative Ereignisse
+|===
+|*Ereignis* |*Maßnahme* |*Erkenntnis*
+| Inkonsistenzen zwischen PowerPoint und GitHub, vor allem bei Task und Asignees
+| - Übertragung der Kapazitätenliste ins GitHub +
+- Happiness-Score in Miro ausgelagert +
+- PowerPoint reduziert
+| - Mehrere Orte für dieselbe Information erzeugen Chaos +
+- einheitliches System vereinfacht Kontrolle
+
+| Zu hoher administrativer Aufwand durch Pflege von Power Point und Git Hub (und Miro- Board)
+| - Aufgaben- und KPI-Erfassung direkt in GitHub und Miro
+| - Administrative Arbeit darf nicht den Entwicklungsaufwand übersteigen
+
+|===
+
+=== Positive Ereignisse
+|===
+|*Ereignis* |*Erkenntnis* 
+| Einführung klarer KPIs (Hapiness, Kapazität, Task- finish rate)
+| - Sichtbarkeit der Arbeitsbelastung und Motivation verbessert Planung, Teamverständnis, Zusammenarbeit, und dienem
+dem Scrum Master als Arbeitsunterstützung (z.B.: Ansprechen in Retrospektive, wenn Hapiness stark fällt, oder sich Kapazitäten drastisch reduzieren)
+| Meetings bekommen prinzipiell durch Power Point mehr Struktur
+| - Vereinheitlichung der Besprechungsbasis führt dazu, das alle Teammitglieder den Stand, Ziele und mögliche Blockaden kennen
+- Vereinfachung der Koordination innerhalb des Teams durch gleiches Projektverständnis
+| Klare Entscheidung gegen PowerPoint als Hauptwerkzeug, bei gleichzeitigem Aufrechterhalten der verbesserten Meeting Struktur
+| - Weniger Redundanz, weniger Aufwand, konsistentere Planung
+| 
+|
+ 
+|===
+
+=== Managementtechniken
+|===
+|*Kategorie* |*Praktik* 
+| Meeting-Struktur- Verbesserung
+|- Wöchentliche Weeklies +
+- Retrospektive am Ende des Sprint +
+- Happiness-Erhebung zu Retrospektiven +
+- Kapazitätserhebung im Weekly +
+- Sprint Planning Meeting zu Beginn jedes Sprints +
+- Refinement- Meeting wenn PBI's zu komplex sind und nicht innerhalb eines Sprints trotz ursprünglichen Erwartungen umgesetzt werden konnten
+| KPI-Nutzung
+|- Happiness-Index (avg(Hapiness- Board)) +
+- Kapazitäten-Index (avg(Kapazitäten-Board)) +
+- Task-Fortschrittsquote (erledigte Task / Gesamttask) +
+| Sprint- Management
+| - Einführung echter 4-Wochen- Sprints, Sprint Backlog, Sprint Execution und regelmäßigen Reviews
+| Task- Organisation
+| - Festlegung klarer Task- Typen: +
+(1) Documentation- Task +
+(2) Implementation- Task +
+(3) Story- Task
+| User- Story- Vorbereitung
+| - Ergänzung des Git Hub Boardes um ein `ready`- Label, welches nur User Stories- Erhalten, die alle Kriterien unserer
+Definition of Ready enthalten +
+| Git- Hub- Nutzung
+| - Board vollständig restrukturiert: +
+(1) Herausnahme der Komplexität des Boardes durch Entfernen von redundanten Sichten und Labels +
+(2) Ergänzen/Refactoring des Boardes um neue, sinnstiftende Sichten und Labels, wie unter anderem: +
+- Product Backlog: Unsere User Stories (gruppiert nach Priorität nach Moscow) +
+- Sprint Backlog: Abgeleitete Task der User Stories +
+- Sprint Execution: Aktuelle User Stories, des jeweiligen Sprints; Board gruppiert nach den einzelnen Sprints, sodass eine gewisse Zeitreihe entsteht; Aktueller Sprint wird mit dem Label `current` visualisiert  +
+- Current Iteration: Zeigt alle Task {Story-, Documentation,- Implementation- Task} der jeweiligen Iteration, gefiltert nach `ToDo`,`In Progress`, `Done` +
+- Documentation & Review- Task: Zeigt alle Dokumentationsanforderungen sowie Termine/ Verbindlichkeiten für den Stakeholder- Austausch +
+(3) Standard- Workflows für Labelvergabe und Umgang mit Sprints definiert, unter anderem: +
+- Unterteilung der Task nun in  `Implementation`, `Story`, `Documentation`- Task zur besseren Struktur und Übersichtlichkeit +
+- Herausnahme von redundanten Komplexitäts und Prioritätslabeln, sodass ein einheitliches Verständnis über den Sinn und Nutzen der Labels nun vorliegt und die Labelingstrategie bei allen Artefakten konsistent und gleich erfolgt +
+- Wiederaufnahme von Sprints und Iterations- Labels in Git- Hub um nun ganz genau einblicken zu können welche Task und schlussendlich auch welche User Stories zu welchen Sprints finalisiert wurden +
+(4) User Stories- Format vereinheitlicht +
+
+|===
