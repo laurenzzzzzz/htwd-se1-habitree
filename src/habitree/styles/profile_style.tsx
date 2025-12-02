@@ -65,6 +65,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 12,
     paddingBottom: 40,
+    
   },
   authButton: {
     backgroundColor: 'rgb(25, 145, 137)',
@@ -73,11 +74,14 @@ export const styles = StyleSheet.create({
     borderRadius: 8,
     width: windowWidth * 0.7,
     alignItems: 'center',
+    alignSelf: 'center',
+    marginTop: 24,
   },
   authButtonText: {
     color: '#fff',
     fontWeight: 'bold',
     fontSize: 16,
+    textAlign: 'center',
   },
   friendsRow: {
     flexDirection: 'row',
