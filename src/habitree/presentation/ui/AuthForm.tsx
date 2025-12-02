@@ -26,7 +26,7 @@ export const AuthForm: React.FC<Props> = ({
   isProcessing,
 }) => {
   return (
-    <View>
+    <View style={{ width: '100%', alignItems: 'center' }}>
       {isRegisterMode && (
         <TextInput style={styles.input} placeholder="Benutzername" value={username} onChangeText={onChangeUsername} autoCapitalize="none" />
       )}
