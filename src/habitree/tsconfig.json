@@ -4,10 +4,10 @@
     "jsx": "react",
     "strict": true,
     
-    // 👇 FÜGEN SIE DIESE BEIDEN ZEILEN HINZU 👇
+
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    // 👆 FÜGEN SIE DIESE BEIDEN ZEILEN HINZU 👆
+
     
     "paths": {
       "@/*": [
