@@ -2,13 +2,11 @@ import { Tabs } from 'expo-router';
 
 import React from 'react';
 
-import { Platform, View, Image, Dimensions, Text } from 'react-native';
+import { Image, Dimensions, Text } from 'react-native';
 
 import { HapticTab } from '@/components/HapticTab';
 
 import { IconSymbol } from '@/components/ui/IconSymbol';
-
-import TabBarBackground from '@/components/ui/TabBarBackground';
 
 import { Colors } from '@/constants/Colors';
 
@@ -17,8 +15,6 @@ import { useColorScheme } from '@/hooks/useColorScheme';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
-const TAB_BAR_HEIGHT = Math.max(65, windowHeight * 0.09);
-// const TAB_BAR_HEIGHT = Math.max(65, windowHeight * 0.09); // 
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();

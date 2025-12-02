@@ -1,16 +1,9 @@
-import React, { 
-    createContext, 
-    useContext, 
-    useState, 
-    useEffect, 
-    PropsWithChildren 
-} from 'react';
-import * as SecureStore from 'expo-secure-store';
+import React, { createContext, useContext, useState, useEffect, PropsWithChildren } from 'react';
+import { User } from '../domain/entities/User';
+import { AuthService } from '../application/services/AuthService';
+import { SecureStoreAuthRepository } from '../infrastructure/adapters/SecureStoreAuthRepository';
 
-const AUTH_TOKEN_KEY = 'userAuthToken';
-const USER_DATA_KEY = 'currentAuthUser'; 
-
-export type CurrentUser = { id: number; email: string; username: string };
+export type CurrentUser = User;
 
 type AuthContextType = {
   authToken: string | null;
@@ -23,37 +16,18 @@ type AuthContextType = {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// --- SECURE STORE FUNKTIONEN ---
-const loadAuthData = async (): Promise<{ token: string | null, user: CurrentUser | null }> => {
-    const token = await SecureStore.getItemAsync(AUTH_TOKEN_KEY);
-    const userJson = await SecureStore.getItemAsync(USER_DATA_KEY);
-    
-    let user: CurrentUser | null = null;
-    if (userJson) {
-        try {
-            user = JSON.parse(userJson);
-        } catch (e) {
-            console.error("Failed to parse user data:", e);
-        }
-    }
-    return { token, user };
-};
-
-const deleteAuthData = async () => {
-    await SecureStore.deleteItemAsync(AUTH_TOKEN_KEY);
-    await SecureStore.deleteItemAsync(USER_DATA_KEY);
-};
-
+// Instantiate repository + service here (can be replaced with DI later)
+const authRepo = new SecureStoreAuthRepository();
+const authService = new AuthService(authRepo);
 
 export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [authToken, setAuthToken] = useState<string | null>(null);
   const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Initiales Laden des Auth-Status beim Start der App
   useEffect(() => {
     const checkAuthStatus = async () => {
-      const { token, user } = await loadAuthData();
+      const { token, user } = await authService.initialize();
       setAuthToken(token);
       setCurrentUser(user);
       setIsLoading(false);
@@ -62,14 +36,13 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
   }, []);
 
   const signIn = async (token: string, user: CurrentUser) => {
-    await SecureStore.setItemAsync(AUTH_TOKEN_KEY, token);
-    await SecureStore.setItemAsync(USER_DATA_KEY, JSON.stringify(user));
+    await authService.signIn(token, user);
     setAuthToken(token);
     setCurrentUser(user);
   };
 
   const signOut = async () => {
-    await deleteAuthData();
+    await authService.signOut();
     setAuthToken(null);
     setCurrentUser(null);
   };
@@ -78,14 +51,7 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{
-        authToken,
-        currentUser,
-        isLoggedIn,
-        isLoading,
-        signIn,
-        signOut,
-      }}
+      value={{ authToken, currentUser, isLoggedIn, isLoading, signIn, signOut }}
     >
       {children}
     </AuthContext.Provider>

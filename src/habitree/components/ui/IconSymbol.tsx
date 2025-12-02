@@ -1,8 +1,8 @@
 import React from 'react';
-import { Platform, View, Text, StyleProp, ViewStyle, TextStyle } from 'react-native';
+import { Platform, View, StyleProp, ViewStyle, TextStyle , OpaqueColorValue } from 'react-native';
 import { SymbolView, SymbolViewProps, SymbolWeight } from 'expo-symbols';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import { OpaqueColorValue } from 'react-native';
+
 
 type IconMapping = Record<SymbolViewProps['name'], keyof typeof MaterialIcons.glyphMap>;
 type IconSymbolName = keyof typeof MAPPING;
