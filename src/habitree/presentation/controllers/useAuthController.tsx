@@ -9,7 +9,11 @@ export function useAuthController() {
   const login = async (email: string, password: string) => {
     setIsProcessing(true);
     try {
-      await authenticationService.login(email, password);
+      const res = await authenticationService.login(email, password);
+      // Update AuthContext state so the app reflects the logged-in user
+      if (res && res.token && res.user) {
+        await signIn(res.token, res.user);
+      }
     } finally {
       setIsProcessing(false);
     }
@@ -18,7 +22,10 @@ export function useAuthController() {
   const register = async (username: string, email: string, password: string) => {
     setIsProcessing(true);
     try {
-      await authenticationService.register(username, email, password);
+      const res = await authenticationService.register(username, email, password);
+      if (res && res.token && res.user) {
+        await signIn(res.token, res.user);
+      }
     } finally {
       setIsProcessing(false);
     }

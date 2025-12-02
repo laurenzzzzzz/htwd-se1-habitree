@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuthController } from '../../presentation/controllers/useAuthController';
-import AuthForm from '../../presentation/ui/AuthForm';
+import { AuthForm } from '../../presentation/ui/AuthForm';
 import {
   Pressable,
   View,
@@ -8,7 +8,7 @@ import {
   Image,
   Alert,
 } from 'react-native';
-import { useAuth } from '../../context/AuthContext';
+// Removed unused useAuth import (login handled via useAuthController)
 import { styles } from '../../styles/login_style';
 
 // --- LOGIN/REGISTER LOGIK UND UI (aus index.tsx verschoben) ---
@@ -18,7 +18,6 @@ export default function LoginScreen() {
   const [authPassword, setAuthPassword] = useState('');
   const [isRegisterMode, setIsRegisterMode] = useState(false);
   const [authUsername, setAuthUsername] = useState('');
-  const { signIn } = useAuth()!; // Verwenden Sie den Auth-Hook
   const { login, register, isProcessing } = useAuthController();
 
 

@@ -17,7 +17,7 @@ import { ThemedView } from '@/components/ThemedView';
 import { StatusBar } from 'expo-status-bar';
 import * as Notifications from 'expo-notifications';
 import { useProfileController } from '../../presentation/controllers/useProfileController';
-import ProfileSettings from '../../presentation/ui/ProfileSettings';
+import { ProfileSettings } from '../../presentation/ui/ProfileSettings';
 import { useAuth } from '../../context/AuthContext';
 import { styles } from '../../styles/profile_style';
 // --- AUTH UND API KONSTANTEN ---
