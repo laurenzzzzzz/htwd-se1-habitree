@@ -9,10 +9,11 @@ type Props = {
 };
 
 export const QuoteBanner: React.FC<Props> = ({ quote }) => {
+  const displayQuote = quote?.getFormattedQuote() || 'Lade Tagesspruch...';
   return (
     <View style={quoteBannerStyles.container}>
       <ThemedText style={quoteBannerStyles.text}>
-        Tagesspruch: "{quote?.getFormattedQuote() || 'Lade Tagesspruch...'}"
+        Tagesspruch: {displayQuote}
       </ThemedText>
     </View>
   );
