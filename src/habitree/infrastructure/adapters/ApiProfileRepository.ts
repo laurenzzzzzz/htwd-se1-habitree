@@ -1,6 +1,6 @@
 import axios from 'axios';
 import IProfileRepository from '../../domain/repositories/IProfileRepository';
-import { User } from '../../domain/entities/User';
+import { User, UserData } from '../../domain/entities/User';
 
 const API_BASE_URL = 'http://iseproject01.informatik.htw-dresden.de:8000';
 
@@ -11,7 +11,8 @@ export class ApiProfileRepository implements IProfileRepository {
       { username: newUsername },
       { headers: { Authorization: `Bearer ${authToken}` } }
     );
-    return response.data;
+    const userData = response.data.user as UserData;
+    return new User(userData);
   }
 
   async updatePassword(authToken: string, oldPassword: string, newPassword: string): Promise<{ message?: string }> {

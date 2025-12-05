@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, Pressable, FlatList } from 'react-native';
-import { ThemedText } from '@/components/ThemedText';
+import { ThemedText } from './ThemedText';
 import { Habit as HabitType } from '../../domain/entities/Habit';
+import { habitListStyles } from '../../styles/habitlist_style';
 
 type Props = {
   habits: HabitType[];
@@ -11,14 +12,14 @@ type Props = {
 export const HabitList: React.FC<Props> = ({ habits, onToggle }) => {
   return (
     <View>
-      <ThemedText type="subtitle" style={{ marginBottom: 8 }}>Deine Streak:</ThemedText>
+      <ThemedText type="subtitle" style={habitListStyles.title}>Deine Streak:</ThemedText>
       <FlatList
         data={habits}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-          <Pressable onPress={() => onToggle(item.id)} style={{ paddingVertical: 8 }}>
-            <ThemedText style={{ fontWeight: '600' }}>{item.name}</ThemedText>
-            <ThemedText style={{ opacity: 0.7 }}>{item.description}</ThemedText>
+          <Pressable onPress={() => onToggle(item.id)} style={habitListStyles.habitItem}>
+            <ThemedText style={habitListStyles.habitName}>{item.name}</ThemedText>
+            <ThemedText style={habitListStyles.habitDescription}>{item.description}</ThemedText>
           </Pressable>
         )}
       />

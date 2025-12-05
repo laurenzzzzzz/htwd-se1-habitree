@@ -95,14 +95,25 @@ src/habitree/
 
 **Contents:**
 - **Entities** (`domain/entities/`)
-  - `User.ts` – User profile data (id, username, email)
-  - `Habit.ts` – Habit definition and tracking data
-  - `Quote.ts` – Daily motivational quote
+  - `User.ts` – User profile data (id, username, email) with validation methods
+  - `Habit.ts` – Habit definition and tracking data with business logic (streak calculation, completion rate)
+  - `Quote.ts` – Daily motivational quote with utility methods
+  - `TreeGrowth.ts` – User's tree progression based on habit completion (0-100%)
+  - `Achievement.ts` – Badges/accomplishments earned by user
+  - `Streak.ts` – User's current and longest streak with milestone tracking
   - `Entry.ts` – Habit completion entry for a specific date
 
 - **Repository Interfaces** (`domain/repositories/`)
   - Define contracts that lower layers must implement
   - Example: `IHabitsRepository` declares `getHabits()`, `saveHabit()`, `toggleHabit()`
+  - `IAuthApiRepository` – Authentication endpoints
+  - `IHabitsRepository` – Habit CRUD and tracking
+  - `IQuotesRepository` – Daily quotes
+  - `IProfileRepository` – User profile updates
+  - `IAuthRepository` – Local auth persistence
+  - `ITreeGrowthRepository` – Tree growth calculations
+  - `IAchievementRepository` – Achievement/badge system
+  - `IStreakRepository` – Streak tracking
   - No implementation details; pure TypeScript interfaces
 
 **Key Rules:**
@@ -123,6 +134,9 @@ src/habitree/
   - `HabitService` – CRUD operations for habits
   - `QuoteService` – Fetch and cache daily quotes
   - `ProfileService` – Update user profile and password
+  - `TreeGrowthService` – Calculate and fetch tree progression
+  - `AchievementService` – Fetch unlocked achievements
+  - `StreakService` – Track current and longest streaks
 
 **Example Flow:**
 ```typescript
@@ -151,6 +165,9 @@ src/habitree/
   - `ApiAuthRepository.ts` – axios calls to `/auth` endpoint
   - `ApiQuotesRepository.ts` – axios calls to `/quotes` endpoint
   - `ApiProfileRepository.ts` – axios calls to `/user` endpoint
+  - `ApiTreeGrowthRepository.ts` – tree growth data and calculations
+  - `ApiAchievementRepository.ts` – achievement/badge endpoints
+  - `ApiStreakRepository.ts` – streak tracking endpoints
   - All adapters implement domain repository interfaces
 
 - **Persistence Adapter**
@@ -181,12 +198,21 @@ src/habitree/
 - **Controller Hooks** (`presentation/controllers/`)
   - Smart hooks that bridge services and UI components
   - Manage loading states, errors, and local UI state
-  - Example: `useHabitsController()` returns `{ habits, isLoading, fetchHabits, saveHabit, toggleHabit }`
+  - `useAuthController()` – Login/register orchestration
+  - `useHabitsController()` – Habit CRUD and filtering
+  - `useQuoteController()` – Daily quote fetching
+  - `useProfileController()` – User profile updates
+  - `useTreeGrowthController()` – Tree growth data and display
+  - `useAchievementController()` – Achievement/badge unlocking
+  - `useStreakController()` – Streak data and milestones
+  - `useCalendarStatsController()` – Weekly completion statistics
 
 - **Presentational Components** (`presentation/ui/`)
   - Dumb, reusable UI components
   - Receive props and emit callbacks; no business logic
-  - Example: `HabitList` receives `habits` array and `onToggle` callback, renders items
+  - Foundation components: `ThemedText`, `ThemedView`, `HelloWave`, `Collapsible`, `HapticTab`, `ExternalLink`, `ParallaxScrollView`
+  - UI Components: `AuthForm`, `HabitList`, `QuoteBanner`, `ProfileSettings`, `HabitModal`
+  - Feature screens: `CalendarView` (with weekly stats), `TreeView` (with growth display), `InventoryView` (with achievements)
 
 **Example Pattern:**
 ```tsx
@@ -405,6 +431,87 @@ export default function NewScreen() {
 ### Component not re-rendering
 - Verify controller hook returns memoized values with `useMemo`
 - Check that dependencies in `useEffect` arrays are correct
+
+### HTTP calls failing silently
+- Add console logs in the HTTP adapter
+- Verify API_BASE_URL is correct
+- Check Auth token is being sent in request headers
+
+---
+
+## Complete DDD Implementation (Latest Session)
+
+### ✅ Domain Layer – All 7 Entities as ES6 Classes
+- `User.ts` – Methods: `isValidEmail()`, `hasValidUsername()`, `getDisplayName()`
+- `Habit.ts` – Methods: `getStreak()`, `isCompletedToday()`, `getCompletionRate()`, `hasMilestone(days)`
+- `Quote.ts` – Methods: `getFormattedQuote()`, `getLength()`, `isValid()`, `getPreview(maxLength)`
+- `TreeGrowth.ts` – Methods: `getGrowthStage()`, `getGrowthText()`, `isFullyGrown()`
+- `Achievement.ts` – Methods: `getDaysSinceUnlock()`, `isRecent()`, `getFormattedUnlockDate()`
+- `Streak.ts` – Methods: `isActive()`, `getMilestoneMessage()`, `getDisplayText()`
+- `Entry.ts` – Habit completion entry record
+
+**All 8 Repository Interfaces:** Pure contracts with no implementations
+
+### ✅ Application Layer – 8 Services (All Depend on Interfaces)
+- `AuthService` – Auth orchestration + persistence
+- `AuthenticationService` – Login/register flow
+- `HabitService` – Habit CRUD + filtering
+- `QuoteService` – Quote fetching + caching
+- `ProfileService` – User profile updates
+- `TreeGrowthService` – Tree progression logic
+- `AchievementService` – Achievement system
+- `StreakService` – Streak tracking + milestones
+
+### ✅ Infrastructure Layer – All Adapters Instantiate Entities
+**CRITICAL - All use `new Entity()` NOT type casting:**
+- `ApiAuthRepository` – `new User(userData)` ✅
+- `ApiHabitsRepository` – `.map(data => new Habit(data))` ✅
+- `ApiQuotesRepository` – `.map(data => new Quote(data))` ✅
+- `ApiProfileRepository` – `new User(userData)` ✅ **FIXED THIS SESSION**
+- `SecureStoreAuthRepository` – `new User(userData)` ✅ 
+- `ApiTreeGrowthRepository` – `new TreeGrowth(dummyData)` ✅
+- `ApiAchievementRepository` – Achievement[] instantiation ✅
+- `ApiStreakRepository` – `new Streak(dummyData)` ✅
+
+### ✅ Presentation Layer – Pure Components + Smart Controllers
+**Components (100% presentation-only):**
+- `TreeView` – ✅ **REFACTORED:** Props-based from tree.tsx screen
+- `CalendarView` – ✅ **REFACTORED:** Props-based from calendar.tsx screen
+- `InventoryView` – ✅ **REFACTORED:** Props-based from inventory.tsx screen
+- `QuoteBanner`, `HabitList`, `AuthForm`, `ProfileSettings`, `HabitModal` – ✅ All pure props-based
+
+**Controllers (8 total):** All manage service calls + state
+- `useAuthController`, `useHabitsController`, `useQuoteController`, `useProfileController`
+- `useTreeGrowthController`, `useAchievementController`, `useStreakController`, `useCalendarStatsController`
+
+### ✅ App Layer – 9 Thin Screen Wrappers
+All screens orchestrate controllers and pass props:
+- Root: `_layout.tsx`, `(auth)/_layout.tsx`, `(auth)/login.tsx`, `(tabs)/_layout.tsx`
+- Feature Screens:
+  - `(tabs)/index.tsx` – HomeScreen (habits + quotes + streak)
+  - `(tabs)/calendar.tsx` – **FIXED:** Calls useCalendarStatsController, passes props to CalendarView
+  - `(tabs)/tree.tsx` – **FIXED:** Calls useTreeGrowthController, passes props to TreeView
+  - `(tabs)/inventory.tsx` – **FIXED:** Calls useAchievementController, passes props to InventoryView
+  - `(tabs)/profile.tsx` – Calls useProfileController
+
+### 📋 Critical Fixes This Session
+| Component | Problem | Fix | Status |
+|-----------|---------|-----|--------|
+| TreeView.tsx | Called controller directly | Moved to tree.tsx, accepts props | ✅ |
+| CalendarView.tsx | Called controller directly | Moved to calendar.tsx, accepts props | ✅ |
+| InventoryView.tsx | Called controller directly | Moved to inventory.tsx, accepts props | ✅ |
+| ApiProfileRepository | Returned plain object | Changed to `new User()` instantiation | ✅ |
+
+### 🎯 All Dummy Data Marked
+- All dummy implementations use `//Dummy Hardcoded:` comments
+- Ready for real API integration
+
+### 📊 Data Flow Example: "Toggle Habit"
+1. **Screen** (index.tsx) – User taps checkbox
+2. **Controller** (useHabitsController) – Calls `handleToggleHabit(id, date)`
+3. **Service** (HabitService) – Calls `habitRepo.toggleHabit(authToken, id, dateIso)`
+4. **Adapter** (ApiHabitsRepository) – Makes HTTP PUT request
+5. **Result** – State updated, component re-renders
 
 ### HTTP calls failing silently
 - Add console logs in the HTTP adapter

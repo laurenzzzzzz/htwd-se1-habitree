@@ -13,7 +13,8 @@ export class SecureStoreAuthRepository implements IAuthRepository {
     let user: User | null = null;
     if (userJson) {
       try {
-        user = JSON.parse(userJson) as User;
+        const userData = JSON.parse(userJson);
+        user = new User(userData);
       } catch (e) {
         console.error('Failed to parse user data from secure store', e);
       }

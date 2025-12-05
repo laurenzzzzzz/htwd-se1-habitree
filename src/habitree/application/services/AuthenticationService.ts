@@ -13,16 +13,16 @@ export class AuthenticationService {
 
   async login(email: string, password: string): Promise<{ token: string; user: User }> {
     const res = await this.apiRepo.login(email, password);
-    const user: User = { id: res.user.id, email: res.user.email, username: res.user.username };
-    await this.authService.signIn(res.token, user);
-    return { token: res.token, user };
+    // res.user is already a User instance from ApiAuthRepository
+    await this.authService.signIn(res.token, res.user);
+    return { token: res.token, user: res.user };
   }
 
   async register(username: string, email: string, password: string): Promise<{ token: string; user: User }> {
     const res = await this.apiRepo.register(username, email, password);
-    const user: User = { id: res.user.id, email: res.user.email, username: res.user.username };
-    await this.authService.signIn(res.token, user);
-    return { token: res.token, user };
+    // res.user is already a User instance from ApiAuthRepository
+    await this.authService.signIn(res.token, res.user);
+    return { token: res.token, user: res.user };
   }
 }
 

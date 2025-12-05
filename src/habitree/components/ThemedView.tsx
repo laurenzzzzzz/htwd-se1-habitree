@@ -1,16 +1,3 @@
-import { View, type ViewProps } from 'react-native';
-import React from 'react';
-
-
-import { useThemeColor } from '@/hooks/useThemeColor';
-
-export type ThemedViewProps = ViewProps & {
-  lightColor?: string;
-  darkColor?: string;
-};
-
-export function ThemedView({ style, lightColor, darkColor, ...otherProps }: ThemedViewProps) {
-  const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'background');
-
-  return <View style={[{ backgroundColor }, style]} {...otherProps} />;
-}
+// This file has been moved to @/presentation/ui/ThemedView.tsx
+// Please import from there instead
+export { ThemedView, type ThemedViewProps } from '@/presentation/ui/ThemedView';

@@ -4,9 +4,9 @@ import React from 'react';
 
 import { Image, Dimensions, Text } from 'react-native';
 
-import { HapticTab } from '@/components/HapticTab';
+import { HapticTab } from '@/presentation/ui/HapticTab';
 
-import { IconSymbol } from '@/components/ui/IconSymbol';
+import { IconSymbol } from '@/presentation/ui/ui/IconSymbol';
 
 import { Colors } from '@/constants/Colors';
 
