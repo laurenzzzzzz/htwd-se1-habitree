@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { TreeGrowth, TreeGrowthData } from '../../domain/entities/TreeGrowth';
+import { TreeGrowth, TreeGrowthData, TreeGrowthUpdatePayload } from '../../domain/entities/TreeGrowth';
 import ITreeGrowthRepository from '../../domain/repositories/ITreeGrowthRepository';
 
 const API_BASE_URL = 'http://iseproject01.informatik.htw-dresden.de:8000';
@@ -27,7 +27,7 @@ export class ApiTreeGrowthRepository implements ITreeGrowthRepository {
     }
   }
 
-  async updateTreeGrowth(authToken: string, userId: number, growthData: any): Promise<void> {
+  async updateTreeGrowth(authToken: string, userId: number, growthData: TreeGrowthUpdatePayload): Promise<void> {
     try {
       //Dummy Hardcoded: In real implementation would send to API
       // await axios.put(`${API_BASE_URL}/api/users/${userId}/tree-growth`, growthData, {

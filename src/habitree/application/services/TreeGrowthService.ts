@@ -1,4 +1,4 @@
-import { TreeGrowth } from '../../domain/entities/TreeGrowth';
+import { TreeGrowth, TreeGrowthUpdatePayload } from '../../domain/entities/TreeGrowth';
 import ITreeGrowthRepository from '../../domain/repositories/ITreeGrowthRepository';
 
 export class TreeGrowthService {
@@ -12,7 +12,7 @@ export class TreeGrowthService {
     return this.repo.fetchTreeGrowth(authToken, userId);
   }
 
-  async updateTreeGrowth(authToken: string, userId: number, growthData: any): Promise<void> {
+  async updateTreeGrowth(authToken: string, userId: number, growthData: TreeGrowthUpdatePayload): Promise<void> {
     return this.repo.updateTreeGrowth(authToken, userId, growthData);
   }
 }

@@ -1,9 +1,10 @@
 import { useCallback, useState, useEffect } from 'react';
-import { TreeGrowthService } from '../../application/services/TreeGrowthService';
+import { useApplicationServices } from '../../application/providers/ApplicationServicesProvider';
 import { useAuth } from '../../context/AuthContext';
 import { TreeGrowth } from '../../domain/entities/TreeGrowth';
 
-export function useTreeGrowthController(treeGrowthService: TreeGrowthService) {
+export function useTreeGrowthController() {
+  const { treeGrowthService } = useApplicationServices();
   const { authToken, currentUser } = useAuth();
   const [treeGrowth, setTreeGrowth] = useState<TreeGrowth | null>(null);
   const [isLoading, setIsLoading] = useState(false);

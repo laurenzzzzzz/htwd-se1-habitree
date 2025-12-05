@@ -1,8 +1,9 @@
 import { useState, useCallback } from 'react';
-import { quoteService } from '../../infrastructure/di/ServiceContainer';
+import { useApplicationServices } from '../../application/providers/ApplicationServicesProvider';
 import { Quote } from '../../domain/entities/Quote';
 
 export function useQuoteController() {
+  const { quoteService } = useApplicationServices();
   const [quote, setQuote] = useState<Quote | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -14,7 +15,7 @@ export function useQuoteController() {
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [quoteService]);
 
   return { quote, isLoading, fetchQuote };
 }

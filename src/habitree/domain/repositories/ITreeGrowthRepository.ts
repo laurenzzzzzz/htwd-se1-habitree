@@ -1,4 +1,4 @@
-import { TreeGrowth } from '../entities/TreeGrowth';
+import { TreeGrowth, TreeGrowthUpdatePayload } from '../entities/TreeGrowth';
 
 export interface ITreeGrowthRepository {
   /**
@@ -9,7 +9,7 @@ export interface ITreeGrowthRepository {
   /**
    * Update tree growth based on habit completion
    */
-  updateTreeGrowth(authToken: string, userId: number, growthData: any): Promise<void>;
+  updateTreeGrowth(authToken: string, userId: number, growthData: TreeGrowthUpdatePayload): Promise<void>;
 }
 
 export default ITreeGrowthRepository;

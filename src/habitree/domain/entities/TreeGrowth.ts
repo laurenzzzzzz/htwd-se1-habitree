@@ -10,6 +10,12 @@ export type TreeGrowthData = {
   streakCount: number;
 };
 
+export type TreeGrowthUpdatePayload = {
+  growthPercentage: number;
+  totalCompletedHabits: number;
+  streakCount: number;
+};
+
 export class TreeGrowth {
   readonly userId: number;
   readonly growthPercentage: number;

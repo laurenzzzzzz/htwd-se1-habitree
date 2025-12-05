@@ -18,7 +18,6 @@ import { useAuth } from '../../context/AuthContext';
 import { useHabitsController } from '../../presentation/controllers/useHabitsController';
 import { useQuoteController } from '../../presentation/controllers/useQuoteController';
 import { useStreakController } from '../../presentation/controllers/useStreakController';
-import { streakService } from '../../infrastructure/di/ServiceContainer';
 import HabitModal from '../../presentation/ui/HabitModal';
 import { QuoteBanner } from '../../presentation/ui/QuoteBanner';
 import {
@@ -43,7 +42,7 @@ export default function HomeScreen() {
     isSameDay,
   } = useHabitsController();
   const { quote, fetchQuote } = useQuoteController();
-  const { streak, isLoading: isLoadingStreak } = useStreakController(streakService);
+  const { streak, isLoading: isLoadingStreak } = useStreakController();
 
   // Local UI state only
   const [habitMode, setHabitMode] = useState<'menu' | 'custom' | 'predefined' | null>(null);

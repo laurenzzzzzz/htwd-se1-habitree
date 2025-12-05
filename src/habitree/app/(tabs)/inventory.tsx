@@ -2,13 +2,12 @@ import React, { useState } from 'react';
 import { View, ActivityIndicator } from 'react-native';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { useAchievementController } from '../../presentation/controllers/useAchievementController';
-import { achievementService } from '../../infrastructure/di/ServiceContainer';
 import InventoryView from '../../presentation/ui/InventoryView';
 import { ThemedText } from '../../presentation/ui/ThemedText';
 
 export default function InventoryScreen() {
   const backgroundColor = useThemeColor({}, 'background');
-  const { achievements, isLoading } = useAchievementController(achievementService);
+  const { achievements, isLoading } = useAchievementController();
   const [selectedAchievementId, setSelectedAchievementId] = useState<number | null>(null);
 
   if (isLoading) {

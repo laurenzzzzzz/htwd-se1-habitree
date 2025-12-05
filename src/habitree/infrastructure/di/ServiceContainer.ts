@@ -14,6 +14,7 @@ import { TreeGrowthService } from '../../application/services/TreeGrowthService'
 import { AchievementService } from '../../application/services/AchievementService';
 import { StreakService } from '../../application/services/StreakService';
 import { SecureStoreAuthRepository } from '../adapters/SecureStoreAuthRepository';
+import { ApplicationServices } from '../../application/types/ApplicationServices';
 
 const habitsRepo = new ApiHabitsRepository();
 const quotesRepo = new ApiQuotesRepository();
@@ -35,12 +36,15 @@ export const treeGrowthService = new TreeGrowthService(treeGrowthRepo);
 export const achievementService = new AchievementService(achievementRepo);
 export const streakService = new StreakService(streakRepo);
 
-export default {
+export const applicationServices: ApplicationServices = {
   habitService,
   quoteService,
   profileService,
   authenticationService,
+  authService,
   treeGrowthService,
   achievementService,
   streakService,
 };
+
+export default applicationServices;

@@ -1,9 +1,10 @@
 import { useCallback, useState, useEffect } from 'react';
-import { StreakService } from '../../application/services/StreakService';
+import { useApplicationServices } from '../../application/providers/ApplicationServicesProvider';
 import { useAuth } from '../../context/AuthContext';
 import { Streak } from '../../domain/entities/Streak';
 
-export function useStreakController(streakService: StreakService) {
+export function useStreakController() {
+  const { streakService } = useApplicationServices();
   const { authToken, currentUser } = useAuth();
   const [streak, setStreak] = useState<Streak | null>(null);
   const [isLoading, setIsLoading] = useState(false);

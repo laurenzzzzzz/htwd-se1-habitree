@@ -31,12 +31,16 @@ src/habitree/
 │       └── IAuthApiRepository.ts
 │
 ├── application/                      # Application Layer
-│   └── services/                     # Use-case orchestration
-│       ├── AuthService.ts            # Auth domain logic
-│       ├── AuthenticationService.ts  # Login/register flow
-│       ├── HabitService.ts           # Habit CRUD
-│       ├── QuoteService.ts           # Quote fetching
-│       └── ProfileService.ts         # User profile updates
+│   ├── providers/                    # React providers for services
+│   │   └── ApplicationServicesProvider.tsx
+│   ├── services/                     # Use-case orchestration
+│   │   ├── AuthService.ts            # Auth domain logic
+│   │   ├── AuthenticationService.ts  # Login/register flow
+│   │   ├── HabitService.ts           # Habit CRUD + orchestration
+│   │   ├── QuoteService.ts           # Quote fetching
+│   │   └── ProfileService.ts         # User profile updates
+│   └── types/
+│       └── ApplicationServices.ts    # Shared DI contract
 │
 ├── infrastructure/                   # Infrastructure Layer
 │   ├── adapters/                     # External system adapters
@@ -46,7 +50,7 @@ src/habitree/
 │   │   ├── ApiProfileRepository.ts   # HTTP: profile endpoint
 │   │   └── SecureStoreAuthRepository.ts  # Local secure persistence
 │   └── di/                           # Dependency Injection
-│       └── ServiceContainer.ts       # Composition root (singleton exports)
+│       └── ServiceContainer.ts       # Instantiates repositories & services
 │
 ├── presentation/                     # Presentation Layer
 │   ├── controllers/                  # Smart hooks connecting UI to services
@@ -54,7 +58,7 @@ src/habitree/
 │   │   ├── useHabitsController.tsx
 │   │   ├── useQuoteController.tsx
 │   │   └── useProfileController.tsx
-│   └── ui/                           # Dumb presentational components
+│   └── ui/                           # Presentational components
 │       ├── QuoteBanner.tsx
 │       ├── HabitList.tsx
 │       ├── AuthForm.tsx
@@ -62,7 +66,8 @@ src/habitree/
 │       ├── CalendarView.tsx
 │       ├── TreeView.tsx
 │       ├── InventoryView.tsx
-│       └── HabitModal.tsx
+│       ├── HabitModal.tsx
+│       └── ui/                       # Low-level shared primitives (IconSymbol, TabBar background)
 │
 ├── app/                              # Expo Router screens
 │   ├── _layout.tsx                   # Root layout & tab navigator
@@ -81,7 +86,7 @@ src/habitree/
 ├── styles/                           # StyleSheet definitions
 ├── constants/                        # Global constants
 ├── hooks/                            # Generic custom hooks
-└── components/                       # Shared UI components (pre-DDD refactor)
+
 
 ```
 
@@ -239,15 +244,15 @@ export default function HomeScreen() {
 
 **Contents:**
 - `AuthContext.tsx`
-  - Uses `AuthService` from DI container
+  - Resolves `AuthService` via `useApplicationServices()`
   - Persists auth token via `SecureStoreAuthRepository`
   - Provides `isLoggedIn`, `currentUser`, `authToken`, `signOut()` to entire app
-  - Wrapped around `RootLayout`
+  - Wrapped by `ApplicationServicesProvider` + `AuthProvider` in `app/_layout.tsx`
 
 **Why Not Full DI?**
-- Minimizes invasive DI throughout the component tree
-- Auth context is a natural boundary for composition
-- Other services are injected per-controller hook as needed
+- `ApplicationServicesProvider` exposes all services through React context once at the root
+- Controllers pull only the services they need via `useApplicationServices`
+- Avoids prop drilling while keeping dependency direction explicit
 
 ---
 
@@ -265,9 +270,10 @@ export default function HomeScreen() {
 ## Key Architectural Principles
 
 ### Dependency Injection (DI)
-- Services are created once in `ServiceContainer.ts` and exported as singletons
-- Controllers receive services via imports (not constructor injection)
-- Reduces boilerplate while maintaining testability
+- Services are instantiated in `ServiceContainer.ts`
+- `ApplicationServicesProvider` (mounted in `app/_layout.tsx`) makes these services available via `useApplicationServices`
+- Controllers call `useApplicationServices()` instead of importing infrastructure modules directly
+- Keeps test seams clear and presentation layer agnostic of infrastructure
 
 ### Separation of Concerns
 - **Domain** = what (business rules)

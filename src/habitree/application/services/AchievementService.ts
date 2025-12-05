@@ -12,8 +12,9 @@ export class AchievementService {
     return this.repo.fetchAchievements(authToken, userId);
   }
 
-  async unlockAchievement(authToken: string, userId: number, achievementId: number): Promise<void> {
-    return this.repo.unlockAchievement(authToken, userId, achievementId);
+  async unlockAchievement(authToken: string, userId: number, achievementId: number): Promise<Achievement[]> {
+    await this.repo.unlockAchievement(authToken, userId, achievementId);
+    return this.repo.fetchAchievements(authToken, userId);
   }
 }
 

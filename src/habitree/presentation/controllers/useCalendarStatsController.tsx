@@ -1,8 +1,7 @@
 import { useCallback, useState, useMemo } from 'react';
 import { useHabitsController } from './useHabitsController';
-import { HabitService } from '../../application/services/HabitService';
 
-export function useCalendarStatsController(habitService: HabitService) {
+export function useCalendarStatsController() {
   const { habits } = useHabitsController();
   const [selectedDate, setSelectedDate] = useState<string>(new Date().toISOString().split('T')[0]);
 

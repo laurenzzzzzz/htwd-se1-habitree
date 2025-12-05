@@ -1,10 +1,11 @@
 import { useCallback, useState, useMemo } from 'react';
-import { habitService } from '../../infrastructure/di/ServiceContainer';
+import { useApplicationServices } from '../../application/providers/ApplicationServicesProvider';
 import { useAuth } from '../../context/AuthContext';
 import { Habit } from '../../domain/entities/Habit';
 import { FilterKey } from '../../constants/HomeScreenConstants';
 
 export function useHabitsController() {
+  const { habitService } = useApplicationServices();
   const { authToken, isLoggedIn } = useAuth();
   const [habits, setHabits] = useState<Habit[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -19,29 +20,27 @@ export function useHabitsController() {
     } finally {
       setIsLoading(false);
     }
-  }, [authToken, isLoggedIn]);
+  }, [authToken, habitService, isLoggedIn]);
 
-  const saveHabit = async (name: string, description: string, frequency: string) => {
+  const saveHabit = useCallback(async (name: string, description: string, frequency: string) => {
     if (!authToken) return;
     try {
-      await habitService.saveHabit(authToken, name, description, frequency);
-      await fetchHabits();
+      const updatedHabits = await habitService.saveHabit(authToken, name, description, frequency);
+      setHabits(updatedHabits);
     } catch (error) {
       throw error;
     }
-  };
+  }, [authToken, habitService]);
 
-  const toggleHabit = async (id: number, dateIso: string) => {
+  const toggleHabit = useCallback(async (id: number, dateIso: string) => {
     if (!authToken) return;
     try {
-      // Send request to server
-      await habitService.toggleHabit(authToken, id, dateIso);
-      // Refetch to ensure consistent state
-      await fetchHabits();
+      const updatedHabits = await habitService.toggleHabit(authToken, id, dateIso);
+      setHabits(updatedHabits);
     } catch (error) {
       throw error;
     }
-  };
+  }, [authToken, habitService]);
 
   /**
    * Filters habits based on selected filter
@@ -93,7 +92,7 @@ export function useHabitsController() {
     } catch (error) {
       return { success: false, error };
     }
-  }, []);
+  }, [saveHabit]);
 
   /**
    * Handler for habit toggle
@@ -105,7 +104,7 @@ export function useHabitsController() {
     } catch (error) {
       return { success: false, error };
     }
-  }, []);
+  }, [toggleHabit]);
 
   return {
     habits,

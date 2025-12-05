@@ -1,9 +1,10 @@
 import { useCallback, useState, useEffect } from 'react';
-import { AchievementService } from '../../application/services/AchievementService';
+import { useApplicationServices } from '../../application/providers/ApplicationServicesProvider';
 import { useAuth } from '../../context/AuthContext';
 import { Achievement } from '../../domain/entities/Achievement';
 
-export function useAchievementController(achievementService: AchievementService) {
+export function useAchievementController() {
+  const { achievementService } = useApplicationServices();
   const { authToken, currentUser } = useAuth();
   const [achievements, setAchievements] = useState<Achievement[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -23,14 +24,14 @@ export function useAchievementController(achievementService: AchievementService)
     async (achievementId: number) => {
       if (!authToken || !currentUser) return;
       try {
-        await achievementService.unlockAchievement(authToken, currentUser.id, achievementId);
-        await fetchAchievements();
+        const updatedAchievements = await achievementService.unlockAchievement(authToken, currentUser.id, achievementId);
+        setAchievements(updatedAchievements);
       } catch (error) {
         console.error('Error unlocking achievement:', error);
         throw error;
       }
     },
-    [authToken, currentUser, achievementService, fetchAchievements]
+    [authToken, currentUser, achievementService]
   );
 
   useEffect(() => {
