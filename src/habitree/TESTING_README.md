@@ -1,112 +1,91 @@
-# Habitree - Domain Driven Design Tests
+# Habitree - Testing Guide
 
-## Projektstruktur (DDD)
+## Testpyramide
 
 ```
-habitree/
-├── domain/                    # 🏛️ DOMAIN LAYER (Business-Logik)
-│   └── habit/
-│       ├── Habit.ts           # Entity, Value Objects, Domain Service
-│       └── index.ts           # Module Exports
-│
-├── __tests__/                 # 🧪 TESTS
-│   └── domain/
-│       └── HabitService.test.ts   # Unit Tests für Domain-Logik
-│
-├── app/                       # 📱 UI Layer (React Native)
-├── components/                # UI Components
-├── context/                   # React Context (Application Layer)
-├── hooks/                     # Custom Hooks
-│
-├── jest.config.js             # Jest Konfiguration
-└── package.json               # Dependencies & Scripts
+        ┌─────────────┐
+        │  System     │  10% - Manuell
+        │   Tests     │  
+        ├─────────────┤
+        │ Integration │  20% - Service + Repository
+        │   Tests     │  (12 Tests)
+        ├─────────────┤
+        │             │
+        │    Unit     │  70% - Domain Logic
+        │    Tests    │  (22 Tests)
+        │             │
+        └─────────────┘
 ```
 
-## DDD-Konzepte erklärt
+## Struktur
 
-### Domain Layer (`domain/`)
-- **Entities**: Objekte mit Identität (z.B. `Habit` mit ID)
-- **Value Objects**: Immutable Objekte ohne Identität (z.B. `HabitEntry`, `ValidationResult`)
-- **Domain Services**: Business-Logik die nicht zu einer Entity gehört (`HabitService`)
-
-### Warum DDD für Tests?
-1. **Isolierte Business-Logik** → Leicht testbar
-2. **Unabhängig von Framework** → Tests laufen ohne React Native
-3. **Klare Verantwortlichkeiten** → Jede Komponente hat eine Aufgabe
+```
+__tests__/
+├── domain/
+│   └── Habit.entity.test.ts          # Unit Tests (22)
+│
+└── integration/
+    └── HabitService.integration.test.ts  # Integration Tests (12)
+```
 
 ## Tests ausführen
 
 ```bash
-# 1. Dependencies installieren
-npm install
-
-# 2. Alle Tests ausführen
+# Alle Tests
 npm test
 
-# 3. Tests im Watch-Mode (bei Änderungen neu ausführen)
-npm run test:watch
-
-# 4. Tests mit Coverage-Report
+# Mit Coverage
 npm run test:coverage
+
+# Watch Mode
+npm run test:watch
 ```
 
-## Testübersicht
+## Was wird getestet?
 
-| Test | Beschreibung | Testmethode |
-|------|-------------|-------------|
-| `isSameDay` | Datumsvergleich | Grenzwertanalyse (Mitternacht) |
-| `calculateStreak` | Streak-Berechnung | Äquivalenzklassen, Grenzwerte |
-| `validateHabit` | Eingabevalidierung | Äquivalenzklassen (gültig/ungültig) |
-| `isHabitCompletedToday` | Tagesprüfung | Positive/Negative Tests |
-| `filterHabits` | Suchfilter | Teilübereinstimmung, Edge Cases |
-| `calculateTotalStreak` | Gesamt-Streak | Kombinatorik |
+### Unit Tests (22 Stück)
+Testet: `domain/entities/Habit.ts`
 
-## Domain Service in der App verwenden
+| Methode | Tests | Testmethode |
+|---------|-------|-------------|
+| `getStreak()` | 6 | Grenzwertanalyse |
+| `isCompletedToday()` | 4 | Äquivalenzklassen |
+| `getCompletionRate()` | 5 | Grenzwerte (0%, 50%, 100%) |
+| `hasMilestone()` | 3 | 7-Tage, 30-Tage |
+| `Constructor` | 2 | Objekterstellung |
 
-```typescript
-// In deiner React Native Komponente:
-import { HabitService } from '@/domain/habit';
+### Integration Tests (12 Stück)
+Testet: `application/services/HabitService.ts` + Repository + Entity
 
-// Streak berechnen
-const streak = HabitService.calculateStreak(habit.entries);
+| Flow | Tests | Was wird geprüft? |
+|------|-------|-------------------|
+| `fetchHabits` | 4 | Service → Repository → Entity |
+| `saveHabit` | 3 | Validierung → Speichern → Liste |
+| `toggleHabit` | 3 | Status-Änderung durch alle Layer |
+| E2E Workflow | 2 | Erstellen → Abhaken → Streak |
 
-// Habit validieren
-const { isValid, errorMessage } = HabitService.validateHabit(name, description);
-if (!isValid) {
-  Alert.alert('Fehler', errorMessage);
-  return;
-}
+### Systemtests (4 Stück - manuell)
+Siehe: `__tests__/system/SYSTEMTESTS.md`
 
-// Prüfen ob heute erledigt
-const completedToday = HabitService.isHabitCompletedToday(habit);
-```
-
-## Integration in index.tsx
-
-Um die Domain-Logik in der App zu verwenden, ersetze die hardcoded Werte:
-
-```typescript
-// VORHER (hardcoded):
-<ThemedText style={styles.streakNumber}>14</ThemedText>
-
-// NACHHER (berechnet):
-import { HabitService } from '@/domain/habit';
-
-// Im Component:
-const streak = HabitService.calculateTotalStreak(habits);
-
-// Im JSX:
-<ThemedText style={styles.streakNumber}>{streak}</ThemedText>
-```
+Login, CRUD, Streak, Validierung - vor Release durchklicken.
 
 ## Für den Fachaustausch
 
-Diese Tests demonstrieren:
-1. ✅ **Unit Tests** (70%) - Domain-Logik isoliert getestet
-2. ✅ **Testmethoden** - Äquivalenzklassen, Grenzwertanalyse, Negativtests
-3. ✅ **DDD-Prinzipien** - Saubere Trennung von Business-Logik
-4. ✅ **FIRST-Prinzip** - Fast, Isolated, Repeatable, Self-validating, Timely
+**Frage 1: Testorganisation**
+- 70% Unit / 20% Integration / 10% System
+- Entwickler: Unit Tests vor Commit
+- Tech Lead: Integration Tests
+- Team: Manuelle Systemtests
+
+**Frage 2: Methoden & Werkzeuge**
+- Jest + jest-expo
+- Mock-Repositories
+- Äquivalenzklassen, Grenzwertanalyse
+
+**Frage 3: Gefundene Fehler**
+1. Streak bei Mitternacht fehlerhaft (isSameDay)
+2. Leere Habit-Namen akzeptiert
+3. Toggle-Status nicht korrekt aktualisiert
 
 ---
-
-**Team T3A - Habitree** | Software Engineering I | HTW Dresden
+**Team T3A - Habitree** | HTW Dresden
