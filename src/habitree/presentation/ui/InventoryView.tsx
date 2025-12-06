@@ -3,6 +3,7 @@ import { Image } from 'expo-image';
 import { Modal, Pressable, StyleSheet, Text, View, Dimensions } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { useThemeColor } from '@/hooks/useThemeColor';
+import { inventoryStyles as styles } from '../../styles/inventory_style';
 
 const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
 
@@ -97,58 +98,3 @@ export default function InventoryView() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  erfolgeTitle: {
-    fontSize: 20,
-    fontWeight: '600',
-    textAlign: 'center',
-    marginVertical: 12,
-    marginTop: 90,
-  },
-  badgeRow: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    gap: 12,
-    marginBottom: 16,
-  },
-  badge: {
-    width: windowWidth * 0.2,
-    height: windowWidth * 0.2,
-  },
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  modalContainer: {
-    backgroundColor: '#fff',
-    borderRadius: 16,
-    padding: 20,
-    width: '85%',
-    alignItems: 'center',
-  },
-  modalTitle: {
-    fontSize: 18,
-    fontWeight: '700',
-    marginBottom: 10,
-    textAlign: 'center',
-  },
-  modalText: {
-    fontSize: 14,
-    textAlign: 'center',
-    color: '#444',
-  },
-  closeButton: {
-    marginTop: 20,
-    backgroundColor: 'rgb(25, 145, 137)',
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 10,
-  },
-  closeButtonText: {
-    color: '#fff',
-    fontWeight: '600',
-  },
-});

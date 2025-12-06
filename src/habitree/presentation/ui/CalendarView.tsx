@@ -4,6 +4,9 @@ import { Calendar } from 'react-native-calendars';
 import { LineChart } from 'react-native-chart-kit';
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
+// import { calendarStyles as styles } from '../../styles/calendar_style'; later use for costum styles
+
+
 
 const { width: windowWidth } = Dimensions.get('window');
 
