@@ -80,7 +80,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="calendar"
         options={{
-          title: 'Kalendar',
+          title: 'Habit Übersicht',
           headerTitle: () => (
             <Text
               style={{
@@ -90,7 +90,7 @@ export default function TabLayout() {
                 textAlign: 'center',
               }}
             >
-              Kalendar
+              Habit Übersicht
             </Text>
           ),
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="calendar" color={color} />,

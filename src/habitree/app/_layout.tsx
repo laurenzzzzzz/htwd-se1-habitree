@@ -1,6 +1,7 @@
 import { Stack, Redirect, useSegments } from 'expo-router';
 import { Text } from 'react-native';
 import { useAuth, AuthProvider } from '../context/AuthContext'; 
+import { HabitsProvider } from '../context/HabitsContext';
 import React from 'react';
 import { ApplicationServicesProvider } from '../application/providers/ApplicationServicesProvider';
 import { applicationServices } from '../infrastructure/di/ServiceContainer';
@@ -48,7 +49,9 @@ export default function RootLayout() {
   return (
     <ApplicationServicesProvider services={applicationServices}>
       <AuthProvider>
-        <RootLayoutContent />
+        <HabitsProvider>
+          <RootLayoutContent />
+        </HabitsProvider>
       </AuthProvider>
     </ApplicationServicesProvider>
   );

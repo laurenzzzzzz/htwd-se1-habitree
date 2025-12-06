@@ -15,7 +15,7 @@ import { ThemedView } from '@/presentation/ui/ThemedView';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { styles } from '../../styles/index_style';
 import { useAuth } from '../../context/AuthContext';
-import { useHabitsController } from '../../presentation/controllers/useHabitsController';
+import { useHabits } from '../../context/HabitsContext';
 import { useQuoteController } from '../../presentation/controllers/useQuoteController';
 import { useStreakController } from '../../presentation/controllers/useStreakController';
 import HabitModal from '../../presentation/ui/HabitModal';
@@ -23,7 +23,6 @@ import { QuoteBanner } from '../../presentation/ui/QuoteBanner';
 import {
   FILTER_OPTIONS,
   CHART_MAP,
-  PREDEFINED_HABITS,
   WEEKDAYS,
 } from '../../constants/HomeScreenConstants';
 
@@ -32,6 +31,8 @@ export default function HomeScreen() {
   const { currentUser } = useAuth();
   const {
     filteredHabits,
+    predefinedHabits,
+    fetchPredefinedHabits,
     isLoading: isLoadingHabits,
     selectedFilter,
     setSelectedFilter,
@@ -40,7 +41,8 @@ export default function HomeScreen() {
     handleSaveHabit,
     handleToggleHabit,
     isSameDay,
-  } = useHabitsController();
+  } = useHabits();
+  // HomeScreen render
   const { quote, fetchQuote } = useQuoteController();
   const { streak, isLoading: isLoadingStreak } = useStreakController();
 
@@ -49,6 +51,11 @@ export default function HomeScreen() {
   const [modalVisible, setModalVisible] = useState(false);
   const [newHabitName, setNewHabitName] = useState('');
   const [newHabitDescription, setNewHabitDescription] = useState('');
+  const [newHabitStartDate, setNewHabitStartDate] = useState('');
+  const [newHabitTime, setNewHabitTime] = useState('');
+  const [newHabitFrequency, setNewHabitFrequency] = useState('');
+  const [newHabitWeekDays, setNewHabitWeekDays] = useState<number[]>([]);
+  const [newHabitIntervalDays, setNewHabitIntervalDays] = useState('');
   const [streakModalVisible, setStreakModalVisible] = useState(false);
 
   useEffect(() => {
@@ -59,20 +66,57 @@ export default function HomeScreen() {
     fetchHabits();
   }, [fetchHabits]);
 
+  // Initialize form with current date and time when opening custom habit creation
+  useEffect(() => {
+    if (habitMode === 'custom' && newHabitStartDate === '' && newHabitTime === '') {
+      const now = new Date();
+      const dateStr = now.toLocaleDateString('de-DE');
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const timeStr = `${hours}:${minutes}`;
+      
+      setNewHabitStartDate(dateStr);
+      setNewHabitTime(timeStr);
+    }
+  }, [habitMode]);
+
+  // Load predefined habits when user opens that mode
+  useEffect(() => {
+    if (habitMode === 'predefined') {
+      fetchPredefinedHabits();
+    }
+  }, [habitMode, fetchPredefinedHabits]);
+
+  // Handler when user selects a predefined habit from the modal: open custom form prefilled
+  const handleSelectPredefined = (p: { id?: number; label: string; description: string; frequency: string }) => {
+    setNewHabitName(p.label);
+    setNewHabitDescription(p.description);
+    setNewHabitFrequency(p.frequency || 'Täglich');
+    // ensure custom form is shown (will also trigger date/time defaults via effect)
+    setHabitMode('custom');
+  };
+
   const handleAddHabit = async () => {
     if (newHabitName.trim() === '' || newHabitDescription.trim() === '') {
       Alert.alert('Fehler', 'Bitte füllen Sie alle Felder aus.');
       return;
     }
 
-    const result = await handleSaveHabit(newHabitName, newHabitDescription, 'Täglich');
+    const frequency = newHabitFrequency || 'Täglich';
+    const result = await handleSaveHabit(newHabitName, newHabitDescription, frequency, newHabitStartDate, newHabitTime, newHabitWeekDays, newHabitIntervalDays);
     if (result.success) {
       setNewHabitName('');
       setNewHabitDescription('');
+      setNewHabitStartDate('');
+      setNewHabitTime('');
+      setNewHabitFrequency('');
+      setNewHabitWeekDays([]);
+      setNewHabitIntervalDays('');
       setModalVisible(false);
       setHabitMode(null);
     } else {
-      Alert.alert('Fehler', 'Speichern des Habits fehlgeschlagen.');
+      const msg = result.error || 'Speichern des Habits fehlgeschlagen.';
+      Alert.alert('Fehler', msg);
     }
   };
 
@@ -82,7 +126,8 @@ export default function HomeScreen() {
       setModalVisible(false);
       setHabitMode(null);
     } else {
-      Alert.alert('Fehler', 'Speichern des vordefiniert Habits fehlgeschlagen.');
+      const msg = result.error || 'Speichern des vordefiniert Habits fehlgeschlagen.';
+      Alert.alert('Fehler', msg);
     }
   };
 
@@ -195,7 +240,7 @@ export default function HomeScreen() {
               contentFit="contain"
             />
             <ThemedText style={styles.streakNumber}>
-              {isLoadingStreak ? '...' : streak?.getDisplayText() || '0'}
+              {isLoadingStreak ? '...' : (streak?.currentStreak ?? 0)}
             </ThemedText>
           </Pressable>
 
@@ -271,11 +316,22 @@ export default function HomeScreen() {
           setHabitMode(null);
         }}
         onOpenMode={(m) => setHabitMode(m)}
-        predefinedHabits={PREDEFINED_HABITS}
+        predefinedHabits={predefinedHabits}
+        onSelectPredefined={handleSelectPredefined}
         newHabitName={newHabitName}
         newHabitDescription={newHabitDescription}
+        newHabitStartDate={newHabitStartDate}
+        newHabitTime={newHabitTime}
+        newHabitFrequency={newHabitFrequency}
+        newHabitWeekDays={newHabitWeekDays}
+        newHabitIntervalDays={newHabitIntervalDays}
         setNewHabitName={setNewHabitName}
         setNewHabitDescription={setNewHabitDescription}
+        setNewHabitStartDate={setNewHabitStartDate}
+        setNewHabitTime={setNewHabitTime}
+        setNewHabitFrequency={setNewHabitFrequency}
+        setNewHabitWeekDays={setNewHabitWeekDays}
+        setNewHabitIntervalDays={setNewHabitIntervalDays}
         onAddPredefined={handleAddPredefinedHabit}
         onAddCustom={handleAddHabit}
       />
@@ -290,7 +346,7 @@ export default function HomeScreen() {
         <View style={styles.streakModalOverlay}>
           <View style={styles.streakModalContainer}>
             <Text style={styles.streakModalTitle}>
-              Wow – {streak?.getDisplayText() || '0'} Tage am Stück!
+              Wow – {streak?.currentStreak ?? 0} Tage am Stück!
             </Text>
             <Text style={styles.streakModalText}>
               {streak?.getMilestoneMessage() || 'Starte deine Streak heute!'}

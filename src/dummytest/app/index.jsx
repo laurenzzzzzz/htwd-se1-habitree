@@ -291,7 +291,7 @@ export default function HomeScreen() {
 
         {/* Kalender */}
         <View style={styles.card}>
-          <Text style={styles.cardTitle}>Kalender</Text>
+          <Text style={styles.cardTitle}>Habit-Übersicht</Text>
           <Calendar
             onDayPress={(day) => {
               Alert.alert('Datum ausgewählt', day.dateString);
