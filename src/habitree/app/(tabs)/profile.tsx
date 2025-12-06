@@ -11,9 +11,9 @@ import {
 } from 'react-native';
 
 import { Image } from 'expo-image';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import ParallaxScrollView from '@/presentation/ui/ParallaxScrollView';
+import { ThemedText } from '@/presentation/ui/ThemedText';
+import { ThemedView } from '@/presentation/ui/ThemedView';
 import { StatusBar } from 'expo-status-bar';
 import * as Notifications from 'expo-notifications';
 import { useProfileController } from '../../presentation/controllers/useProfileController';

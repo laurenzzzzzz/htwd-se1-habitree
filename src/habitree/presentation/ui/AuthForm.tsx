@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, TextInput, TouchableOpacity, Text, ActivityIndicator } from 'react-native';
 import { styles } from '../../styles/login_style';
+import { authFormStyles } from '../../styles/authform_style';
 
 type Props = {
   email: string;
@@ -26,7 +27,7 @@ export const AuthForm: React.FC<Props> = ({
   isProcessing,
 }) => {
   return (
-    <View style={{ width: '100%', alignItems: 'center' }}>
+    <View style={authFormStyles.container}>
       {isRegisterMode && (
         <TextInput style={styles.input} placeholder="Benutzername" value={username} onChangeText={onChangeUsername} autoCapitalize="none" />
       )}

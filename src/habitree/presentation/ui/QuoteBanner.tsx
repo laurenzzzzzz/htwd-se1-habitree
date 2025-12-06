@@ -1,16 +1,19 @@
 import React from 'react';
-import { ThemedText } from '@/components/ThemedText';
+import { ThemedText } from './ThemedText';
 import { View } from 'react-native';
+import { quoteBannerStyles } from '../../styles/quotebanner_style';
+import { Quote } from '../../domain/entities/Quote';
 
 type Props = {
-  quote: { id: number; quote: string } | null;
+  quote: Quote | null;
 };
 
 export const QuoteBanner: React.FC<Props> = ({ quote }) => {
+  const displayQuote = quote?.getFormattedQuote() || 'Lade Tagesspruch...';
   return (
-    <View style={{ marginVertical: 8 }}>
-      <ThemedText style={{ fontStyle: 'italic', opacity: 0.9 }}>
-        Tagesspruch: "{quote?.quote || 'Lade Tagesspruch...'}"
+    <View style={quoteBannerStyles.container}>
+      <ThemedText style={quoteBannerStyles.text}>
+        Tagesspruch: {displayQuote}
       </ThemedText>
     </View>
   );

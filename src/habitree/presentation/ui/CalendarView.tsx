@@ -1,33 +1,78 @@
-import React from 'react';
-import { StyleSheet, Dimensions, View, Alert } from 'react-native';
+import React, { useMemo } from 'react';
+import { Dimensions, View, Alert } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import { LineChart } from 'react-native-chart-kit';
-import { ThemedView } from '@/components/ThemedView';
-import { ThemedText } from '@/components/ThemedText';
+import { ThemedView } from './ThemedView';
+import { ThemedText } from './ThemedText';
+import { calendarViewStyles } from '../../styles/calenderview_style';
+
+type WeeklyStats = {
+  labels: string[];
+  data: number[];
+};
+
+type Props = {
+  weeklyStats: WeeklyStats;
+  selectedDate: string;
+  onDayPress: (dateString: string) => void;
+  getDayCompletionRate: (dateString: string) => number;
+};
 
 const { width: windowWidth } = Dimensions.get('window');
 
-const generateRandomData = () => Array.from({ length: 7 }, () => Math.floor(Math.random() * 100));
-
-export const CalendarView: React.FC = () => {
-  const data = {
-    labels: ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'],
+export const CalendarView: React.FC<Props> = ({ 
+  weeklyStats, 
+  selectedDate, 
+  onDayPress, 
+  getDayCompletionRate 
+}) => {
+  /**
+   * //Dummy Hardcoded: Chart data with weekly stats
+   * In real implementation, would fetch historical completion data
+   */
+  const chartData = useMemo(() => ({
+    labels: weeklyStats.labels,
     datasets: [
-      { data: generateRandomData(), color: (opacity = 1) => `rgba(0,173,245,${opacity})`, strokeWidth: 2 },
+      {
+        data: weeklyStats.data,
+        color: (opacity = 1) => `rgba(0,173,245,${opacity})`,
+        strokeWidth: 2,
+      },
     ],
+  }), [weeklyStats]);
+
+  const handleDayPress = (day: { dateString: string }) => {
+    onDayPress(day.dateString);
+    const rate = getDayCompletionRate(day.dateString);
+    Alert.alert(
+      'Fortschritt',
+      `${day.dateString}: ${rate}% Habits abgeschlossen`,
+      [{ text: 'OK' }]
+    );
+  };
+
+  const handleChartDataPointClick = ({ value, index }: { value: number; index: number }) => {
+    Alert.alert(
+      `${weeklyStats.labels[index]}`,
+      `Completion Rate: ${value}%`,
+      [{ text: 'OK' }]
+    );
   };
 
   return (
-    <ThemedView style={{ flex: 1 }}>
+    <ThemedView style={calendarViewStyles.container}>
+      {/* //Dummy Hardcoded: Calendar component with dummy data */}
       <Calendar
-        style={{ marginVertical: 20, borderRadius: 10 }}
-        onDayPress={(day) => {
-          Alert.alert('Ausgewähltes Datum', day.dateString);
+        style={calendarViewStyles.calendar}
+        onDayPress={handleDayPress}
+        markedDates={{
+          [selectedDate]: { selected: true, selectedColor: '#1E9189' },
         }}
       />
 
+      {/* //Dummy Hardcoded: Weekly completion chart */}
       <LineChart
-        data={data}
+        data={chartData}
         width={windowWidth - 32}
         height={220}
         yAxisLabel=""
@@ -41,9 +86,13 @@ export const CalendarView: React.FC = () => {
           propsForDots: { r: '4', strokeWidth: '2', stroke: '#00adf5' },
         }}
         bezier
-        style={{ marginVertical: 16, borderRadius: 12, alignSelf: 'center' }}
-        onDataPointClick={({ value, index }) => Alert.alert(`Wert am ${data.labels[index]}`, `Y: ${value}`)}
+        style={calendarViewStyles.chart}
+        onDataPointClick={handleChartDataPointClick}
       />
+
+      <ThemedText style={{ marginTop: 16, textAlign: 'center' }}>
+        Wöchentlicher Fortschritt: {Math.round(weeklyStats.data.reduce((a, b) => a + b, 0) / 7)}% ⌀
+      </ThemedText>
     </ThemedView>
   );
 };

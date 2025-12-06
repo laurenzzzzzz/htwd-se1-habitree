@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, PropsWithChildren } from 'react';
 import { User } from '../domain/entities/User';
-import { AuthService } from '../application/services/AuthService';
-import { SecureStoreAuthRepository } from '../infrastructure/adapters/SecureStoreAuthRepository';
+import { useApplicationServices } from '../application/providers/ApplicationServicesProvider';
 
 export type CurrentUser = User;
 
@@ -16,11 +15,8 @@ type AuthContextType = {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// Instantiate repository + service here (can be replaced with DI later)
-const authRepo = new SecureStoreAuthRepository();
-const authService = new AuthService(authRepo);
-
 export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
+  const { authService } = useApplicationServices();
   const [authToken, setAuthToken] = useState<string | null>(null);
   const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -33,7 +29,7 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
       setIsLoading(false);
     };
     checkAuthStatus();
-  }, []);
+  }, [authService]);
 
   const signIn = async (token: string, user: CurrentUser) => {
     await authService.signIn(token, user);
