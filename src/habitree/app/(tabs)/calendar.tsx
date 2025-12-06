@@ -1,11 +1,15 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { View, Pressable, ActivityIndicator, ScrollView, Alert } from 'react-native';
+import { View, Pressable, ActivityIndicator, ScrollView, Alert, Image } from 'react-native';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { ThemedText } from '@/presentation/ui/ThemedText';
 import { ThemedView } from '@/presentation/ui/ThemedView';
 import { useHabits } from '../../context/HabitsContext';
 import HabitModal from '../../presentation/ui/HabitModal';
 import { styles } from '../../styles/index_style';
+
+// Bilder importieren
+const EditIcon = require('../../assets/images/edit.png');
+const DeleteIcon = require('../../assets/images/delete.png');
 
 export default function CalendarScreen() {
   useThemeColor({}, 'background');
@@ -94,9 +98,9 @@ export default function CalendarScreen() {
   return (
     <ScrollView contentContainerStyle={{ padding: 16 }}>
       {/* Heutige Habits Section */}
-      <View style={{ borderWidth: 2, borderColor: '#000', borderRadius: 8, padding: 12, marginBottom: 20 }}>
+      <View style={{ borderWidth: 2, borderColor: 'rgb(25, 145, 137)', borderRadius: 8, padding: 12, marginBottom: 20 }}>
         <View style={{ backgroundColor: 'rgb(131, 233, 142)', padding: 12, marginHorizontal: -12, marginTop: -12, marginBottom: 12, borderTopLeftRadius: 6, borderTopRightRadius: 6 }}>
-          <ThemedText type="subtitle" style={[styles.habitTitle, { color: '#000000ff', marginTop: 0 }]}>
+          <ThemedText type="subtitle" style={[styles.habitTitle, { color: 'black', marginTop: -2, marginBottom: -2 }]}>
             Heutige Habits
           </ThemedText>
         </View>
@@ -134,7 +138,7 @@ export default function CalendarScreen() {
                     setModalMode('custom');
                     setModalVisible(true);
                   }} style={{ padding: 8 }}>
-                    <ThemedText>✏️</ThemedText>
+                    <Image source={EditIcon} style={{ width: 21, height: 21 }} /> 
                   </Pressable>
                   <Pressable onPress={() => {
                     Alert.alert('Löschen', 'Habit wirklich löschen?', [
@@ -144,7 +148,7 @@ export default function CalendarScreen() {
                       } }
                     ]);
                   }} style={{ padding: 8 }}>
-                    <ThemedText>🗑️</ThemedText>
+                    <Image source={DeleteIcon} style={{ width: 21, height: 21 }} />
                   </Pressable>
                 </View>
               </View>
@@ -156,10 +160,10 @@ export default function CalendarScreen() {
       </View>
 
       {/* Anstehende Habits Section */}
-      <View style={{ borderWidth: 2, borderColor: '#000', borderRadius: 8, padding: 12, marginBottom: 20 }}>
+      <View style={{ borderWidth: 2, borderColor: 'rgb(25, 145, 137)', borderRadius: 8, padding: 12, marginBottom: 20 }}>
         <View style={{ backgroundColor: 'rgb(255, 236, 136)', padding: 12, marginHorizontal: -12, marginTop: -12, marginBottom: 12, borderTopLeftRadius: 6, borderTopRightRadius: 6 }}>
-          <ThemedText type="subtitle" style={[styles.habitTitle, { color: '#000000ff', marginTop: 0 }]}>
-            Anstehende Habits für den nächsten Tag
+          <ThemedText type="subtitle" style={[styles.habitTitle, { color: 'black', marginTop: -2, marginBottom: -2 }]}>
+            Morgige Habits
           </ThemedText>
         </View>
 
@@ -187,10 +191,10 @@ export default function CalendarScreen() {
                   setNewHabitFrequency(habit.frequency || '');
                   setNewHabitWeekDays(habit.weekDays || []);
                   setNewHabitIntervalDays(habit.intervalDays ? String(habit.intervalDays) : '');
-                    setModalMode('custom');
-                    setModalVisible(true);
+                  setModalMode('custom');
+                  setModalVisible(true);
                 }} style={{ padding: 8 }}>
-                  <ThemedText>✏️</ThemedText>
+                  <Image source={EditIcon} style={{ width: 21, height: 21 }} />
                 </Pressable>
                 <Pressable onPress={() => {
                   Alert.alert('Löschen', 'Habit wirklich löschen?', [
@@ -200,7 +204,7 @@ export default function CalendarScreen() {
                     } }
                   ]);
                 }} style={{ padding: 8 }}>
-                  <ThemedText>🗑️</ThemedText>
+                  <Image source={DeleteIcon} style={{ width: 21, height: 21 }} />
                 </Pressable>
               </View>
             </View>
@@ -211,9 +215,9 @@ export default function CalendarScreen() {
       </View>
 
       {/* Alle Habits Section */}
-      <View style={{ borderWidth: 2, borderColor: '#000', borderRadius: 8, padding: 12 }}>
+      <View style={{ borderWidth: 2, borderColor: 'rgb(25, 145, 137)', borderRadius: 8, padding: 12 }}>
         <View style={{ backgroundColor: 'rgb(255,112,112)', padding: 12, marginHorizontal: -12, marginTop: -12, marginBottom: 12, borderTopLeftRadius: 6, borderTopRightRadius: 6 }}>
-          <ThemedText type="subtitle" style={[styles.habitTitle, { color: '#000000ff', marginTop: 0 }]}>
+          <ThemedText type="subtitle" style={[styles.habitTitle, { color: 'black', marginTop: -2, marginBottom: -2 }]}>
             Alle Habits
           </ThemedText>
         </View>
@@ -244,7 +248,7 @@ export default function CalendarScreen() {
                   setNewHabitIntervalDays(habit.intervalDays ? String(habit.intervalDays) : '');
                   setModalVisible(true);
                 }} style={{ padding: 8 }}>
-                  <ThemedText>✏️</ThemedText>
+                  <Image source={EditIcon} style={{ width: 21, height: 21 }} />
                 </Pressable>
                 <Pressable onPress={() => {
                   Alert.alert('Löschen', 'Habit wirklich löschen?', [
@@ -254,7 +258,7 @@ export default function CalendarScreen() {
                     } }
                   ]);
                 }} style={{ padding: 8 }}>
-                  <ThemedText>🗑️</ThemedText>
+                  <Image source={DeleteIcon} style={{ width: 21, height: 21 }} />
                 </Pressable>
               </View>
             </View>
