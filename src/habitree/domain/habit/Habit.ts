@@ -159,7 +159,6 @@ export class HabitService {
   /**
    * Validiert einen neuen Habit
    * 
-   * Business Rules:
    * - Name: nicht leer, 2-50 Zeichen
    * - Beschreibung: nicht leer
    */
