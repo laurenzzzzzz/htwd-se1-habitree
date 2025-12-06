@@ -6,8 +6,8 @@ const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
 
 // 1. Horizontale und vertikale Abstände als Prozentsatz der Bildschirmmaße
 const MAX_FORM_WIDTH = 400; 
-const HORIZONTAL_PADDING_PERCENTAGE = 0.05; // 5% der Fensterbreite
-const VERTICAL_PADDING_PERCENTAGE = 0.02;   // 2% der Fensterhöhe
+const HORIZONTAL_PADDING_PERCENTAGE = 0.06; // 6% der Fensterbreite
+const VERTICAL_PADDING_PERCENTAGE = 0.03;   // 3% der Fensterhöhe
 
 // Vertikale Abstände für Margins
 const LARGE_VERTICAL_SPACING = windowHeight * 0.04;   
@@ -15,8 +15,8 @@ const MEDIUM_VERTICAL_SPACING = windowHeight * 0.025;
 const SMALL_VERTICAL_SPACING = windowHeight * 0.01;   
 
 // 2. Dynamische UI-Element-Werte (Skalierung mit Breite)
-const RESPONSIVE_BUTTON_FONTSIZE = Math.min(windowWidth * 0.045, 18); 
-const RESPONSIVE_INPUT_FONTSIZE = Math.min(windowWidth * 0.04, 16); 
+const RESPONSIVE_BUTTON_FONTSIZE = Math.min(windowWidth * 0.055, 20); 
+const RESPONSIVE_INPUT_FONTSIZE = Math.min(windowWidth * 0.05, 18); 
 const RESPONSIVE_TITLE_FONTSIZE = Math.min(windowWidth * 0.08, 34); 
 const RESPONSIVE_BORDER_RADIUS = Math.min(windowWidth * 0.02, 8);
 const RESPONSIVE_BORDER_WIDTH = Math.min(windowWidth * 0.003, 1);

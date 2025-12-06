@@ -1,32 +1,26 @@
 import React, { useState, useEffect, useCallback } from 'react';
 
-import { Dimensions } from 'react-native';
-const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
 import {
   useColorScheme,
-  Switch,
-  TouchableOpacity,
-  View,
-  StyleSheet,
   ActivityIndicator,
   Modal,
   TextInput,
   Alert,
   Button,
+  View,
 } from 'react-native';
+
 import { Image } from 'expo-image';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import ParallaxScrollView from '@/presentation/ui/ParallaxScrollView';
+import { ThemedText } from '@/presentation/ui/ThemedText';
+import { ThemedView } from '@/presentation/ui/ThemedView';
 import { StatusBar } from 'expo-status-bar';
 import * as Notifications from 'expo-notifications';
-import axios from 'axios';
-import { useRouter } from 'expo-router';
-import { useAuth, CurrentUser } from '../../context/AuthContext';
+import { useProfileController } from '../../presentation/controllers/useProfileController';
+import { ProfileSettings } from '../../presentation/ui/ProfileSettings';
+import { useAuth } from '../../context/AuthContext';
 import { styles } from '../../styles/profile_style';
-
 // --- AUTH UND API KONSTANTEN ---
-const API_BASE_URL = 'http://iseproject01.informatik.htw-dresden.de:8000';
 
 // --- BENACHRICHTIGUNGSHANDLER ---
 Notifications.setNotificationHandler({
@@ -42,17 +36,11 @@ Notifications.setNotificationHandler({
 
 // --- HAUPTKOMPONENTE ---
 export default function ProfileScreen() {
-  const router = useRouter();
   const systemColorScheme = useColorScheme();
 
-  const { 
-    isLoggedIn, 
-    currentUser, 
-    authToken, 
-    isLoading, // Für den Ladezustand des AuthContext
-    signOut,   // Globale Logout-Funktion
-    signIn     // Globale Login/Save-Funktion (wird für User-Updates wiederverwendet)
-  } = useAuth();
+  const { isLoggedIn, currentUser, authToken, signOut } = useAuth();
+
+  const { updateUsername, updatePassword: updatePasswordController, isUpdatingUsername, isUpdatingPassword } = useProfileController();
 
   // --- PROFILEINSTELLUNGEN ---
   const [isDarkMode, setIsDarkMode] = useState(systemColorScheme === 'dark');
@@ -63,12 +51,10 @@ export default function ProfileScreen() {
   // --- MODAL-STATES ---
   const [isUpdateUsernameModalVisible, setIsUpdateUsernameModalVisible] = useState(false);
   const [newUsername, setNewUsername] = useState('');
-  const [isUpdatingUsername, setIsUpdatingUsername] = useState(false);
 
   const [isPasswordModalVisible, setIsPasswordModalVisible] = useState(false);
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
-  const [isUpdatingPassword, setIsUpdatingPassword] = useState(false);
 
   // --- NOTIFICATIONS ---
   useEffect(() => {
@@ -119,38 +105,20 @@ export default function ProfileScreen() {
       return;
     }
 
-    setIsUpdatingUsername(true);
     try {
-      const response = await axios.put(
-        `${API_BASE_URL}/user/username`,
-        { username: newUsername },
-        { headers: { Authorization: `Bearer ${authToken}` } }
-      );
-
-      const updatedUser = {
-        ...currentUser,
-        username: response.data.username || newUsername,
-      };
-
-      await signIn(authToken, updatedUser);
-
+      const updatedUser = await updateUsername(newUsername);
       Alert.alert('Erfolg', `Benutzername geändert zu '${updatedUser.username}'.`);
     } catch (error) {
       console.error('Fehler beim Aktualisieren:', error);
-      const errorMessage =
-        axios.isAxiosError(error) && error.response?.data?.error
-          ? error.response.data.error
-          : 'Fehler beim Speichern. Name eventuell vergeben?';
-      Alert.alert('Fehler', errorMessage);
+      Alert.alert('Fehler', 'Fehler beim Speichern. Name eventuell vergeben?');
     } finally {
-      setIsUpdatingUsername(false);
       setIsUpdateUsernameModalVisible(false);
       setNewUsername('');
     }
   };
 
   // --- PASSWORT ÄNDERN ---
-  const updatePassword = useCallback(async () => {
+  const handleUpdatePassword = useCallback(async () => {
     if (!authToken) {
       Alert.alert('Fehler', 'Nicht authentifiziert.');
       return;
@@ -159,30 +127,17 @@ export default function ProfileScreen() {
       Alert.alert('Fehler', 'Das Passwort muss mindestens 6 Zeichen lang sein.');
       return;
     }
-
-    setIsUpdatingPassword(true);
     try {
-      const response = await axios.put(
-        `${API_BASE_URL}/auth/password`,
-        { oldPassword, newPassword },
-        { headers: { Authorization: `Bearer ${authToken}` } }
-      );
-
-      Alert.alert('Erfolg', response.data.message || 'Passwort erfolgreich geändert.');
+      const res = await updatePasswordController(oldPassword, newPassword);
+      Alert.alert('Erfolg', res.message || 'Passwort erfolgreich geändert.');
       setOldPassword('');
       setNewPassword('');
       setIsPasswordModalVisible(false);
     } catch (error) {
       console.error('Fehler beim Ändern des Passworts:', error);
-      const errorMessage =
-        axios.isAxiosError(error) && error.response?.data?.error
-          ? error.response.data.error
-          : 'Fehler beim Ändern des Passworts.';
-      Alert.alert('Fehler', errorMessage);
-    } finally {
-      setIsUpdatingPassword(false);
+      Alert.alert('Fehler', 'Fehler beim Ändern des Passworts.');
     }
-  }, [authToken, oldPassword, newPassword]);
+  }, [authToken, oldPassword, newPassword, updatePasswordController]);
 
   // --- NICHT EINGELOGGT ---
   if (!isLoggedIn) {
@@ -292,16 +247,16 @@ export default function ProfileScreen() {
 
             <View style={styles.buttonRow}>
               <Button title="Abbrechen" onPress={() => setIsPasswordModalVisible(false)} />
-              <Button
-                title={isUpdatingPassword ? 'Aktualisiere...' : 'Speichern'}
-                onPress={updatePassword}
-                disabled={
-                  isUpdatingPassword ||
-                  oldPassword.trim() === '' ||
-                  newPassword.trim().length < 6
-                }
-                color="rgb(25, 145, 137)"
-              />
+                <Button
+                  title={isUpdatingPassword ? 'Aktualisiere...' : 'Speichern'}
+                  onPress={handleUpdatePassword}
+                  disabled={
+                    isUpdatingPassword ||
+                    oldPassword.trim() === '' ||
+                    newPassword.trim().length < 6
+                  }
+                  color="rgb(25, 145, 137)"
+                />
             </View>
             {isUpdatingPassword && (
               <ActivityIndicator style={{ marginTop: 20 }} size="small" color="rgb(25, 145, 137)" />
@@ -346,62 +301,19 @@ export default function ProfileScreen() {
         </ThemedView>
 
         <ThemedView style={styles.sectionContainer}>
-          <ThemedText type="subtitle">Einstellungen</ThemedText>
-
-          <ThemedView style={styles.settingRow}>
-            <ThemedText>Tagesmotivation</ThemedText>
-            <Switch value={tagesMotivationEnabled} onValueChange={toggleTagesMotivation} />
-          </ThemedView>
-
-          <ThemedView style={styles.settingRow}>
-            <ThemedText>Tägliche Erinnerung</ThemedText>
-            <Switch value={taeglicheErinnerungEnabled} onValueChange={toggleTaeglicheErinnerung} />
-          </ThemedView>
-
-          <ThemedView style={styles.settingRow}>
-            <ThemedText>Dark Mode</ThemedText>
-            <Switch value={isDarkMode} onValueChange={toggleDarkMode} />
-          </ThemedView>
-
-          <ThemedView style={styles.settingRow}>
-            <ThemedText>Öffentliches Profil</ThemedText>
-            <Switch value={oeffentlichesProfilEnabled} onValueChange={toggleOeffentlichesProfil} />
-          </ThemedView>
-
-          <TouchableOpacity
-            style={[styles.settingRowButton, styles.settingRowTopBorder]}
-            onPress={() => {
-              setNewUsername(currentUser?.username || '');
-              setIsUpdateUsernameModalVisible(true);
-            }}
-          >
-            <ThemedText>Benutzernamen ändern</ThemedText>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.settingRowButton}
-            onPress={() => {
-              setOldPassword('');
-              setNewPassword('');
-              setIsPasswordModalVisible(true);
-            }}
-          >
-            <ThemedText>Passwort ändern</ThemedText>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.settingRowButton}>
-            <ThemedText>Profilbild ändern</ThemedText>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.settingRowButton}>
-            <ThemedText>Sprache ändern</ThemedText>
-          </TouchableOpacity>
-        </ThemedView>
-
-        <ThemedView style={styles.authButtonsContainer}>
-          <TouchableOpacity style={styles.authButton} onPress={handleLogout}>
-            <ThemedText style={styles.authButtonText}>Abmelden</ThemedText>
-          </TouchableOpacity>
+          <ProfileSettings
+            isDarkMode={isDarkMode}
+            onToggleDarkMode={toggleDarkMode}
+            tagesMotivationEnabled={tagesMotivationEnabled}
+            onToggleTagesMotivation={toggleTagesMotivation}
+            taeglicheErinnerungEnabled={taeglicheErinnerungEnabled}
+            onToggleTaeglicheErinnerung={toggleTaeglicheErinnerung}
+            oeffentlichesProfilEnabled={oeffentlichesProfilEnabled}
+            onToggleOeffentlichesProfil={toggleOeffentlichesProfil}
+            onChangeUsername={() => { setNewUsername(currentUser?.username || ''); setIsUpdateUsernameModalVisible(true); }}
+            onChangePassword={() => { setOldPassword(''); setNewPassword(''); setIsPasswordModalVisible(true); }}
+            onLogout={handleLogout}
+          />
         </ThemedView>
       </ParallaxScrollView>
     </>
