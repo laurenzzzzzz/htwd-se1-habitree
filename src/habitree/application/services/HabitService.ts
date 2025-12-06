@@ -12,12 +12,14 @@ export class HabitService {
     return this.repo.fetchHabits(authToken);
   }
 
-  async saveHabit(authToken: string, name: string, description: string, frequency: string): Promise<void> {
-    return this.repo.saveHabit(authToken, { name, description, frequency });
+  async saveHabit(authToken: string, name: string, description: string, frequency: string): Promise<Habit[]> {
+    await this.repo.saveHabit(authToken, { name, description, frequency });
+    return this.repo.fetchHabits(authToken);
   }
 
-  async toggleHabit(authToken: string, id: number, dateIso: string): Promise<void> {
-    return this.repo.toggleHabit(authToken, id, dateIso);
+  async toggleHabit(authToken: string, id: number, dateIso: string): Promise<Habit[]> {
+    await this.repo.toggleHabit(authToken, id, dateIso);
+    return this.repo.fetchHabits(authToken);
   }
 }
 

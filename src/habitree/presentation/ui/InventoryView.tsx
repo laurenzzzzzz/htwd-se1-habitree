@@ -1,100 +1,99 @@
-import React, { useState } from 'react';
+
+import React, { useMemo } from 'react';
 import { Image } from 'expo-image';
-import { Modal, Pressable, StyleSheet, Text, View, Dimensions } from 'react-native';
-import { ThemedText } from '@/components/ThemedText';
-import { useThemeColor } from '@/hooks/useThemeColor';
-import { inventoryStyles as styles } from '../../styles/inventory_style';
+import { Modal, Pressable, Text, View } from 'react-native';
+import { ThemedText } from './ThemedText';
+import { ThemedView } from './ThemedView';
+import { inventoryviewStyles } from '../../styles/inventory_style';
+import { Achievement } from '../../domain/entities/Achievement';
 
-const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
+type Props = {
+  achievements: Achievement[];
+  selectedAchievementId: number | null;
+  onSelectAchievement: (id: number | null) => void;
+};
 
-const abzeichenZeilen = [
-  [
-    require('@/assets/images/abzeichen1.png'),
-    require('@/assets/images/abzeichen2.png'),
-  ],
-  [
-    require('@/assets/images/abzeichen3.png'),
-    require('@/assets/images/abzeichen4.png'),
-    require('@/assets/images/abzeichen5.png'),
-  ],
-  [
-    require('@/assets/images/abzeichen6.png'),
-    require('@/assets/images/abzeichen7.png'),
-  ],
-];
-
-export default function InventoryView() {
-  const backgroundColor = useThemeColor({}, 'background');
-  const [modalVisible, setModalVisible] = useState<null | 'abzeichen5' | 'abzeichen6'>(null);
-
-  const renderModalContent = () => {
-    if (modalVisible === 'abzeichen6') {
-      return (
-        <>
-          <Text style={styles.modalTitle}>Täglicher Sport</Text>
-          <Text style={styles.modalText}>
-            Gratulation, du hast 66 Tage am Stück täglich eine Stunde Sport getrieben und damit nachhaltig deinen Alltag und Wohlbefinden verbessert. Bleib dran! :)
-          </Text>
-        </>
-      );
+export const InventoryView: React.FC<Props> = ({ 
+  achievements, 
+  selectedAchievementId, 
+  onSelectAchievement 
+}) => {
+  // //Dummy Hardcoded: Organize achievements into rows for display
+  // In real implementation, would fetch row organization from backend
+  const achievementRows = useMemo(() => {
+    const rows: Achievement[][] = [];
+    for (let i = 0; i < achievements.length; i += 3) {
+      rows.push(achievements.slice(i, i + 3));
     }
+    return rows;
+  }, [achievements]);
 
-    if (modalVisible === 'abzeichen5') {
-      return (
-        <>
-          <Text style={styles.modalTitle}>Rauchen abgelegt</Text>
-          <Text style={styles.modalText}>
-            Starke Leistung! Du hast erfolgreich das Rauchen aufgegeben und damit einen großen Schritt in Richtung besserer Gesundheit und Lebensqualität gemacht. Weiter so!
-          </Text>
-        </>
-      );
-    }
-
-    return null;
-  };
+  const selectedAchievement = useMemo(() => {
+    return achievements.find((a) => a.id === selectedAchievementId);
+  }, [achievements, selectedAchievementId]);
 
   return (
-    <View style={{ flex: 1, backgroundColor }}>
-      <ThemedText type="subtitle" style={styles.erfolgeTitle}>
+    <ThemedView style={inventoryviewStyles.container}>
+      <ThemedText type="subtitle" style={inventoryviewStyles.title}>
         Erfolge
       </ThemedText>
 
-      {abzeichenZeilen.map((zeile, zeilenIndex) => (
-        <View key={zeilenIndex} style={styles.badgeRow}>
-          {zeile.map((source, index) => {
-            const isAbzeichen5 = source === require('@/assets/images/abzeichen5.png');
-            const isAbzeichen6 = source === require('@/assets/images/abzeichen6.png');
-
-            return (
-              <Pressable
-                key={index}
-                onPress={() => {
-                  if (isAbzeichen5) setModalVisible('abzeichen5');
-                  if (isAbzeichen6) setModalVisible('abzeichen6');
-                }}
-              >
-                <Image source={source} style={styles.badge} contentFit="contain" />
-              </Pressable>
-            );
-          })}
+      {/* //Dummy Hardcoded: Render achievement badges in grid */}
+      {achievementRows.map((row, rowIndex) => (
+        <View key={rowIndex} style={inventoryviewStyles.badgeRow}>
+          {row.map((achievement) => (
+            <Pressable
+              key={achievement.id}
+              onPress={() => onSelectAchievement(achievement.id)}
+            >
+              <Image 
+                source={achievement.imageUrl} 
+                style={inventoryviewStyles.badge} 
+                contentFit="contain" 
+              />
+            </Pressable>
+          ))}
         </View>
       ))}
 
+      {/* Achievement Details Modal */}
       <Modal
-        visible={modalVisible !== null}
+        visible={selectedAchievementId !== null}
         animationType="fade"
         transparent={true}
-        onRequestClose={() => setModalVisible(null)}
+        onRequestClose={() => onSelectAchievement(null)}
       >
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalContainer}>
-            {renderModalContent()}
-            <Pressable style={styles.closeButton} onPress={() => setModalVisible(null)}>
-              <Text style={styles.closeButtonText}>Schließen</Text>
+        <View style={inventoryviewStyles.modalOverlay}>
+          <View style={inventoryviewStyles.modalContent}>
+            {selectedAchievement && (
+              <>
+                <Image
+                  source={selectedAchievement.imageUrl}
+                  style={{ width: 80, height: 80, marginBottom: 16 }}
+                  contentFit="contain"
+                />
+                <Text style={inventoryviewStyles.modalTitle}>
+                  {selectedAchievement.name}
+                </Text>
+                <Text style={inventoryviewStyles.modalText}>
+                  {selectedAchievement.description}
+                </Text>
+                <Text style={inventoryviewStyles.modalText}>
+                  Freigeschaltet: {selectedAchievement.getFormattedUnlockDate()}
+                </Text>
+              </>
+            )}
+            <Pressable
+              style={inventoryviewStyles.closeButton}
+              onPress={() => onSelectAchievement(null)}
+            >
+              <Text style={inventoryviewStyles.closeButtonText}>Schließen</Text>
             </Pressable>
           </View>
         </View>
       </Modal>
-    </View>
+    </ThemedView>
   );
-}
+};
+
+export default InventoryView;

@@ -2,7 +2,6 @@ import { SymbolView, SymbolViewProps, SymbolWeight } from 'expo-symbols';
 import { StyleProp, ViewStyle , View } from 'react-native';
 import React from 'react';
 
-
 export function IconSymbol({
   name,
   size = 24,
@@ -23,7 +22,7 @@ export function IconSymbol({
         tintColor={color}
         resizeMode="scaleAspectFit"
         name={name}
-        style={{ width: '100%', height: '100%' }} // ❗ nur interne Style hier
+        style={{ width: '100%', height: '100%' }}
       />
     </View>
   );

@@ -3,7 +3,6 @@ import { Platform, View, StyleProp, ViewStyle, TextStyle , OpaqueColorValue } fr
 import { SymbolView, SymbolViewProps, SymbolWeight } from 'expo-symbols';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
-
 type IconMapping = Record<SymbolViewProps['name'], keyof typeof MaterialIcons.glyphMap>;
 type IconSymbolName = keyof typeof MAPPING;
 

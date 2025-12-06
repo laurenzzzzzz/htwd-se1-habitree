@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Switch, TouchableOpacity, Text } from 'react-native';
-import { ThemedText } from '@/components/ThemedText';
+import { ThemedText } from './ThemedText';
 import { styles } from '../../styles/profile_style';
 
 type Props = {

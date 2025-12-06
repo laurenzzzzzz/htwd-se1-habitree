@@ -1,13 +1,14 @@
-import { useState } from 'react';
-import { profileService } from '../../infrastructure/di/ServiceContainer';
+import { useState, useCallback } from 'react';
+import { useApplicationServices } from '../../application/providers/ApplicationServicesProvider';
 import { useAuth, CurrentUser } from '../../context/AuthContext';
 
 export function useProfileController() {
+  const { profileService } = useApplicationServices();
   const { authToken, signIn } = useAuth();
   const [isUpdatingUsername, setIsUpdatingUsername] = useState(false);
   const [isUpdatingPassword, setIsUpdatingPassword] = useState(false);
 
-  const updateUsername = async (newUsername: string) => {
+  const updateUsername = useCallback(async (newUsername: string) => {
     if (!authToken) throw new Error('Not authenticated');
     setIsUpdatingUsername(true);
     try {
@@ -18,9 +19,9 @@ export function useProfileController() {
     } finally {
       setIsUpdatingUsername(false);
     }
-  };
+  }, [authToken, profileService, signIn]);
 
-  const updatePassword = async (oldPassword: string, newPassword: string) => {
+  const updatePassword = useCallback(async (oldPassword: string, newPassword: string) => {
     if (!authToken) throw new Error('Not authenticated');
     setIsUpdatingPassword(true);
     try {
@@ -29,7 +30,7 @@ export function useProfileController() {
     } finally {
       setIsUpdatingPassword(false);
     }
-  };
+  }, [authToken, profileService]);
 
   return { updateUsername, updatePassword, isUpdatingUsername, isUpdatingPassword };
 }
