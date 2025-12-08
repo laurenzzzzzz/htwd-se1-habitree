@@ -2,6 +2,8 @@ import { Stack, Redirect, useSegments } from 'expo-router';
 import { Text } from 'react-native';
 import { useAuth, AuthProvider } from '../context/AuthContext'; 
 import React from 'react';
+import { ApplicationServicesProvider } from '../presentation/providers/ApplicationServicesProvider';
+import { applicationServices } from '../infrastructure/di/ServiceContainer';
 
 function RootLayoutContent() {
   const { isLoggedIn, isLoading } = useAuth(); // Holt den globalen Status
@@ -44,8 +46,10 @@ function RootLayoutContent() {
 
 export default function RootLayout() {
   return (
-    <AuthProvider>
-      <RootLayoutContent />
-    </AuthProvider>
+    <ApplicationServicesProvider services={applicationServices}>
+      <AuthProvider>
+        <RootLayoutContent />
+      </AuthProvider>
+    </ApplicationServicesProvider>
   );
 }

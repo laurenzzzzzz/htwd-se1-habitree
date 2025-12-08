@@ -1,346 +1,155 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Image } from 'expo-image';
-import axios from 'axios';
 import {
   Pressable,
   ScrollView,
-  StyleSheet,
   View,
-  Modal,
-  TextInput,
   Text,
-  Button,
   ActivityIndicator,
   Alert,
+  Modal,
 } from 'react-native';
-import { HelloWave } from '@/components/HelloWave';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import { HelloWave } from '@/presentation/ui/HelloWave';
+import { ThemedText } from '@/presentation/ui/ThemedText';
+import { ThemedView } from '@/presentation/ui/ThemedView';
 import { useThemeColor } from '@/hooks/useThemeColor';
-import {styles} from '../../styles/index_style';
+import { styles } from '../../styles/index_style';
 import { useAuth } from '../../context/AuthContext';
-
-
-// --- TYPEN ---
-type FilterKey = 'alle' | 'klimmzuege' | 'liegestuetze' | 'schritte';
-type Habit = {
-  id: number;
-  name: string;
-  description: string;
-  frequency: string;
-  entries: { id: number; date: string; status: boolean; note: string | null }[];
-};
-type Quote = {
-  id: number;
-  quote: string;
-};
-
+import { useHabitsController } from '../../presentation/controllers/useHabitsController';
+import { useQuoteController } from '../../presentation/controllers/useQuoteController';
+import { useStreakController } from '../../presentation/controllers/useStreakController';
+import HabitModal from '../../presentation/ui/HabitModal';
+import { QuoteBanner } from '../../presentation/ui/QuoteBanner';
+import {
+  FILTER_OPTIONS,
+  CHART_MAP,
+  PREDEFINED_HABITS,
+  WEEKDAYS,
+} from '../../constants/HomeScreenConstants';
 
 export default function HomeScreen() {
-
   const backgroundColor = useThemeColor({}, 'background');
-  const { isLoggedIn, authToken, currentUser } = useAuth();
+  const { currentUser } = useAuth();
+  const {
+    filteredHabits,
+    isLoading: isLoadingHabits,
+    selectedFilter,
+    setSelectedFilter,
+    today,
+    fetchHabits,
+    handleSaveHabit,
+    handleToggleHabit,
+    isSameDay,
+  } = useHabitsController();
+  const { quote, fetchQuote } = useQuoteController();
+  const { streak, isLoading: isLoadingStreak } = useStreakController();
 
-  // --- API KONSTANTEN ---
-  const API_BASE_URL = 'http://iseproject01.informatik.htw-dresden.de:8000';
-  const HABITS_API_URL = `${API_BASE_URL}/habits`;
-  const QUOTES_API_URL = `${API_BASE_URL}/quotes`;
-
-
-  // --- HABIT STATES ---
+  // Local UI state only
   const [habitMode, setHabitMode] = useState<'menu' | 'custom' | 'predefined' | null>(null);
-  const [selectedFilter, setSelectedFilter] = useState<FilterKey>('alle');
-  const [habits, setHabits] = useState<Habit[]>([]);
-  const [quote, setQuote] = useState<Quote | null>(null);
-  const [isLoadingHabits, setIsLoadingHabits] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [newHabitName, setNewHabitName] = useState('');
   const [newHabitDescription, setNewHabitDescription] = useState('');
   const [streakModalVisible, setStreakModalVisible] = useState(false);
 
-  // --- UTILITY ---
-  const today = new Date();
-  const isSameDay = (a: Date, b: Date) =>
-    a.getFullYear() === b.getFullYear() &&
-    a.getMonth() === b.getMonth() &&
-    a.getDate() === b.getDate();
-
-  const predefinedHabits = [
-    { id: 1, label: '6000 Schritte', description: 'Gehe heute mindestens 6000 Schritte.', frequency: 'Täglich' },
-    { id: 2, label: '1,5h Uni', description: 'Verbringe 1,5 Stunden mit Uni-Aufgaben.', frequency: 'Wöchentlich' },
-    { id: 3, label: '40 Liegestütze', description: 'Mache 40 saubere Liegestütze.', frequency: '2x Pro Woche' },
-    { id: 4, label: '10 Klimmzüge', description: 'Schaffe heute 10 Klimmzüge.', frequency: '3x Pro Woche' },
-  ];
-
-  // --- DATENLADE FUNKTIONEN ---
-  const fetchQuote = useCallback(async () => {
-    try {
-      const response = await axios.get<Quote[]>(QUOTES_API_URL);
-      const quotes = response.data;
-      if (quotes.length > 0) {
-        const randomIndex = Math.floor(Math.random() * quotes.length);
-        setQuote(quotes[randomIndex]);
-      } else {
-        setQuote({ id: 0, quote: "Keine Zitate verfügbar. Bleib trotzdem motiviert!" });
-      }
-    } catch (error) {
-      console.error('Fehler beim Abrufen der Quotes:', error);
-      setQuote({ id: 0, quote: "Fehler beim Laden des Spruchs." });
-    }
-  }, [QUOTES_API_URL]);
-
-  const fetchHabits = useCallback(async () => {
-    if (!authToken || !isLoggedIn) return;
-    setIsLoadingHabits(true);
-    try {
-      const response = await axios.get<Habit[]>(HABITS_API_URL, {
-        headers: { Authorization: `Bearer ${authToken}` },
-      });
-      setHabits(response.data);
-    } catch (error) {
-      console.error('Fehler beim Laden der Habits:', error);
-    } finally {
-      setIsLoadingHabits(false);
-    }
-  }, [authToken, isLoggedIn, HABITS_API_URL]);
-
   useEffect(() => {
     fetchQuote();
   }, [fetchQuote]);
 
-  useEffect(() => { 
+  useEffect(() => {
     fetchHabits();
   }, [fetchHabits]);
 
-  // --- HABIT FUNKTIONEN ---
-  const saveHabit = async (name: string, description: string, frequency: string) => {
-    try {
-      if (!authToken) {
-        Alert.alert('Fehler', 'Nicht angemeldet. Bitte melden Sie sich an.');
-        return;
-      }
-        await axios.post(
-          HABITS_API_URL,
-          { name: name.trim(), description: description.trim(), frequency },
-          { headers: { Authorization: `Bearer ${authToken}` } }
-        );
-        fetchHabits();
-      } catch (error) {
-        console.error('Fehler beim Speichern des neuen Habits:', error);
-        Alert.alert('Fehler', 'Speichern des Habits fehlgeschlagen.');
-      }
-    };
+  const handleAddHabit = async () => {
+    if (newHabitName.trim() === '' || newHabitDescription.trim() === '') {
+      Alert.alert('Fehler', 'Bitte füllen Sie alle Felder aus.');
+      return;
+    }
 
-  const addHabit = () => {
-      if (newHabitName.trim() === '' || newHabitDescription.trim() === '') return;
-      saveHabit(newHabitName, newHabitDescription, 'Täglich');
+    const result = await handleSaveHabit(newHabitName, newHabitDescription, 'Täglich');
+    if (result.success) {
       setNewHabitName('');
       setNewHabitDescription('');
       setModalVisible(false);
       setHabitMode(null);
+    } else {
+      Alert.alert('Fehler', result.errorMessage ?? 'Speichern des Habits fehlgeschlagen.');
+    }
   };
-  
-  const addPredefinedHabit = (label: string, description: string, frequency: string) => {
-      saveHabit(label, description, frequency);
+
+  const handleAddPredefinedHabit = async (label: string, description: string, frequency: string) => {
+    const result = await handleSaveHabit(label, description, frequency);
+    if (result.success) {
       setModalVisible(false);
       setHabitMode(null);
-  }
-
-  const toggleHabit = async (id: number) => {
-    if (!authToken) return;
-
-    const habitToToggle = habits.find(h => h.id === id);
-    const entryForToday = habitToToggle?.entries.find(entry => isSameDay(new Date(entry.date), today));
-
-    if (!entryForToday) {
-        Alert.alert('Fehler', 'Kein heutiger Eintrag zum Umschalten gefunden.');
-        return;
+    } else {
+      Alert.alert('Fehler', result.errorMessage ?? 'Speichern des vordefinierten Habits fehlgeschlagen.');
     }
-    
-    const newStatus = !entryForToday.status;
-    setHabits((prev) =>
-        prev.map((habit) =>
-            habit.id === id ? {
-                ...habit,
-                entries: habit.entries.map(e =>
-                    e.id === entryForToday.id ? {...e, status: newStatus} : e
-                )
-            } : habit
-        )
-    );
-    try {
-        await axios.put(
-            `${HABITS_API_URL}/${id}/toggle`,
-            { date: today.toISOString() },
-            { headers: { Authorization: `Bearer ${authToken}` } }
-        );
-    } catch (error) {
-        console.error('Fehler beim Aktualisieren des Status:', error);
-        
-        // Rollback der UI bei Fehler
-        setHabits((prev) =>
-            prev.map((habit) =>
-                habit.id === id ? {
-                    ...habit,
-                    entries: habit.entries.map(e =>
-                        e.id === entryForToday.id ? {...e, status: !newStatus} : e
-                    )
-                } : habit
-            )
-        );
-        Alert.alert('Fehler', 'Status-Update fehlgeschlagen. Bitte erneut versuchen.');
-    }
-};
-
-  // --- USEMEMO UND HILFSFUNKTIONEN ---
-  const filterOptions: { key: FilterKey; label: string }[] = [
-    { key: 'alle', label: 'Alle' },
-    { key: 'klimmzuege', label: 'Klimmzüge' },
-    { key: 'liegestuetze', label: 'Liegestütze' },
-    { key: 'schritte', label: 'Schritte' },
-  ];
-  const chartMap: Record<FilterKey, any> = {
-    alle: require('@/assets/images/chart1.png'),
-    klimmzuege: require('@/assets/images/chart2.png'),
-    liegestuetze: require('@/assets/images/chart3.png'),
-    schritte: require('@/assets/images/chart4.png'),
   };
 
-  const filteredHabits = useMemo(() => {
-    const activeHabits = habits.map(habit => {
-        const entryForToday = habit.entries.find((entry) =>
-            isSameDay(new Date(entry.date), today)
-        );
-        return {
-            ...habit,
-            checked: entryForToday?.status ?? false,
-        };
-    }).filter(habit => {
-      if (selectedFilter === 'alle') return true;
-      return habit.name.toLowerCase().includes(selectedFilter);
-    });
-
-    return activeHabits;
-  }, [habits, selectedFilter, today]);
-
-
-  const openHabitModal = (mode: 'menu' | 'custom' | 'predefined') => {
-    if (!isLoggedIn) {
-        Alert.alert('Login erforderlich', 'Bitte melde dich zuerst an, um Habits zu erstellen.');
-        return;
+  const handleToggleHabitPress = async (id: number) => {
+    const result = await handleToggleHabit(id, today.toISOString());
+    if (!result.success) {
+      Alert.alert('Fehler', result.errorMessage ?? 'Status-Update fehlgeschlagen. Bitte erneut versuchen.');
     }
-    setHabitMode(mode);
-    setModalVisible(true);
   };
-  
-  // --- RENDERING FUNKTIONEN ---
-  const renderModals = () => {
+
+  const renderWeekdayCircle = (index: number) => {
+    const todayDay = new Date();
+    const jsDay = todayDay.getDay();
+    const mappedDay = jsDay === 0 ? 6 : jsDay - 1;
+    const isToday = index === mappedDay;
+    const isPastOrToday = index <= mappedDay;
+
     return (
-      <Modal
-        visible={modalVisible}
-        transparent
-        animationType="fade"
-        onRequestClose={() => { setModalVisible(false); setHabitMode(null); }}
+      <View
+        key={index}
+        style={[
+          styles.weekdayCircle,
+          isPastOrToday && styles.weekdayFilled,
+          isToday && styles.weekdayToday,
+        ]}
       >
-        <View style={styles.modalBackdrop}>
-          <View style={styles.modalContent}>
-            {/* Modal-Menü */}
-            {habitMode === 'menu' && (
-              <>
-                <ThemedText type="subtitle" style={{ marginBottom: 12 }}>Was möchtest du tun?</ThemedText>
-                <Button title="Vordefiniertes Ziel wählen" onPress={() => setHabitMode('predefined')} />
-                <View style={{ height: 12 }} />
-                <Button title="Eigenes Ziel erstellen" onPress={() => setHabitMode('custom')} />
-              </>
-            )}
-
-            {/* Vordefinierte Habits */}
-            {habitMode === 'predefined' && (
-              <>
-                <ThemedText type="subtitle" style={{ marginBottom: 12 }}>Vordefiniertes Ziel auswählen:</ThemedText>
-                {predefinedHabits.map(({ id,label, description, frequency }) => (
-                  <Pressable
-                    key={id}
-                    onPress={() => addPredefinedHabit(label, description, frequency)}
-                    style={styles.predefinedItem}
-                  >
-                    <ThemedText style={{ fontWeight: '500' }}>{label}</ThemedText>
-                    <ThemedText style={{ opacity: 0.7, marginTop: 4 }}>{description}</ThemedText>
-                  </Pressable>
-                ))}
-              </>
-            )}
-
-            {/* Eigene Habit */}
-            {habitMode === 'custom' && (
-              <>
-                <ThemedText type="subtitle" style={{ marginBottom: 12 }}>Eigenes Ziel erstellen</ThemedText>
-                <TextInput
-                  placeholder="Kurzname (z. B. Kniebeugen)"
-                  value={newHabitName}
-                  onChangeText={setNewHabitName}
-                  style={styles.textInput}
-                />
-                <TextInput
-                  placeholder="Beschreibung"
-                  value={newHabitDescription}
-                  onChangeText={setNewHabitDescription}
-                  style={styles.textInput}
-                />
-                <View style={{ flexDirection: 'row', gap: 12, marginTop: 16 }}>
-                  <Button title="Hinzufügen" onPress={addHabit} />
-                </View>
-              </>
-            )}
-
-            <View style={{ marginTop: 24 }}>
-              <Button
-                title="Zurück"
-                onPress={() => {
-                  if (habitMode === 'menu') {
-                    setModalVisible(false);
-                    setHabitMode(null);
-                  } else {
-                    setHabitMode('menu');
-                  }
-                }}
-              />
-            </View>
-          </View>
-        </View>
-      </Modal>
+        <ThemedText
+          style={[
+            styles.weekdayText,
+            isToday && styles.weekdayTextToday,
+          ]}
+        >
+          {WEEKDAYS[index]}
+        </ThemedText>
+      </View>
     );
   };
-  
 
-  // --- MAIN RENDER ---
   return (
     <View style={{ flex: 1, backgroundColor }}>
       <ScrollView
-        style={{ flex: 1, backgroundColor }}
         contentContainerStyle={styles.contentContainer}
+        showsVerticalScrollIndicator={false}
       >
+        {/* Header */}
         <View style={styles.titleContainer}>
           <ThemedText type="title" style={styles.greetingText}>
-            Hallo, {currentUser?.username || 'Nutzer'}!
+            Hallo, {currentUser ? currentUser.getDisplayName() : 'Nutzer'}!
           </ThemedText>
           <HelloWave />
         </View>
 
-        <ThemedText style={styles.motivationQuote}>
-          Tagesspruch: "{quote?.quote || 'Lade Tagesspruch...'}"
-        </ThemedText>
+        {/* Daily Quote */}
+        <QuoteBanner quote={quote} />
 
+        {/* Statistics Section */}
         <ThemedText type="subtitle" style={styles.sectionTitle}>
           Deine Statistiken:
         </ThemedText>
 
+        {/* Filter Buttons */}
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.chartSelector}
         >
-          {filterOptions.map((option) => (
+          {FILTER_OPTIONS.map((option) => (
             <Pressable
               key={option.key}
               style={[
@@ -352,7 +161,7 @@ export default function HomeScreen() {
               <ThemedText
                 style={[
                   styles.chartButtonText,
-                  { color: '#000000' },
+                  { color: '#000' },
                   selectedFilter === option.key && styles.chartButtonTextSelected,
                 ]}
               >
@@ -362,100 +171,72 @@ export default function HomeScreen() {
           ))}
         </ScrollView>
 
+        {/* Chart */}
         <Image
-          source={chartMap[selectedFilter]}
+          source={CHART_MAP[selectedFilter]}
           style={styles.chartImage}
           contentFit="contain"
         />
 
-        {/* Streak-Bild */}
-        
-        {/* 
-          <Image
-            source={require('@/assets/images/streak.png')}
-            style={[styles.chartImage, { height: 280 }]}
-            contentFit="contain"
-          /> 
-          */}
-        
-
+        {/* Habit List Container */}
         <ThemedView style={styles.habitListContainer}>
-          
+          {/* Streak Section */}
           <ThemedText type="subtitle" style={styles.habitTitle}>
             Deine Streak:
           </ThemedText>
 
-          {/* Streak-Zahl mit transparenten Wassertropfen-Bild */}
-          <Pressable style={styles.streakContainer} onPress={() => setStreakModalVisible(true)}>
+          <Pressable
+            style={styles.streakContainer}
+            onPress={() => setStreakModalVisible(true)}
+          >
             <Image
               source={require('@/assets/images/wassertropfen.png')}
               style={styles.streakBackgroundImage}
               contentFit="contain"
             />
-            <ThemedText style={styles.streakNumber}>14</ThemedText>
+            <ThemedText style={styles.streakNumber}>
+              {isLoadingStreak ? '...' : streak?.getDisplayText() || '0'}
+            </ThemedText>
           </Pressable>
-          
 
-          {/* Neue Profilbilder-Leiste mit gelbem Rahmen für den heutigen Tag */}
+          {/* Weekday Row */}
           <View style={styles.weekdayRow}>
-            {['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'].map((day, index) => {
-              const today = new Date();
-              const jsDay = today.getDay(); // Sonntag = 0, Montag = 1, ...
-              const mappedDay = jsDay === 0 ? 6 : jsDay - 1; // Montag = 0, Sonntag = 6
-
-              const isToday = index === mappedDay;
-              const isPastOrToday = index <= mappedDay; // alles bis einschließlich heute
-
-              return (
-                <View
-                  key={index}
-                  style={[
-                    styles.weekdayCircle,
-                    isPastOrToday && styles.weekdayFilled,
-                    isToday && styles.weekdayToday,
-                  ]}
-                >
-                  <ThemedText
-                    style={[
-                      styles.weekdayText,
-                      isToday && styles.weekdayTextToday,
-                    ]}
-                  >
-                    {day}
-                  </ThemedText>
-                </View>
-              );
-            })}
+            {WEEKDAYS.map((_, index) => renderWeekdayCircle(index))}
           </View>
 
+          {/* Today's Goals */}
           <ThemedText type="subtitle" style={[styles.habitTitle, { marginTop: 40 }]}>
             Heutige Ziele:
           </ThemedText>
 
           {isLoadingHabits ? (
-             <View style={{ padding: 20 }}>
-                <ActivityIndicator size="small" color="rgb(25, 145, 137)" />
-                <ThemedText style={{ textAlign: 'center', marginTop: 5 }}>Lade Habits...</ThemedText>
+            <View style={{ padding: 20 }}>
+              <ActivityIndicator size="small" color="rgb(25, 145, 137)" />
+              <ThemedText style={{ textAlign: 'center', marginTop: 5 }}>
+                Lade Habits...
+              </ThemedText>
             </View>
           ) : filteredHabits.length > 0 ? (
-            filteredHabits.map((habit) => (
+            filteredHabits.map(({ habit, checked }) => (
               <Pressable
                 key={habit.id}
-                onPress={() => toggleHabit(habit.id)}
+                onPress={() => handleToggleHabitPress(habit.id)}
                 style={styles.habitItem}
               >
                 <View
                   style={[
                     styles.checkbox,
-                    habit.checked && styles.checkboxChecked,
+                    checked && styles.checkboxChecked,
                   ]}
                 >
-                  {habit.checked && (
+                  {checked && (
                     <ThemedText style={styles.checkmark}>✓</ThemedText>
                   )}
                 </View>
                 <View style={styles.habitTextContainer}>
-                  <ThemedText style={styles.habitLabel}>{habit.name}</ThemedText>
+                  <ThemedText style={styles.habitLabel}>
+                    {habit.name}
+                  </ThemedText>
                   <ThemedText style={styles.habitDescription}>
                     {habit.description} ({habit.frequency})
                   </ThemedText>
@@ -468,136 +249,69 @@ export default function HomeScreen() {
             </ThemedText>
           )}
         </ThemedView>
-
       </ScrollView>
 
-      <Pressable style={styles.fab} onPress={() => openHabitModal('menu')}>
-          <ThemedText style={styles.fabText}>＋</ThemedText>
+      {/* FAB */}
+      <Pressable
+        style={styles.fab}
+        onPress={() => {
+          setHabitMode('menu');
+          setModalVisible(true);
+        }}
+      >
+        <ThemedText style={styles.fabText}>＋</ThemedText>
       </Pressable>
 
-        {/* Modal zum Hinzufügen eines neuen Habits */}
-        <Modal
-          visible={modalVisible}
-          transparent
-          animationType="fade"
-          onRequestClose={() => {
-            setModalVisible(false);
-            setHabitMode(null);
-          }}
-        >
-          <View style={styles.modalBackdrop}>
-            <View style={styles.modalContent}>
-              {habitMode === 'menu' && (
-                <>
-                  <ThemedText type="subtitle" style={{ marginBottom: 12 }}>
-                    Was möchtest du tun?
-                  </ThemedText>
-                  <Button title="Vordefiniertes Ziel wählen" onPress={() => setHabitMode('predefined')} />
-                  <View style={{ height: 12 }} />
-                  <Button title="Eigenes Ziel erstellen" onPress={() => setHabitMode('custom')} />
-                </>
-              )}
+      {/* Habit Creation Modal */}
+      <HabitModal
+        visible={modalVisible}
+        mode={habitMode}
+        onClose={() => {
+          setModalVisible(false);
+          setHabitMode(null);
+        }}
+        onOpenMode={(m) => setHabitMode(m)}
+        predefinedHabits={PREDEFINED_HABITS}
+        newHabitName={newHabitName}
+        newHabitDescription={newHabitDescription}
+        setNewHabitName={setNewHabitName}
+        setNewHabitDescription={setNewHabitDescription}
+        onAddPredefined={handleAddPredefinedHabit}
+        onAddCustom={handleAddHabit}
+      />
 
-              
-              {habitMode === 'predefined' && (
-                <>
-                  <ThemedText type="subtitle" style={{ marginBottom: 12 }}>
-                    Vordefiniertes Ziel auswählen:
-                  </ThemedText>
-                  {predefinedHabits.map(({ label, description, frequency }, index) => (
-                    <Pressable
-                      key={index}
-                      
-                      onPress={() => addPredefinedHabit(label, description, frequency)}
-                      style={{
-                        paddingVertical: 10,
-                        paddingHorizontal: 16,
-                        borderBottomColor: '#ddd',
-                        borderBottomWidth: 1,
-                      }}
-                    >
-                      <ThemedText style={{ fontWeight: '500' }}>{label}</ThemedText>
-                      <ThemedText style={{ opacity: 0.7, marginTop: 4 }}>{description}</ThemedText>
-                    </Pressable>
-                  ))}
-                </>
-              )}
-
-              {habitMode === 'custom' && (
-                <>
-                  <ThemedText type="subtitle" style={{ marginBottom: 12 }}>
-                    Eigenes Ziel erstellen
-                  </ThemedText>
-                  <TextInput
-                    placeholder="Kurzname (z. B. Kniebeugen)"
-                    value={newHabitName}
-                    onChangeText={setNewHabitName}
-                    style={styles.textInput}
-                  />
-                  <TextInput
-                    placeholder="Beschreibung"
-                    value={newHabitDescription}
-                    onChangeText={setNewHabitDescription}
-                    style={styles.textInput}
-                  />
-                  <View style={{ flexDirection: 'row', gap: 12, marginTop: 16 }}>
-                    <Button title="Hinzufügen" onPress={addHabit} />
-                  </View>
-                </>
-              )}
-
-              {/* Zurück-Button immer zeigen */}
-              <View style={{ marginTop: 24 }}>
-                <Button
-                  title="Zurück"
-                  onPress={() => {
-                    if (habitMode === 'menu') {
-                      setModalVisible(false);
-                      setHabitMode(null);
-                    } else {
-                      setHabitMode('menu');
-                    }
-                  }}
-                />
-              </View>
-            </View>
-          </View>
-          
-        </Modal>
-        
-        {/* Modal für Streak-Info */}
-        <Modal
-          visible={streakModalVisible}
-          animationType="fade"
-          transparent
-          onRequestClose={() => setStreakModalVisible(false)}
-        >
-          <View style={styles.streakModalOverlay}>
-            <View style={styles.streakModalContainer}>
-              <Text style={styles.streakModalTitle}>Wow – 14 Tage am Stück!</Text>
-              <Text style={styles.streakModalText}>
-                Super gemacht!  Du hast bereits 14 Tage in Folge deine Streak gehalten. 
-                Bleib dran – dein Durchhaltevermögen zahlt sich aus!
+      {/* Streak Modal */}
+      <Modal
+        visible={streakModalVisible}
+        animationType="fade"
+        transparent
+        onRequestClose={() => setStreakModalVisible(false)}
+      >
+        <View style={styles.streakModalOverlay}>
+          <View style={styles.streakModalContainer}>
+            <Text style={styles.streakModalTitle}>
+              Wow – {streak?.getDisplayText() || '0'} Tage am Stück!
+            </Text>
+            <Text style={styles.streakModalText}>
+              {streak?.getMilestoneMessage() || 'Starte deine Streak heute!'}
+            </Text>
+            <Image
+              source={require('@/assets/images/wassertropfen.png')}
+              style={styles.streakModalImage}
+              contentFit="contain"
+            />
+            <Pressable
+              style={styles.streakCloseButton}
+              onPress={() => setStreakModalVisible(false)}
+            >
+              <Text style={styles.streakCloseButtonText}>
+                Weiter motiviert bleiben
               </Text>
-
-              <Image
-                source={require('@/assets/images/wassertropfen.png')}
-                style={styles.streakModalImage}
-                contentFit="contain"
-              />
-
-              <Pressable
-                style={styles.streakCloseButton}
-                onPress={() => setStreakModalVisible(false)}
-              >
-                <Text style={styles.streakCloseButtonText}>Weiter motiviert bleiben</Text>
-              </Pressable>
-            </View>
+            </Pressable>
           </View>
-        </Modal>
-        
+        </View>
+      </Modal>
     </View>
-    
   );
 }
 
