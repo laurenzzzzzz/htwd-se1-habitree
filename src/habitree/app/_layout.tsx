@@ -3,7 +3,7 @@ import { Text } from 'react-native';
 import { useAuth, AuthProvider } from '../context/AuthContext'; 
 import { HabitsProvider } from '../context/HabitsContext';
 import React from 'react';
-import { ApplicationServicesProvider } from '../application/providers/ApplicationServicesProvider';
+import { ApplicationServicesProvider } from '../presentation/providers/ApplicationServicesProvider';
 import { applicationServices } from '../infrastructure/di/ServiceContainer';
 
 function RootLayoutContent() {

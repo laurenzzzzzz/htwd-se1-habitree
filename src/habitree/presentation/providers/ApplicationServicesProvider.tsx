@@ -1,5 +1,5 @@
 import React, { createContext, useContext, PropsWithChildren } from 'react';
-import { ApplicationServices } from '../types/ApplicationServices';
+import { ApplicationServices } from '../../application/types/ApplicationServices';
 
 const ApplicationServicesContext = createContext<ApplicationServices | null>(null);
 

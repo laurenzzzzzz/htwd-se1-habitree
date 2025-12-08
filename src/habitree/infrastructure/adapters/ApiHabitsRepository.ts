@@ -1,5 +1,5 @@
-import axios from 'axios';
-import IHabitsRepository from '../../domain/repositories/IHabitsRepository';
+import axios, { AxiosError } from 'axios';
+import IHabitsRepository, { HabitPersistencePayload } from '../../domain/repositories/IHabitsRepository';
 import { Habit, HabitData } from '../../domain/entities/Habit';
 
 const API_BASE_URL = 'http://iseproject01.informatik.htw-dresden.de:8000';
@@ -16,7 +16,7 @@ export class ApiHabitsRepository implements IHabitsRepository {
 
   async saveHabit(
     authToken: string,
-    payload: { name: string; description: string; frequency: string; startDate?: string; time?: string; weekDays?: number[]; intervalDays?: string }
+    payload: HabitPersistencePayload
   ): Promise<void> {
     // Backend requires startDate and time. Prefer values from payload, otherwise generate sensible defaults.
     const now = new Date();
@@ -58,9 +58,32 @@ export class ApiHabitsRepository implements IHabitsRepository {
   }
 
   async toggleHabit(authToken: string, id: number, dateIso: string): Promise<void> {
-    await axios.put(`${HABITS_API_URL}/${id}/toggle`, { date: dateIso }, {
-      headers: { Authorization: `Bearer ${authToken}` },
-    });
+    try {
+      await axios.put(`${HABITS_API_URL}/${id}/toggle`, { date: dateIso }, {
+        headers: { Authorization: `Bearer ${authToken}` },
+      });
+    } catch (error) {
+      throw this.createDetailedError(error, 'Habit konnte nicht aktualisiert werden');
+    }
+  }
+
+  private createDetailedError(originalError: unknown, fallbackMessage: string): Error {
+    if (axios.isAxiosError(originalError)) {
+      const axiosError = originalError as AxiosError<{ message?: string; error?: string }>;
+      const serverMessage = axiosError.response?.data?.message || axiosError.response?.data?.error;
+      const status = axiosError.response?.status;
+      const detail = serverMessage || axiosError.message || fallbackMessage;
+      const message = status
+        ? `${fallbackMessage} (Status ${status}: ${detail})`
+        : `${fallbackMessage}: ${detail}`;
+      return new Error(message);
+    }
+
+    if (originalError instanceof Error) {
+      return originalError;
+    }
+
+    return new Error(fallbackMessage);
   }
 
   async deleteHabit(authToken: string, id: number): Promise<void> {

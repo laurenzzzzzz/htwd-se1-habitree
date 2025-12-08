@@ -1,5 +1,5 @@
 import { useCallback, useState, useMemo } from 'react';
-import { useApplicationServices } from '../../application/providers/ApplicationServicesProvider';
+import { useApplicationServices } from '../providers/ApplicationServicesProvider';
 import { useAuth } from '../../context/AuthContext';
 import { Habit } from '../../domain/entities/Habit';
 import { FilterKey } from '../../constants/HomeScreenConstants';
@@ -169,17 +169,6 @@ export function useHabitsController() {
 
   /**
    * Gets today's date for display/operations
-   */
-  const today = useMemo(() => new Date(), []);
-
-  /**
-   * Helper: check if two dates are the same day
-   */
-  const isSameDay = useCallback((a: Date, b: Date) => 
-    a.getFullYear() === b.getFullYear() && 
-    a.getMonth() === b.getMonth() && 
-    a.getDate() === b.getDate(), 
-  []);
 
   /**
    * Handler for habit creation
@@ -206,7 +195,9 @@ export function useHabitsController() {
       await toggleHabit(id, dateIso);
       return { success: true };
     } catch (error) {
-      return { success: false, error };
+      console.error('toggleHabit failed', error);
+      const message = error instanceof Error ? error.message : 'Unbekannter Fehler beim Aktualisieren des Habits';
+      return { success: false, errorMessage: message };
     }
   }, [toggleHabit]);
 
@@ -237,7 +228,6 @@ export function useHabitsController() {
     isLoading,
     selectedFilter,
     setSelectedFilter,
-    today,
     fetchHabits,
     saveHabit,
     toggleHabit,
@@ -248,7 +238,6 @@ export function useHabitsController() {
     handleDeleteHabit,
     handleUpdateHabit,
     fetchPredefinedHabits,
-    isSameDay,
     setHabits,
   };
 }

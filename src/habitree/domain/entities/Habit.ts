@@ -96,7 +96,32 @@ export class Habit {
     const completed = this.entries.filter(e => e.status).length;
     return Math.round((completed / this.entries.length) * 100);
   }
+/////////////////////////////////////////////////////////
+  /**
+   * Finds the entry for a specific calendar date (if any)
+   */
+  getEntryForDate(targetDate: Date): HabitEntry | undefined {
+    return this.entries.find(entry => this.isSameDay(new Date(entry.date), targetDate));
+  }
 
+  /**
+   * Determines whether the habit is completed on a given date
+   */
+  isCompletedOn(targetDate: Date): boolean {
+    const entry = this.getEntryForDate(targetDate);
+    return Boolean(entry && entry.status);
+  }
+
+  /**
+   * Checks if habit should appear for a given filter value
+   */
+  matchesFilter(filter: string): boolean {
+    if (!filter || filter.toLowerCase() === 'alle') {
+      return true;
+    }
+    return this.name.toLowerCase().includes(filter.toLowerCase());
+  }
+/////////////////////////////////////////////////////
   /**
    * Checks if habit qualifies for a milestone (e.g., 7-day streak, 30-day streak)
    */

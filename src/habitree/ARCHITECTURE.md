@@ -31,8 +31,6 @@ src/habitree/
 │       └── IAuthApiRepository.ts
 │
 ├── application/                      # Application Layer
-│   ├── providers/                    # React providers for services
-│   │   └── ApplicationServicesProvider.tsx
 │   ├── services/                     # Use-case orchestration
 │   │   ├── AuthService.ts            # Auth domain logic
 │   │   ├── AuthenticationService.ts  # Login/register flow
@@ -53,6 +51,8 @@ src/habitree/
 │       └── ServiceContainer.ts       # Instantiates repositories & services
 │
 ├── presentation/                     # Presentation Layer
+│   ├── providers/                    # React providers for services/DI
+│   │   └── ApplicationServicesProvider.tsx
 │   ├── controllers/                  # Smart hooks connecting UI to services
 │   │   ├── useAuthController.tsx
 │   │   ├── useHabitsController.tsx

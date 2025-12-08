@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { useApplicationServices } from '../../application/providers/ApplicationServicesProvider';
+import { useApplicationServices } from '../providers/ApplicationServicesProvider';
 import { Quote } from '../../domain/entities/Quote';
 
 export function useQuoteController() {
