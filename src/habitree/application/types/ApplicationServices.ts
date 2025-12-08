@@ -6,6 +6,7 @@ import { AuthService } from '../services/AuthService';
 import { TreeGrowthService } from '../services/TreeGrowthService';
 import { AchievementService } from '../services/AchievementService';
 import { StreakService } from '../services/StreakService';
+import { NotificationService } from '../services/NotificationService';
 
 export type ApplicationServices = {
   habitService: HabitService;
@@ -16,4 +17,5 @@ export type ApplicationServices = {
   treeGrowthService: TreeGrowthService;
   achievementService: AchievementService;
   streakService: StreakService;
+  notificationService: NotificationService;
 };

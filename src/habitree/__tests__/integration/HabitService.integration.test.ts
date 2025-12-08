@@ -16,6 +16,7 @@ import IHabitsRepository, { HabitPersistencePayload } from '../../domain/reposit
 class MockHabitsRepository implements IHabitsRepository {
   private habits: HabitData[] = [];
   private shouldFail: boolean = false;
+  private lastToggleDate: string | null = null;
 
   setHabits(habits: HabitData[]) {
     this.habits = habits;
@@ -60,6 +61,7 @@ class MockHabitsRepository implements IHabitsRepository {
     if (!habit) {
       throw new Error('Habit nicht gefunden');
     }
+    this.lastToggleDate = dateIso;
     
     const existingEntry = habit.entries.find(e => e.date === dateIso);
     if (existingEntry) {
@@ -72,6 +74,10 @@ class MockHabitsRepository implements IHabitsRepository {
         note: null
       });
     }
+  }
+
+  getLastToggleDate(): string | null {
+    return this.lastToggleDate;
   }
 }
 
@@ -184,6 +190,23 @@ describe('HabitService Integration Tests', () => {
       await expect(
         service.toggleHabit(validToken, 999, today)
       ).rejects.toThrow('Habit nicht gefunden');
+    });
+
+    it('sollte aktuelles Datum verwenden, wenn keins übergeben wird', async () => {
+      mockRepo.setHabits([
+        { id: 1, name: 'Sport', description: 'Test', frequency: 'daily', entries: [] }
+      ]);
+
+      const habits = await service.toggleHabit(validToken, 1);
+
+      const lastToggleDate = mockRepo.getLastToggleDate();
+      expect(lastToggleDate).not.toBeNull();
+      if (lastToggleDate) {
+        const toggleDate = new Date(lastToggleDate);
+        const now = new Date();
+        expect(toggleDate.toDateString()).toBe(now.toDateString());
+      }
+      expect(habits[0].entries).toHaveLength(1);
     });
   });
 

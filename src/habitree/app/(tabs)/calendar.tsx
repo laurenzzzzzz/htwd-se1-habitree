@@ -6,6 +6,7 @@ import { ThemedView } from '@/presentation/ui/ThemedView';
 import { useHabits } from '../../context/HabitsContext';
 import HabitModal from '../../presentation/ui/HabitModal';
 import { styles } from '../../styles/index_style';
+import { shouldHabitOccurOnDate } from '../../domain/services/HabitSchedulePolicy';
 
 // Bilder importieren
 const EditIcon = require('../../assets/images/edit.png');
@@ -53,29 +54,6 @@ export default function CalendarScreen() {
 
   const isSameDay = (a: Date, b: Date) =>
     a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
-
-  const shouldHabitOccurOnDate = (habit: any, date: Date): boolean => {
-    if (!habit.startDate) return false;
-
-    const startDate = new Date(habit.startDate);
-    startDate.setHours(0, 0, 0, 0);
-
-    // Habit hat noch nicht angefangen
-    if (date < startDate) return false;
-
-    const daysDifference = Math.floor((date.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
-
-    if (habit.frequency === 'Täglich') {
-      return true;
-    } else if (habit.frequency === 'Wöchentlich') {
-      const dayOfWeek = date.getDay();
-      const mappedDay = dayOfWeek === 0 ? 7 : dayOfWeek; // Convert Sunday from 0 to 7
-      return habit.weekDays?.includes(mappedDay) ?? false;
-    } else if (habit.frequency === 'Intervalles') {
-      return daysDifference % (habit.intervalDays ?? 1) === 0;
-    }
-    return false;
-  };
 
   const todayHabits = habits.filter((h: any) =>
     Array.isArray(h.entries) && h.entries.some((e: any) => isSameDay(new Date(e.date), today))

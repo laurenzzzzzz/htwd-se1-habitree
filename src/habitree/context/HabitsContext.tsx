@@ -14,11 +14,11 @@ export interface IHabitsContext {
   predefinedHabits: any[];
   fetchPredefinedHabits: () => Promise<any[]>;
   saveHabit: (name: string, description: string, frequency: string, startDate?: string, time?: string, weekDays?: number[], intervalDays?: string) => Promise<Habit[]>;
-  toggleHabit: (id: number, dateIso: string) => Promise<void>;
+  toggleHabit: (id: number, dateIso?: string) => Promise<Habit[]>;
   deleteHabit: (id: number) => Promise<Habit[]>;
   updateHabit: (id: number, name: string, description: string, frequency: string, startDate?: string, time?: string, weekDays?: number[], intervalDays?: string) => Promise<Habit[]>;
   handleSaveHabit: (name: string, description: string, frequency: string, startDate?: string, time?: string, weekDays?: number[], intervalDays?: string) => Promise<{ success: boolean; error?: any }>;
-  handleToggleHabit: (id: number, dateIso: string) => Promise<{ success: boolean; error?: any }>;
+  handleToggleHabit: (id: number, dateIso?: string) => Promise<{ success: boolean; error?: any }>;
   handleDeleteHabit: (id: number) => Promise<{ success: boolean; error?: any }>;
   handleUpdateHabit: (id: number, name: string, description: string, frequency: string, startDate?: string, time?: string, weekDays?: number[], intervalDays?: string) => Promise<{ success: boolean; error?: any }>;
   isSameDay: (a: Date, b: Date) => boolean;

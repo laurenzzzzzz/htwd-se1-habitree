@@ -132,7 +132,7 @@ export default function HomeScreen() {
   };
 
   const handleToggleHabitPress = async (id: number) => {
-    const result = await handleToggleHabit(id, today.toISOString());
+    const result = await handleToggleHabit(id);
     if (!result.success) {
       Alert.alert('Fehler', result.error ?? 'Status-Update fehlgeschlagen. Bitte erneut versuchen.');
     }

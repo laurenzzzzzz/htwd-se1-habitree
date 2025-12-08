@@ -1,6 +1,10 @@
 import axios, { AxiosError } from 'axios';
 import IHabitsRepository, { HabitPersistencePayload } from '../../domain/repositories/IHabitsRepository';
 import { Habit, HabitData } from '../../domain/entities/Habit';
+import {
+  buildHabitPersistenceRequest,
+  HabitPersistenceRequestBody,
+} from '../../domain/services/HabitSchedulePolicy';
 
 const API_BASE_URL = 'http://iseproject01.informatik.htw-dresden.de:8000';
 const HABITS_API_URL = `${API_BASE_URL}/habits`;
@@ -18,25 +22,7 @@ export class ApiHabitsRepository implements IHabitsRepository {
     authToken: string,
     payload: HabitPersistencePayload
   ): Promise<void> {
-    // Backend requires startDate and time. Prefer values from payload, otherwise generate sensible defaults.
-    const now = new Date();
-    const dd = String(now.getDate()).padStart(2, '0');
-    const mm = String(now.getMonth() + 1).padStart(2, '0');
-    const yyyy = now.getFullYear();
-    const defaultStartDate = `${dd}.${mm}.${yyyy}`; // dd.mm.yyyy
-    const hours = String(now.getHours()).padStart(2, '0');
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    const defaultTime = `${hours}:${minutes}`;
-
-    const body = {
-      name: payload.name,
-      description: payload.description,
-      frequency: payload.frequency,
-      startDate: payload.startDate && payload.startDate.trim() !== '' ? payload.startDate : defaultStartDate,
-      time: payload.time && payload.time.trim() !== '' ? payload.time : defaultTime,
-      weekDays: payload.weekDays && payload.weekDays.length > 0 ? payload.weekDays : [],
-      intervalDays: payload.intervalDays && payload.intervalDays.trim() !== '' ? Number(payload.intervalDays) : undefined,
-    };
+    const body: HabitPersistenceRequestBody = buildHabitPersistenceRequest(payload);
 
     try {
       await axios.post(HABITS_API_URL, body, {
@@ -95,17 +81,9 @@ export class ApiHabitsRepository implements IHabitsRepository {
   async updateHabit(
     authToken: string,
     id: number,
-    payload: { name: string; description: string; frequency: string; startDate?: string; time?: string; weekDays?: number[]; intervalDays?: string }
+    payload: HabitPersistencePayload
   ): Promise<void> {
-    const body = {
-      name: payload.name,
-      description: payload.description,
-      frequency: payload.frequency,
-      startDate: payload.startDate,
-      time: payload.time,
-      weekDays: payload.weekDays,
-      intervalDays: payload.intervalDays && payload.intervalDays.trim() !== '' ? Number(payload.intervalDays) : undefined,
-    };
+    const body: HabitPersistenceRequestBody = buildHabitPersistenceRequest(payload);
     await axios.put(`${HABITS_API_URL}/${id}`, body, {
       headers: { Authorization: `Bearer ${authToken}` },
     });

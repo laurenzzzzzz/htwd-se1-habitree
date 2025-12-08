@@ -20,7 +20,6 @@ import { useProfileController } from '../../presentation/controllers/useProfileC
 import { ProfileSettings } from '../../presentation/ui/ProfileSettings';
 import { useAuth } from '../../context/AuthContext';
 import { styles } from '../../styles/profile_style';
-import { getNotificationLogs } from '@/application/services/LocalNotificationService';
 // --- AUTH UND API KONSTANTEN ---
 
 // --- BENACHRICHTIGUNGSHANDLER ---

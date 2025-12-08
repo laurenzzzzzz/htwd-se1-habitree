@@ -26,8 +26,9 @@ export class HabitService {
     return this.repo.fetchHabits(authToken);
   }
 
-  async toggleHabit(authToken: string, id: number, dateIso: string): Promise<Habit[]> {
-    await this.repo.toggleHabit(authToken, id, dateIso);
+  async toggleHabit(authToken: string, id: number, dateIso?: string): Promise<Habit[]> {
+    const effectiveDateIso = dateIso ?? new Date().toISOString();
+    await this.repo.toggleHabit(authToken, id, effectiveDateIso);
     return this.repo.fetchHabits(authToken);
   }
 
