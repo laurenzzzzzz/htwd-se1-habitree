@@ -50,8 +50,20 @@ jobs:
       run: npm ci
 
 
-    # 8. OPTIONAL: Expo build check (no interaction)
+    # 8. Expo build check (no interaction)
     - name: Run Expo doctor
       run: |
         cd src/habitree
         npx expo-doctor
+
+      # 8. Expo build check (no interaction)
+    - name: Run Expo doctor
+      run: |
+        cd src/habitree
+        npx expo-doctor
+
+      # 9. Testing
+    - name: Run Tests
+      run: |
+        cd src/habitree
+        npm test
