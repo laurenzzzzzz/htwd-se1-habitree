@@ -210,7 +210,7 @@ export default function HabitModal({
                                     {/* Interval Input - Only show if frequency is Benutzerdefiniert */}
                                     {newHabitFrequency === 'Benutzerdefiniert' && (
                                         <View style={{ marginTop: 12 }}>
-                                            <ThemedText style={habitModalStyles.label}>Alle wieviele Tage?</ThemedText>
+                                            <ThemedText style={habitModalStyles.label}>Alle wie viele Tage?</ThemedText>
                                             <TextInput
                                                 placeholder="z.B. 2, 4, 7"
                                                 value={newHabitIntervalDays}
@@ -225,7 +225,7 @@ export default function HabitModal({
                                     {newHabitFrequency === 'Wöchentlich' && (
                                         <View style={{ marginTop: 12 }}>
                                             <ThemedText style={habitModalStyles.label}>Wochentage auswählen:</ThemedText>
-                                            <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
+                                            <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 4 }}>
                                                 {['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'].map((label, index) => {
                                                     const isSelected = newHabitWeekDays.includes(index);
                                                     return (
@@ -249,7 +249,7 @@ export default function HabitModal({
                                                                 borderColor: isSelected ? '#388E3C' : '#ccc',
                                                             }}
                                                         >
-                                                            <Text style={{ fontSize: 12, fontWeight: '500', color: isSelected ? '#fff' : '#333' }}>
+                                                            <Text style={{ fontSize: 11, fontWeight: '500', color: isSelected ? '#fff' : '#333' }}>
                                                                 {label}
                                                             </Text>
                                                         </Pressable>

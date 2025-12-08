@@ -54,7 +54,7 @@ export const timePickerStyles = StyleSheet.create({
     alignItems: 'center',
   },
   timeText: {
-    fontSize: 32,
+    fontSize: 24,
     fontWeight: 'bold',
     color: '#fff',
   },
