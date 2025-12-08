@@ -10,7 +10,7 @@
 
 import { HabitService } from '../../application/services/HabitService';
 import { Habit, HabitData } from '../../domain/entities/Habit';
-import IHabitsRepository from '../../domain/repositories/IHabitsRepository';
+import IHabitsRepository, { HabitPersistencePayload } from '../../domain/repositories/IHabitsRepository';
 
 // Mock Repository (simuliert API ohne echten Server)
 class MockHabitsRepository implements IHabitsRepository {
@@ -35,7 +35,7 @@ class MockHabitsRepository implements IHabitsRepository {
     return this.habits.map(data => new Habit(data));
   }
 
-  async saveHabit(authToken: string, payload: { name: string; description: string; frequency: string }): Promise<void> {
+  async saveHabit(authToken: string, payload: HabitPersistencePayload): Promise<void> {
     if (this.shouldFail) {
       throw new Error('API Error: Speichern fehlgeschlagen');
     }
@@ -47,7 +47,7 @@ class MockHabitsRepository implements IHabitsRepository {
       name: payload.name,
       description: payload.description,
       frequency: payload.frequency,
-      entries: []
+      entries: [],
     };
     this.habits.push(newHabit);
   }

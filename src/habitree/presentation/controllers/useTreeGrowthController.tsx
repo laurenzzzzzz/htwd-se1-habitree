@@ -1,5 +1,5 @@
 import { useCallback, useState, useEffect } from 'react';
-import { useApplicationServices } from '../../application/providers/ApplicationServicesProvider';
+import { useApplicationServices } from '../providers/ApplicationServicesProvider';
 import { useAuth } from '../../context/AuthContext';
 import { TreeGrowth } from '../../domain/entities/TreeGrowth';
 

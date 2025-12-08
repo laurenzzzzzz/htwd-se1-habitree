@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, PropsWithChildren } from 'react';
 import { User } from '../domain/entities/User';
-import { useApplicationServices } from '../application/providers/ApplicationServicesProvider';
+import { useApplicationServices } from '../presentation/providers/ApplicationServicesProvider';
 
 export type CurrentUser = User;
 

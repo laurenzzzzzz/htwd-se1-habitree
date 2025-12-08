@@ -1,5 +1,5 @@
 import { useCallback, useState, useMemo } from 'react';
-import { useApplicationServices } from '../../application/providers/ApplicationServicesProvider';
+import { useApplicationServices } from '../providers/ApplicationServicesProvider';
 import { useAuth } from '../../context/AuthContext';
 import { Habit } from '../../domain/entities/Habit';
 import { FilterKey } from '../../constants/HomeScreenConstants';
@@ -43,44 +43,16 @@ export function useHabitsController() {
   }, [authToken, habitService]);
 
   /**
-   * Filters habits based on selected filter
-   */
-  const filteredHabits = useMemo(() => {
-    const today = new Date();
-    const isSameDay = (a: Date, b: Date) => 
-      a.getFullYear() === b.getFullYear() && 
-      a.getMonth() === b.getMonth() && 
-      a.getDate() === b.getDate();
-
-    return habits
-      .map(habit => {
-        const entryForToday = habit.entries.find(entry => 
-          isSameDay(new Date(entry.date), today)
-        );
-        return {
-          habit,
-          checked: entryForToday?.status ?? false,
-        };
-      })
-      .filter(({ habit }) => {
-        if (selectedFilter === 'alle') return true;
-        return habit.name.toLowerCase().includes(selectedFilter);
-      });
-  }, [habits, selectedFilter]);
-
-  /**
    * Gets today's date for display/operations
    */
   const today = useMemo(() => new Date(), []);
 
   /**
-   * Helper: check if two dates are the same day
+   * Filters habits based on selected filter (delegated to habitService)
    */
-  const isSameDay = useCallback((a: Date, b: Date) => 
-    a.getFullYear() === b.getFullYear() && 
-    a.getMonth() === b.getMonth() && 
-    a.getDate() === b.getDate(), 
-  []);
+  const filteredHabits = useMemo(() => {
+    return habitService.buildDailyOverview(habits, { date: today, filter: selectedFilter });
+  }, [habitService, habits, selectedFilter, today]);
 
   /**
    * Handler for habit creation
@@ -90,7 +62,9 @@ export function useHabitsController() {
       await saveHabit(name, description, frequency);
       return { success: true };
     } catch (error) {
-      return { success: false, error };
+      console.error('saveHabit failed', error);
+      const message = error instanceof Error ? error.message : 'Unbekannter Fehler beim Speichern des Habits';
+      return { success: false, errorMessage: message };
     }
   }, [saveHabit]);
 
@@ -102,7 +76,9 @@ export function useHabitsController() {
       await toggleHabit(id, dateIso);
       return { success: true };
     } catch (error) {
-      return { success: false, error };
+      console.error('toggleHabit failed', error);
+      const message = error instanceof Error ? error.message : 'Unbekannter Fehler beim Aktualisieren des Habits';
+      return { success: false, errorMessage: message };
     }
   }, [toggleHabit]);
 
@@ -118,7 +94,6 @@ export function useHabitsController() {
     toggleHabit,
     handleSaveHabit,
     handleToggleHabit,
-    isSameDay,
     setHabits,
   };
 }

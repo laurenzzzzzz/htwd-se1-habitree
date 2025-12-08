@@ -1,8 +1,16 @@
 import { Habit } from '../entities/Habit';
 
+export type HabitPersistencePayload = {
+  name: string;
+  description: string;
+  frequency: string;
+  startDate?: string;
+  startTime?: string;
+};
+
 export interface IHabitsRepository {
   fetchHabits(authToken: string): Promise<Habit[]>;
-  saveHabit(authToken: string, payload: { name: string; description: string; frequency: string }): Promise<void>;
+  saveHabit(authToken: string, payload: HabitPersistencePayload): Promise<void>;
   toggleHabit(authToken: string, id: number, dateIso: string): Promise<void>;
 }
 

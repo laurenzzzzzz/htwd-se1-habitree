@@ -72,7 +72,7 @@ export default function HomeScreen() {
       setModalVisible(false);
       setHabitMode(null);
     } else {
-      Alert.alert('Fehler', 'Speichern des Habits fehlgeschlagen.');
+      Alert.alert('Fehler', result.errorMessage ?? 'Speichern des Habits fehlgeschlagen.');
     }
   };
 
@@ -82,14 +82,14 @@ export default function HomeScreen() {
       setModalVisible(false);
       setHabitMode(null);
     } else {
-      Alert.alert('Fehler', 'Speichern des vordefiniert Habits fehlgeschlagen.');
+      Alert.alert('Fehler', result.errorMessage ?? 'Speichern des vordefinierten Habits fehlgeschlagen.');
     }
   };
 
   const handleToggleHabitPress = async (id: number) => {
     const result = await handleToggleHabit(id, today.toISOString());
     if (!result.success) {
-      Alert.alert('Fehler', 'Status-Update fehlgeschlagen. Bitte erneut versuchen.');
+      Alert.alert('Fehler', result.errorMessage ?? 'Status-Update fehlgeschlagen. Bitte erneut versuchen.');
     }
   };
 

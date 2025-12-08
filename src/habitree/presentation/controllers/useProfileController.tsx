@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { useApplicationServices } from '../../application/providers/ApplicationServicesProvider';
+import { useApplicationServices } from '../providers/ApplicationServicesProvider';
 import { useAuth, CurrentUser } from '../../context/AuthContext';
 
 export function useProfileController() {
