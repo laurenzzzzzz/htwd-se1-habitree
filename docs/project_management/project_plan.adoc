@@ -330,3 +330,10 @@ Definition of Ready enthalten +
 (4) User Stories- Format vereinheitlicht +
 
 |===
+
+=== Technische Praktiken
+
+|===
+|*Kategorie* |*Praktik* 
+
+|===
