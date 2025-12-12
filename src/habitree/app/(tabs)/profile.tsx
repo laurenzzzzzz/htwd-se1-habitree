@@ -28,7 +28,6 @@ Notifications.setNotificationHandler({
     shouldShowAlert: true,
     shouldPlaySound: false,
     shouldSetBadge: false,
-    // Diese beiden Eigenschaften beheben den Fehler:
     shouldShowBanner: true, // Ob ein Banner angezeigt werden soll (oben auf dem Bildschirm)
     shouldShowList: true,   // Ob in der Benachrichtigungsliste angezeigt werden soll
   }),
@@ -36,17 +35,16 @@ Notifications.setNotificationHandler({
 
 // --- HAUPTKOMPONENTE ---
 export default function ProfileScreen() {
-  const systemColorScheme = useColorScheme();
+  // const systemColorScheme = useColorScheme();
 
   const { isLoggedIn, currentUser, authToken, signOut } = useAuth();
 
   const { updateUsername, updatePassword: updatePasswordController, isUpdatingUsername, isUpdatingPassword } = useProfileController();
 
   // --- PROFILEINSTELLUNGEN ---
-  const [isDarkMode, setIsDarkMode] = useState(systemColorScheme === 'dark');
   const [tagesMotivationEnabled, setTagesMotivationEnabled] = useState(false);
   const [taeglicheErinnerungEnabled, setTaeglicheErinnerungEnabled] = useState(false);
-  const [oeffentlichesProfilEnabled, setOeffentlichesProfilEnabled] = useState(false);
+  //const [oeffentlichesProfilEnabled, setOeffentlichesProfilEnabled] = useState(false);
 
   // --- MODAL-STATES ---
   const [isUpdateUsernameModalVisible, setIsUpdateUsernameModalVisible] = useState(false);
@@ -76,9 +74,8 @@ export default function ProfileScreen() {
   };
 
   // --- TOGGLES ---
-  const toggleDarkMode = () => setIsDarkMode((prev) => !prev);
   const toggleTaeglicheErinnerung = () => setTaeglicheErinnerungEnabled((prev) => !prev);
-  const toggleOeffentlichesProfil = () => setOeffentlichesProfilEnabled((prev) => !prev);
+  //const toggleOeffentlichesProfil = () => setOeffentlichesProfilEnabled((prev) => !prev);
   const toggleTagesMotivation = async () => {
     const newValue = !tagesMotivationEnabled;
     setTagesMotivationEnabled(newValue);
@@ -143,10 +140,10 @@ export default function ProfileScreen() {
   if (!isLoggedIn) {
     return (
       <ThemedView style={styles.loadingContainer}>
-        <ThemedText type="title" style={{ marginBottom: 20, textAlign: 'center' }} >
+        <ThemedText type="title" style={styles.loadingTitle} >
           Anmeldung erforderlich
         </ThemedText>
-        <ThemedText style={{ textAlign: 'center', marginHorizontal: 30, opacity: 0.8 }}>
+        <ThemedText style={styles.loadingText}>
           Bitte wechsle zum Home-Tab, um dich anzumelden oder zu registrieren.
         </ThemedText>
       </ThemedView>
@@ -169,19 +166,11 @@ export default function ProfileScreen() {
               Benutzernamen ändern
             </ThemedText>
             <TextInput
-              style={[
-                styles.input,
-                {
-                  borderColor: isDarkMode ? '#555' : '#ccc',
-                  color: isDarkMode ? '#fff' : '#000',
-                  backgroundColor: isDarkMode ? '#333' : '#fff',
-                },
-              ]}
+              style={styles.input}
               onChangeText={setNewUsername}
               value={newUsername}
               placeholder="Neuer Benutzername"
-              placeholderTextColor={isDarkMode ? '#aaa' : '#888'}
-              editable={!isUpdatingUsername}
+              placeholderTextColor="#888"
               autoCapitalize="none"
             />
             <View style={styles.buttonRow}>
@@ -194,7 +183,7 @@ export default function ProfileScreen() {
               />
             </View>
             {isUpdatingUsername && (
-              <ActivityIndicator style={{ marginTop: 20 }} size="small" color="rgb(25, 145, 137)" />
+              <ActivityIndicator style={styles.activityIndicator} size="small" color="rgb(25, 145, 137)" />
             )}
           </ThemedView>
         </View>
@@ -215,51 +204,37 @@ export default function ProfileScreen() {
 
             <TextInput
               placeholder="Altes Passwort"
-              placeholderTextColor={isDarkMode ? '#aaa' : '#888'}
+              placeholderTextColor="#888"
               secureTextEntry
               value={oldPassword}
               onChangeText={setOldPassword}
-              style={[
-                styles.input,
-                {
-                  borderColor: isDarkMode ? '#555' : '#ccc',
-                  color: isDarkMode ? '#fff' : '#000',
-                  backgroundColor: isDarkMode ? '#333' : '#fff',
-                },
-              ]}
+              style={styles.input}
             />
 
             <TextInput
               placeholder="Neues Passwort (min. 6 Zeichen)"
-              placeholderTextColor={isDarkMode ? '#aaa' : '#888'}
+              placeholderTextColor="#888"
               secureTextEntry
               value={newPassword}
               onChangeText={setNewPassword}
-              style={[
-                styles.input,
-                {
-                  borderColor: isDarkMode ? '#555' : '#ccc',
-                  color: isDarkMode ? '#fff' : '#000',
-                  backgroundColor: isDarkMode ? '#333' : '#fff',
-                },
-              ]}
+              style={styles.input}
             />
 
             <View style={styles.buttonRow}>
               <Button title="Abbrechen" onPress={() => setIsPasswordModalVisible(false)} />
-                <Button
-                  title={isUpdatingPassword ? 'Aktualisiere...' : 'Speichern'}
-                  onPress={handleUpdatePassword}
-                  disabled={
-                    isUpdatingPassword ||
-                    oldPassword.trim() === '' ||
-                    newPassword.trim().length < 6
-                  }
-                  color="rgb(25, 145, 137)"
-                />
+              <Button
+                title={isUpdatingPassword ? 'Aktualisiere...' : 'Speichern'}
+                onPress={handleUpdatePassword}
+                disabled={
+                  isUpdatingPassword ||
+                  oldPassword.trim() === '' ||
+                  newPassword.trim().length < 6
+                }
+                color="rgb(25, 145, 137)"
+              />
             </View>
             {isUpdatingPassword && (
-              <ActivityIndicator style={{ marginTop: 20 }} size="small" color="rgb(25, 145, 137)" />
+              <ActivityIndicator style={styles.activityIndicator} size="small" color="rgb(25, 145, 137)" />
             )}
           </ThemedView>
         </View>
@@ -302,14 +277,14 @@ export default function ProfileScreen() {
 
         <ThemedView style={styles.sectionContainer}>
           <ProfileSettings
-            isDarkMode={isDarkMode}
-            onToggleDarkMode={toggleDarkMode}
+            //isDarkMode={isDarkMode}
+            //onToggleDarkMode={toggleDarkMode}
             tagesMotivationEnabled={tagesMotivationEnabled}
             onToggleTagesMotivation={toggleTagesMotivation}
             taeglicheErinnerungEnabled={taeglicheErinnerungEnabled}
             onToggleTaeglicheErinnerung={toggleTaeglicheErinnerung}
-            oeffentlichesProfilEnabled={oeffentlichesProfilEnabled}
-            onToggleOeffentlichesProfil={toggleOeffentlichesProfil}
+            //oeffentlichesProfilEnabled={oeffentlichesProfilEnabled}
+            //onToggleOeffentlichesProfil={toggleOeffentlichesProfil}
             onChangeUsername={() => { setNewUsername(currentUser?.username || ''); setIsUpdateUsernameModalVisible(true); }}
             onChangePassword={() => { setOldPassword(''); setNewPassword(''); setIsPasswordModalVisible(true); }}
             onLogout={handleLogout}
