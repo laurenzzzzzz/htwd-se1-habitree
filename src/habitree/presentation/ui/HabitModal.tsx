@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, View, Button, Pressable, TextInput, Text, ScrollView, Dimensions, StyleSheet } from 'react-native';
+import { Modal, View, Button, Pressable, TextInput, Text, ScrollView, Dimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ThemedText } from './ThemedText';
 import { styles as loginStyles } from '../../styles/login_style';
@@ -34,8 +34,6 @@ type Props = {
     onSelectPredefined?: (p: Predefined) => void;
     onAddCustom: () => void;
 };
-
-const inputFontFix = { fontSize: 16 };
 
 export default function HabitModal({
     visible,
@@ -153,13 +151,13 @@ export default function HabitModal({
                                         placeholder="Kurzname (z. B. Kniebeugen)"
                                         value={newHabitName}
                                         onChangeText={setNewHabitName}
-                                        style={[loginStyles.input, inputFontFix]}
+                                        style={[loginStyles.input, habitModalStyles.inputFontFix]}
                                     />
                                     <TextInput
                                         placeholder="Beschreibung"
                                         value={newHabitDescription}
                                         onChangeText={setNewHabitDescription}
-                                        style={[loginStyles.input, inputFontFix]}
+                                        style={[loginStyles.input, habitModalStyles.inputFontFix]}
                                     />
 
                                     {/* Start Date Input */}
@@ -209,23 +207,23 @@ export default function HabitModal({
 
                                     {/* Interval Input - Only show if frequency is Benutzerdefiniert */}
                                     {newHabitFrequency === 'Benutzerdefiniert' && (
-                                        <View style={{ marginTop: 12 }}>
+                                        <View style={habitModalStyles.marginTop}>
                                             <ThemedText style={habitModalStyles.label}>Alle wie viele Tage?</ThemedText>
                                             <TextInput
                                                 placeholder="z.B. 2, 4, 7"
                                                 value={newHabitIntervalDays}
                                                 onChangeText={setNewHabitIntervalDays}
                                                 keyboardType="number-pad"
-                                                style={[loginStyles.input, inputFontFix]}
+                                                style={[loginStyles.input, habitModalStyles.inputFontFix]}
                                             />
                                         </View>
                                     )}
 
                                     {/* Weekday Picker - Only show if frequency is Wöchentlich */}
                                     {newHabitFrequency === 'Wöchentlich' && (
-                                        <View style={{ marginTop: 12 }}>
+                                        <View style={habitModalStyles.marginTop}>
                                             <ThemedText style={habitModalStyles.label}>Wochentage auswählen:</ThemedText>
-                                            <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 4 }}>
+                                            <View style={habitModalStyles.weekdayGrid}>
                                                 {['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'].map((label, index) => {
                                                     const isSelected = newHabitWeekDays.includes(index);
                                                     return (
@@ -238,18 +236,21 @@ export default function HabitModal({
                                                                     setNewHabitWeekDays([...newHabitWeekDays, index]);
                                                                 }
                                                             }}
-                                                            style={{
-                                                                width: '13%',
-                                                                aspectRatio: 1,
-                                                                borderRadius: 8,
-                                                                backgroundColor: isSelected ? '#4CAF50' : '#f0f0f0',
-                                                                justifyContent: 'center',
-                                                                alignItems: 'center',
-                                                                borderWidth: 1,
-                                                                borderColor: isSelected ? '#388E3C' : '#ccc',
-                                                            }}
+                                                            style={[
+                                                                habitModalStyles.weekdayButton,
+                                                                isSelected
+                                                                    ? habitModalStyles.weekdayButtonSelected
+                                                                    : habitModalStyles.weekdayButtonUnselected,
+                                                            ]}
                                                         >
-                                                            <Text style={{ fontSize: 11, fontWeight: '500', color: isSelected ? '#fff' : '#333' }}>
+                                                            <Text
+                                                                style={[
+                                                                    habitModalStyles.weekdayText,
+                                                                    isSelected
+                                                                        ? habitModalStyles.weekdayTextSelected
+                                                                        : habitModalStyles.weekdayTextUnselected,
+                                                                ]}
+                                                            >
                                                                 {label}
                                                             </Text>
                                                         </Pressable>
@@ -271,8 +272,8 @@ export default function HabitModal({
                                     habitModalStyles.halfButton,
                                     (newHabitFrequency === 'Wöchentlich' && newHabitWeekDays.length === 0) ||
                                     (newHabitFrequency === 'Benutzerdefiniert' && newHabitIntervalDays.trim() === '')
-                                        ? { opacity: 0.5 }
-                                        : {},
+                                        ? habitModalStyles.disabledButton
+                                        : null,
                                 ]}
                                 onPress={onAddCustom}
                                 disabled={

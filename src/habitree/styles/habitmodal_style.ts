@@ -111,6 +111,9 @@ export const habitModalStyles = StyleSheet.create({
         width: '100%',
         position: 'relative',
     },
+    inputFontFix: {
+        fontSize: 16,
+    },
     inputInner: {
         flex: 1,
         paddingRight: 56,
@@ -176,5 +179,39 @@ export const habitModalStyles = StyleSheet.create({
     },
     marginTop: {
         marginTop: 12,
+    },
+    weekdayGrid: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        gap: 4,
+    },
+    weekdayButton: {
+        width: '13%',
+        aspectRatio: 1,
+        borderRadius: 8,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 1,
+    },
+    weekdayButtonSelected: {
+        backgroundColor: '#4CAF50',
+        borderColor: '#388E3C',
+    },
+    weekdayButtonUnselected: {
+        backgroundColor: '#f0f0f0',
+        borderColor: '#ccc',
+    },
+    weekdayText: {
+        fontSize: 11,
+        fontWeight: '500',
+    },
+    weekdayTextSelected: {
+        color: '#fff',
+    },
+    weekdayTextUnselected: {
+        color: '#333',
+    },
+    disabledButton: {
+        opacity: 0.5,
     },
 });
