@@ -22,6 +22,15 @@ export const inventoryviewStyles = StyleSheet.create({
     width: windowWidth * 0.2,
     height: windowWidth * 0.2,
   },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingText: {
+    marginTop: 10,
+    textAlign: 'center',
+  },
   modalOverlay: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.7)',

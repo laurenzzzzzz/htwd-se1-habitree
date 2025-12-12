@@ -4,6 +4,7 @@ import { useThemeColor } from '@/hooks/useThemeColor';
 import { useAchievementController } from '../../presentation/controllers/useAchievementController';
 import InventoryView from '../../presentation/ui/InventoryView';
 import { ThemedText } from '../../presentation/ui/ThemedText';
+import { inventoryviewStyles as styles } from '../../styles/inventory_style';
 
 export default function InventoryScreen() {
   const backgroundColor = useThemeColor({}, 'background');
@@ -12,9 +13,9 @@ export default function InventoryScreen() {
 
   if (isLoading) {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor }}>
+      <View style={[styles.loadingContainer, { backgroundColor }]}>
         <ActivityIndicator size="large" color="rgb(25, 145, 137)" />
-        <ThemedText style={{ marginTop: 10, textAlign: 'center' }}>Lädt Erfolge...</ThemedText>
+        <ThemedText style={styles.loadingText}>Lädt Erfolge...</ThemedText>
       </View>
     );
   }
