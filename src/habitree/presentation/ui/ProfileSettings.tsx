@@ -4,28 +4,28 @@ import { ThemedText } from './ThemedText';
 import { styles } from '../../styles/profile_style';
 
 type Props = {
-  isDarkMode: boolean;
-  onToggleDarkMode: () => void;
+  //isDarkMode: boolean;
+  //onToggleDarkMode: () => void;
   tagesMotivationEnabled: boolean;
   onToggleTagesMotivation: () => void;
   taeglicheErinnerungEnabled: boolean;
   onToggleTaeglicheErinnerung: () => void;
-  oeffentlichesProfilEnabled: boolean;
-  onToggleOeffentlichesProfil: () => void;
+  //oeffentlichesProfilEnabled: boolean;
+  //onToggleOeffentlichesProfil: () => void;
   onChangeUsername: () => void;
   onChangePassword: () => void;
   onLogout: () => void;
 };
 
 export const ProfileSettings: React.FC<Props> = ({
-  isDarkMode,
-  onToggleDarkMode,
+  //isDarkMode,
+  //onToggleDarkMode,
   tagesMotivationEnabled,
   onToggleTagesMotivation,
   taeglicheErinnerungEnabled,
   onToggleTaeglicheErinnerung,
-  oeffentlichesProfilEnabled,
-  onToggleOeffentlichesProfil,
+  //oeffentlichesProfilEnabled,
+  //onToggleOeffentlichesProfil,
   onChangeUsername,
   onChangePassword,
   onLogout,
@@ -41,14 +41,14 @@ export const ProfileSettings: React.FC<Props> = ({
         <ThemedText>Tägliche Erinnerung</ThemedText>
         <Switch value={taeglicheErinnerungEnabled} onValueChange={onToggleTaeglicheErinnerung} />
       </View>
-      <View style={styles.settingRow}>
+      {/* <View style={styles.settingRow}>
         <ThemedText>Dark Mode</ThemedText>
         <Switch value={isDarkMode} onValueChange={onToggleDarkMode} />
       </View>
       <View style={styles.settingRow}>
         <ThemedText>Öffentliches Profil</ThemedText>
         <Switch value={oeffentlichesProfilEnabled} onValueChange={onToggleOeffentlichesProfil} />
-      </View>
+      </View> */}
 
       <TouchableOpacity style={styles.settingRowButton} onPress={onChangeUsername}>
         <ThemedText>Benutzernamen ändern</ThemedText>

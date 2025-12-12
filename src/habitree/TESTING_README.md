@@ -25,7 +25,8 @@ __tests__/
 │   └── Habit.entity.test.ts          # Unit Tests (22)
 │
 └── integration/
-    └── HabitService.integration.test.ts  # Integration Tests (12)
+    ├── HabitSchedulePolicy.test.ts      # Domain policy coverage
+    └── HabitService.integration.test.ts # Service + Repository
 ```
 
 ## Tests ausführen
@@ -54,15 +55,18 @@ Testet: `domain/entities/Habit.ts`
 | `hasMilestone()` | 3 | 7-Tage, 30-Tage |
 | `Constructor` | 2 | Objekterstellung |
 
-### Integration Tests (12 Stück)
-Testet: `application/services/HabitService.ts` + Repository + Entity
+### Integration Tests (13 Stück)
+Testet: 
+- `application/services/HabitService.ts` + Repository + Entity
+- `domain/services/HabitSchedulePolicy.ts` (Policy bleibt konsistent)
 
-| Flow | Tests | Was wird geprüft? |
-|------|-------|-------------------|
+| Flow/Testblock | Tests | Was wird geprüft? |
+|----------------|-------|-------------------|
 | `fetchHabits` | 4 | Service → Repository → Entity |
 | `saveHabit` | 3 | Validierung → Speichern → Liste |
-| `toggleHabit` | 3 | Status-Änderung durch alle Layer |
+| `toggleHabit` | 4 | Status-Änderung + Default-Datum |
 | E2E Workflow | 2 | Erstellen → Abhaken → Streak |
+| `HabitSchedulePolicy` | 4 | Defaults + Frequenzlogik |
 
 ### Systemtests (4 Stück - manuell)
 Siehe: `__tests__/system/SYSTEMTESTS.md`

@@ -31,6 +31,21 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     fontSize: 16,
+    borderColor: '#ccc',
+    color: '#000',
+    backgroundColor: '#fff',
+  },
+  loadingTitle: {
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  loadingText: {
+    textAlign: 'center',
+    marginHorizontal: 30,
+    opacity: 0.8,
+  },
+  activityIndicator: {
+    marginTop: 20,
   },
   buttonRow: {
     flexDirection: 'row',

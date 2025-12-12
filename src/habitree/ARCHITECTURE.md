@@ -23,6 +23,10 @@ src/habitree/
 │   │   ├── Habit.ts
 │   │   ├── Quote.ts
 │   │   └── Entry.ts
+│   ├── services/                     # Pure domain policies/helpers
+│   │   └── HabitSchedulePolicy.ts
+│   └── ports/                        # Domain ports for external capabilities
+│       └── INotificationPort.ts
 │   └── repositories/                 # Repository interfaces (contracts)
 │       ├── IAuthRepository.ts
 │       ├── IHabitsRepository.ts
@@ -36,7 +40,8 @@ src/habitree/
 │   │   ├── AuthenticationService.ts  # Login/register flow
 │   │   ├── HabitService.ts           # Habit CRUD + orchestration
 │   │   ├── QuoteService.ts           # Quote fetching
-│   │   └── ProfileService.ts         # User profile updates
+│   │   ├── ProfileService.ts         # User profile updates
+│   │   └── NotificationService.ts    # Bridges notification port for scheduling
 │   └── types/
 │       └── ApplicationServices.ts    # Shared DI contract
 │
@@ -46,7 +51,8 @@ src/habitree/
 │   │   ├── ApiAuthRepository.ts      # HTTP: auth endpoint
 │   │   ├── ApiQuotesRepository.ts    # HTTP: quotes endpoint
 │   │   ├── ApiProfileRepository.ts   # HTTP: profile endpoint
-│   │   └── SecureStoreAuthRepository.ts  # Local secure persistence
+│   │   ├── SecureStoreAuthRepository.ts  # Local secure persistence
+│   │   └── ExpoNotificationPort.ts   # Expo notifications adapter (implements INotificationPort)
 │   └── di/                           # Dependency Injection
 │       └── ServiceContainer.ts       # Instantiates repositories & services
 │
@@ -108,6 +114,14 @@ src/habitree/
   - `Streak.ts` – User's current and longest streak with milestone tracking
   - `Entry.ts` – Habit completion entry for a specific date
 
+- **Domain Services / Policies** (`domain/services/`)
+  - `HabitSchedulePolicy.ts` – Pure functions for scheduling rules (daily/weekly/interval), default formatting for persistence, shared helpers like `isSameDay`
+  - Keeps recurrence/business rules out of UI/infrastructure so both API adapter and screens use the same source of truth
+
+- **Domain Ports** (`domain/ports/`)
+  - `INotificationPort.ts` – Defines the minimal capability the domain/application need for scheduling reminders (init + schedule)
+  - Allows swapping Expo notifications, test doubles, or native modules without changing application logic
+
 - **Repository Interfaces** (`domain/repositories/`)
   - Define contracts that lower layers must implement
   - Example: `IHabitsRepository` declares `getHabits()`, `saveHabit()`, `toggleHabit()`
@@ -142,6 +156,7 @@ src/habitree/
   - `TreeGrowthService` – Calculate and fetch tree progression
   - `AchievementService` – Fetch unlocked achievements
   - `StreakService` – Track current and longest streaks
+  - `NotificationService` – Delegates to `INotificationPort` implementations to initialize permissions and schedule reminders after habit changes
 
 **Example Flow:**
 ```typescript
@@ -165,7 +180,7 @@ src/habitree/
 
 **Contents:**
 
-- **HTTP Adapters** (`infrastructure/adapters/`)
+- **HTTP / Platform Adapters** (`infrastructure/adapters/`)
   - `ApiHabitsRepository.ts` – axios calls to `/habits` endpoint
   - `ApiAuthRepository.ts` – axios calls to `/auth` endpoint
   - `ApiQuotesRepository.ts` – axios calls to `/quotes` endpoint
@@ -173,7 +188,8 @@ src/habitree/
   - `ApiTreeGrowthRepository.ts` – tree growth data and calculations
   - `ApiAchievementRepository.ts` – achievement/badge endpoints
   - `ApiStreakRepository.ts` – streak tracking endpoints
-  - All adapters implement domain repository interfaces
+  - `ExpoNotificationPort.ts` – Wraps `expo-notifications` + `Platform` APIs and implements `INotificationPort`
+  - All adapters implement domain interfaces or ports, keeping Expo specifics in infrastructure
 
 - **Persistence Adapter**
   - `SecureStoreAuthRepository.ts` – Uses `expo-secure-store` to persist auth token and user data locally
@@ -181,10 +197,12 @@ src/habitree/
 - **DI Composition Root** (`infrastructure/di/ServiceContainer.ts`)
   - Exports singleton instances of all services
   - Wires repositories to services
+  - Registers `NotificationService` with the Expo port so controllers just call the abstract service
   - Example:
     ```typescript
     export const authService = new AuthService(secureStoreAuthRepo);
     export const habitService = new HabitService(apiHabitsRepo);
+    export const notificationService = new NotificationService(new ExpoNotificationPort());
     ```
 
 **Key Rules:**
@@ -204,7 +222,7 @@ src/habitree/
   - Smart hooks that bridge services and UI components
   - Manage loading states, errors, and local UI state
   - `useAuthController()` – Login/register orchestration
-  - `useHabitsController()` – Habit CRUD and filtering
+  - `useHabitsController()` – Habit CRUD, filtering, and notification scheduling (delegates to `NotificationService` after each mutation)
   - `useQuoteController()` – Daily quote fetching
   - `useProfileController()` – User profile updates
   - `useTreeGrowthController()` – Tree growth data and display
@@ -215,6 +233,7 @@ src/habitree/
 - **Presentational Components** (`presentation/ui/`)
   - Dumb, reusable UI components
   - Receive props and emit callbacks; no business logic
+  - Screens such as `calendar.tsx` rely on `HabitSchedulePolicy` helpers from the domain layer instead of re-implementing recurrence logic
   - Foundation components: `ThemedText`, `ThemedView`, `HelloWave`, `Collapsible`, `HapticTab`, `ExternalLink`, `ParallaxScrollView`
   - UI Components: `AuthForm`, `HabitList`, `QuoteBanner`, `ProfileSettings`, `HabitModal`
   - Feature screens: `CalendarView` (with weekly stats), `TreeView` (with growth display), `InventoryView` (with achievements)
@@ -262,8 +281,9 @@ export default function HomeScreen() {
 2. **Controller** – `useHabitsController.saveHabit(name, description, frequency)` is called
 3. **Application** – `habitService.saveHabit(...)` orchestrates the save
 4. **Infrastructure** – `apiHabitsRepository.saveHabit(...)` makes HTTP POST request
-5. **Response** – New habit returned and merged into local `habits` state
-6. **Re-render** – Component re-renders with updated habit list
+5. **Application (Notifications)** – `NotificationService` asks the `INotificationPort` implementation (Expo) to reschedule reminders for relevant habits
+6. **Response** – New habit returned and merged into local `habits` state
+7. **Re-render** – Component re-renders with updated habit list
 
 ---
 

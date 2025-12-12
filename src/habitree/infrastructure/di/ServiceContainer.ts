@@ -15,6 +15,8 @@ import { AchievementService } from '../../application/services/AchievementServic
 import { StreakService } from '../../application/services/StreakService';
 import { SecureStoreAuthRepository } from '../adapters/SecureStoreAuthRepository';
 import { ApplicationServices } from '../../application/types/ApplicationServices';
+import { NotificationService } from '../../application/services/NotificationService';
+import { ExpoNotificationPort } from '../adapters/ExpoNotificationPort';
 
 const habitsRepo = new ApiHabitsRepository();
 const quotesRepo = new ApiQuotesRepository();
@@ -23,6 +25,7 @@ const authApiRepo = new ApiAuthRepository();
 const treeGrowthRepo = new ApiTreeGrowthRepository();
 const achievementRepo = new ApiAchievementRepository();
 const streakRepo = new ApiStreakRepository();
+const notificationPort = new ExpoNotificationPort();
 
 // Auth persistence service (keeps using SecureStoreAuthRepository inside AuthService)
 const authRepoForPersistence = new SecureStoreAuthRepository();
@@ -35,6 +38,7 @@ export const profileService = new ProfileService(profileRepo);
 export const treeGrowthService = new TreeGrowthService(treeGrowthRepo);
 export const achievementService = new AchievementService(achievementRepo);
 export const streakService = new StreakService(streakRepo);
+export const notificationService = new NotificationService(notificationPort);
 
 export const applicationServices: ApplicationServices = {
   habitService,
@@ -45,6 +49,7 @@ export const applicationServices: ApplicationServices = {
   treeGrowthService,
   achievementService,
   streakService,
+  notificationService,
 };
 
 export default applicationServices;

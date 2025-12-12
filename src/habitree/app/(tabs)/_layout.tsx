@@ -41,12 +41,15 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        // tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        tabBarActiveTintColor: Colors.light.tint,
         headerShown: true,
         headerTitleAlign: 'center',
         headerStyle: {
-          backgroundColor: Colors[colorScheme ?? 'light'].background,
-          borderBottomColor: Colors[colorScheme ?? 'light'].border,
+          // backgroundColor: Colors[colorScheme ?? 'light'].background,
+          backgroundColor: Colors.light.background,
+          // borderBottomColor: Colors[colorScheme ?? 'light'].border,
+          borderBottomColor: Colors.light.border,
           height: HEADER_HEIGHT,
         },
         tabBarButton: HapticTab,
@@ -80,7 +83,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="calendar"
         options={{
-          title: 'Kalendar',
+          title: 'Habits',
           headerTitle: () => (
             <Text
               style={{
@@ -90,7 +93,7 @@ export default function TabLayout() {
                 textAlign: 'center',
               }}
             >
-              Kalendar
+              Habits
             </Text>
           ),
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="calendar" color={color} />,

@@ -1,6 +1,10 @@
 import axios, { AxiosError } from 'axios';
 import IHabitsRepository, { HabitPersistencePayload } from '../../domain/repositories/IHabitsRepository';
 import { Habit, HabitData } from '../../domain/entities/Habit';
+import {
+  buildHabitPersistenceRequest,
+  HabitPersistenceRequestBody,
+} from '../../domain/services/HabitSchedulePolicy';
 
 const API_BASE_URL = 'http://iseproject01.informatik.htw-dresden.de:8000';
 const HABITS_API_URL = `${API_BASE_URL}/habits`;
@@ -14,14 +18,28 @@ export class ApiHabitsRepository implements IHabitsRepository {
     return response.data.map(data => new Habit(data));
   }
 
-  async saveHabit(authToken: string, payload: HabitPersistencePayload): Promise<void> {
-    try {
+  async saveHabit(
+    authToken: string,
+    payload: HabitPersistencePayload
+  ): Promise<void> {
+    const body: HabitPersistenceRequestBody = buildHabitPersistenceRequest(payload);
 
-      await axios.post(HABITS_API_URL, payload, {
+    try {
+      await axios.post(HABITS_API_URL, body, {
         headers: { Authorization: `Bearer ${authToken}` },
       });
-    } catch (error) {
-      throw this.createDetailedError(error, 'Habit konnte nicht gespeichert werden');
+    } catch (err) {
+      // Normalize axios error to a readable message
+      const axiosErr = err as any;
+      let message = 'Unbekannter Fehler beim Erstellen des Habits.';
+      if (axiosErr.response && axiosErr.response.data) {
+        if (typeof axiosErr.response.data === 'string') message = axiosErr.response.data;
+        else if (axiosErr.response.data.error) message = axiosErr.response.data.error;
+        else message = JSON.stringify(axiosErr.response.data);
+      } else if (axiosErr.message) {
+        message = axiosErr.message;
+      }
+      throw new Error(message);
     }
   }
 
@@ -52,6 +70,30 @@ export class ApiHabitsRepository implements IHabitsRepository {
     }
 
     return new Error(fallbackMessage);
+  }
+
+  async deleteHabit(authToken: string, id: number): Promise<void> {
+    await axios.delete(`${HABITS_API_URL}/${id}`, {
+      headers: { Authorization: `Bearer ${authToken}` },
+    });
+  }
+
+  async updateHabit(
+    authToken: string,
+    id: number,
+    payload: HabitPersistencePayload
+  ): Promise<void> {
+    const body: HabitPersistenceRequestBody = buildHabitPersistenceRequest(payload);
+    await axios.put(`${HABITS_API_URL}/${id}`, body, {
+      headers: { Authorization: `Bearer ${authToken}` },
+    });
+  }
+
+  async fetchPredefinedHabits(authToken: string): Promise<any[]> {
+    const response = await axios.get<any[]>(`${HABITS_API_URL}/predefined`, {
+      headers: { Authorization: `Bearer ${authToken}` },
+    });
+    return response.data;
   }
 }
 

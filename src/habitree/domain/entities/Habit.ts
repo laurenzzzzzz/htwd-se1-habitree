@@ -10,6 +10,10 @@ export type HabitData = {
   name: string;
   description: string;
   frequency: string;
+  time?: string | null;
+  startDate?: string | Date | null;
+  weekDays?: number[];
+  intervalDays?: number | null;
   entries: HabitEntry[];
 };
 
@@ -22,6 +26,10 @@ export class Habit {
   readonly name: string;
   readonly description: string;
   readonly frequency: string;
+  readonly time?: string | null;
+  readonly startDate?: string | Date | null;
+  readonly weekDays?: number[];
+  readonly intervalDays?: number | null;
   readonly entries: HabitEntry[];
 
   constructor(data: HabitData) {
@@ -29,6 +37,10 @@ export class Habit {
     this.name = data.name;
     this.description = data.description;
     this.frequency = data.frequency;
+    this.time = data.time ?? null;
+    this.startDate = data.startDate ?? null;
+    this.weekDays = data.weekDays ?? [];
+    this.intervalDays = data.intervalDays ?? null;
     this.entries = data.entries;
   }
 

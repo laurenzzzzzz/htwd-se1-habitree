@@ -41,9 +41,9 @@ export class Streak {
    */
   getMilestoneMessage(): string {
     if (this.currentStreak < 7) return `${this.currentStreak} Tage`;
-    if (this.currentStreak < 30) return `${this.currentStreak} Tage - Eine Woche! 🎉`;
-    if (this.currentStreak < 100) return `${this.currentStreak} Tage - Ein Monat! 🚀`;
-    return `${this.currentStreak} Tage - Legende! 👑`;
+    if (this.currentStreak < 30) return `${this.currentStreak} Tage - Eine Woche! `;
+    if (this.currentStreak < 100) return `${this.currentStreak} Tage - Ein Monat! `;
+    return `${this.currentStreak} Tage - Legende! `;
   }
 
   /**

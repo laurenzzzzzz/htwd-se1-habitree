@@ -37,7 +37,7 @@ export default function TabTwoScreen() {
       }
     >
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Kalender</ThemedText>
+        <ThemedText type="title">Habit-Übersicht</ThemedText>
       </ThemedView>
 
       <Calendar
