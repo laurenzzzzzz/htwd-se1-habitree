@@ -286,7 +286,11 @@ dem Scrum Master als Arbeitsunterstützung (z.B.: Ansprechen in Retrospektive, w
 | Klare Entscheidung gegen PowerPoint als Hauptwerkzeug, bei gleichzeitigem Aufrechterhalten der verbesserten Meeting Struktur
 | - Weniger Redundanz, weniger Aufwand, konsistentere Planung
 | Einführung strukturierter Testprozesse entlang der Testpyramide
-| - Aufbau eines systematischen Testprozesses entlang der in der Vorlesung vorgegebenen Testpyramide +
+|- Grundlegende Ziele des Testens ist das extrahieren von: +
+(1) Fehlerhaften Zuständen des Systemes +
+(2) Ausfällen, Abweichungen des Ist- Verhaltens vom Soll- Verhalten des Systemes +
+(3) Bugs/ `Defects`, mechanische oder algorithmische Fehler +
+- Aufbau eines systematischen Testprozesses entlang der in der Vorlesung vorgegebenen Testpyramide +
 - Akzeptanztests wurden im Weekly ausgewählt, priorisiert und im Rahmen der Sprint Reviews gemeinsam mit Stakeholdern überprüft (Team 1C) +
 - Alle während des Testens erkannten Fehler werden als Bugs dokumentiert und mit dem Label `defect` erfasst +
 - `Defects` werden automatisiert auf einem separaten Board angezeigt und im Weekly den verantwortlichen  zugeteilt +
@@ -337,15 +341,18 @@ Definition of Ready enthalten +
 
 === Technische Praktiken
 
-=== Technische Praktiken (Erweiterung)
 |===
 |*Kategorie* | *Praktik*
 
 | Test-Management & Qualitätssicherung
-|- Unsere Tests orientieren sich an den `First`- Regeln +
+|- Unsere Tests orientieren sich an den `First`- Regeln <???> +
+- Habitree muss hierbei verifiziert und validiert werden.
 - Unsere Tests untergliedern sich in mehrere Arten: +
-(1) White- Box- Tests: Messung mittels der KPI `Code Coverage` +
+(1) White- Box- Tests: Messung mittels der KPI `Code Coverage`:
+- Ziel ist es die interne Logik und Kontrollflüsse des Codes basierend auf Wissen über die Implementierung zu prüfen. +
 (2) Black Box Tests: +
+- Ziel hierbei ist es zu überprüfen, ob die Anwendung sich aus Sicht der Nutzer so verhält, wie es in den User Stories und Akzeptanzkriterien geschrieben wurde. Der Interne Code wird hierbei als unbekannt gesehen. +
+- Diese Tests erfolgen explorativ (z.B.: manuelles durchklicken der App zur gewünschten Spezifikation von User Story X) +
 (2.1) Äquivalenzklassenanalyse +
 (2.2) Grenzwertanalyse +
 - Die Tests haben folgende Namenskonventionen: <???> +
@@ -355,17 +362,25 @@ Definition of Ready enthalten +
 
 
 | Unterteilung der Testarten
-|- Einführung einer Testpyramide mit klaren Teststufen: +
+|*- Einführung einer Testpyramide mit klaren Teststufen:* +
   (1) Unit-Tests zur Überprüfung einzelner Methoden (je Test i.d.R. eine Methode) +
   (2) Integrationstest um die Zusammenarbeit mehrerer Units zu testen.  +
   (3) Systemtests für das gesamte System. +
+  *- Testfälle werden in Positiv und Negativtests untergliedert:* +
+  (1) Positivtests: Das Verhaltens des System under Tests bei korrekter Nutzung wird untersucht, was bedeutet, dass nur valider Input als Testdaten eingefügt wird. +
+  (2) Negativtests: Das Verhalten des System under Tests bei fehlerhaften/unzureichenden Input wird überprüft, sodass insbesonders dessen Exception- Handling ersichtlich wird. 
   
 | Integration ins GitHub-Board
 |- Bugs, die durch Tests gefunden werden, werden als Issues mit dem label `defect` versehen +
 - Defects erscheinen automatisch im separaten Defect-Board +
 - Defects werden basierend auf Ihrem Risiko und Ihrer Komplexität geschätzt und priorisiert. Für die Priorisierung wird auch der Geschäftswert der betreffenden Funktionalität betrachtet. Ist dieser hoch, so muss das Fixing zeitnah erfolgen!  +
-- Sprint Reviews enthalten nun auch Akzeptanztests zu vorher ausgewählten Stories/ Features der Anwendung. + 
 - Bugs, die von den einzelnen Entwicklern selber im jeweiligen Sprint gefunden wurden, werden sofort durch die zuständigen Programmierer behoben. +
+
+
+| Integration in den Scrum- Zyklus
+|- Sprint Reviews enthalten nun auch Akzeptanztests zu vorher ausgewählten Stories/ Features der Anwendung. Somit sollen auch statische Tests manuell durch andere Personen als den Ersteller abgedeckt werden. + 
+- Weitere statische Tests werden auch innerhalb der Weekly- Meetings durch andere Personen (insbesonders durch unseren PO) des Teams vorgenommen. +
+- Vor allem bei Sprint Review- Tests mit externen Stakeholdern,erfolgt im Vorfeld eine kurze Absprache mit dem Scrum Master, PO und dem enstprechenden Entwickler, welche konkreten Kriterien zur Testevaluation hinzugezogen werden müssen.
 |===
 
 
@@ -378,4 +393,14 @@ Dokument anlegen: testing.adoc mit Test- Ordnerstruktur +
 Namenskonventionen für tests nieder schreiben +
 Mocking vorhanden ???
 
-Welche Qualitätseigenschaften testes du am meisten? Folie 28
+Welche Qualitätseigenschaften testes du am meisten? Folie 28 +
+
+Automatisiertes vs Exploratives Testen was machen wir genau? +
+
+Konkrete Umsetzung der White Box tests kurz hier niederschreiben und genauer noch mal in Testing.adoc ergänzen +
+
+Testorganisation (Seite 24- 30) muss erklärt werden. +
+
+Beispiele bei First Regeln nennen +
+
+Fragen aus Vorlesung von Prof. Anke beantworten- ggf. im Q&A
