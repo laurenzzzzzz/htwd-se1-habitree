@@ -51,7 +51,7 @@ npx expo start
 
 === Startseite (Home)
 
-image::Startseite.jpg[Startseite der App, width=300]
+image::images/Startseite.jpg[Startseite der App, width=300]
 
 Auf der Startseite wird der Benutzer persönlich begrüßt (z. B. *„Hallo, Nutzer!“*).  
 Zusätzlich werden folgende Informationen angezeigt:
@@ -68,7 +68,7 @@ Zusätzlich werden folgende Informationen angezeigt:
 
 === Habits-Übersicht
 
-image::Habits.jpg[Habits Übersicht, width=300]
+image::images/Habits.jpg[Habits Übersicht, width=300]
 
 In der Habits-Ansicht verwaltet der Benutzer seine Gewohnheiten.  
 Die Ansicht ist in drei Bereiche unterteilt:
@@ -81,7 +81,7 @@ Die Ansicht ist in drei Bereiche unterteilt:
 
 === Baum-Ansicht (Fortschritt)
 
-image::Baum.jpg[Baum Fortschritt, width=300]
+image::images/Baum.jpg[Baum Fortschritt, width=300]
 
 Die Baum-Ansicht visualisiert den Fortschritt des Benutzers:
 
@@ -96,7 +96,7 @@ Der Baum dient als zentrales Motivations- und Belohnungselement der App.
 
 === Inventar / Abzeichen
 
-image::Inventar.jpg[Inventar / Abzeichen Übersicht, width=300]
+image::images/Inventar.jpg[Inventar / Abzeichen Übersicht, width=300]
 
 In der Inventar-Ansicht sieht der Benutzer alle gesammelten Abzeichen und Belohnungen:
 
@@ -109,7 +109,7 @@ Die Inventar-Ansicht dient der Gamification und zusätzlichen Motivation, regelm
 
 === Profil / Einstellungen
 
-image::Profil.jpg[Profil-Ansicht und Einstellungen, width=300]
+image::images/Profil.jpg[Profil-Ansicht und Einstellungen, width=300]
 
 In der Profil-Ansicht kann der Benutzer persönliche Daten und App-Einstellungen anpassen:
 
