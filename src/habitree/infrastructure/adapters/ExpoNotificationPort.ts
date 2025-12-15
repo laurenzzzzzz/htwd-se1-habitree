@@ -97,12 +97,20 @@ export class ExpoNotificationPort implements INotificationPort {
         if (Platform.OS === 'ios') {
           await Notifications.scheduleNotificationAsync({
             content: { title, body, data: { habitId: habit.id } },
-            trigger: { seconds: secondsUntil, repeats: false } as unknown as Notifications.NotificationTriggerInput,
+            trigger: {
+              type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL,
+              seconds: secondsUntil,
+              repeats: false,
+            } as Notifications.NotificationTriggerInput,
           });
         } else {
           await Notifications.scheduleNotificationAsync({
             content: { title, body, data: { habitId: habit.id } },
-            trigger: scheduledDate as unknown as Notifications.NotificationTriggerInput,
+            trigger: {
+              type: Notifications.SchedulableTriggerInputTypes.DATE,
+              date: scheduledDate,
+              channelId: 'habit-reminders',
+            } as Notifications.NotificationTriggerInput,
           });
         }
 
