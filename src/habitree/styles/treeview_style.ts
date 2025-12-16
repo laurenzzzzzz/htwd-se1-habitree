@@ -1,32 +1,37 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { createResponsiveHelpers } from './responsive';
 
-const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
+export const createTreeViewStyles = (width?: number, height?: number) => {
+  const { spacing, font, width: screenWidth, height: screenHeight } = createResponsiveHelpers(width, height);
 
-export const treeviewStyles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 16,
-  },
-  treeImage: {
-    width: windowWidth * 0.8,
-    height: windowHeight * 0.35,
-    alignSelf: 'center',
-    marginVertical: 24,
-  },
-  growthInfoContainer: {
-    marginTop: 20,
-    paddingHorizontal: 16,
-    alignItems: 'center',
-  },
-  growthText: {
-    fontSize: 16,
-    fontWeight: '600',
-    marginBottom: 8,
-  },
-  growthPercentage: {
-    fontSize: 14,
-    opacity: 0.7,
-  },
-});
+  return StyleSheet.create({
+    container: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      paddingHorizontal: spacing.md,
+    },
+    treeImage: {
+      width: screenWidth ? screenWidth * 0.8 : '100%',
+      height: screenHeight ? screenHeight * 0.35 : 260,
+      alignSelf: 'center',
+      marginVertical: spacing.lg,
+    },
+    growthInfoContainer: {
+      marginTop: spacing.md,
+      paddingHorizontal: spacing.md,
+      alignItems: 'center',
+    },
+    growthText: {
+      fontSize: font(16),
+      fontWeight: '600',
+      marginBottom: spacing.xs,
+    },
+    growthPercentage: {
+      fontSize: font(14),
+      opacity: 0.7,
+    },
+  });
+};
+
+export const treeviewStyles = createTreeViewStyles();

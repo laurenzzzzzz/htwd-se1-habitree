@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Image } from 'expo-image';
 import {
   Pressable,
@@ -8,12 +8,13 @@ import {
   ActivityIndicator,
   Alert,
   Modal,
+  useWindowDimensions,
 } from 'react-native';
 import { HelloWave } from '@/presentation/ui/HelloWave';
 import { ThemedText } from '@/presentation/ui/ThemedText';
 import { ThemedView } from '@/presentation/ui/ThemedView';
 import { useThemeColor } from '@/hooks/useThemeColor';
-import { styles } from '../../styles/index_style';
+import { createHomeStyles } from '../../styles/index_style';
 import { useAuth } from '../../context/AuthContext';
 import { useHabits } from '../../context/HabitsContext';
 import { useQuoteController } from '../../presentation/controllers/useQuoteController';
@@ -23,6 +24,8 @@ import { QuoteBanner } from '../../presentation/ui/QuoteBanner';
 import { WEEKDAYS } from '../../constants/HomeScreenConstants';
 
 export default function HomeScreen() {
+  const { width, height } = useWindowDimensions();
+  const styles = useMemo(() => createHomeStyles(width, height), [width, height]);
   const backgroundColor = useThemeColor({}, 'background');
   const { currentUser } = useAuth();
   const {

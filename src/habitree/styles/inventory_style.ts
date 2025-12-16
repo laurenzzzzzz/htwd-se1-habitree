@@ -1,68 +1,78 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { createResponsiveHelpers } from './responsive';
 
-const { width: windowWidth } = Dimensions.get('window');
+export const createInventoryViewStyles = (width?: number, height?: number) => {
+  const { spacing, font, radius, scale } = createResponsiveHelpers(width, height);
+  const modalWidth = width ? Math.min(width * 0.85, 520) : undefined;
 
-export const inventoryviewStyles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingHorizontal: 16,
-    paddingVertical: 20,
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 20,
-  },
-  badgeRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginBottom: 20,
-  },
-  badge: {
-    width: windowWidth * 0.2,
-    height: windowWidth * 0.2,
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  loadingText: {
-    marginTop: 10,
-    textAlign: 'center',
-  },
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.7)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  modalContent: {
-    backgroundColor: '#fff',
-    padding: 20,
-    borderRadius: 10,
-    width: windowWidth * 0.85,
-    alignItems: 'center',
-  },
-  modalTitle: {
-    fontSize: 18,
-    fontWeight: '700',
-    marginBottom: 10,
-  },
-  modalText: {
-    fontSize: 14,
-    lineHeight: 20,
-    marginBottom: 20,
-    textAlign: 'center',
-  },
-  closeButton: {
-    backgroundColor: '#1E9189',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 8,
-  },
-  closeButtonText: {
-    color: '#fff',
-    fontWeight: '600',
-  },
-});
+  return StyleSheet.create({
+    container: {
+      flex: 1,
+      paddingHorizontal: spacing.md,
+      paddingVertical: spacing.lg,
+    },
+    title: {
+      fontSize: font(20),
+      fontWeight: 'bold',
+      marginBottom: spacing.lg,
+    },
+    badgeRow: {
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      marginBottom: spacing.lg,
+      flexWrap: 'wrap',
+      gap: spacing.md,
+    },
+    badge: {
+      width: scale(80),
+      height: scale(80),
+    },
+    loadingContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: spacing.lg,
+    },
+    loadingText: {
+      marginTop: spacing.sm,
+      textAlign: 'center',
+    },
+    modalOverlay: {
+      flex: 1,
+      backgroundColor: 'rgba(0, 0, 0, 0.7)',
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: spacing.md,
+    },
+    modalContent: {
+      backgroundColor: '#fff',
+      padding: spacing.lg,
+      borderRadius: radius(14),
+      width: modalWidth,
+      alignItems: 'center',
+    },
+    modalTitle: {
+      fontSize: font(18),
+      fontWeight: '700',
+      marginBottom: spacing.sm,
+    },
+    modalText: {
+      fontSize: font(14),
+      lineHeight: font(20),
+      marginBottom: spacing.lg,
+      textAlign: 'center',
+    },
+    closeButton: {
+      backgroundColor: '#1E9189',
+      paddingVertical: spacing.sm,
+      paddingHorizontal: spacing.lg,
+      borderRadius: radius(12),
+    },
+    closeButtonText: {
+      color: '#fff',
+      fontWeight: '600',
+    },
+  });
+};
+
+export const inventoryviewStyles = createInventoryViewStyles();
