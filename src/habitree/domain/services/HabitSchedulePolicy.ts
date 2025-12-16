@@ -15,7 +15,9 @@ export type HabitPersistenceRequestBody = Omit<HabitPersistencePayload, 'interva
 
 const DAILY = 'Täglich';
 const WEEKLY = 'Wöchentlich';
-const INTERVAL = 'Intervalles';
+const MONTHLY = 'Monatlich';
+const INTERVAL = 'Benutzerdefiniert';
+const LEGACY_INTERVAL = 'Intervalles';
 
 /** Formats date as dd.mm.yyyy for backend */
 export function formatDateForPersistence(date: Date): string {
@@ -71,12 +73,18 @@ export function shouldHabitOccurOnDate(habit: HabitScheduleLike, targetDate: Dat
   }
 
   if (habit.frequency === WEEKLY) {
-    const dayOfWeek = normalizedTarget.getDay();
-    const mappedDay = dayOfWeek === 0 ? 7 : dayOfWeek;
-    return Boolean(habit.weekDays?.includes(mappedDay));
+    const uiWeekdayIndex = (normalizedTarget.getDay() + 6) % 7;
+    return Boolean(habit.weekDays?.includes(uiWeekdayIndex));
   }
 
-  if (habit.frequency === INTERVAL) {
+  if (habit.frequency === MONTHLY) {
+    const monthsDiff = calculateMonthDifference(startDate, normalizedTarget);
+    if (monthsDiff < 0) return false;
+    const expectedDay = clampDayToMonth(startDate.getDate(), normalizedTarget);
+    return normalizedTarget.getDate() === expectedDay;
+  }
+
+  if (habit.frequency === INTERVAL || habit.frequency === LEGACY_INTERVAL) {
     const daysDifference = Math.floor(
       (normalizedTarget.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)
     );
@@ -143,4 +151,13 @@ function startOfDay(date: Date): Date {
   const clone = new Date(date);
   clone.setHours(0, 0, 0, 0);
   return clone;
+}
+
+function calculateMonthDifference(start: Date, target: Date): number {
+  return (target.getFullYear() - start.getFullYear()) * 12 + (target.getMonth() - start.getMonth());
+}
+
+function clampDayToMonth(desiredDay: number, targetDate: Date): number {
+  const daysInMonth = new Date(targetDate.getFullYear(), targetDate.getMonth() + 1, 0).getDate();
+  return Math.min(desiredDay, daysInMonth);
 }
