@@ -1,66 +1,76 @@
 import { StyleSheet } from 'react-native';
+import { createResponsiveHelpers } from './responsive';
 
-export const timePickerStyles = StyleSheet.create({
-  overlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  container: {
-    width: '85%',
-    maxWidth: 400,
-    backgroundColor: '#fff',
-    borderRadius: 12,
-    padding: 16,
-    elevation: 5,
-  },
-  title: {
-    marginBottom: 16,
-    textAlign: 'center',
-    fontWeight: 'bold',
-  },
-  sliderSection: {
-    marginBottom: 20,
-  },
-  label: {
-    marginBottom: 8,
-    fontWeight: '500',
-  },
-  pickerRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  pickerContainer: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  picker: {
-    width: '100%',
-    height: 150,
-  },
-  pickerItem: {
-    height: 40,
-  },
-  slider: {
-    width: '100%',
-    height: 40,
-  },
-  timeDisplay: {
-    backgroundColor: 'rgb(25, 145, 137)',
-    borderRadius: 8,
-    paddingVertical: 12,
-    marginVertical: 16,
-    alignItems: 'center',
-  },
-  timeText: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#fff',
-  },
-  buttonRow: {
-    flexDirection: 'row',
-    gap: 8,
-    justifyContent: 'space-around',
-  },
-});
+export const createTimePickerStyles = (width?: number, height?: number) => {
+  const { spacing, font, radius, scale } = createResponsiveHelpers(width, height);
+  const maxWidth = width ? Math.min(width * 0.9, 420) : 400;
+
+  return StyleSheet.create({
+    overlay: {
+      flex: 1,
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: spacing.md,
+    },
+    container: {
+      width: '85%',
+      maxWidth,
+      backgroundColor: '#fff',
+      borderRadius: radius(14),
+      padding: spacing.md,
+      elevation: 5,
+    },
+    title: {
+      marginBottom: spacing.md,
+      textAlign: 'center',
+      fontWeight: 'bold',
+    },
+    sliderSection: {
+      marginBottom: spacing.lg,
+    },
+    label: {
+      marginBottom: spacing.xs,
+      fontWeight: '500',
+    },
+    pickerRow: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      gap: spacing.md,
+    },
+    pickerContainer: {
+      flex: 1,
+      alignItems: 'center',
+    },
+    picker: {
+      width: '100%',
+      height: scale(150),
+    },
+    pickerItem: {
+      height: scale(40),
+    },
+    slider: {
+      width: '100%',
+      height: scale(40),
+    },
+    timeDisplay: {
+      backgroundColor: 'rgb(25, 145, 137)',
+      borderRadius: radius(12),
+      paddingVertical: spacing.sm,
+      marginVertical: spacing.md,
+      alignItems: 'center',
+    },
+    timeText: {
+      fontSize: font(24),
+      fontWeight: 'bold',
+      color: '#fff',
+    },
+    buttonRow: {
+      flexDirection: 'row',
+      gap: spacing.sm,
+      justifyContent: 'space-around',
+    },
+  });
+};
+
+export const timePickerStyles = createTimePickerStyles();
