@@ -1,8 +1,9 @@
 import { Stack, Redirect, useSegments } from 'expo-router';
 import { Appearance, Text } from 'react-native';
-import { useAuth, AuthProvider } from '../context/AuthContext'; 
-import { HabitsProvider } from '../context/HabitsContext';
 import React from 'react';
+import { ThemeProvider, DefaultTheme } from '@react-navigation/native';
+import { useAuth, AuthProvider } from '../context/AuthContext';
+import { HabitsProvider } from '../context/HabitsContext';
 import { ApplicationServicesProvider } from '../presentation/providers/ApplicationServicesProvider';
 import { applicationServices } from '../infrastructure/di/ServiceContainer';
 
@@ -41,10 +42,12 @@ function RootLayoutContent() {
   }
 
   return (
-    <Stack>
-      <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-    </Stack>
+    <ThemeProvider value={DefaultTheme}>
+      <Stack>
+        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      </Stack>
+    </ThemeProvider>
   );
 }
 

@@ -20,11 +20,7 @@ import { useQuoteController } from '../../presentation/controllers/useQuoteContr
 import { useStreakController } from '../../presentation/controllers/useStreakController';
 import HabitModal from '../../presentation/ui/HabitModal';
 import { QuoteBanner } from '../../presentation/ui/QuoteBanner';
-import {
-  FILTER_OPTIONS,
-  CHART_MAP,
-  WEEKDAYS,
-} from '../../constants/HomeScreenConstants';
+import { WEEKDAYS } from '../../constants/HomeScreenConstants';
 
 export default function HomeScreen() {
   const backgroundColor = useThemeColor({}, 'background');
@@ -34,8 +30,6 @@ export default function HomeScreen() {
     predefinedHabits,
     fetchPredefinedHabits,
     isLoading: isLoadingHabits,
-    selectedFilter,
-    setSelectedFilter,
     today,
     fetchHabits,
     handleSaveHabit,
@@ -182,46 +176,6 @@ export default function HomeScreen() {
 
         {/* Daily Quote */}
         <QuoteBanner quote={quote} />
-
-        {/* Statistics Section */}
-        <ThemedText type="subtitle" style={styles.sectionTitle}>
-          Deine Statistiken:
-        </ThemedText>
-
-        {/* Filter Buttons */}
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.chartSelector}
-        >
-          {FILTER_OPTIONS.map((option) => (
-            <Pressable
-              key={option.key}
-              style={[
-                styles.chartButton,
-                selectedFilter === option.key && styles.chartButtonSelected,
-              ]}
-              onPress={() => setSelectedFilter(option.key)}
-            >
-              <ThemedText
-                style={[
-                  styles.chartButtonText,
-                  { color: '#000' },
-                  selectedFilter === option.key && styles.chartButtonTextSelected,
-                ]}
-              >
-                {option.label}
-              </ThemedText>
-            </Pressable>
-          ))}
-        </ScrollView>
-
-        {/* Chart */}
-        <Image
-          source={CHART_MAP[selectedFilter]}
-          style={styles.chartImage}
-          contentFit="contain"
-        />
 
         {/* Habit List Container */}
         <ThemedView style={styles.habitListContainer}>

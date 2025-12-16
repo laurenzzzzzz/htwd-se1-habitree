@@ -10,14 +10,11 @@ import { IconSymbol } from '@/presentation/ui/ui/IconSymbol';
 
 import { Colors } from '@/constants/Colors';
 
-import { useColorScheme } from '@/hooks/useColorScheme';
-
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
   const insets = useSafeAreaInsets();
 
   // Responsive Header Höhe 
