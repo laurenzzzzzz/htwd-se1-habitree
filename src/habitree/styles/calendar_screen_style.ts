@@ -12,6 +12,11 @@ export const createCalendarScreenStyles = (width?: number, height?: number) => {
   const { spacing, radius, scale } = createResponsiveHelpers(width, height);
 
   return StyleSheet.create({
+    screenContainer: {
+      flex: 1,
+      backgroundColor: '#fff',
+      position: 'relative',
+    },
     scrollContent: {
       padding: spacing.md,
       paddingBottom: spacing.xl,

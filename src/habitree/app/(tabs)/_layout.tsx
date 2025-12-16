@@ -63,7 +63,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="tree"
         options={{
-          title: 'Baum',
+          title: 'Habitree',
           headerTitle: () => renderHeaderTitle('Baum'),
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="tree.fill" color={color} />,
         }}
@@ -71,8 +71,8 @@ export default function TabLayout() {
       <Tabs.Screen
         name="inventory"
         options={{
-          title: 'Inventar',
-          headerTitle: () => renderHeaderTitle('Inventar'),
+          title: 'Erfolge',
+          headerTitle: () => renderHeaderTitle('Erfolge'),
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="trophy.fill" color={color} />,
         }}
       />
