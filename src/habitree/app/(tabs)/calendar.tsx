@@ -23,6 +23,7 @@ export default function CalendarScreen() {
     handleToggleHabit,
     handleDeleteHabit,
     handleUpdateHabit,
+    handleSaveHabit,
     isLoading: isLoadingHabits,
   } = useHabits();
   // CalendarScreen render
@@ -45,6 +46,23 @@ export default function CalendarScreen() {
   useEffect(() => {
     fetchHabits();
   }, [fetchHabits]);
+
+  // Initialize form with current date and time when opening custom habit creation
+  useEffect(() => {
+    if (modalMode === 'custom' && !editHabitId && newHabitStartDate === '' && newHabitTime === '') {
+      const now = new Date();
+      const dateStr = now.toLocaleDateString('de-DE');
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const timeStr = `${hours}:${minutes}`;
+      
+      setNewHabitStartDate(dateStr);
+      setNewHabitTime(timeStr);
+      if (!newHabitFrequency) {
+        setNewHabitFrequency('Täglich');
+      }
+    }
+  }, [modalMode, editHabitId]);
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -74,8 +92,9 @@ export default function CalendarScreen() {
   };
 
   return (
-    <ScrollView contentContainerStyle={{ padding: 16 }}>
-      {/* Heutige Habits Section */}
+    <View style={{ flex: 1 }}>
+      <ScrollView contentContainerStyle={{ padding: 16 }}>
+        {/* Heutige Habits Section */}
       <View style={{ borderWidth: 2, borderColor: 'rgb(25, 145, 137)', borderRadius: 8, padding: 12, marginBottom: 20 }}>
         <View style={{ backgroundColor: 'rgb(131, 233, 142)', padding: 12, marginHorizontal: -12, marginTop: -12, marginBottom: 12, borderTopLeftRadius: 6, borderTopRightRadius: 6 }}>
           <ThemedText type="subtitle" style={[styles.habitTitle, { color: 'black', marginTop: -2, marginBottom: -2 }]}>
@@ -245,6 +264,19 @@ export default function CalendarScreen() {
           <ThemedText style={styles.noHabitsText}>Keine Habits angelegt.</ThemedText>
         )}
       </View>
+      </ScrollView>
+
+      {/* FAB */}
+      <Pressable
+        style={styles.fab}
+        onPress={() => {
+          setModalMode('menu');
+          setModalVisible(true);
+        }}
+      >
+        <ThemedText style={styles.fabText}>＋</ThemedText>
+      </Pressable>
+
       <HabitModal
         visible={modalVisible}
         mode={modalMode ?? (editHabitId ? 'custom' : null)}
@@ -279,7 +311,15 @@ export default function CalendarScreen() {
         setNewHabitFrequency={setNewHabitFrequency}
         setNewHabitWeekDays={setNewHabitWeekDays}
         setNewHabitIntervalDays={setNewHabitIntervalDays}
-        onAddPredefined={() => {}}
+        onAddPredefined={async (label, description, frequency) => {
+          const result = await handleSaveHabit(label, description, frequency);
+          if (result.success) {
+            setModalVisible(false);
+            setModalMode(null);
+          } else {
+            Alert.alert('Fehler', result.error || 'Speichern fehlgeschlagen.');
+          }
+        }}
         onSelectPredefined={(p) => {
           // Prefill custom form with selected predefined and switch to custom mode
           setNewHabitName(p.label);
@@ -288,14 +328,35 @@ export default function CalendarScreen() {
           setModalMode('custom');
         }}
         onAddCustom={async () => {
-          if (!editHabitId) return;
-          const res = await handleUpdateHabit(editHabitId, newHabitName, newHabitDescription, newHabitFrequency || 'Täglich', newHabitStartDate, newHabitTime, newHabitWeekDays, newHabitIntervalDays);
-          if (res.success) {
-            setModalVisible(false);
-            setEditHabitId(null);
+          if (editHabitId) {
+            const res = await handleUpdateHabit(editHabitId, newHabitName, newHabitDescription, newHabitFrequency || 'Täglich', newHabitStartDate, newHabitTime, newHabitWeekDays, newHabitIntervalDays);
+            if (res.success) {
+              setModalVisible(false);
+              setEditHabitId(null);
+            }
+          } else {
+            if (newHabitName.trim() === '' || newHabitDescription.trim() === '') {
+              Alert.alert('Fehler', 'Bitte füllen Sie alle Felder aus.');
+              return;
+            }
+            const frequency = newHabitFrequency || 'Täglich';
+            const result = await handleSaveHabit(newHabitName, newHabitDescription, frequency, newHabitStartDate, newHabitTime, newHabitWeekDays, newHabitIntervalDays);
+            if (result.success) {
+              setNewHabitName('');
+              setNewHabitDescription('');
+              setNewHabitStartDate('');
+              setNewHabitTime('');
+              setNewHabitFrequency('');
+              setNewHabitWeekDays([]);
+              setNewHabitIntervalDays('');
+              setModalVisible(false);
+              setModalMode(null);
+            } else {
+              Alert.alert('Fehler', result.error || 'Speichern fehlgeschlagen.');
+            }
           }
         }}
       />
-    </ScrollView>
+    </View>
   );
 }

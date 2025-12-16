@@ -251,7 +251,7 @@ export default function HomeScreen() {
 
           {/* Today's Goals */}
           <ThemedText type="subtitle" style={[styles.habitTitle, { marginTop: 40 }]}>
-            Heutige Ziele:
+            Heutige Habits:
           </ThemedText>
 
           {isLoadingHabits ? (
