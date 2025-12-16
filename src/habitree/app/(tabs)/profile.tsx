@@ -9,6 +9,7 @@ import {
   Button,
   View,
 } from 'react-native';
+import type { ImageStyle } from 'react-native';
 
 import { Image } from 'expo-image';
 import ParallaxScrollView from '@/presentation/ui/ParallaxScrollView';
@@ -246,7 +247,7 @@ export default function ProfileScreen() {
         headerImage={
           <Image
             source={require('@/assets/images/profile.png')}
-            style={styles.headerImage}
+            style={styles.headerImage as ImageStyle}
             contentFit="cover"
           />
         }
