@@ -1,70 +1,63 @@
 # Habitree Architecture – Domain-Driven Design (DDD)
 
-## Overview
+## Überblick
 
-The Habitree project follows **Domain-Driven Design (DDD)** principles with a clear separation of concerns across four architectural layers:
+Das Habitree-Projekt folgt den Prinzipien des **Domain-Driven Design (DDD)** mit einer klaren Trennung der Aufgabenbereiche über vier Architekturschichten hinweg:
 
-- **Domain** – Core business logic, entities, and repository interfaces
-- **Application** – Use-case services orchestrating domain logic
-- **Infrastructure** – Adapters for external systems (HTTP, persistence, DI)
-- **Presentation** – React Native UI components, screens, and controllers
+- **Domäne** – Kerngeschäftslogik, Entitäten und Repository-Schnittstellen
+- **Anwendung** – Use-Case-Services, die die Domänenlogik steuern
+- **Infrastruktur** – Adapter für externe Systeme (HTTP, Persistenz, DI)
+- **Präsentation** – React Native UI-Komponenten, Bildschirme und Controller
 
-This document describes the folder structure, responsibilities of each layer, and guidelines for contributors.
-
+Dieses Dokument beschreibt die Ordnerstruktur, die Verantwortlichkeiten jeder Schicht und Richtlinien für Mitwirkende.
 ---
 
-## Folder Structure
+## Ordnerstruktur
 
 ```
 src/habitree/
-├── domain/                           # Domain Layer
-│   ├── entities/                     # Core domain entities
+├── domain/                           # Domänenschicht
+│   ├── entities/                     # Kerndomänenentitäten
 │   │   ├── User.ts
 │   │   ├── Habit.ts
 │   │   ├── Quote.ts
 │   │   └── Entry.ts
-│   ├── services/                     # Pure domain policies/helpers
-│   │   └── HabitSchedulePolicy.ts
-│   └── ports/                        # Domain ports for external capabilities
-│       └── INotificationPort.ts
-│   └── repositories/                 # Repository interfaces (contracts)
+│   └── repositories/                 # Repository-Schnittstellen (Verträge)
 │       ├── IAuthRepository.ts
 │       ├── IHabitsRepository.ts
 │       ├── IQuotesRepository.ts
 │       ├── IProfileRepository.ts
 │       └── IAuthApiRepository.ts
 │
-├── application/                      # Application Layer
-│   ├── services/                     # Use-case orchestration
-│   │   ├── AuthService.ts            # Auth domain logic
-│   │   ├── AuthenticationService.ts  # Login/register flow
-│   │   ├── HabitService.ts           # Habit CRUD + orchestration
-│   │   ├── QuoteService.ts           # Quote fetching
-│   │   ├── ProfileService.ts         # User profile updates
-│   │   └── NotificationService.ts    # Bridges notification port for scheduling
+├── application/                      # Anwendungsschicht
+│   ├── services/                     # Orchestrierung von Anwendungsfällen
+│   │   ├── AuthService.ts            # Domänenlogik für die Authentifizierung
+│   │   ├── AuthenticationService.ts  # Anmelde-/Registrierungsablauf
+│   │   ├── HabitService.ts           # Habit CRUD + Orchestrierung
+│   │   ├── QuoteService.ts           # Abrufen von Zitaten
+│   │   └── ProfileService.ts         # Aktualisierungen des Benutzerprofils
 │   └── types/
-│       └── ApplicationServices.ts    # Shared DI contract
+│       └── ApplicationServices.ts    # Gemeinsamer DI-Vertrag
 │
-├── infrastructure/                   # Infrastructure Layer
-│   ├── adapters/                     # External system adapters
-│   │   ├── ApiHabitsRepository.ts    # HTTP: habits endpoint
-│   │   ├── ApiAuthRepository.ts      # HTTP: auth endpoint
-│   │   ├── ApiQuotesRepository.ts    # HTTP: quotes endpoint
-│   │   ├── ApiProfileRepository.ts   # HTTP: profile endpoint
-│   │   ├── SecureStoreAuthRepository.ts  # Local secure persistence
-│   │   └── ExpoNotificationPort.ts   # Expo notifications adapter (implements INotificationPort)
-│   └── di/                           # Dependency Injection
-│       └── ServiceContainer.ts       # Instantiates repositories & services
+├── infrastructure/                   # Infrastruktur-Ebene
+│   ├── adapters/                     # Externe Systemadapter
+│   │   ├── ApiHabitsRepository.ts    # HTTP: habits Endpunkt
+│   │   ├── ApiAuthRepository.ts      # HTTP: auth Endpunkt
+│   │   ├── ApiQuotesRepository.ts    # HTTP: quotes Endpunkt
+│   │   ├── ApiProfileRepository.ts   # HTTP: profile Endpunkt
+│   │   └── SecureStoreAuthRepository.ts  # Lokale sichere Persistenz
+│   └── di/                           # Abhängigkeitsinjektion
+│       └── ServiceContainer.ts       # Erstellt Repositorys und Dienste
 │
-├── presentation/                     # Presentation Layer
-│   ├── providers/                    # React providers for services/DI
+├── presentation/                     # Präsentationsschicht
+│   ├── providers/                    # React-provider für Dienste/DI
 │   │   └── ApplicationServicesProvider.tsx
-│   ├── controllers/                  # Smart hooks connecting UI to services
+│   ├── controllers/                  # Smart hooks, die die Benutzeroberfläche mit Diensten verbinden
 │   │   ├── useAuthController.tsx
 │   │   ├── useHabitsController.tsx
 │   │   ├── useQuoteController.tsx
 │   │   └── useProfileController.tsx
-│   └── ui/                           # Presentational components
+│   └── ui/                           # Präsentationskomponenten
 │       ├── QuoteBanner.tsx
 │       ├── HabitList.tsx
 │       ├── AuthForm.tsx
@@ -73,24 +66,24 @@ src/habitree/
 │       ├── TreeView.tsx
 │       ├── InventoryView.tsx
 │       ├── HabitModal.tsx
-│       └── ui/                       # Low-level shared primitives (IconSymbol, TabBar background)
+│       └── ui/                       # Gemeinsame Grundelemente auf niedriger Ebene (IconSymbol, TabBar Hintergrund)
 │
-├── app/                              # Expo Router screens
+├── app/                              # Expo Router Bildschirme
 │   ├── _layout.tsx                   # Root layout & tab navigator
 │   ├── (auth)/
-│   │   └── login.tsx                 # Auth screen (uses LoginController)
+│   │   └── login.tsx                 # Auth-Bildschirm (verwendet LoginController)
 │   └── (tabs)/
-│       ├── index.tsx                 # Home screen (habits, quotes)
-│       ├── calendar.tsx              # Calendar screen
-│       ├── tree.tsx                  # Tree screen (rewards)
-│       ├── inventory.tsx             # Inventory screen (items)
-│       └── profile.tsx               # Profile screen (settings, user info)
+│       ├── index.tsx                 # Startbildschirm (habits, Zitate)
+│       ├── calendar.tsx              # Kalenderbildschirm
+│       ├── tree.tsx                  # Baumbildschirm (Belohnungen)
+│       ├── inventory.tsx             # Inventarbildschirm (items)
+│       └── profile.tsx               # Profilbildschirm  (Einstellungen, Benutzerinformationen)
 │
 ├── context/                          # Global state & auth context
 │   └── AuthContext.tsx               # Auth state, persistence adapter composition
 │
 ├── styles/                           # StyleSheet definitions
-├── constants/                        # Global constants
+├── constants/                        # Globale Konstanten
 ├── hooks/                            # Generic custom hooks
 
 
@@ -100,145 +93,131 @@ src/habitree/
 
 ## Layer Responsibilities
 
-### 1. Domain Layer (`domain/`)
+### 1. Domänenschicht -- Domain Layer  (`domain/`)
 
-**Purpose:** Define core business concepts and rules independent of any framework or technology.
+**Zweck:** Definition der zentralen Geschäftskonzepte und -regeln unabhängig von Frameworks oder Technologien.
 
-**Contents:**
+**Inhalt:**
 - **Entities** (`domain/entities/`)
-  - `User.ts` – User profile data (id, username, email) with validation methods
-  - `Habit.ts` – Habit definition and tracking data with business logic (streak calculation, completion rate)
-  - `Quote.ts` – Daily motivational quote with utility methods
-  - `TreeGrowth.ts` – User's tree progression based on habit completion (0-100%)
-  - `Achievement.ts` – Badges/accomplishments earned by user
-  - `Streak.ts` – User's current and longest streak with milestone tracking
-  - `Entry.ts` – Habit completion entry for a specific date
+  - `User.ts` –  Benutzerprofildaten (ID, Benutzername, E-Mail) mit Validierungsmethoden
+  - `Habit.ts` –  Gewohnheitsdefinition und Tracking-Daten mit Geschäftslogik (Berechnung der Streak, Abschlussrate)
+  - `Quote.ts` – Tägliches Motivationszitat mit Hilfsmethoden
+  - `TreeGrowth.ts` – Fortschritt des Benutzers basierend auf der Gewohnheitserfüllung (0–100 %)
+  - `Achievement.ts` – Vom Benutzer verdiente Abzeichen/Erfolge
+  - `Streak.ts` – Aktuelle und längste Serie des Benutzers mit Meilenstein-Verfolgung
+  - `Entry.ts` – Eintrag zur Habit Erfüllung für ein bestimmtes Datum
 
-- **Domain Services / Policies** (`domain/services/`)
-  - `HabitSchedulePolicy.ts` – Pure functions for scheduling rules (daily/weekly/interval), default formatting for persistence, shared helpers like `isSameDay`
-  - Keeps recurrence/business rules out of UI/infrastructure so both API adapter and screens use the same source of truth
+- **Repository Schnittstellen** (`domain/repositories/`)
+  - Definition von Schnittstellen, die von den unteren Schichten implementiert werden müssen
+  - Beispiel: `IHabitsRepository` declares `getHabits()`, `saveHabit()`, `toggleHabit()`
+  - `IAuthApiRepository` – Authentifizierungsendpunkte
+  - `IHabitsRepository` – Habit CRUD und Tracking
+  - `IQuotesRepository` – Tägliche Zitate
+  - `IProfileRepository` – Aktualisierungen des Benutzerprofils
+  - `IAuthRepository` – Lokale Authentifizierungspersistenz
+  - `ITreeGrowthRepository` – Berechnungen zum Baumwachstum
+  - `IAchievementRepository` – Erfolgssystem/Abzeichensystem
+  - `IStreakRepository` – Verfolgung der Streak
+  - Keine Implementierungsdetails; reine TypeScript-Schnittstellen
 
-- **Domain Ports** (`domain/ports/`)
-  - `INotificationPort.ts` – Defines the minimal capability the domain/application need for scheduling reminders (init + schedule)
-  - Allows swapping Expo notifications, test doubles, or native modules without changing application logic
-
-- **Repository Interfaces** (`domain/repositories/`)
-  - Define contracts that lower layers must implement
-  - Example: `IHabitsRepository` declares `getHabits()`, `saveHabit()`, `toggleHabit()`
-  - `IAuthApiRepository` – Authentication endpoints
-  - `IHabitsRepository` – Habit CRUD and tracking
-  - `IQuotesRepository` – Daily quotes
-  - `IProfileRepository` – User profile updates
-  - `IAuthRepository` – Local auth persistence
-  - `ITreeGrowthRepository` – Tree growth calculations
-  - `IAchievementRepository` – Achievement/badge system
-  - `IStreakRepository` – Streak tracking
-  - No implementation details; pure TypeScript interfaces
-
-**Key Rules:**
-- No imports from `application/`, `infrastructure/`, or `presentation/`
-- Focus on data structures and business logic contracts
-- Immutable by preference; use readonly fields where appropriate
+**Wichtige Regeln:**
+- Keine Importe aus  `application/`, `infrastructure/`, oder `presentation/`
+- Fokus auf Datenstrukturen und Geschäftslogik-Verträgen
+- Vorzugsweise unveränderlich; gegebenenfalls schreibgeschützte Felder verwenden
 
 ---
 
-### 2. Application Layer (`application/services/`)
+### 2. Anwendungsschicht -- Application Layer (`application/services/`)
 
-**Purpose:** Orchestrate domain logic and coordinate use-cases; acts as a bridge between presentation and domain.
+**Zweck:** Koordinierung der Domänenlogik und der Anwendungsfälle; fungiert als Brücke zwischen Präsentation und Domäne.
 
-**Contents:**
-- **Service Classes** – Implement use-cases by calling repositories and domain logic
-  - `AuthService` – Manages auth state and local persistence (SecureStore)
-  - `AuthenticationService` – Handles login/register flow
-  - `HabitService` – CRUD operations for habits
-  - `QuoteService` – Fetch and cache daily quotes
-  - `ProfileService` – Update user profile and password
-  - `TreeGrowthService` – Calculate and fetch tree progression
-  - `AchievementService` – Fetch unlocked achievements
-  - `StreakService` – Track current and longest streaks
-  - `NotificationService` – Delegates to `INotificationPort` implementations to initialize permissions and schedule reminders after habit changes
+**Inhalt:**
+- **Service Classes** – Implementierung von Anwendungsfällen durch Aufruf von Repositorys und Domänenlogik
+  - `AuthService` – Verwaltet den Authentifizierungsstatus und die lokale Beständigkeit (SecureStore)
+  - `AuthenticationService` – Verarbeitet den Anmelde-/Registrierungsablauf
+  - `HabitService` – CRUD-Operationen für habits
+  - `QuoteService` – Ruft tägliche Zitate ab und speichert sie im Cache
+  - `ProfileService` – Aktualisiert das Benutzerprofil und das Passwort.
+  - `TreeGrowthService` – Berechnet und ruft den Fortschritt des Baums ab.
+  - `AchievementService` – Ruft freigeschaltete Erfolge ab.
+  - `StreakService` – Tracked aktuelle und längste Serien.
 
-**Example Flow:**
+**Beispielablauf:**
 ```typescript
 // ProfileService.updateUsername(authToken, newUsername)
-// 1. Receives user request via controller hook
-// 2. Calls profileRepository.updateUsername() (HTTP adapter)
-// 3. Returns updated user entity
-// 4. Controller updates state and re-renders
+// 1. Empfängt Benutzeranfrage über Controller-Hook.
+// 2. Ruft profileRepository.updateUsername() (HTTP-Adapter) auf.
+// 3. Gibt aktualisierte Benutzereinheit zurück.
+// 4. Controller aktualisiert Status und rendert neu.
 ```
-
-**Key Rules:**
-- Depend on domain entities and repository interfaces (not implementations)
-- No direct HTTP calls; use injected repository adapters
-- Services are stateless; state managed by controllers or context
+**Wichtige Regeln:**
+- Abhängigkeit von Domänenentitäten und Repository-Schnittstellen (nicht von Implementierungen)
+- Keine direkten HTTP-Aufrufe; Verwendung von eingefügten Repository-Adaptern
+- Dienste sind zustandslos; Zustand wird von Controllern oder Kontext verwaltet
 
 ---
 
-### 3. Infrastructure Layer (`infrastructure/`)
+### 3. Infrastruktur-Ebene -- Infrastructure Layer (`infrastructure/`)
 
-**Purpose:** Implement external system adapters and provide dependency injection.
+**Zweck:** Implementierung externer Systemadapter und Bereitstellung von Dependency Injection.
 
-**Contents:**
+**Inhalt:**
 
-- **HTTP / Platform Adapters** (`infrastructure/adapters/`)
+- **HTTP Adapters** (`infrastructure/adapters/`)
   - `ApiHabitsRepository.ts` – axios calls to `/habits` endpoint
   - `ApiAuthRepository.ts` – axios calls to `/auth` endpoint
   - `ApiQuotesRepository.ts` – axios calls to `/quotes` endpoint
   - `ApiProfileRepository.ts` – axios calls to `/user` endpoint
-  - `ApiTreeGrowthRepository.ts` – tree growth data and calculations
-  - `ApiAchievementRepository.ts` – achievement/badge endpoints
+  - `ApiTreeGrowthRepository.ts` – Daten und Berechnungen zum Baumwachstum
+  - `ApiAchievementRepository.ts` – Erfolge/Abzeichen endpoints
   - `ApiStreakRepository.ts` – streak tracking endpoints
-  - `ExpoNotificationPort.ts` – Wraps `expo-notifications` + `Platform` APIs and implements `INotificationPort`
-  - All adapters implement domain interfaces or ports, keeping Expo specifics in infrastructure
+  - Alle Adapter implementieren Domänen-Repository-Schnittstellen
 
-- **Persistence Adapter**
-  - `SecureStoreAuthRepository.ts` – Uses `expo-secure-store` to persist auth token and user data locally
+- **Persistenzadapter**
+  - `SecureStoreAuthRepository.ts` – Uses `expo-secure-store` um auth token und Benutzerdaten lokal zu speichern
 
 - **DI Composition Root** (`infrastructure/di/ServiceContainer.ts`)
-  - Exports singleton instances of all services
-  - Wires repositories to services
-  - Registers `NotificationService` with the Expo port so controllers just call the abstract service
-  - Example:
+  - Exportiert Einzelinstanzen aller Dienste
+  - Verbindet Repositorys mit Diensten
+  - Beispiel:
     ```typescript
     export const authService = new AuthService(secureStoreAuthRepo);
     export const habitService = new HabitService(apiHabitsRepo);
-    export const notificationService = new NotificationService(new ExpoNotificationPort());
     ```
-
-**Key Rules:**
-- Only place where direct axios/SecureStore calls occur
-- All HTTP headers, error handling, and auth token injection happen here
-- New external library usage should be wrapped in an adapter
+    
+**Wichtige Regeln:**
+- Einziger Ort, an dem direkte axios/SecureStore calls erfolgen
+- Alle HTTP-Header, die Fehlerbehandlung und die Einfügung von auth token erfolgen hier
+- Die Verwendung neuer externer Bibliotheken sollte in einen Adapter eingebunden werden
 
 ---
 
-### 4. Presentation Layer (`presentation/`)
+### 4. Präsentationsschicht -- Presentation Layer (`presentation/`)
 
-**Purpose:** Render UI and manage local component state via controllers.
+**Zweck:** Rendern der Benutzeroberfläche (UI) und Verwalten des lokalen Komponentenzustands über Controller.
 
-**Contents:**
+**Inhalt:**
 
 - **Controller Hooks** (`presentation/controllers/`)
-  - Smart hooks that bridge services and UI components
-  - Manage loading states, errors, and local UI state
-  - `useAuthController()` – Login/register orchestration
-  - `useHabitsController()` – Habit CRUD, filtering, and notification scheduling (delegates to `NotificationService` after each mutation)
-  - `useQuoteController()` – Daily quote fetching
-  - `useProfileController()` – User profile updates
-  - `useTreeGrowthController()` – Tree growth data and display
-  - `useAchievementController()` – Achievement/badge unlocking
-  - `useStreakController()` – Streak data and milestones
-  - `useCalendarStatsController()` – Weekly completion statistics
+  - Intelligente Hooks, die services und UI-Komponenten verbinden
+  - Verwalten von Ladezuständen, Fehlern und lokalem UI-Status
+  - `useAuthController()` – Koordination von Anmeldung/Registrierung
+  - `useHabitsController()` – Habit  CRUD und Filterung
+  - `useQuoteController()` – Abrufen täglicher Zitate
+  - `useProfileController()` – Aktualisierungen des Benutzerprofils
+  - `useTreeGrowthController()` – Baumwachstumsdaten und -anzeige
+  - `useAchievementController()` – Freischalten von Erfolgen/Abzeichen
+  - `useStreakController()` – Streak-Daten und Meilensteine
+  - `useCalendarStatsController()` –  Wöchentliche Abschlussstatistiken
 
-- **Presentational Components** (`presentation/ui/`)
-  - Dumb, reusable UI components
-  - Receive props and emit callbacks; no business logic
-  - Screens such as `calendar.tsx` rely on `HabitSchedulePolicy` helpers from the domain layer instead of re-implementing recurrence logic
-  - Foundation components: `ThemedText`, `ThemedView`, `HelloWave`, `Collapsible`, `HapticTab`, `ExternalLink`, `ParallaxScrollView`
-  - UI Components: `AuthForm`, `HabitList`, `QuoteBanner`, `ProfileSettings`, `HabitModal`
-  - Feature screens: `CalendarView` (with weekly stats), `TreeView` (with growth display), `InventoryView` (with achievements)
+- **Präsentationskomponenten** (`presentation/ui/`)
+  - Einfache, wiederverwendbare UI-Komponenten
+  - Empfangen von props und Ausgeben von callbacks; keine Geschäftslogik
+  - Grundlegende Komponenten: `ThemedText`, `ThemedView`, `HelloWave`, `Collapsible`, `HapticTab`, `ExternalLink`, `ParallaxScrollView`
+  - UI Komponenten: `AuthForm`, `HabitList`, `QuoteBanner`, `ProfileSettings`, `HabitModal`
+  - Funktionsbildschirme: `CalendarView` (mit wöchentlichen Statistiken), `TreeView` (mit Wachstumsanzeige), `InventoryView` (mit Erfolgen)
 
-**Example Pattern:**
+**Beispielmuster:**
 ```tsx
 // Screen (e.g., index.tsx)
 export default function HomeScreen() {
@@ -250,72 +229,71 @@ export default function HomeScreen() {
 }
 ```
 
-**Key Rules:**
-- Controllers orchestrate services; components are presentation-only
-- Components accept props and callbacks; no direct service calls
-- Minimize component re-renders with `useMemo` and `useCallback`
+**Wichtige Regeln:**
+- Controller koordinieren Dienste; Komponenten dienen nur der Darstellung.
+- Komponenten akzeptieren props und callbacks; keine direkten Dienstaufrufe.
+- Minimieren Sie das erneute Rendern von Komponenten mit `useMemo` und `useCallback`.
 
 ---
 
-### 5. Global State & Context (`context/`)
+### 5. Globaler Status und Kontext -- Global State & Context (`context/`)
 
-**Purpose:** Manage auth state and provide app-wide identity context.
+**Zweck:** Verwalten des Authentifizierungsstatus und Bereitstellen eines app-weiten Identitätskontexts.
 
-**Contents:**
+**Inhalt:**
 - `AuthContext.tsx`
-  - Resolves `AuthService` via `useApplicationServices()`
-  - Persists auth token via `SecureStoreAuthRepository`
-  - Provides `isLoggedIn`, `currentUser`, `authToken`, `signOut()` to entire app
-  - Wrapped by `ApplicationServicesProvider` + `AuthProvider` in `app/_layout.tsx`
+  - Löst `AuthService` via `useApplicationServices()`
+  - Speichert auth token via `SecureStoreAuthRepository`
+  - Stellt  `isLoggedIn`, `currentUser`, `authToken`, `signOut()` für die gesamte App bereit.
+  - Umschlossen von `ApplicationServicesProvider` + `AuthProvider` in `app/_layout.tsx`
+    
+**Warum nicht vollständige DI?**
+- `ApplicationServicesProvider` stellt alle Dienste einmalig über den React-Kontext an der Basis bereit.
+- Controller rufen nur die Dienste ab, die sie benötigen, via `useApplicationServices`.
+- Vermeidet Prop Drilling und hält gleichzeitig die Abhängigkeitsrichtung eindeutig.
+- 
+---
 
-**Why Not Full DI?**
-- `ApplicationServicesProvider` exposes all services through React context once at the root
-- Controllers pull only the services they need via `useApplicationServices`
-- Avoids prop drilling while keeping dependency direction explicit
+## Beispiel für Datenfluss: „Neue Gewohnheit speichern"
+
+1. **Presentation** – Der Benutzer tippt auf die Schaltfläche „Gewohnheit hinzufügen” auf dem Startbildschirm.
+2. **Controller** – `useHabitsController.saveHabit(name, description, frequency)` wird aufgerufen.
+3. **Application** – `habitService.saveHabit(...)` steuert das Speichern.
+4. **Infrastructure** – `apiHabitsRepository.saveHabit(...)` sendet eine HTTP-POST-Anfrage.
+5. **Response** – Die neue Gewohnheit wird zurückgegeben und in den lokalen Status `habits` übernommen. 
+6. **Re-render** – Die Komponente wird mit der aktualisierten Gewohnheitenliste neu gerendert.
 
 ---
 
-## Data Flow Example: "Save a New Habit"
-
-1. **Presentation** – User taps "Add Habit" button in Home screen
-2. **Controller** – `useHabitsController.saveHabit(name, description, frequency)` is called
-3. **Application** – `habitService.saveHabit(...)` orchestrates the save
-4. **Infrastructure** – `apiHabitsRepository.saveHabit(...)` makes HTTP POST request
-5. **Application (Notifications)** – `NotificationService` asks the `INotificationPort` implementation (Expo) to reschedule reminders for relevant habits
-6. **Response** – New habit returned and merged into local `habits` state
-7. **Re-render** – Component re-renders with updated habit list
-
----
-
-## Key Architectural Principles
+## Wichtige Architekturprinzipien
 
 ### Dependency Injection (DI)
-- Services are instantiated in `ServiceContainer.ts`
-- `ApplicationServicesProvider` (mounted in `app/_layout.tsx`) makes these services available via `useApplicationServices`
-- Controllers call `useApplicationServices()` instead of importing infrastructure modules directly
-- Keeps test seams clear and presentation layer agnostic of infrastructure
+- Dienste werden in `ServiceContainer.ts` instanziiert
+- `ApplicationServicesProvider` (eingebunden in `app/_layout.tsx`) macht diese Dienste über `useApplicationServices` verfügbar
+- Controllers rufen `useApplicationServices()` auf, anstatt Infrastrukturmodule direkt zu importieren
+- Hält Testschnittstellen klar und die Präsentationsschicht unabhängig von der Infrastruktur
 
-### Separation of Concerns
-- **Domain** = what (business rules)
-- **Application** = how (orchestration)
-- **Infrastructure** = where (HTTP, persistence)
-- **Presentation** = display (React Native components)
+### Trennung der Anliegen
+- **Domäne -- Domain** = Was (Geschäftsregeln)
+- **Anwendung -- Application** = Wie (Koordination)
+- **Infrastruktur -- Infrastructure** = Wo (HTTP, Persistenz)
+- **Präsentation -- Presentation** = Anzeige (React Native-Komponenten)
 
-### Unidirectional Dependencies
-- Higher layers (Presentation) depend on lower layers (Domain)
-- Lower layers never import from higher layers
-- Enables testing domain logic in isolation
+### Einseitige Abhängigkeiten
+- Höhere Schichten (Präsentation) sind von niedrigeren Schichten (Domäne) abhängig.
+- Niedrigere Schichten importieren niemals aus höheren Schichten.
+- Ermöglicht das isolierte Testen der Domänenlogik.
 
-### Single Responsibility
-- Each service handles one logical domain (Auth, Habits, Quotes, Profile)
-- Each component renders one piece of UI
-- Each adapter handles one external system
+### Einzelne Verantwortung
+- Jeder Dienst verarbeitet eine logische Domäne (Authentifizierung, Gewohnheiten, Zitate, Profil).
+- Jede Komponente rendert einen Teil der Benutzeroberfläche.
+- Jeder Adapter verarbeitet ein externes System.
 
 ---
 
-## Adding New Features
+## Hinzufügen neuer Funktionen
 
-### Step 1: Define Domain (if needed)
+### Schritt 1: Domäne definieren (falls erforderlich)
 ```typescript
 // domain/entities/NewEntity.ts
 export interface NewEntity {
@@ -324,7 +302,7 @@ export interface NewEntity {
 }
 ```
 
-### Step 2: Define Repository Interface
+### Schritt 2: Repository-Schnittstelle definieren
 ```typescript
 // domain/repositories/INewRepository.ts
 export interface INewRepository {
@@ -333,7 +311,7 @@ export interface INewRepository {
 }
 ```
 
-### Step 3: Implement HTTP Adapter
+### Schritt 3: HTTP-Adapter implementieren
 ```typescript
 // infrastructure/adapters/ApiNewRepository.ts
 export class ApiNewRepository implements INewRepository {
@@ -343,7 +321,7 @@ export class ApiNewRepository implements INewRepository {
 }
 ```
 
-### Step 4: Create Application Service
+### Schritt 4: Application Service erstellen
 ```typescript
 // application/services/NewService.ts
 export class NewService {
@@ -354,13 +332,13 @@ export class NewService {
 }
 ```
 
-### Step 5: Wire into DI Container
+### Schritt 5: In DI-Container einbinden
 ```typescript
 // infrastructure/di/ServiceContainer.ts
 export const newService = new NewService(apiNewRepo);
 ```
 
-### Step 6: Create Controller Hook
+### Schritt 6: Controller-Hook erstellen
 ```typescript
 // presentation/controllers/useNewController.tsx
 export function useNewController() {
@@ -373,7 +351,7 @@ export function useNewController() {
 }
 ```
 
-### Step 7: Create Presentational Component & Use in Screen
+### Schritt 7: Präsentationskomponente erstellen und im Bildschirm verwenden
 ```tsx
 // presentation/ui/NewList.tsx
 export const NewList: React.FC<Props> = ({ items, onSelect }) => {
@@ -389,170 +367,153 @@ export default function NewScreen() {
 
 ---
 
-## Testing Strategy
+## Teststrategie
 
-### Unit Tests (Domain & Application)
-- Test services in isolation with mock repositories
-- Example: `AuthService.login()` succeeds with valid credentials, fails with invalid
-- Location: `*.test.ts` alongside service files or in a dedicated `__tests__/` folder
+### Unit-Tests (Domäne und Anwendung)
+- Dienste isoliert mit Mock-Repositorys testen
+- Beispiel: `AuthService.login()` ist mit gültigen Anmeldedaten erfolgreich, mit ungültigen Anmeldedaten fehlgeschlagen
+- Speicherort: `*.test.ts`  neben den Dienstdateien oder in einem speziellen Ordner `__tests__/` 
 
-### Integration Tests (Infrastructure)
-- Test HTTP adapters with mock server or real endpoints (in test environment)
-- Example: Verify `ApiHabitsRepository` correctly parses response
+### Integrationstests (Infrastruktur)
+- Testen Sie HTTP-Adapter mit Mock-Servern oder echten Endpunkten (in der Testumgebung).
+- Beispiel: Überprüfen Sie, ob `ApiHabitsRepository` die Antwort korrekt verarbeitet.
 
-### Component Tests (Presentation)
-- Test presentational components with mock props
-- Use React Native Testing Library
+### Komponententests (Präsentation)
+- Testen Sie Präsentationskomponenten mit Mock-Props.
+- Verwenden Sie die React Native Testing Library.
 
-### E2E Tests
-- Test full user flows on device/emulator with Expo
-- Example: Login → Add Habit → Verify in calendar
-
----
-
-## File Naming Conventions
-
-| Layer | Pattern | Example |
-|-------|---------|---------|
-| Domain Entities | PascalCase | `User.ts`, `Habit.ts` |
-| Repository Interfaces | `I` + PascalCase | `IHabitsRepository.ts` |
-| Services | PascalCase + `Service` | `AuthService.ts` |
-| Adapters | PascalCase + `Repository` | `ApiHabitsRepository.ts` |
-| Controllers | `use` + PascalCase + `Controller` | `useHabitsController.tsx` |
-| UI Components | PascalCase | `HabitList.tsx` |
-| Screens | lowercase | `index.tsx`, `login.tsx` |
+### E2E-Tests
+- Testen Sie vollständige Benutzerabläufe auf dem Gerät/Emulator mit Expo.
+- Beispiel: Anmelden → Gewohnheit hinzufügen → Im Kalender überprüfen
 
 ---
 
-## Common Patterns
+## Regeln für die Benennung von Dateien
 
-### Error Handling
-- Services throw typed errors; controllers catch and display to user
-- HTTP adapters include try-catch and re-throw as domain errors
+| Layer | Muster  | Beispiel |
+|-------|---------|----------|
+| Domain Entities | Groß- und Kleinschreibung | `User.ts`, `Habit.ts` |
+| Repository Interfaces | `I` + Groß- und Kleinschreibung | `IHabitsRepository.ts` |
+| Services | Groß- und Kleinschreibung + `Service` | `AuthService.ts` |
+| Adapters | Groß- und Kleinschreibung + `Repository` | `ApiHabitsRepository.ts` |
+| Controllers | `use` + Groß- und Kleinschreibung + `Controller` | `useHabitsController.tsx` |
+| UI Components | Groß- und Kleinschreibung | `HabitList.tsx` |
+| Screens | Kleinbuchstaben  | `index.tsx`, `login.tsx` |
 
-### Loading States
-- Controllers manage `isLoading`, `isUpdating` flags
-- UI components consume these and show spinners
+---
+
+## Häufige Muster
+
+### Fehlerbehandlung
+- Dienste werfen typisierte Fehler; Controller fangen diese ab und zeigen sie dem Benutzer an.
+- HTTP-Adapter enthalten Try-Catch und werfen Fehler als Domänenfehler erneut.
+
+
+### Ladezustände
+- Controller verwalten die Flags „isLoading” und „isUpdating”.
+- UI-Komponenten nutzen diese und zeigen Ladesymbole an.
 
 ### Caching
-- Services cache data in component state or a simple in-memory cache
-- Consider adding Redux/Zustand for complex global state later
+- Dienste speichern Daten im Komponentenstatus oder in einem einfachen In-Memory-Cache zwischen.
+- Später kann Redux/Zustand für komplexe globale Zustände hinzugefügt werden.
 
-### Authentication Flow
-- `AuthContext` is the source of truth for logged-in state
-- Screens wrapped in conditional renders based on `isLoggedIn`
-
----
-
-## Troubleshooting
-
-### "Module not found" errors
-- Verify imports use relative paths: `../../domain/entities/User`
-- Check file extensions (`.ts`, `.tsx`)
-
-### Service not initialized
-- Ensure service is exported from `ServiceContainer.ts`
-- Check that all dependencies (repositories) are provided to the service constructor
-
-### Component not re-rendering
-- Verify controller hook returns memoized values with `useMemo`
-- Check that dependencies in `useEffect` arrays are correct
-
-### HTTP calls failing silently
-- Add console logs in the HTTP adapter
-- Verify API_BASE_URL is correct
-- Check Auth token is being sent in request headers
+### Authentifizierungsablauf
+- `AuthContext` ist die Quelle für den Anmeldestatus.
+- Bildschirme werden basierend auf `isLoggedIn` in bedingte Renderings eingebunden.
 
 ---
 
-## Complete DDD Implementation (Latest Session)
+## Fehlerbehebung
 
-### ✅ Domain Layer – All 7 Entities as ES6 Classes
+### Fehler „Modul nicht gefunden“
+- Überprüfen Sie, ob Importe relative Pfade verwenden: `../../domain/entities/User`
+- Überprüfen Sie die Dateierweiterungen (`.ts`, `.tsx`)
+
+### Dienst nicht initialisiert
+- Stellen Sie sicher, dass der Dienst aus `ServiceContainer.ts` exportiert wird
+- Überprüfen Sie, ob alle Abhängigkeiten (Repositorys) für den Dienstkonstruktor bereitgestellt werden
+
+
+### Komponente wird nicht neu gerendert
+- Überprüfen Sie, ob der Controller-Hook mit `useMemo` gespeicherte Werte zurückgibt.
+- Überprüfen Sie, ob die Abhängigkeiten in den `useEffect`-Arrays korrekt sind.
+
+### HTTP-Aufrufe scheitern ohne Fehlermeldung
+- Fügen Sie Konsolenprotokolle im HTTP-Adapter hinzu.
+- Überprüfen Sie, ob API_BASE_URL korrekt ist.
+- Überprüfen Sie, ob das Auth-Token in den Anfrage-Headern gesendet wird.
+
+---
+
+## Vollständige DDD-Implementierung
+
+### Domain Layer – All 7 Entities as ES6 Classes
 - `User.ts` – Methods: `isValidEmail()`, `hasValidUsername()`, `getDisplayName()`
 - `Habit.ts` – Methods: `getStreak()`, `isCompletedToday()`, `getCompletionRate()`, `hasMilestone(days)`
 - `Quote.ts` – Methods: `getFormattedQuote()`, `getLength()`, `isValid()`, `getPreview(maxLength)`
 - `TreeGrowth.ts` – Methods: `getGrowthStage()`, `getGrowthText()`, `isFullyGrown()`
 - `Achievement.ts` – Methods: `getDaysSinceUnlock()`, `isRecent()`, `getFormattedUnlockDate()`
 - `Streak.ts` – Methods: `isActive()`, `getMilestoneMessage()`, `getDisplayText()`
-- `Entry.ts` – Habit completion entry record
+- `Entry.ts` –  Datensatz zur Erfassung der Gewohnheitserfüllung
 
-**All 8 Repository Interfaces:** Pure contracts with no implementations
+**Alle 8 Repository-Schnittstellen:**
 
-### ✅ Application Layer – 8 Services (All Depend on Interfaces)
-- `AuthService` – Auth orchestration + persistence
-- `AuthenticationService` – Login/register flow
-- `HabitService` – Habit CRUD + filtering
-- `QuoteService` – Quote fetching + caching
-- `ProfileService` – User profile updates
-- `TreeGrowthService` – Tree progression logic
-- `AchievementService` – Achievement system
-- `StreakService` – Streak tracking + milestones
+### Application Layer – 8 Services (alle abhängig von Schnittstellen)
+- `AuthService` – Autorenkoordination + Persistenz
+- `AuthenticationService` – Anmelde-/Registrierungsablauf
+- `HabitService` – Gewohnheits-CRUD + Filterung
+- `QuoteService` – Abrufen + Zwischenspeichern von Zitaten
+- `ProfileService` – Aktualisierungen des Benutzerprofils
+- `TreeGrowthService` – Logik für den Fortschritt des Baums
+- `AchievementService` – Leistungssystem
+- `StreakService` – Streak-Verfolgung + Meilensteine
 
-### ✅ Infrastructure Layer – All Adapters Instantiate Entities
-**CRITICAL - All use `new Entity()` NOT type casting:**
-- `ApiAuthRepository` – `new User(userData)` ✅
-- `ApiHabitsRepository` – `.map(data => new Habit(data))` ✅
-- `ApiQuotesRepository` – `.map(data => new Quote(data))` ✅
-- `ApiProfileRepository` – `new User(userData)` ✅ **FIXED THIS SESSION**
-- `SecureStoreAuthRepository` – `new User(userData)` ✅ 
-- `ApiTreeGrowthRepository` – `new TreeGrowth(dummyData)` ✅
-- `ApiAchievementRepository` – Achievement[] instantiation ✅
-- `ApiStreakRepository` – `new Streak(dummyData)` ✅
+### Infrastructure Layer – Alle Adapter erstellen Entitäten
+**WICHTIG – Alle verwenden `new Entity()`, KEINE Typumwandlung:**- `ApiAuthRepository` – `new User(userData)` 
+- `ApiHabitsRepository` – `.map(data => new Habit(data))` 
+- `ApiQuotesRepository` – `.map(data => new Quote(data))` 
+- `ApiProfileRepository` – `new User(userData)` 
+- `SecureStoreAuthRepository` – `new User(userData)`  
+- `ApiTreeGrowthRepository` – `new TreeGrowth(dummyData)` 
+- `ApiAchievementRepository` – Achievement[] instantiation 
+- `ApiStreakRepository` – `new Streak(dummyData)` 
 
-### ✅ Presentation Layer – Pure Components + Smart Controllers
-**Components (100% presentation-only):**
-- `TreeView` – ✅ **REFACTORED:** Props-based from tree.tsx screen
-- `CalendarView` – ✅ **REFACTORED:** Props-based from calendar.tsx screen
-- `InventoryView` – ✅ **REFACTORED:** Props-based from inventory.tsx screen
-- `QuoteBanner`, `HabitList`, `AuthForm`, `ProfileSettings`, `HabitModal` – ✅ All pure props-based
+### Presentation Layer – Reine Komponenten + Smart Controller
+**Komponenten (100 % nur Präsentation):**
+- `TreeView` – **REFACTORED:** Props-basiert aus tree.tsx-Bildschirm
+- `CalendarView` – **REFACTORED:** Props-basiert aus dem Bildschirm calendar.tsx
+- `InventoryView` – **REFACTORED:** Props-basiert aus dem Bildschirm inventory.tsx
+- `QuoteBanner`, `HabitList`, `AuthForm`, `ProfileSettings`, `HabitModal` 
 
-**Controllers (8 total):** All manage service calls + state
+**Controllers (8 total):** Alle verwalten Serviceaufrufe + Status
 - `useAuthController`, `useHabitsController`, `useQuoteController`, `useProfileController`
 - `useTreeGrowthController`, `useAchievementController`, `useStreakController`, `useCalendarStatsController`
 
-### ✅ App Layer – 9 Thin Screen Wrappers
-All screens orchestrate controllers and pass props:
+### App Layer – 9 Thin Screen Wrappers
+Alle Bildschirme steuern Controller und übergeben Props:
 - Root: `_layout.tsx`, `(auth)/_layout.tsx`, `(auth)/login.tsx`, `(tabs)/_layout.tsx`
 - Feature Screens:
   - `(tabs)/index.tsx` – HomeScreen (habits + quotes + streak)
-  - `(tabs)/calendar.tsx` – **FIXED:** Calls useCalendarStatsController, passes props to CalendarView
-  - `(tabs)/tree.tsx` – **FIXED:** Calls useTreeGrowthController, passes props to TreeView
-  - `(tabs)/inventory.tsx` – **FIXED:** Calls useAchievementController, passes props to InventoryView
-  - `(tabs)/profile.tsx` – Calls useProfileController
+  - `(tabs)/calendar.tsx` – **FIXED:** Ruft useCalendarStatsController auf, übergibt Props an CalendarView
+  - `(tabs)/tree.tsx` – **FIXED:** Ruft useTreeGrowthController auf, übergibt Props an TreeView
+  - `(tabs)/inventory.tsx` – **FIXED:** Ruft useAchievementController auf, übergibt Props an InventoryView
+  - `(tabs)/profile.tsx` – Ruft useProfileController auf
 
-### 📋 Critical Fixes This Session
-| Component | Problem | Fix | Status |
-|-----------|---------|-----|--------|
-| TreeView.tsx | Called controller directly | Moved to tree.tsx, accepts props | ✅ |
-| CalendarView.tsx | Called controller directly | Moved to calendar.tsx, accepts props | ✅ |
-| InventoryView.tsx | Called controller directly | Moved to inventory.tsx, accepts props | ✅ |
-| ApiProfileRepository | Returned plain object | Changed to `new User()` instantiation | ✅ |
+### Alle Dummy-Daten markiert
+- Alle Dummy-Implementierungen verwenden Kommentare `//Dummy Hardcoded:`
+- Bereit für die echte API-Integration
 
-### 🎯 All Dummy Data Marked
-- All dummy implementations use `//Dummy Hardcoded:` comments
-- Ready for real API integration
-
-### 📊 Data Flow Example: "Toggle Habit"
-1. **Screen** (index.tsx) – User taps checkbox
+### Beispiel für Datenfluss: „Gewohnheit umschalten“
+1. **Screen** (index.tsx) – Benutzer tippt auf Kontrollkästchen
 2. **Controller** (useHabitsController) – Calls `handleToggleHabit(id, date)`
 3. **Service** (HabitService) – Calls `habitRepo.toggleHabit(authToken, id, dateIso)`
-4. **Adapter** (ApiHabitsRepository) – Makes HTTP PUT request
-5. **Result** – State updated, component re-renders
+4. **Adapter** (ApiHabitsRepository) – Führt HTTP PUT request durch
+5. **Result** – Status aktualisiert, Komponente wird neu gerendert
 
-### HTTP calls failing silently
-- Add console logs in the HTTP adapter
-- Verify API_BASE_URL is correct
-- Check Auth token is being sent in request headers
-
----
-
-## Next Steps
-
-1. **Add Unit Tests** – Create Jest config and write tests for core services
-2. **Implement E2E Tests** – Use Expo testing tools or Detox
-3. **Add State Management** – Consider Redux/Zustand if global state grows
-4. **Documentation** – Keep this file updated as new features are added
-5. **Code Review Checklist** – Use this architecture as basis for PR review standards
+### HTTP-Aufrufe schlagen stillschweigend fehl
+- Konsolenprotokolle im HTTP-Adapter hinzufügen
+- Überprüfen, ob API_BASE_URL korrekt ist
+- Überprüfen, ob Auth-Token in den Anfrage-Headern gesendet wird
 
 ---
 

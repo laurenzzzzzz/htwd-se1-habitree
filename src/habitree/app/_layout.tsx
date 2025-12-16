@@ -1,10 +1,14 @@
 import { Stack, Redirect, useSegments } from 'expo-router';
-import { Text } from 'react-native';
-import { useAuth, AuthProvider } from '../context/AuthContext'; 
-import { HabitsProvider } from '../context/HabitsContext';
+import { Appearance, Text } from 'react-native';
 import React from 'react';
+import { ThemeProvider, DefaultTheme } from '@react-navigation/native';
+import { useAuth, AuthProvider } from '../context/AuthContext';
+import { HabitsProvider } from '../context/HabitsContext';
 import { ApplicationServicesProvider } from '../presentation/providers/ApplicationServicesProvider';
 import { applicationServices } from '../infrastructure/di/ServiceContainer';
+
+// Force app-wide light appearance to stop system-driven palette changes
+Appearance.setColorScheme?.('light');
 
 function RootLayoutContent() {
   const { isLoggedIn, isLoading } = useAuth(); // Holt den globalen Status
@@ -38,10 +42,12 @@ function RootLayoutContent() {
   }
 
   return (
-    <Stack>
-      <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-    </Stack>
+    <ThemeProvider value={DefaultTheme}>
+      <Stack>
+        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      </Stack>
+    </ThemeProvider>
   );
 }
 

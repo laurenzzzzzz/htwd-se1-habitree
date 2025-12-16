@@ -10,14 +10,11 @@ import { IconSymbol } from '@/presentation/ui/ui/IconSymbol';
 
 import { Colors } from '@/constants/Colors';
 
-import { useColorScheme } from '@/hooks/useColorScheme';
-
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
   const insets = useSafeAreaInsets();
 
   // Responsive Header Höhe 
@@ -102,18 +99,17 @@ export default function TabLayout() {
       <Tabs.Screen
         name="tree"
         options={{
-          title: 'Baum',
+          title: 'Habitree',
           headerTitle: () => (
-            <Text
+            <Image
+              source={require('@/assets/images/header.png')}
               style={{
-                fontSize: Math.min(windowWidth * 0.08, 34),
-                fontWeight: 'bold',
+                width: Math.min(windowWidth * 0.35, 140),
+                height: windowHeight * 0.07,
+                resizeMode: 'contain',
                 marginTop: responsiveMarginTop,
-                textAlign: 'center',
               }}
-            >
-              Baum
-            </Text>
+            />
           ),
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="tree.fill" color={color} />,
         }}
@@ -121,7 +117,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="inventory"
         options={{
-          title: 'Inventar',
+          title: 'Erfolge',
           headerTitle: () => (
             <Text
               style={{
@@ -131,7 +127,7 @@ export default function TabLayout() {
                 textAlign: 'center',
               }}
             >
-              Inventar
+              Erfolge
             </Text>
           ),
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="trophy.fill" color={color} />,
