@@ -271,7 +271,33 @@ des Projektes. Projekt  enthält eigene Gedanken und Ideen und ist somit hinsich
 | Zu hoher administrativer Aufwand durch Pflege von Power Point und Git Hub (und Miro- Board)
 | - Aufgaben- und KPI-Erfassung direkt in GitHub und Miro
 | - Administrative Arbeit darf nicht den Entwicklungsaufwand übersteigen
-
+| **Anhaltend geringes Engagement eines Teammitglieds trotz wiederholter Aufgabenvergabe**
++
+Bereits in Software Engineering 1 wurden vereinbarte Aufgaben (z. B. Erstellung von Wireframes) nicht oder nur unvollständig erledigt.  
+In Software Engineering 2 setzte sich dieses Verhalten verstärkt fort:
++
+- über mehrere Wochen keine Bearbeitung zugewiesener Aufgaben (z. B. Benutzerhandbuch, Sequenzdiagramme) +
+- unregelmäßige oder fehlende Teilnahme an Meetings +
+- passive Anwesenheit (stummgeschaltet, AFK, keine inhaltlichen Beiträge in Meetings) +
+- fehlende Eigeninitiative und Rückmeldungen +
+- Kaum Commits in Git Hub  +
+- Wenn Commits vollzogen wurden, dann wurde nur Chat- Gpt Text ins Git gepushed
+|
+- Mehrfache freundliche Erinnerungen und persönliche Gespräche im Team, vor allem veranlasst durch Scrum Master, was keine Wirkung erzielte +  
+- Klare Aufgabenverteilung mit festen Zuständigkeiten und Deadlines, was auch kaum Wirkung erzielte  +
+- Thematisierung des Problems in Retrospektiven, was ebenfalls wirkungslos war + 
+- Eskalation auf eine deutlich verbindlichere, autoritärere Kommunikation, was schlussendlich Erfolge in der Arbeitsweise der Person mit sich brachte:
+  +
+  - explizite Delegation von Aufgaben +
+  - klare Erwartungshaltung mit Konsequenzen, wenn diese nicht erfüllt wurde +
+  - Hinweis auf mögliche Einbindung von Professor/Coach bzw. Ausschluss aus dem Team bei weiterem Ausbleiben von Beiträgen +
+|
+- Freundliche Ermahnungen allein reichen nicht aus, wenn grundlegende Verlässlichkeit fehlt  +
+- Scrum setzt Selbstorganisation voraus, benötigt aber **klare Grenzen und Verbindlichkeit**, wenn diese nicht eingehalten wird  +
+- Autoritäres Eingreifen ist kein Widerspruch zu Agilität, sondern in Ausnahmesituationen notwendig, um das Projekt zu schützen (Beschrieben auch z.B.: im Situativen Reifegradmodell der Führung nach Hersey/Blanchard)  +
+- Fehlende Beiträge einzelner gefährden nicht nur Ergebnisse, sondern auch kaskadierend Motivation und Fairness im Team  +
+- Frühes und konsequentes Handeln ist entscheidend, damit sich die unerledigten Task der Person nicht aufsummieren +
+- Man sollte sich nicht einlullen lassen und nicht immer Ausreden wie 'Das werde ich heute Abend noch machen...' akzeotieren. +
 |===
 
 === Positive Ereignisse
@@ -336,8 +362,17 @@ Definition of Ready enthalten +
 - Herausnahme von redundanten Komplexitäts und Prioritätslabeln, sodass ein einheitliches Verständnis über den Sinn und Nutzen der Labels nun vorliegt und die Labelingstrategie bei allen Artefakten konsistent und gleich erfolgt +
 - Wiederaufnahme von Sprints und Iterations- Labels in Git- Hub um nun ganz genau einblicken zu können welche Task und schlussendlich auch welche User Stories zu welchen Sprints finalisiert wurden +
 (4) User Stories- Format vereinheitlicht +
-
+| Umgang mit geringer Verlässlichkeit im Team
+| - Klare Erwartungshaltung an jedes Teammitglied hinsichtlich Teilnahme, Kommunikation und Aufgabenerfüllung  +
+- *Eskalationsstufen bei anhaltender Nichterfüllung:* +
+  (1) freundliche Erinnerung und Unterstützung  +
+  (2) explizite Aufgaben und Terminzuweisung  +
+  (3) autoritäre Delegation der Aufgaben, mit Androhung von Konsequenzen bei Nichteinhaltung, *auch wenn es sich mit manchen Scrum- Prinzipien beißt!*  +
+- Finden einer Balance zwischen Projekterfolg und Teamspirit +
+- Schutz des Teams vor dauerhafter Mehrbelastung durch einzelne Mitglieder ist wichtig um andere Mitglieder nicht auch zu demotivieren!  +
+- Einbindung von Betreuern (Professor/Coach) als letzte Eskalationsstufe +
 |===
+
 
 === Technische Praktiken
 
@@ -391,11 +426,17 @@ open points:
 
 Dokument anlegen: testing.adoc mit Test- Ordnerstruktur +
 Namenskonventionen für tests nieder schreiben +
+
 Mocking vorhanden ???
+
 
 Welche Qualitätseigenschaften testes du am meisten? Folie 28 +
 
+
 Automatisiertes vs Exploratives Testen was machen wir genau? +
+- Automatisiertes Testen: Machen wir bei Push/Pull Requests und den Code auf Git Hub Pushen doer Pullen mit Git Hub Actions +
+- Exploratives: Unit Tests +
+
 
 Konkrete Umsetzung der White Box tests kurz hier niederschreiben und genauer noch mal in Testing.adoc ergänzen +
 

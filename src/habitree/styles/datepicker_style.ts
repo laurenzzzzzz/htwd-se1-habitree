@@ -1,78 +1,84 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { createResponsiveHelpers } from './responsive';
 
-const { width: windowWidth } = Dimensions.get('window');
+export const createDatePickerStyles = (width?: number, height?: number) => {
+  const { spacing, font, radius } = createResponsiveHelpers(width, height);
+  const maxWidth = width ? Math.min(width * 0.9, 420) : 400;
 
-export const datePickerStyles = StyleSheet.create({
-  overlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  container: {
-    width: '85%',
-    maxWidth: 400,
-    backgroundColor: '#fff',
-    borderRadius: 12,
-    padding: 16,
-    elevation: 5,
-  },
-  title: {
-    marginBottom: 16,
-    textAlign: 'center',
-    fontWeight: 'bold',
-  },
-  monthHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 16,
-  },
-  monthText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    flex: 1,
-    textAlign: 'center',
-  },
-  weekdayRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 8,
-  },
-  weekdayCell: {
-    width: `${100 / 7}%`,
-    alignItems: 'center',
-    paddingVertical: 4,
-  },
-  weekdayText: {
-    fontWeight: 'bold',
-    fontSize: 12,
-  },
-  calendarGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginBottom: 16,
-  },
-  dayCell: {
-    width: `${100 / 7}%`,
-    aspectRatio: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 8,
-    marginBottom: 4,
-  },
-  dayCellEmpty: {
-    backgroundColor: 'transparent',
-  },
-  dayCellSelected: {
-    backgroundColor: 'rgb(25, 145, 137)',
-  },
-  dayText: {
-    fontSize: 14,
-    color: '#000',
-  },
-  dayTextSelected: {
-    color: '#fff',
-    fontWeight: 'bold',
-  },
-});
+  return StyleSheet.create({
+    overlay: {
+      flex: 1,
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    container: {
+      width: '85%',
+      maxWidth,
+      backgroundColor: '#fff',
+      borderRadius: radius(14),
+      padding: spacing.md,
+      elevation: 5,
+    },
+    title: {
+      marginBottom: spacing.md,
+      textAlign: 'center',
+      fontWeight: 'bold',
+    },
+    monthHeader: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginBottom: spacing.md,
+    },
+    monthText: {
+      fontSize: font(16),
+      fontWeight: 'bold',
+      flex: 1,
+      textAlign: 'center',
+    },
+    weekdayRow: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      marginBottom: spacing.xs,
+    },
+    weekdayCell: {
+      width: `${100 / 7}%`,
+      alignItems: 'center',
+      paddingVertical: spacing.xs * 0.75,
+    },
+    weekdayText: {
+      fontWeight: 'bold',
+      fontSize: font(12),
+    },
+    calendarGrid: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      marginBottom: spacing.md,
+    },
+    dayCell: {
+      width: `${100 / 7}%`,
+      aspectRatio: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: radius(10),
+      marginBottom: spacing.xs * 0.75,
+    },
+    dayCellEmpty: {
+      backgroundColor: 'transparent',
+    },
+    dayCellSelected: {
+      backgroundColor: 'rgb(25, 145, 137)',
+    },
+    dayText: {
+      fontSize: font(14),
+      color: '#000',
+    },
+    dayTextSelected: {
+      color: '#fff',
+      fontWeight: 'bold',
+    },
+  });
+};
+
+export const datePickerStyles = createDatePickerStyles();
