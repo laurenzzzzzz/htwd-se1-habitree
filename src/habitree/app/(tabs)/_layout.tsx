@@ -1,39 +1,28 @@
 import { Tabs } from 'expo-router';
 
-import React from 'react';
+import React, { useMemo } from 'react';
 
-import { Image, Dimensions, Text } from 'react-native';
+import { Image, Text, useWindowDimensions } from 'react-native';
 
 import { HapticTab } from '@/presentation/ui/HapticTab';
 
 import { IconSymbol } from '@/presentation/ui/ui/IconSymbol';
-
 import { Colors } from '@/constants/Colors';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-
-const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
+import { createTabsLayoutStyles } from '../../styles/tabs_layout_style';
 
 export default function TabLayout() {
   const insets = useSafeAreaInsets();
+  const { width, height } = useWindowDimensions();
+  const tabsLayoutStyles = useMemo(
+    () => createTabsLayoutStyles(width, height, { top: insets.top, bottom: insets.bottom }),
+    [width, height, insets.top, insets.bottom],
+  );
 
-  // Responsive Header Höhe 
-
-  const HEADER_HEIGHT = Math.max(70 + insets.top, 60);
-
-  // Responsive TabBar Höhe (Beibehalten der Korrektur von vorhin)
-  const TAB_BAR_HEIGHT = Math.max(48, windowHeight * 0.050);
-
- 
-
-  //const responsiveMarginTop = Math.max(insets.top * 0.1, baseMargin);
-  const responsiveMarginTop = insets.top * 0.2;
-
-  const largeHeaderTitleStyle = {
-    fontSize: Math.min(windowWidth * 0.08, 34),
-    fontWeight: 'bold' as 'bold',
-  };
-
+  const renderHeaderTitle = (label: string) => (
+    <Text style={tabsLayoutStyles.headerTitleText}>{label}</Text>
+  );
 
   return (
     <Tabs
@@ -42,19 +31,10 @@ export default function TabLayout() {
         tabBarActiveTintColor: Colors.light.tint,
         headerShown: true,
         headerTitleAlign: 'center',
-        headerStyle: {
-          // backgroundColor: Colors[colorScheme ?? 'light'].background,
-          backgroundColor: Colors.light.background,
-          // borderBottomColor: Colors[colorScheme ?? 'light'].border,
-          borderBottomColor: Colors.light.border,
-          height: HEADER_HEIGHT,
-        },
+        headerStyle: tabsLayoutStyles.headerStyle,
         tabBarButton: HapticTab,
-        headerTitleStyle: largeHeaderTitleStyle,
-        tabBarStyle: {
-          height: TAB_BAR_HEIGHT + insets.bottom,
-          paddingBottom: insets.bottom,
-        },
+        headerTitleStyle: tabsLayoutStyles.headerTitleStyle,
+        tabBarStyle: tabsLayoutStyles.tabBarStyle,
       }}
     >
       <Tabs.Screen
@@ -64,12 +44,7 @@ export default function TabLayout() {
           headerTitle: () => (
             <Image
               source={require('@/assets/images/header.png')}
-              style={{ 
-                width: Math.min(windowWidth * 0.35, 140), 
-                height: windowHeight * 0.07, 
-                resizeMode: 'contain', 
-                marginTop: responsiveMarginTop
-              }}
+              style={tabsLayoutStyles.headerLogo}
             />
           ),
           tabBarIcon: ({ color }) => (
@@ -81,18 +56,7 @@ export default function TabLayout() {
         name="calendar"
         options={{
           title: 'Habits',
-          headerTitle: () => (
-            <Text
-              style={{
-                fontSize: Math.min(windowWidth * 0.08, 34),
-                fontWeight: 'bold',
-                marginTop: responsiveMarginTop,
-                textAlign: 'center',
-              }}
-            >
-              Habits
-            </Text>
-          ),
+          headerTitle: () => renderHeaderTitle('Habits'),
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="calendar" color={color} />,
         }}
       />
@@ -100,18 +64,7 @@ export default function TabLayout() {
         name="tree"
         options={{
           title: 'Baum',
-          headerTitle: () => (
-            <Text
-              style={{
-                fontSize: Math.min(windowWidth * 0.08, 34),
-                fontWeight: 'bold',
-                marginTop: responsiveMarginTop,
-                textAlign: 'center',
-              }}
-            >
-              Baum
-            </Text>
-          ),
+          headerTitle: () => renderHeaderTitle('Baum'),
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="tree.fill" color={color} />,
         }}
       />
@@ -119,18 +72,7 @@ export default function TabLayout() {
         name="inventory"
         options={{
           title: 'Inventar',
-          headerTitle: () => (
-            <Text
-              style={{
-                fontSize: Math.min(windowWidth * 0.08, 34),
-                fontWeight: 'bold',
-                marginTop: responsiveMarginTop,
-                textAlign: 'center',
-              }}
-            >
-              Inventar
-            </Text>
-          ),
+          headerTitle: () => renderHeaderTitle('Inventar'),
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="trophy.fill" color={color} />,
         }}
       />
@@ -138,18 +80,7 @@ export default function TabLayout() {
         name="profile"
         options={{
           title: 'Profil',
-          headerTitle: () => (
-            <Text
-              style={{
-                fontSize: Math.min(windowWidth * 0.08, 34),
-                fontWeight: 'bold',
-                marginTop: responsiveMarginTop,
-                textAlign: 'center',
-              }}
-            >
-              Profil
-            </Text>
-          ),
+          headerTitle: () => renderHeaderTitle('Profil'),
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="person.fill" color={color} />,
         }}
       />

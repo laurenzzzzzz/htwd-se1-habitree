@@ -1,11 +1,24 @@
 import { StyleSheet } from 'react-native';
 import { createResponsiveHelpers } from './responsive';
 
-export const createInventoryViewStyles = (width?: number, height?: number) => {
+type InventoryStyleOptions = {
+  backgroundColor?: string;
+};
+
+export const createInventoryViewStyles = (
+  width?: number,
+  height?: number,
+  options: InventoryStyleOptions = {},
+) => {
   const { spacing, font, radius, scale } = createResponsiveHelpers(width, height);
   const modalWidth = width ? Math.min(width * 0.85, 520) : undefined;
+  const backgroundColorValue = options.backgroundColor ?? '#fff';
 
   return StyleSheet.create({
+    screenContainer: {
+      flex: 1,
+      backgroundColor: backgroundColorValue,
+    },
     container: {
       flex: 1,
       paddingHorizontal: spacing.md,
@@ -32,6 +45,7 @@ export const createInventoryViewStyles = (width?: number, height?: number) => {
       justifyContent: 'center',
       alignItems: 'center',
       padding: spacing.lg,
+      backgroundColor: backgroundColorValue,
     },
     loadingText: {
       marginTop: spacing.sm,

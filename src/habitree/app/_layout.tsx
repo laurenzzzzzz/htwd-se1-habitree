@@ -7,6 +7,7 @@ import { HabitsProvider } from '../context/HabitsContext';
 import { ApplicationServicesProvider } from '../presentation/providers/ApplicationServicesProvider';
 import { applicationServices } from '../infrastructure/di/ServiceContainer';
 import { Colors } from '../constants/Colors';
+import { rootLayoutStyles } from '../styles/rootlayout_style';
 
 function RootLayoutContent() {
   const { isLoggedIn, isLoading } = useAuth(); // Holt den globalen Status
@@ -17,14 +18,7 @@ function RootLayoutContent() {
 
   if (isLoading) {
     return (
-      <Text
-        style={{
-          flex: 1,
-          textAlign: "center",
-          textAlignVertical: "center",
-          fontSize: 18,
-        }}
-      >
+      <Text style={rootLayoutStyles.loadingText}>
         Laden...
       </Text>
     );

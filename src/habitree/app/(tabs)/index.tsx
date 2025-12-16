@@ -22,11 +22,15 @@ import { useStreakController } from '../../presentation/controllers/useStreakCon
 import HabitModal from '../../presentation/ui/HabitModal';
 import { QuoteBanner } from '../../presentation/ui/QuoteBanner';
 import { WEEKDAYS } from '../../constants/HomeScreenConstants';
+import { Colors } from '../../constants/Colors';
 
 export default function HomeScreen() {
   const { width, height } = useWindowDimensions();
-  const styles = useMemo(() => createHomeStyles(width, height), [width, height]);
   const backgroundColor = useThemeColor({}, 'background');
+  const styles = useMemo(
+    () => createHomeStyles(width, height, { backgroundColor }),
+    [width, height, backgroundColor],
+  );
   const { currentUser } = useAuth();
   const {
     filteredHabits,
@@ -164,7 +168,7 @@ export default function HomeScreen() {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor }}>
+    <View style={styles.screenContainer}>
       <ScrollView
         contentContainerStyle={styles.contentContainer}
         showsVerticalScrollIndicator={false}
@@ -207,14 +211,14 @@ export default function HomeScreen() {
           </View>
 
           {/* Today's Goals */}
-          <ThemedText type="subtitle" style={[styles.habitTitle, { marginTop: 40 }]}>
+          <ThemedText type="subtitle" style={[styles.habitTitle, styles.habitTitleSpacing]}>
             Heutige Ziele:
           </ThemedText>
 
           {isLoadingHabits ? (
-            <View style={{ padding: 20 }}>
-              <ActivityIndicator size="small" color="rgb(25, 145, 137)" />
-              <ThemedText style={{ textAlign: 'center', marginTop: 5 }}>
+            <View style={styles.loadingBox}>
+              <ActivityIndicator size="small" color={Colors.light.accent} />
+              <ThemedText style={styles.loadingMessage}>
                 Lade Habits...
               </ThemedText>
             </View>

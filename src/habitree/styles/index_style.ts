@@ -3,7 +3,15 @@ import { createResponsiveHelpers } from './responsive';
 
 const { width: defaultWidth, height: defaultHeight } = Dimensions.get('window');
 
-export const createHomeStyles = (screenWidth = defaultWidth, screenHeight = defaultHeight) => {
+type HomeStyleOptions = {
+  backgroundColor?: string;
+};
+
+export const createHomeStyles = (
+  screenWidth = defaultWidth,
+  screenHeight = defaultHeight,
+  options: HomeStyleOptions = {},
+) => {
   const helpers = createResponsiveHelpers(screenWidth, screenHeight);
   const { spacing, font, scale, verticalScale, radius } = helpers;
   const checkboxSize = Math.max(22, scale(24));
@@ -14,8 +22,13 @@ export const createHomeStyles = (screenWidth = defaultWidth, screenHeight = defa
   const dropSize = Math.max(80, scale(88));
   const streakModalWidth = Math.min(screenWidth * 0.9, 460);
   const modalWidth = Math.min(screenWidth * 0.9, 420);
+  const backgroundColorValue = options.backgroundColor ?? '#fff';
 
   return StyleSheet.create({
+    screenContainer: {
+      flex: 1,
+      backgroundColor: backgroundColorValue,
+    },
     authContainer: {
       width: '100%',
       padding: cardPadding,
@@ -72,6 +85,13 @@ export const createHomeStyles = (screenWidth = defaultWidth, screenHeight = defa
       fontStyle: 'italic',
       textAlign: 'center',
       marginVertical: spacing.md,
+    },
+    loadingBox: {
+      padding: spacing.md,
+    },
+    loadingMessage: {
+      textAlign: 'center',
+      marginTop: spacing.xs,
     },
     container: {
       flex: 1,
@@ -162,6 +182,9 @@ export const createHomeStyles = (screenWidth = defaultWidth, screenHeight = defa
     habitTitle: {
       marginBottom: spacing.sm,
       fontSize: font(20),
+    },
+    habitTitleSpacing: {
+      marginTop: spacing.xl,
     },
     habitListContainer: {
       borderRadius: cardRadius,

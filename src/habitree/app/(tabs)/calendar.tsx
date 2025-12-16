@@ -1,12 +1,14 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { View, Pressable, ActivityIndicator, ScrollView, Alert, Image } from 'react-native';
+import React, { useEffect, useState, useRef, useMemo } from 'react';
+import { View, Pressable, ActivityIndicator, ScrollView, Alert, Image, useWindowDimensions } from 'react-native';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { ThemedText } from '@/presentation/ui/ThemedText';
 import { ThemedView } from '@/presentation/ui/ThemedView';
 import { useHabits } from '../../context/HabitsContext';
 import HabitModal from '../../presentation/ui/HabitModal';
-import { styles } from '../../styles/index_style';
+import { styles as homeStyles } from '../../styles/index_style';
 import { shouldHabitOccurOnDate } from '../../domain/services/HabitSchedulePolicy';
+import { createCalendarScreenStyles } from '../../styles/calendar_screen_style';
+import { Colors } from '../../constants/Colors';
 
 // Bilder importieren
 const EditIcon = require('../../assets/images/edit.png');
@@ -14,6 +16,8 @@ const DeleteIcon = require('../../assets/images/delete.png');
 
 export default function CalendarScreen() {
   useThemeColor({}, 'background');
+  const { width, height } = useWindowDimensions();
+  const calendarStyles = useMemo(() => createCalendarScreenStyles(width, height), [width, height]);
 
   const {
     habits,
@@ -74,35 +78,35 @@ export default function CalendarScreen() {
   };
 
   return (
-    <ScrollView contentContainerStyle={{ padding: 16 }}>
+    <ScrollView contentContainerStyle={calendarStyles.scrollContent}>
       {/* Heutige Habits Section */}
-      <View style={{ borderWidth: 2, borderColor: 'rgb(25, 145, 137)', borderRadius: 8, padding: 12, marginBottom: 20 }}>
-        <View style={{ backgroundColor: 'rgb(131, 233, 142)', padding: 12, marginHorizontal: -12, marginTop: -12, marginBottom: 12, borderTopLeftRadius: 6, borderTopRightRadius: 6 }}>
-          <ThemedText type="subtitle" style={[styles.habitTitle, { color: 'black', marginTop: -2, marginBottom: -2 }]}>
+      <View style={calendarStyles.sectionCard}>
+        <View style={[calendarStyles.sectionBanner, calendarStyles.sectionBannerToday]}>
+          <ThemedText type="subtitle" style={[homeStyles.habitTitle, calendarStyles.sectionHeaderTitle]}>
             Heutige Habits
           </ThemedText>
         </View>
 
         {isLoadingHabits ? (
-          <View style={{ padding: 20 }}>
-            <ActivityIndicator size="small" color="rgb(25, 145, 137)" />
+          <View style={calendarStyles.loadingContainer}>
+            <ActivityIndicator size="small" color={Colors.light.accent} />
           </View>
         ) : todayHabits.length > 0 ? (
           todayHabits.map((habit: any) => {
             const entryForToday = habit.entries.find((e: any) => isSameDay(new Date(e.date), today));
             const checked = entryForToday?.status ?? false;
             return (
-              <View key={habit.id} style={styles.habitItem}>
-                <Pressable onPress={() => handleToggle(habit.id)} style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
-                  <View style={[styles.checkbox, checked && styles.checkboxChecked]}>
-                    {checked && <ThemedText style={styles.checkmark}>✓</ThemedText>}
+              <View key={habit.id} style={homeStyles.habitItem}>
+                <Pressable onPress={() => handleToggle(habit.id)} style={calendarStyles.habitPressable}>
+                  <View style={[homeStyles.checkbox, checked && homeStyles.checkboxChecked]}>
+                    {checked && <ThemedText style={homeStyles.checkmark}>✓</ThemedText>}
                   </View>
-                  <View style={styles.habitTextContainer}>
-                    <ThemedText style={styles.habitLabel}>{habit.name}</ThemedText>
-                    <ThemedText style={styles.habitDescription}>{habit.description} ({habit.frequency})</ThemedText>
+                  <View style={homeStyles.habitTextContainer}>
+                    <ThemedText style={homeStyles.habitLabel}>{habit.name}</ThemedText>
+                    <ThemedText style={homeStyles.habitDescription}>{habit.description} ({habit.frequency})</ThemedText>
                   </View>
                 </Pressable>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View style={calendarStyles.actionRow}>
                   <Pressable onPress={() => {
                     // open edit modal prefilled
                     setEditHabitId(habit.id);
@@ -115,8 +119,8 @@ export default function CalendarScreen() {
                     setNewHabitIntervalDays(habit.intervalDays ? String(habit.intervalDays) : '');
                     setModalMode('custom');
                     setModalVisible(true);
-                  }} style={{ padding: 8 }}>
-                    <Image source={EditIcon} style={{ width: 21, height: 21 }} /> 
+                  }} style={calendarStyles.actionControl}>
+                    <Image source={EditIcon} style={calendarStyles.actionIcon} /> 
                   </Pressable>
                   <Pressable onPress={() => {
                     Alert.alert('Löschen', 'Habit wirklich löschen?', [
@@ -125,40 +129,40 @@ export default function CalendarScreen() {
                         await handleDeleteHabit(habit.id);
                       } }
                     ]);
-                  }} style={{ padding: 8 }}>
-                    <Image source={DeleteIcon} style={{ width: 21, height: 21 }} />
+                  }} style={calendarStyles.actionControl}>
+                    <Image source={DeleteIcon} style={calendarStyles.actionIcon} />
                   </Pressable>
                 </View>
               </View>
             );
           })
         ) : (
-          <ThemedText style={styles.noHabitsText}>Keine Habits für heute.</ThemedText>
+          <ThemedText style={homeStyles.noHabitsText}>Keine Habits für heute.</ThemedText>
         )}
       </View>
 
       {/* Anstehende Habits Section */}
-      <View style={{ borderWidth: 2, borderColor: 'rgb(25, 145, 137)', borderRadius: 8, padding: 12, marginBottom: 20 }}>
-        <View style={{ backgroundColor: 'rgb(255, 236, 136)', padding: 12, marginHorizontal: -12, marginTop: -12, marginBottom: 12, borderTopLeftRadius: 6, borderTopRightRadius: 6 }}>
-          <ThemedText type="subtitle" style={[styles.habitTitle, { color: 'black', marginTop: -2, marginBottom: -2 }]}>
+      <View style={calendarStyles.sectionCard}>
+        <View style={[calendarStyles.sectionBanner, calendarStyles.sectionBannerUpcoming]}>
+          <ThemedText type="subtitle" style={[homeStyles.habitTitle, calendarStyles.sectionHeaderTitle]}>
             Morgige Habits
           </ThemedText>
         </View>
 
         {isLoadingHabits ? (
-          <View style={{ padding: 20 }}>
-            <ActivityIndicator size="small" color="rgb(25, 145, 137)" />
+          <View style={calendarStyles.loadingContainer}>
+            <ActivityIndicator size="small" color={Colors.light.accent} />
           </View>
         ) : upcomingHabits.length > 0 ? (
           upcomingHabits.map((habit: any) => (
-            <View key={habit.id} style={styles.habitItem}>
-              <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
-                <View style={styles.habitTextContainer}>
-                  <ThemedText style={styles.habitLabel}>{habit.name}</ThemedText>
-                  <ThemedText style={styles.habitDescription}>{habit.description} ({habit.frequency})</ThemedText>
+            <View key={habit.id} style={homeStyles.habitItem}>
+              <View style={calendarStyles.habitPressable}>
+                <View style={homeStyles.habitTextContainer}>
+                  <ThemedText style={homeStyles.habitLabel}>{habit.name}</ThemedText>
+                  <ThemedText style={homeStyles.habitDescription}>{habit.description} ({habit.frequency})</ThemedText>
                 </View>
               </View>
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <View style={calendarStyles.actionRow}>
                 <Pressable onPress={() => {
                   // open edit modal prefilled
                   setEditHabitId(habit.id);
@@ -171,8 +175,8 @@ export default function CalendarScreen() {
                   setNewHabitIntervalDays(habit.intervalDays ? String(habit.intervalDays) : '');
                   setModalMode('custom');
                   setModalVisible(true);
-                }} style={{ padding: 8 }}>
-                  <Image source={EditIcon} style={{ width: 21, height: 21 }} />
+                }} style={calendarStyles.actionControl}>
+                  <Image source={EditIcon} style={calendarStyles.actionIcon} />
                 </Pressable>
                 <Pressable onPress={() => {
                   Alert.alert('Löschen', 'Habit wirklich löschen?', [
@@ -181,39 +185,39 @@ export default function CalendarScreen() {
                       await handleDeleteHabit(habit.id);
                     } }
                   ]);
-                }} style={{ padding: 8 }}>
-                  <Image source={DeleteIcon} style={{ width: 21, height: 21 }} />
+                }} style={calendarStyles.actionControl}>
+                  <Image source={DeleteIcon} style={calendarStyles.actionIcon} />
                 </Pressable>
               </View>
             </View>
           ))
         ) : (
-          <ThemedText style={styles.noHabitsText}>Keine anstehenden Habits.</ThemedText>
+          <ThemedText style={homeStyles.noHabitsText}>Keine anstehenden Habits.</ThemedText>
         )}
       </View>
 
       {/* Alle Habits Section */}
-      <View style={{ borderWidth: 2, borderColor: 'rgb(25, 145, 137)', borderRadius: 8, padding: 12 }}>
-        <View style={{ backgroundColor: 'rgb(255,112,112)', padding: 12, marginHorizontal: -12, marginTop: -12, marginBottom: 12, borderTopLeftRadius: 6, borderTopRightRadius: 6 }}>
-          <ThemedText type="subtitle" style={[styles.habitTitle, { color: 'black', marginTop: -2, marginBottom: -2 }]}>
+      <View style={calendarStyles.sectionCard}>
+        <View style={[calendarStyles.sectionBanner, calendarStyles.sectionBannerAll]}>
+          <ThemedText type="subtitle" style={[homeStyles.habitTitle, calendarStyles.sectionHeaderTitle]}>
             Alle Habits
           </ThemedText>
         </View>
 
         {isLoadingHabits ? (
-          <View style={{ padding: 20 }}>
-            <ActivityIndicator size="small" color="rgb(25, 145, 137)" />
+          <View style={calendarStyles.loadingContainer}>
+            <ActivityIndicator size="small" color={Colors.light.accent} />
           </View>
         ) : habits.length > 0 ? (
           habits.map((habit: any) => (
-            <View key={habit.id} style={styles.habitItem}>
-              <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
-                <View style={styles.habitTextContainer}>
-                  <ThemedText style={styles.habitLabel}>{habit.name}</ThemedText>
-                  <ThemedText style={styles.habitDescription}>{habit.description} ({habit.frequency})</ThemedText>
+            <View key={habit.id} style={homeStyles.habitItem}>
+              <View style={calendarStyles.habitPressable}>
+                <View style={homeStyles.habitTextContainer}>
+                  <ThemedText style={homeStyles.habitLabel}>{habit.name}</ThemedText>
+                  <ThemedText style={homeStyles.habitDescription}>{habit.description} ({habit.frequency})</ThemedText>
                 </View>
               </View>
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <View style={calendarStyles.actionRow}>
                 <Pressable onPress={() => {
                   // open edit modal prefilled
                   setEditHabitId(habit.id);
@@ -225,8 +229,8 @@ export default function CalendarScreen() {
                   setNewHabitWeekDays(habit.weekDays || []);
                   setNewHabitIntervalDays(habit.intervalDays ? String(habit.intervalDays) : '');
                   setModalVisible(true);
-                }} style={{ padding: 8 }}>
-                  <Image source={EditIcon} style={{ width: 21, height: 21 }} />
+                }} style={calendarStyles.actionControl}>
+                  <Image source={EditIcon} style={calendarStyles.actionIcon} />
                 </Pressable>
                 <Pressable onPress={() => {
                   Alert.alert('Löschen', 'Habit wirklich löschen?', [
@@ -235,14 +239,14 @@ export default function CalendarScreen() {
                       await handleDeleteHabit(habit.id);
                     } }
                   ]);
-                }} style={{ padding: 8 }}>
-                  <Image source={DeleteIcon} style={{ width: 21, height: 21 }} />
+                }} style={calendarStyles.actionControl}>
+                  <Image source={DeleteIcon} style={calendarStyles.actionIcon} />
                 </Pressable>
               </View>
             </View>
           ))
         ) : (
-          <ThemedText style={styles.noHabitsText}>Keine Habits angelegt.</ThemedText>
+          <ThemedText style={homeStyles.noHabitsText}>Keine Habits angelegt.</ThemedText>
         )}
       </View>
       <HabitModal

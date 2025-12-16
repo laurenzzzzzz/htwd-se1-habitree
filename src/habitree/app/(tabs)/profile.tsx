@@ -1,13 +1,13 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 
 import {
-  useColorScheme,
   ActivityIndicator,
   Modal,
   TextInput,
   Alert,
   Button,
   View,
+  useWindowDimensions,
 } from 'react-native';
 import type { ImageStyle } from 'react-native';
 
@@ -20,7 +20,8 @@ import * as Notifications from 'expo-notifications';
 import { useProfileController } from '../../presentation/controllers/useProfileController';
 import { ProfileSettings } from '../../presentation/ui/ProfileSettings';
 import { useAuth } from '../../context/AuthContext';
-import { styles } from '../../styles/profile_style';
+import { createProfileStyles } from '../../styles/profile_style';
+import { Colors } from '../../constants/Colors';
 // --- AUTH UND API KONSTANTEN ---
 
 // --- BENACHRICHTIGUNGSHANDLER ---
@@ -36,9 +37,9 @@ Notifications.setNotificationHandler({
 
 // --- HAUPTKOMPONENTE ---
 export default function ProfileScreen() {
-  // const systemColorScheme = useColorScheme();
-
   const { isLoggedIn, currentUser, authToken, signOut } = useAuth();
+  const { width, height } = useWindowDimensions();
+  const styles = useMemo(() => createProfileStyles(width, height), [width, height]);
 
   const { updateUsername, updatePassword: updatePasswordController, isUpdatingUsername, isUpdatingPassword } = useProfileController();
 
@@ -180,11 +181,11 @@ export default function ProfileScreen() {
                 title={isUpdatingUsername ? 'Speichere...' : 'Speichern'}
                 onPress={handleUpdateUsername}
                 disabled={isUpdatingUsername || newUsername.length < 3}
-                color="rgb(25, 145, 137)"
+                color={Colors.light.accent}
               />
             </View>
             {isUpdatingUsername && (
-              <ActivityIndicator style={styles.activityIndicator} size="small" color="rgb(25, 145, 137)" />
+              <ActivityIndicator style={styles.activityIndicator} size="small" color={Colors.light.accent} />
             )}
           </ThemedView>
         </View>
@@ -231,11 +232,11 @@ export default function ProfileScreen() {
                   oldPassword.trim() === '' ||
                   newPassword.trim().length < 6
                 }
-                color="rgb(25, 145, 137)"
+                color={Colors.light.accent}
               />
             </View>
             {isUpdatingPassword && (
-              <ActivityIndicator style={styles.activityIndicator} size="small" color="rgb(25, 145, 137)" />
+              <ActivityIndicator style={styles.activityIndicator} size="small" color={Colors.light.accent} />
             )}
           </ThemedView>
         </View>
@@ -243,7 +244,7 @@ export default function ProfileScreen() {
 
       {/* Hauptinhalt */}
       <ParallaxScrollView
-        headerBackgroundColor={{ light: '#FFFFFF', dark: '#353636' }}
+        headerBackgroundColor={{ light: Colors.light.background, dark: Colors.dark.background }}
         headerImage={
           <Image
             source={require('@/assets/images/profile.png')}
@@ -252,7 +253,7 @@ export default function ProfileScreen() {
           />
         }
       >
-        <StatusBar style="dark" backgroundColor="#FFFFFF" />
+        <StatusBar style="dark" backgroundColor={Colors.light.background} />
         <View>
           <ThemedText type="title">
             {currentUser?.username || currentUser?.email || 'Dein Profil'}
