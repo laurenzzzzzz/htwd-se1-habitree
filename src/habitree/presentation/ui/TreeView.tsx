@@ -20,8 +20,9 @@ const INSEL_KLEIN_IMAGE = require('@/assets/images/tree/insel_klein.png');
 /**
  * Bestimmt das korrekte Baum-Bild (tree1.png bis tree7.png) basierend auf der Streak-Zahl.
  * @param streakNumber Die Streak-Zahl/den Fortschrittswert (entspricht 0-100)
+ * @param isSelected Ob der Baum ausgewählt ist (dann treeX_selected.png)
  */
-const getTreeImage = (streakNumber: number) => {
+const getTreeImage = (streakNumber: number, isSelected: boolean = false) => {
   let treeNumber: number;
 
   if (!streakNumber || streakNumber <= 11) {
@@ -38,6 +39,26 @@ const getTreeImage = (streakNumber: number) => {
     treeNumber = 6; // 56-66%
   } else {
     treeNumber = 7; // > 66% (bis 100%)
+  }
+
+  if (isSelected) {
+    switch (treeNumber) {
+      case 1:
+        return require('@/assets/images/tree/tree1_selected.png');
+      case 2:
+        return require('@/assets/images/tree/tree2_selected.png');
+      case 3:
+        return require('@/assets/images/tree/tree3_selected.png');
+      case 4:
+        return require('@/assets/images/tree/tree4_selected.png');
+      case 5:
+        return require('@/assets/images/tree/tree5_selected.png');
+      case 6:
+        return require('@/assets/images/tree/tree6_selected.png');
+      case 7:
+      default:
+        return require('@/assets/images/tree/tree7_selected.png');
+    }
   }
 
   // Wichtig: React Native muss alle require-Pfade statisch kennen
@@ -86,18 +107,18 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
   const HABITREE_STREAK = 66;
 
   // Lade das dynamische Baum-Bild basierend auf der Streak-Zahl
-  const treeSource = getTreeImage(HABITREE_STREAK);
+  const treeSource = getTreeImage(HABITREE_STREAK, selectedItem === 'main');
 
   const numberOfHabits = mockHabits.length;
 
   // Helper-Komponente für eine kleine Insel mit Baum
   const SmallIslandWithTree = ({ habit, style, treeStyle }: { habit: typeof mockHabits[0], style: any, treeStyle?: any }) => {
-    const treeImg = getTreeImage(habit.streak);
     const isSelected = selectedItem !== 'main' && selectedItem.id === habit.id;
+    const treeImg = getTreeImage(habit.streak, isSelected);
     
     return (
       <TouchableOpacity 
-        style={[style, isSelected && treeviewStyles.selectedContainer]} 
+        style={[style, isSelected && treeviewStyles.selectedContainer]}  
         onPress={() => {
           setSelectedItem(habit);
           setIsInfoVisible(true);
