@@ -215,6 +215,7 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
             <>
               <View style={treeviewStyles.infoBoxHeader}>
                 <Text style={treeviewStyles.infoBoxTitle}>Informationen: habitree</Text>
+                <Ionicons name="information-circle-outline" size={24} color="black" />
               </View>
               <View style={treeviewStyles.infoBoxContent}>
                 <Text style={treeviewStyles.infoBoxStreakText}>

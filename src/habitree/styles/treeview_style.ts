@@ -6,7 +6,7 @@ const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
 
 // Zentraler Wert zur Steuerung der vertikalen Abstände der kleinen Inseln.
 // Ein HÖHERER negativer Wert (-120 ist enger als -80) reduziert den Abstand.
-const ROW_GAP_NEG = -90; 
+const ROW_GAP_NEG = -160; 
 
 // Die Breite des Row-Containers
 const ROW_CONTAINER_WIDTH = windowWidth * 0.8;
@@ -39,7 +39,7 @@ export const treeviewStyles = StyleSheet.create({
   scrollContentContainer: {
     alignItems: 'center',
     paddingTop: 160, // Weniger Platz oben
-    paddingBottom: 180, // Weniger Platz unten
+    paddingBottom: 120, // Weniger Platz unten
   },
   
   // Allgemeiner Container für jede Inselreihe
