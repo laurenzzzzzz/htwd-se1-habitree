@@ -64,7 +64,12 @@ export default function TabLayout() {
         name="tree"
         options={{
           title: 'Habitree',
-          headerTitle: () => renderHeaderTitle('Baum'),
+          headerTitle: () => (
+            <Image
+              source={require('@/assets/images/header.png')}
+              style={tabsLayoutStyles.headerLogo}
+            />
+          ),
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="tree.fill" color={color} />,
         }}
       />

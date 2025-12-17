@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Image } from 'expo-image';
 import { View, ActivityIndicator, ScrollView, TouchableOpacity, Text } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { ThemedText } from './ThemedText';
 import { ThemedView } from './ThemedView'; 
 import { treeviewStyles } from '../../styles/treeview_style';
@@ -67,8 +67,8 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
   const mockHabits = [
     { id: 1, streak: 80, name: 'Joggen', description: '30 Minuten entspanntes Laufen im Park.' }, 
     { id: 2, streak: 60, name: 'Lesen', description: '20 Seiten in einem Buch lesen.' }, 
-    { id: 3, streak: 55, name: 'Trinken', description: 'Mindestens 2 Liter Wasser trinken.' }, 
-    { id: 4, streak: 55, name: 'Meditieren', description: '10 Minuten Achtsamkeitsmeditation.' }, 
+    { id: 3, streak: 50, name: 'Trinken', description: 'Mindestens 2 Liter Wasser trinken.' }, 
+    { id: 4, streak: 50, name: 'Meditieren', description: '10 Minuten Achtsamkeitsmeditation.' }, 
     { id: 5, streak: 44, name: 'Lernen', description: 'Eine Stunde programmieren lernen.' }, 
     { id: 6, streak: 34, name: 'Aufräumen', description: '15 Minuten die Wohnung aufräumen.' }, 
     { id: 7, streak: 24, name: 'Kochen', description: 'Ein gesundes Abendessen zubereiten.' }, 
@@ -116,6 +116,20 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
         />
       </TouchableOpacity>
     );
+  };
+
+  const handleNextHabit = () => {
+    if (selectedItem === 'main') return;
+    const currentIndex = mockHabits.findIndex(h => h.id === selectedItem.id);
+    const nextIndex = (currentIndex + 1) % mockHabits.length;
+    setSelectedItem(mockHabits[nextIndex]);
+  };
+
+  const handlePrevHabit = () => {
+    if (selectedItem === 'main') return;
+    const currentIndex = mockHabits.findIndex(h => h.id === selectedItem.id);
+    const prevIndex = (currentIndex - 1 + mockHabits.length) % mockHabits.length;
+    setSelectedItem(mockHabits[prevIndex]);
   };
 
   const renderHabitIslands = () => {
@@ -254,9 +268,19 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
                       <View style={[treeviewStyles.progressBarFill, { width: `${progress}%` }]} />
                     </View>
                     
-                    {/* Percentage Badge */}
-                    <View style={treeviewStyles.percentageBadge}>
-                      <Text style={treeviewStyles.percentageText}>{progress}%</Text>
+                    {/* Percentage Badge with Navigation */}
+                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: -5 }}>
+                      <TouchableOpacity onPress={handlePrevHabit} style={{ padding: 5 }}>
+                         <MaterialIcons name="keyboard-arrow-left" size={36} color="rgb(25, 145, 137)" />
+                      </TouchableOpacity>
+                      
+                      <View style={[treeviewStyles.percentageBadge, { marginTop: 0, marginHorizontal: 10 }]}>
+                        <Text style={treeviewStyles.percentageText}>{progress}%</Text>
+                      </View>
+
+                      <TouchableOpacity onPress={handleNextHabit} style={{ padding: 5 }}>
+                         <MaterialIcons name="keyboard-arrow-right" size={36} color="rgb(25, 145, 137)" />
+                      </TouchableOpacity>
                     </View>
                   </View>
                 </>

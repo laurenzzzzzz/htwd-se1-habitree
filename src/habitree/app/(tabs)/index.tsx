@@ -58,6 +58,71 @@ export default function HomeScreen() {
   const [newHabitWeekDays, setNewHabitWeekDays] = useState<number[]>([]);
   const [newHabitIntervalDays, setNewHabitIntervalDays] = useState('');
   const [streakModalVisible, setStreakModalVisible] = useState(false);
+  const [selectedBar, setSelectedBar] = useState<number | null>(null);
+
+  const exampleHabits = [
+    { id: 1, name: 'Lesen', streak: 70 },
+    { id: 2, name: 'Sport', streak: 20 },
+    { id: 3, name: 'Wasser', streak: 40 },
+    { id: 4, name: 'Code', streak: 64 },
+    { id: 5, name: 'Medit.', streak: 34 },
+    { id: 6, name: 'Laufen', streak: 54 },
+    { id: 7, name: 'Schlaf', streak: 18 },
+    { id: 8, name: 'Lernen', streak: 25 },
+    { id: 9, name: 'Yoga', streak: 50 },
+    { id: 10, name: 'Kochen', streak: 40 },
+    { id: 11, name: 'Gehen', streak: 0 },
+    { id: 12, name: 'Planen', streak: 75 },
+  ];
+
+  const maxStreak = Math.max(...exampleHabits.map(h => h.streak));
+
+  const renderChart = () => {
+    return (
+      <View style={styles.chartContainer}>
+        <ThemedText style={styles.chartTitle}>Habit-Statistiken (Tage)</ThemedText>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          <View style={styles.chartContent}>
+            {exampleHabits.map((habit) => {
+              // Max height 70% to prevent overlap with title and leave room for value text
+              const calculatedHeight = maxStreak > 0 ? (habit.streak / maxStreak) * 70 : 0;
+              const heightPercentage = Math.max(calculatedHeight, 2); // Min 2% height
+              const isSelected = selectedBar === habit.id;
+              const isGold = habit.streak >= 66;
+              
+              return (
+                <Pressable 
+                  key={habit.id} 
+                  style={styles.barContainer}
+                  onPress={() => {
+                      if (isSelected) {
+                          setSelectedBar(null);
+                          Alert.alert('Info', `${habit.name}: ${habit.streak} Tage Streak`);
+                      } else {
+                          setSelectedBar(habit.id);
+                      }
+                  }}
+                >
+                {isSelected && (
+                    <Text style={styles.barValue}>{habit.streak}</Text>
+                )}
+                <View 
+                  style={[
+                    styles.bar, 
+                    isGold && styles.barGold,
+                    { height: `${heightPercentage}%` },
+                    isSelected && (isGold ? styles.barGoldSelected : styles.barSelected)
+                  ]} 
+                />
+                <Text style={styles.barLabel} numberOfLines={1} ellipsizeMode="tail">{habit.name}</Text>
+              </Pressable>
+            );
+          })}
+        </View>
+      </ScrollView>
+    </View>
+  );
+};
 
   useEffect(() => {
     fetchQuote();
@@ -184,11 +249,13 @@ export default function HomeScreen() {
         {/* Daily Quote */}
         <QuoteBanner quote={quote} />
 
-        {/* Habit List Container */}
-        <ThemedView style={styles.habitListContainer}>
-          {/* Streak Section */}
-          <ThemedText type="subtitle" style={styles.habitTitle}>
-            Deine Streak:
+        {/* Example Habits Chart */}
+        {renderChart()}
+
+        {/* Streak Section */}
+        <View style={styles.chartContainer}>
+          <ThemedText style={styles.chartTitle}>
+            Deine Streak
           </ThemedText>
 
           <Pressable
@@ -209,10 +276,13 @@ export default function HomeScreen() {
           <View style={styles.weekdayRow}>
             {WEEKDAYS.map((_, index) => renderWeekdayCircle(index))}
           </View>
+        </View>
 
+        {/* Habit List Container */}
+        <ThemedView style={styles.habitListContainer}>
           {/* Today's Goals */}
           <ThemedText type="subtitle" style={[styles.habitTitle, styles.habitTitleSpacing]}>
-            Heutige Ziele:
+            Heutige Habits:
           </ThemedText>
 
           {isLoadingHabits ? (

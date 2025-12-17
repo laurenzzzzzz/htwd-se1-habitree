@@ -219,6 +219,8 @@ export const treeviewStyles = StyleSheet.create({
     borderRadius: radius(12),
     alignSelf: 'center',
     marginTop: 5,
+    width: scale(80),
+    alignItems: 'center',
   },
   percentageText: {
     color: 'black',

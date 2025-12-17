@@ -13,7 +13,7 @@ export const QuoteBanner: React.FC<Props> = ({ quote }) => {
   return (
     <View style={quoteBannerStyles.container}>
       <ThemedText style={quoteBannerStyles.text}>
-        Tagesspruch: {displayQuote}
+        <ThemedText style={[quoteBannerStyles.text, { fontWeight: 'bold' }]}>Tagesspruch:</ThemedText> {displayQuote}
       </ThemedText>
     </View>
   );

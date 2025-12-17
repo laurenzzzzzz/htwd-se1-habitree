@@ -15,7 +15,7 @@ export const createHomeStyles = (
   const helpers = createResponsiveHelpers(screenWidth, screenHeight);
   const { spacing, font, scale, verticalScale, radius } = helpers;
   const checkboxSize = Math.max(22, scale(24));
-  const circleSize = Math.max(36, scale(36));
+  const circleSize = Math.max(32, scale(32));
   const fabSize = Math.max(56, scale(60));
   const cardRadius = Math.max(12, radius(12));
   const cardPadding = Math.max(16, spacing.md);
@@ -258,8 +258,8 @@ export const createHomeStyles = (
       justifyContent: 'center',
       alignItems: 'center',
       position: 'relative',
-      marginVertical: spacing.lg,
-      marginTop: spacing.md,
+      marginVertical: spacing.sm,
+      marginTop: 0,
     },
     streakBackgroundImage: {
       position: 'absolute',
@@ -283,7 +283,7 @@ export const createHomeStyles = (
       justifyContent: 'center',
       alignItems: 'center',
       marginBottom: spacing.md,
-      marginTop: spacing.lg,
+      marginTop: spacing.sm,
       gap: spacing.xs,
       flexWrap: 'wrap',
     },
@@ -361,6 +361,66 @@ export const createHomeStyles = (
       fontWeight: '600',
       textAlign: 'center',
       fontSize: font(14),
+    },
+    // --- CHART STYLES ---
+    chartContainer: {
+      marginVertical: spacing.md,
+      padding: cardPadding,
+      backgroundColor: '#fff',
+      borderRadius: cardRadius,
+      borderWidth: 2,
+      borderColor: 'rgb(25, 145, 137)',
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.1,
+      shadowRadius: 4,
+      elevation: 3,
+    },
+    chartTitle: {
+      fontSize: font(16),
+      fontWeight: 'bold',
+      marginBottom: spacing.md,
+      color: '#333',
+    },
+    chartContent: {
+      flexDirection: 'row',
+      alignItems: 'flex-end',
+      height: verticalScale(150),
+      paddingBottom: spacing.xs,
+    },
+    barContainer: {
+      alignItems: 'center',
+      justifyContent: 'flex-end',
+      width: scale(45),
+      height: '100%',
+      marginRight: spacing.xs,
+    },
+    bar: {
+      width: scale(20),
+      backgroundColor: 'rgba(25, 145, 137, 0.5)',
+      borderRadius: radius(4),
+      marginBottom: spacing.xs,
+    },
+    barSelected: {
+      backgroundColor: 'rgb(25, 145, 137)',
+    },
+    barGold: {
+      backgroundColor: 'rgba(255, 215, 0, 0.6)',
+    },
+    barGoldSelected: {
+      backgroundColor: 'rgb(255, 215, 0)',
+    },
+    barValue: {
+      fontSize: font(12),
+      fontWeight: 'bold',
+      color: '#333',
+      marginBottom: 2,
+    },
+    barLabel: {
+      fontSize: font(10),
+      color: '#666',
+      textAlign: 'center',
+      width: '100%',
     },
   });
 };
