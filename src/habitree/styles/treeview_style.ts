@@ -1,45 +1,65 @@
 import { StyleSheet, Dimensions } from 'react-native';
+import { createResponsiveHelpers } from './responsive';
 
-const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
+// Initialisiere Responsive-Helper mit aktuellen Fensterdimensionen
+const { width, height } = Dimensions.get('window');
+const {
+  spacing,
+  font,
+  scale,
+  verticalScale,
+  radius,
+} = createResponsiveHelpers(width, height);
 
-// --- ZENTRALE VARIABLEN FÜR STYLES ---
+const safeWidth = width;
+const safeHeight = height;
+const shortSide = Math.min(safeWidth, safeHeight);
 
-// Zentraler Wert zur Steuerung der vertikalen Abstände der kleinen Inseln.
-// Ein HÖHERER negativer Wert (-120 ist enger als -80) reduziert den Abstand.
-const ROW_GAP_NEG = -160; 
+// --- KONFIGURATION ABSTÄNDE (Responsive) ---
+// Hier können die Abstände angepasst werden.
 
-// Die Breite des Row-Containers
-const ROW_CONTAINER_WIDTH = windowWidth * 0.8;
-const ROW_CONTAINER_HEIGHT = windowWidth * 0.35; 
+// Vertikaler Abstand zwischen den Reihen (negativ, damit sie sich überlappen)
+// Ein höherer negativer Wert zieht die Reihen enger zusammen.
+const ISLAND_VERTICAL_SPACING = -verticalScale(100); 
+
+// Horizontaler Abstand (Margin) für die Insel-Paare
+const ISLAND_HORIZONTAL_SPACING = scale(25);
+
+// --- BERECHNETE GRÖSSEN ---
+
+const rowWidth = Math.min(safeWidth * 0.9, 540);
+const rowHeight = Math.max(verticalScale(165), shortSide * 0.32);
 
 // Werte für die große Insel (Reihe 1)
-const INSEL_GROSS_SIZE = windowWidth * 0.45;
-// Die vertikale Position der großen Insel, um sie im oberen Bereich (ca. 2/3 des Containers) zu platzieren.
-// WICHTIG: Berechnung außerhalb des StyleSheet.create
-const INSEL_GROSS_TOP_POSITION = -windowWidth * 0.15; 
+const largeIsland = Math.min(shortSide * 0.6, safeWidth * 0.5);
+const largeIslandTop = -Math.round(rowHeight * 0.45); // ca. -15% width
 
 // Werte für den Baum (Tree Overlay)
-const TREE_OVERLAY_SIZE = windowWidth * 0.55;
-// Position des Baumes, basierend auf der Inselposition minus einer Korrektur (z.B. 30px), um ihn höher zu setzen.
-const TREE_OVERLAY_TOP_POSITION = INSEL_GROSS_TOP_POSITION - 122; 
+const treeOverlaySize = largeIsland * 1.12; // etwas größer als die Insel
+const treeOverlayTop = largeIslandTop - verticalScale(110); // Position angepasst
 
 // Werte für die kleinen Inseln
-const INSEL_KLEIN_PAAR_SIZE = windowWidth * 0.30;
-const INSEL_KLEIN_MIDDLE_SIZE = windowWidth * 0.30;
-const INSEL_KLEIN_BOTTOM_SIZE = windowWidth * 0.30;
+const pairIsland = Math.min(shortSide * 0.4, safeWidth * 0.34); // ca. 30% width
+const middleIsland = Math.min(shortSide * 0.38, safeWidth * 0.32);
+const bottomIsland = Math.min(shortSide * 0.36, safeWidth * 0.3);
+const smallTreeSize = Math.min(shortSide * 0.4, safeWidth * 0.35);
+
+// Info Box
+const infoHeight = 160; // Fixe Höhe wie gewünscht
+const infoHorizontal = Math.max(spacing.md, safeWidth * 0.05);
+const progressHeight = Math.max(scale(6), 6);
 
 export const treeviewStyles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center', 
+    justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 16,
+    paddingHorizontal: spacing.md,
   },
-
   scrollContentContainer: {
     alignItems: 'center',
-    paddingTop: 160, // Weniger Platz oben
-    paddingBottom: 120, // Weniger Platz unten
+    paddingTop: verticalScale(170),
+    paddingBottom: verticalScale(147),
   },
   
   // Allgemeiner Container für jede Inselreihe
@@ -47,78 +67,68 @@ export const treeviewStyles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: -80, 
+    marginBottom: ISLAND_VERTICAL_SPACING, 
     position: 'relative',
-    width: ROW_CONTAINER_WIDTH,
-    height: ROW_CONTAINER_HEIGHT, 
+    width: rowWidth,
+    height: rowHeight,
   },
   
   // --- REIHEN 1: GROSSE INSEL MIT BAUM ---
-  
   inselGrossTop: {
-    width: INSEL_GROSS_SIZE,
-    height: INSEL_GROSS_SIZE,
+    width: largeIsland,
+    height: largeIsland,
     position: 'absolute',
-    top: INSEL_GROSS_TOP_POSITION, 
+    top: largeIslandTop,
     alignSelf: 'center',
   },
-
   treeOverlay: {
-    width: TREE_OVERLAY_SIZE, 
-    height: TREE_OVERLAY_SIZE,
-    position: 'absolute', 
-    zIndex: 2, 
-    top: TREE_OVERLAY_TOP_POSITION, 
+    width: treeOverlaySize,
+    height: treeOverlaySize,
+    position: 'absolute',
+    zIndex: 2,
+    top: treeOverlayTop,
     alignSelf: 'center',
     marginLeft: -5,
   },
   
   // --- REIHEN 2, 3, 4, 5, 6: KLEINE INSELN ---
-  
-  // inselKleinPaar: Steuert die oberen 2er-Reihen (Reihe 2, 4) mit großem Abstand (35)
   inselKleinPaar: {
-    width: INSEL_KLEIN_PAAR_SIZE,
-    height: INSEL_KLEIN_PAAR_SIZE,
-    marginHorizontal: 40,
-    marginTop: ROW_GAP_NEG,
+    width: pairIsland,
+    height: pairIsland,
+    marginHorizontal: ISLAND_HORIZONTAL_SPACING,
+    marginTop: ISLAND_VERTICAL_SPACING,
   },
-
-  // inselKleinPaarBottom: Steuert die unterste 2er-Reihe (Reihe 6) mit speziellem Abstand
   inselKleinPaarBottom: {
-    width: INSEL_KLEIN_PAAR_SIZE,
-    height: INSEL_KLEIN_PAAR_SIZE,
-    marginHorizontal: 15, // Spezieller, enger Abstand für die unterste Reihe
-    marginTop: ROW_GAP_NEG,
+    width: pairIsland,
+    height: pairIsland,
+    marginHorizontal: scale(15),
+    marginTop: ISLAND_VERTICAL_SPACING,
   },
-
-  // inselKleinMiddle: Steuert die einzelne Insel in Reihe 3 (Größer)
   inselKleinMiddle: {
-    width: INSEL_KLEIN_MIDDLE_SIZE,
-    height: INSEL_KLEIN_MIDDLE_SIZE,
-    marginHorizontal: 5,
-    marginTop: ROW_GAP_NEG, 
+    width: middleIsland,
+    height: middleIsland,
+    marginHorizontal: scale(5),
+    marginTop: ISLAND_VERTICAL_SPACING,
   },
-  
-  // inselKleinBottom: Steuert die einzelne Insel in Reihe 5 (Kleiner)
   inselKleinBottom: {
-    width: INSEL_KLEIN_BOTTOM_SIZE,
-    height: INSEL_KLEIN_BOTTOM_SIZE,
-    marginHorizontal: 50,
-    marginTop: ROW_GAP_NEG, 
+    width: bottomIsland,
+    height: bottomIsland,
+    marginHorizontal: scale(50),
+    marginTop: ISLAND_VERTICAL_SPACING,
   },
   
   growthInfoContainer: {
-    marginTop: 20,
-    paddingHorizontal: 16,
+    marginTop: spacing.lg,
+    paddingHorizontal: spacing.md,
     alignItems: 'center',
   },
   growthText: {
-    fontSize: 16,
+    fontSize: font(16),
     fontWeight: '600',
-    marginBottom: 8,
+    marginBottom: spacing.xs,
   },
   growthPercentage: {
-    fontSize: 14,
+    fontSize: font(14),
     opacity: 0.7,
   },
 
@@ -127,25 +137,27 @@ export const treeviewStyles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
-  
   smallTreeOverlay: {
-    width: windowWidth * 0.35,
-    height: windowWidth * 0.35,
+    width: smallTreeSize,
+    height: smallTreeSize,
     position: 'absolute',
-    bottom: windowWidth * 0.15, // Angepasst, damit der Baum auf der Insel steht
+    bottom: smallTreeSize * 0.50,
     alignSelf: 'center',
     zIndex: 2,
+  },
+  smallTreeOverlayMiddle: {
+    bottom: smallTreeSize * 0.46, // Etwas höher für die mittleren Inseln
   },
 
   // --- INFO BOX STYLES ---
   infoBoxContainer: {
     position: 'absolute',
-    bottom: 10,
-    left: 20,
-    right: 20,
-    height: 160, // Weiter reduzierte Höhe
+    bottom: spacing.md,
+    left: infoHorizontal,
+    right: infoHorizontal,
+    height: infoHeight,
     backgroundColor: 'white',
-    borderRadius: 12,
+    borderRadius: radius(12),
     borderWidth: 2,
     borderColor: 'black',
     overflow: 'hidden',
@@ -156,8 +168,8 @@ export const treeviewStyles = StyleSheet.create({
     shadowRadius: 3.84,
   },
   infoBoxHeader: {
-    backgroundColor: 'rgb(75, 180, 170)', // Teal color similar to image
-    padding: 10,
+    backgroundColor: 'rgb(75, 180, 170)',
+    padding: spacing.sm,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -165,32 +177,32 @@ export const treeviewStyles = StyleSheet.create({
     borderBottomColor: 'black',
   },
   infoBoxTitle: {
-    fontSize: 16, // Reduziert von 18
+    fontSize: font(16),
     fontWeight: 'bold',
     color: 'black',
   },
   infoBoxContent: {
-    padding: 10, // Reduziert von 15
+    padding: spacing.sm,
   },
   infoBoxStreakText: {
-    fontSize: 14, // Reduziert von 16
+    fontSize: font(14),
     fontWeight: 'bold',
-    marginBottom: 2, // Reduziert von 5
+    marginBottom: 2,
     color: 'black',
   },
   infoBoxDescription: {
-    fontSize: 12, // Reduziert von 14
+    fontSize: font(12),
     color: 'black',
-    lineHeight: 16, // Reduziert von 20
-    marginBottom: 4, // Weiter reduziert
+    lineHeight: font(16),
+    marginBottom: 4,
   },
   
   // Progress Bar Styles
   progressBarContainer: {
-    height: 8,
+    height: progressHeight,
     backgroundColor: '#E0E0E0',
-    borderRadius: 4,
-    marginBottom: 4, // Weiter reduziert
+    borderRadius: progressHeight / 2,
+    marginBottom: 4,
     flexDirection: 'row',
     alignItems: 'center',
     position: 'relative',
@@ -198,20 +210,20 @@ export const treeviewStyles = StyleSheet.create({
   progressBarFill: {
     height: '100%',
     backgroundColor: 'rgb(75, 180, 170)',
-    borderRadius: 4,
+    borderRadius: progressHeight / 2,
   },
   percentageBadge: {
     backgroundColor: 'rgb(75, 180, 170)',
-    paddingHorizontal: 12,
+    paddingHorizontal: spacing.sm,
     paddingVertical: 4,
-    borderRadius: 12,
+    borderRadius: radius(12),
     alignSelf: 'center',
     marginTop: 5,
   },
   percentageText: {
     color: 'black',
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: font(16),
   },
 
   selectedContainer: {
@@ -219,11 +231,6 @@ export const treeviewStyles = StyleSheet.create({
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 10,
     shadowRadius: 15,
-    elevation: 15, // Android shadow
-    // Optional: Add a border if shadow is not visible enough
-    // borderWidth: 2,
-    // borderColor: 'rgba(255, 68, 68, 0.5)',
-    // borderRadius: 100, // Try to make it circular-ish
+    elevation: 15,
   },
-
 });

@@ -1,18 +1,25 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { createResponsiveHelpers } from './responsive';
 
-const { width: windowWidth } = Dimensions.get('window');
+export const createCalendarViewStyles = (width?: number, height?: number) => {
+  const { spacing, radius } = createResponsiveHelpers(width, height);
 
-export const calendarViewStyles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  calendar: {
-    marginVertical: 20,
-    borderRadius: 10,
-  },
-  chart: {
-    marginVertical: 16,
-    borderRadius: 12,
-    alignSelf: 'center',
-  },
-});
+  return StyleSheet.create({
+    container: {
+      flex: 1,
+      paddingHorizontal: spacing.md,
+    },
+    calendar: {
+      marginVertical: spacing.lg,
+      borderRadius: radius(12),
+    },
+    chart: {
+      marginVertical: spacing.md,
+      borderRadius: radius(14),
+      alignSelf: 'center',
+      width: '100%',
+    },
+  });
+};
+
+export const calendarViewStyles = createCalendarViewStyles();

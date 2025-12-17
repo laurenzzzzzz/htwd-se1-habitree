@@ -1,91 +1,70 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { createResponsiveHelpers } from './responsive';
 
-const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
+export const createLoginStyles = (width?: number, height?: number) => {
+  const helpers = createResponsiveHelpers(width, height);
+  const { spacing, font, radius, width: screenWidth, height: screenHeight } = helpers;
+  const resolvedWidth = screenWidth ?? 375;
+  const resolvedHeight = screenHeight ?? 812;
+  const maxFormWidth = Math.min(resolvedWidth * 0.9, 420);
+  const horizontalPadding = resolvedWidth * 0.06;
+  const verticalPadding = resolvedHeight * 0.03;
 
-// --- DYNAMISCHE KONSTANTEN ---
-
-// 1. Horizontale und vertikale Abstände als Prozentsatz der Bildschirmmaße
-const MAX_FORM_WIDTH = 400; 
-const HORIZONTAL_PADDING_PERCENTAGE = 0.06; // 6% der Fensterbreite
-const VERTICAL_PADDING_PERCENTAGE = 0.03;   // 3% der Fensterhöhe
-
-// Vertikale Abstände für Margins
-const LARGE_VERTICAL_SPACING = windowHeight * 0.04;   
-const MEDIUM_VERTICAL_SPACING = windowHeight * 0.025; 
-const SMALL_VERTICAL_SPACING = windowHeight * 0.01;   
-
-// 2. Dynamische UI-Element-Werte (Skalierung mit Breite)
-const RESPONSIVE_BUTTON_FONTSIZE = Math.min(windowWidth * 0.055, 20); 
-const RESPONSIVE_INPUT_FONTSIZE = Math.min(windowWidth * 0.05, 18); 
-const RESPONSIVE_TITLE_FONTSIZE = Math.min(windowWidth * 0.08, 34); 
-const RESPONSIVE_BORDER_RADIUS = Math.min(windowWidth * 0.02, 8);
-const RESPONSIVE_BORDER_WIDTH = Math.min(windowWidth * 0.003, 1);
-
-
-export const styles = StyleSheet.create({
+  return StyleSheet.create({
     container: {
-      flex: 1, 
-      justifyContent: 'center', 
-      alignItems: 'center', 
-      
-      // Horizontaler Padding ist dynamisch (5% der Breite)
-      paddingHorizontal: windowWidth * HORIZONTAL_PADDING_PERCENTAGE,
-      
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      paddingHorizontal: horizontalPadding,
       backgroundColor: 'white',
     },
     title: {
-      fontSize: RESPONSIVE_TITLE_FONTSIZE, 
+      fontSize: font(34),
       fontWeight: 'bold',
-      marginBottom: MEDIUM_VERTICAL_SPACING, 
+      marginBottom: spacing.md,
       textAlign: 'center',
-      maxWidth: MAX_FORM_WIDTH, 
+      maxWidth: maxFormWidth,
     },
     input: {
       width: '100%',
-      maxWidth: MAX_FORM_WIDTH, 
-      
-      // NEU: Responsiver vertikaler und horizontaler Padding
-      paddingVertical: windowHeight * VERTICAL_PADDING_PERCENTAGE, 
-      paddingHorizontal: windowWidth * 0.04, // Etwas kleiner als der Container-Padding
-      
-      marginVertical: SMALL_VERTICAL_SPACING, 
-      borderWidth: RESPONSIVE_BORDER_WIDTH, 
+      maxWidth: maxFormWidth,
+      paddingVertical: verticalPadding,
+      paddingHorizontal: resolvedWidth * 0.04,
+      marginVertical: spacing.xs,
+      borderWidth: Math.min(resolvedWidth * 0.003, 1),
       borderColor: '#ccc',
-      borderRadius: RESPONSIVE_BORDER_RADIUS, 
-      fontSize: RESPONSIVE_INPUT_FONTSIZE, 
+      borderRadius: radius(10),
+      fontSize: font(18),
     },
     authButton: {
       backgroundColor: 'rgb(25, 145, 137)',
-      
-      // NEU: Responsiver vertikaler Padding
-      paddingVertical: windowHeight * VERTICAL_PADDING_PERCENTAGE, 
-      paddingHorizontal: windowWidth * 0.04,
-      
-      borderRadius: RESPONSIVE_BORDER_RADIUS, 
+      paddingVertical: verticalPadding,
+      paddingHorizontal: resolvedWidth * 0.04,
+      borderRadius: radius(10),
       width: '100%',
-      maxWidth: MAX_FORM_WIDTH,
+      maxWidth: maxFormWidth,
       alignItems: 'center',
-      marginTop: MEDIUM_VERTICAL_SPACING,
+      marginTop: spacing.md,
     },
     authButtonText: {
       color: 'white',
       fontWeight: 'bold',
-      fontSize: RESPONSIVE_BUTTON_FONTSIZE, 
+      fontSize: font(20),
     },
     switchButtonText: {
-        color: 'rgb(25, 145, 137)',
-        marginTop: MEDIUM_VERTICAL_SPACING, 
-        maxWidth: MAX_FORM_WIDTH,
-        textAlign: 'center',
-        fontSize: RESPONSIVE_INPUT_FONTSIZE, 
+      color: 'rgb(25, 145, 137)',
+      marginTop: spacing.md,
+      maxWidth: maxFormWidth,
+      textAlign: 'center',
+      fontSize: font(18),
     },
     logo: {
-      width: Math.min(windowWidth * 0.4, 180), 
-      
-      // NEU: Responsive Höhe, basierend auf 18% der Fensterhöhe, begrenzt auf 150px
-      height: Math.min(windowHeight * 0.18, 150), 
-      
+      width: Math.min(resolvedWidth * 0.4, 180),
+      height: Math.min(resolvedHeight * 0.18, 150),
       resizeMode: 'contain',
-      marginBottom: LARGE_VERTICAL_SPACING, 
+      marginBottom: spacing.lg,
     },
   });
+};
+
+export const styles = createLoginStyles();

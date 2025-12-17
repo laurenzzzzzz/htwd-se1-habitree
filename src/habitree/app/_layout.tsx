@@ -6,6 +6,8 @@ import { useAuth, AuthProvider } from '../context/AuthContext';
 import { HabitsProvider } from '../context/HabitsContext';
 import { ApplicationServicesProvider } from '../presentation/providers/ApplicationServicesProvider';
 import { applicationServices } from '../infrastructure/di/ServiceContainer';
+import { Colors } from '../constants/Colors';
+import { rootLayoutStyles } from '../styles/rootlayout_style';
 
 // Force app-wide light appearance to stop system-driven palette changes
 Appearance.setColorScheme?.('light');
@@ -19,14 +21,7 @@ function RootLayoutContent() {
 
   if (isLoading) {
     return (
-      <Text
-        style={{
-          flex: 1,
-          textAlign: "center",
-          textAlignVertical: "center",
-          fontSize: 18,
-        }}
-      >
+      <Text style={rootLayoutStyles.loadingText}>
         Laden...
       </Text>
     );
