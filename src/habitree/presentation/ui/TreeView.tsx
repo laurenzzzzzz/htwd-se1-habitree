@@ -91,7 +91,7 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
   const numberOfHabits = mockHabits.length;
 
   // Helper-Komponente für eine kleine Insel mit Baum
-  const SmallIslandWithTree = ({ habit, style }: { habit: typeof mockHabits[0], style: any }) => {
+  const SmallIslandWithTree = ({ habit, style, treeStyle }: { habit: typeof mockHabits[0], style: any, treeStyle?: any }) => {
     const treeImg = getTreeImage(habit.streak);
     const isSelected = selectedItem !== 'main' && selectedItem.id === habit.id;
     
@@ -111,7 +111,7 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
         />
         <Image 
           source={treeImg} 
-          style={treeviewStyles.smallTreeOverlay} 
+          style={[treeviewStyles.smallTreeOverlay, treeStyle]} 
           contentFit="contain" 
         />
       </TouchableOpacity>
@@ -158,6 +158,7 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
           <SmallIslandWithTree 
             habit={row.habits[0]} 
             style={treeviewStyles.inselKleinMiddle} 
+            treeStyle={treeviewStyles.smallTreeOverlayMiddle}
           />
         )}
       </View>
@@ -181,9 +182,9 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
         <TouchableOpacity 
           style={[
             treeviewStyles.rowContainer, 
-            { marginBottom: -20 },
+            { marginBottom: -80 },
             selectedItem === 'main' && treeviewStyles.selectedContainer
-          ]} 
+          ]}  
           onPress={() => {
             setSelectedItem('main');
             setIsInfoVisible(true);
