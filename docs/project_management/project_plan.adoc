@@ -322,6 +322,11 @@ dem Scrum Master als Arbeitsunterstützung (z.B.: Ansprechen in Retrospektive, w
 - `Defects` werden automatisiert auf einem separaten Board angezeigt und im Weekly den verantwortlichen  zugeteilt +
 - Zusätzliche Fehler, die während des Programmierens auftreten, werden durch den jeweiligen Entwickler bearbeitet +
 
+| Durchführung eines strukturierten Sprint- Review mit einem externen Team (Team 1c), welches zentrale Funktionalitäten der Habitree- App getestet und bewertet hat. +
+| -	Externes Feedback liefert wertvolle Perspektiven, die innerhalb des eigenen Teams oft übersehen werden (z. B. Notwendigkeit von Features, Gestaltungsvorschläge...). +
+	-	Die Kombination aus Abnahmetest und Feedback (UI- Gestaltung, Feature- Funktionen...) gibt uns wertvollen Input um unser Produkt weiter verbessern zu könenn +
+	-	Ein klar strukturiertes Sprint-Review (Agenda, Zeitrahmen, Zielsetzung) schafft effizientes und Zielorientiertes Arbeiten. (Statt sich über andere Dinge den Großteil der Zeit zu unterhalten wie in SE1) +
+	-	Das Review bestätigte sowohl funktionale Stärken als auch  Verbesserungspotenziale für die nächsten Sprints +
 |===
 
 === Managementtechniken
@@ -380,21 +385,35 @@ Definition of Ready enthalten +
 |*Kategorie* | *Praktik*
 
 | Test-Management & Qualitätssicherung
-|- Unsere Tests orientieren sich an den `First`- Regeln <???> +
-- Habitree muss hierbei verifiziert und validiert werden.
-- Unsere Tests untergliedern sich in mehrere Arten: +
-(1) White- Box- Tests: Messung mittels der KPI `Code Coverage`:
-- Ziel ist es die interne Logik und Kontrollflüsse des Codes basierend auf Wissen über die Implementierung zu prüfen. +
-(2) Black Box Tests: +
-- Ziel hierbei ist es zu überprüfen, ob die Anwendung sich aus Sicht der Nutzer so verhält, wie es in den User Stories und Akzeptanzkriterien geschrieben wurde. Der Interne Code wird hierbei als unbekannt gesehen. +
-- Diese Tests erfolgen explorativ (z.B.: manuelles durchklicken der App zur gewünschten Spezifikation von User Story X) +
-(2.1) Äquivalenzklassenanalyse +
-(2.2) Grenzwertanalyse +
-- Die Tests haben folgende Namenskonventionen: <???> +
-- Es wurde eine passende Ordner Struktur für das File- Layout angelegt. Der konkrete Aufbau befindet sich im Dokument `testing.adoc`. +
-- Die Tests erfolgen schon während des jeweiligen Sprints, spätestens bei Überprüfung der Kriterien der Definition of Done für die enstprechenden Stories. Eine User Story darf erst auf Done gestellt werden, wenn diese die Kriterien der DoD erfüllt, was bei uns bedeutet, dass hinreichend viele Tests durchgeführt wurden. +
-- Testoptimierung wird bei uns jeweils nach dem Sprint in der Retrospektive besprochen. +
+|*Unsere Tests orientieren sich an den FIRST-Prinzipien*: +
+(1) *Fast*: Tests laufen schnell, keine echten API- oder Netzwerkaufrufe +
+(2) *Independent*: Tests sind unabhängig voneinander (`beforeEach` / Reset des Zustands) +
+(3) *Repeatable*: Tests sind reproduzierbar, keine externen Abhängigkeiten +
+(4) *Self-Validating*: Tests enthalten klare Assertions +
+(5) *Timely*: Tests werden begleitend zur Implementierung erstellt +
+- Habitree wird sowohl *verifiziert* (funktionale Korrektheit) als auch *validiert* (Erfüllung der User Stories). +
 
+*Unsere Tests untergliedern sich in mehrere Arten:* +
+(1) *White-Box-Tests*: +
+- Messung mittels der KPI `Code Coverage` +
+- Ziel: Prüfung interner Logik, Kontrollflüsse und Randfälle  auf Basis der Implementierung +
+(2) *Black-Box-Tests*: +
+- Prüfung des Systemverhaltens aus Nutzersicht anhand von User Stories und Akzeptanzkriterien +
+- Der interne Code wird dabei als unbekannt betrachtet
+- Diese Tests erfolgen sowohl explorativ (manuelles Durchklicken) als auch strukturiert +
+
+*Methoden der Tests:* +
+(1) Äquivalenzklassenanalyse  +
+(2) Grenzwertanalyse +
+
+*Namenskonventionen:* +
+- standardisiert: +
+`<Funktion>_<Szenario>_<ErwartetesErgebnis>` +
+
+*Ordnerstruktur:* +
+- Vorhanden und dokumentiert im Dokument `testing.adoc` +
+- Tests werden fortlaufend während des Sprints erstellt und spätestens zur Prüfung der *Definition of Done* abgeschlossen. +
+- Eine User Story darf nur dann auf *Done* gesetzt werden, wenn alle relevanten Tests erfolgreich sind. +
 
 | Unterteilung der Testarten
 |*- Einführung einer Testpyramide mit klaren Teststufen:* +
