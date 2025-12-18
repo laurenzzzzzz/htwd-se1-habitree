@@ -29,6 +29,7 @@ export class Streak {
   isActive(): boolean {
     const today = new Date();
     const lastDate = new Date(this.lastCompletionDate);
+    // Compare using local date components (year, month, day)
     return (
       today.getFullYear() === lastDate.getFullYear() &&
       today.getMonth() === lastDate.getMonth() &&

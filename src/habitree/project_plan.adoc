@@ -1,0 +1,20 @@
+== Testing / Qualitätssicherung
+
+Wir verwenden Jest für Unit- und Integrationstests.
+Aktuell testen wir vor allem die Domain-Logik (Streak, TreeGrowth, Achievements, Quotes) und das Zusammenspiel wichtiger Services.
+Tests laufen aktuell lokal; CI kann später ergänzt werden.
+
+--
+Mini Q&A
+
+Warum arbeiten wir aktuell nicht strikt mit Test Driven Development?
+Aufgrund von Zeitdruck und Lernfokus: Wir schreiben Tests vor allem für kritische Units nach, statt strikt alles per TDD zu entwickeln.
+
+Wie testen wir aktuell?
+Unit-Tests für Domain-Logik + Integrationstests für mehrere Services (z. B. TreeGrowthService, AchievementService, StreakService).
+
+Wie ist die Testorganisation?
+Tests sind nach Domain/Integration getrennt; Namenskonventionen und Details stehen in testing.adoc.
+--
+
+Details zu Testarten, Coverage und Testorganisation sind in testing.adoc dokumentiert.
