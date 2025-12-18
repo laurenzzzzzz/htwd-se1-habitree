@@ -143,12 +143,28 @@ Die untere Navigationsleiste ist in allen Ansichten sichtbar und ermöglicht den
 
 
 == 9. Selten genutzte Funktionen
+- Freunde hinzufügen und verbinden
 
+- Benachrichtigungen aktivieren/deaktivieren
+
+- Dark Mode einschalten
+
+- Account löschen
 
 == 10. FAQ / Häufige Probleme
+- **Warum sehe ich den QR-Code nicht?** → Stelle sicher, dass Expo läuft und dein Handy im gleichen Netzwerk ist.
 
+- **Meine Habits verschwinden nach einem Update?** → Prüfe, ob du dich mit deinem Account eingeloggt hast.
+
+- **Der Baum wächst nicht?** → Nur wenn du deine Habits regelmäßig abhaken kannst, steigt der Fortschritt.
 
 == 11. Tipps & Tricks
+- Starte mit kleinen Gewohnheiten – lieber 5 Minuten lesen als gleich ein ganzes Buch.
 
+- Nutze die Streak-Anzeige als Motivation: schon 3 Tage geschafft, jetzt nicht abbrechen!
+
+- Verbinde dich mit Freunden – gemeinsam bleibt man eher dran und es macht mehr Spass.
 
 == 12. Abschluss / Weiterführende Links
+GitHub Repository: https://github.com/laurenzzzzzz/htwd-se1-habitree
+
