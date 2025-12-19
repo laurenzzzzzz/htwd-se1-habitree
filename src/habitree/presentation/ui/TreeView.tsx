@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Image } from 'expo-image';
-import { View, ActivityIndicator, ScrollView, TouchableOpacity, Text } from 'react-native';
+import { View, ActivityIndicator, ScrollView, TouchableOpacity, Text, Alert } from 'react-native';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { ThemedText } from './ThemedText';
 import { ThemedView } from './ThemedView'; 
@@ -8,6 +8,7 @@ import { treeviewStyles } from '../../styles/treeview_style';
 import { TreeGrowth } from '../../domain/entities/TreeGrowth';
 import { useHabits } from '../../context/HabitsContext';
 import { useStreakController } from '../controllers/useStreakController';
+import HabitModal from './HabitModal';
 
 type Props = {
   treeGrowth: TreeGrowth | null;
@@ -84,7 +85,15 @@ const getTreeImage = (streakNumber: number, isSelected: boolean = false) => {
 };
 
 export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundColor }) => {
-  const { habits, fetchHabits, isLoading: isHabitsLoading } = useHabits();
+  const {
+    habits,
+    fetchHabits,
+    isLoading: isHabitsLoading,
+    predefinedHabits,
+    fetchPredefinedHabits,
+    handleSaveHabit,
+    handleUpdateHabit,
+  } = useHabits();
   const { streak, isLoading: isStreakLoading } = useStreakController();
 
   type HabitItem = { id: number; streak: number; name: string; description: string };
@@ -106,6 +115,18 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
 
   const [isInfoVisible, setIsInfoVisible] = useState(true); // Standardmäßig sichtbar
   const [selectedItem, setSelectedItem] = useState<'main' | HabitItem>('main');
+
+  // Modal/Edit state (reuse HabitModal like Habit view)
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalMode, setModalMode] = useState<'menu' | 'custom' | 'predefined' | null>(null);
+  const [editHabitId, setEditHabitId] = useState<number | null>(null);
+  const [newHabitName, setNewHabitName] = useState('');
+  const [newHabitDescription, setNewHabitDescription] = useState('');
+  const [newHabitStartDate, setNewHabitStartDate] = useState('');
+  const [newHabitTime, setNewHabitTime] = useState('');
+  const [newHabitFrequency, setNewHabitFrequency] = useState('');
+  const [newHabitWeekDays, setNewHabitWeekDays] = useState<number[]>([]);
+  const [newHabitIntervalDays, setNewHabitIntervalDays] = useState('');
 
   // Hauptbaum: echte Streak-Tage (Gesamt-Streak)
   const mainStreakDays = streak?.currentStreak ?? 0;
@@ -281,11 +302,29 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
                     >
                       Informationen: {selectedItem.name}
                     </Text>
-                    <Image 
-                      source={require('@/assets/images/edit.png')} 
-                      style={{ width: 20, height: 20 }}
-                      contentFit="contain"
-                    />
+                    <TouchableOpacity
+                      onPress={() => {
+                        const habit = habits.find(h => h.id === selectedItem.id);
+                        if (!habit) return;
+                        setEditHabitId(habit.id);
+                        setNewHabitName(habit.name || '');
+                        setNewHabitDescription(habit.description || '');
+                        setNewHabitStartDate(habit.startDate ? new Date(habit.startDate as any).toLocaleDateString('de-DE') : '');
+                        setNewHabitTime(habit.time || '');
+                        setNewHabitFrequency(habit.frequency || '');
+                        setNewHabitWeekDays(habit.weekDays || []);
+                        setNewHabitIntervalDays(habit.intervalDays ? String(habit.intervalDays) : '');
+                        setModalMode('custom');
+                        setModalVisible(true);
+                      }}
+                      style={{ padding: 4 }}
+                    >
+                      <Image 
+                        source={require('@/assets/images/edit.png')} 
+                        style={{ width: 20, height: 20 }}
+                        contentFit="contain"
+                      />
+                    </TouchableOpacity>
                   </View>
                   <View style={treeviewStyles.infoBoxContent}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 2 }}>
@@ -328,6 +367,110 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
           )}
         </View>
       )}
+
+      <HabitModal
+        visible={modalVisible}
+        mode={modalMode ?? (editHabitId ? 'custom' : null)}
+        submitLabel={editHabitId ? 'Speichern' : 'Hinzufügen'}
+        onClose={() => {
+          setModalVisible(false);
+          setEditHabitId(null);
+          setModalMode(null);
+          setNewHabitName('');
+          setNewHabitDescription('');
+          setNewHabitStartDate('');
+          setNewHabitTime('');
+          setNewHabitFrequency('');
+          setNewHabitWeekDays([]);
+          setNewHabitIntervalDays('');
+        }}
+        onOpenMode={(m) => {
+          if (m === 'predefined') fetchPredefinedHabits();
+          setModalMode(m);
+        }}
+        predefinedHabits={predefinedHabits}
+        newHabitName={newHabitName}
+        newHabitDescription={newHabitDescription}
+        newHabitStartDate={newHabitStartDate}
+        newHabitTime={newHabitTime}
+        newHabitFrequency={newHabitFrequency}
+        newHabitWeekDays={newHabitWeekDays}
+        newHabitIntervalDays={newHabitIntervalDays}
+        setNewHabitName={setNewHabitName}
+        setNewHabitDescription={setNewHabitDescription}
+        setNewHabitStartDate={setNewHabitStartDate}
+        setNewHabitTime={setNewHabitTime}
+        setNewHabitFrequency={setNewHabitFrequency}
+        setNewHabitWeekDays={setNewHabitWeekDays}
+        setNewHabitIntervalDays={setNewHabitIntervalDays}
+        onAddPredefined={async (label, description, freq) => {
+          const result = await handleSaveHabit(label, description, freq);
+          if (result.success) {
+            setModalVisible(false);
+            setModalMode(null);
+          } else {
+            Alert.alert('Fehler', result.error || 'Speichern fehlgeschlagen.');
+          }
+        }}
+        onSelectPredefined={(p) => {
+          setNewHabitName(p.label);
+          setNewHabitDescription(p.description);
+          setNewHabitFrequency(p.frequency || 'Täglich');
+          setModalMode('custom');
+        }}
+        onAddCustom={async () => {
+          if (editHabitId) {
+            const res = await handleUpdateHabit(
+              editHabitId,
+              newHabitName,
+              newHabitDescription,
+              newHabitFrequency || 'Täglich',
+              newHabitStartDate,
+              newHabitTime,
+              newHabitWeekDays,
+              newHabitIntervalDays
+            );
+            if (res.success) {
+              setModalVisible(false);
+              setEditHabitId(null);
+              // Update selected item UI immediately
+              setSelectedItem((prev) => {
+                if (prev === 'main') return prev;
+                if (prev.id !== editHabitId) return prev;
+                return {
+                  ...prev,
+                  name: newHabitName,
+                  description: newHabitDescription || '',
+                };
+              });
+              await fetchHabits();
+            } else {
+              Alert.alert('Fehler', res.error || 'Speichern fehlgeschlagen.');
+            }
+          } else {
+            if (newHabitName.trim() === '') {
+              Alert.alert('Fehler', 'Bitte gib einen Namen ein.');
+              return;
+            }
+            const freq = newHabitFrequency || 'Täglich';
+            const descValue = newHabitDescription.trim() === '' ? undefined : newHabitDescription;
+            const result = await handleSaveHabit(newHabitName, descValue, freq, newHabitStartDate, newHabitTime, newHabitWeekDays, newHabitIntervalDays);
+            if (result.success) {
+              setNewHabitName('');
+              setNewHabitDescription('');
+              setNewHabitStartDate('');
+              setNewHabitTime('');
+              setNewHabitFrequency('');
+              setNewHabitWeekDays([]);
+              setNewHabitIntervalDays('');
+              setModalVisible(false);
+              setModalMode(null);
+            } else {
+              Alert.alert('Fehler', result.error || 'Speichern fehlgeschlagen.');
+            }
+          }
+        }}
+      />
     </ThemedView>
   );
 };

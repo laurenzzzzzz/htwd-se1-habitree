@@ -15,6 +15,7 @@ type Props = {
     mode: 'menu' | 'custom' | 'predefined' | null;
     onClose: () => void;
     onOpenMode: (mode: 'menu' | 'custom' | 'predefined') => void;
+    submitLabel?: string;
     predefinedHabits: Predefined[];
     newHabitName: string;
     newHabitDescription: string;
@@ -40,6 +41,7 @@ export default function HabitModal({
     mode,
     onClose,
     onOpenMode,
+    submitLabel,
     predefinedHabits,
     newHabitName,
     newHabitDescription,
@@ -281,7 +283,7 @@ export default function HabitModal({
                                     (newHabitFrequency === 'Benutzerdefiniert' && newHabitIntervalDays.trim() === '')
                                 }
                             >
-                                <ThemedText style={habitModalStyles.buttonText}>Hinzufügen</ThemedText>
+                                <ThemedText style={habitModalStyles.buttonText}>{submitLabel || 'Hinzufügen'}</ThemedText>
                             </Pressable>
                         </View>
                     </View>
