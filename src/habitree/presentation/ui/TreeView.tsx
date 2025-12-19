@@ -274,7 +274,13 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
               return (
                 <>
                   <View style={treeviewStyles.infoBoxHeader}>
-                    <Text style={treeviewStyles.infoBoxTitle}>Informationen: {selectedItem.name}</Text>
+                    <Text 
+                      style={[treeviewStyles.infoBoxTitle, { flex: 1, marginRight: 8 }]} 
+                      numberOfLines={1} 
+                      ellipsizeMode="tail"
+                    >
+                      Informationen: {selectedItem.name}
+                    </Text>
                     <Image 
                       source={require('@/assets/images/edit.png')} 
                       style={{ width: 20, height: 20 }}
@@ -282,9 +288,16 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
                     />
                   </View>
                   <View style={treeviewStyles.infoBoxContent}>
-                    <Text style={treeviewStyles.infoBoxStreakText}>
-                      {selectedItem.name}-Streak: {selectedItem.streak} Tage
-                    </Text>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 2 }}>
+                      <Text 
+                        style={[treeviewStyles.infoBoxStreakText, { marginBottom: 0, flexShrink: 1 }]} 
+                        numberOfLines={1} 
+                        ellipsizeMode="tail"
+                      >
+                        {selectedItem.name}
+                      </Text>
+                      <Text style={[treeviewStyles.infoBoxStreakText, { marginBottom: 0 }]}>-Streak: {selectedItem.streak} Tage</Text>
+                    </View>
                     <Text style={treeviewStyles.infoBoxDescription} numberOfLines={1} ellipsizeMode="tail">
                       <Text style={{ fontWeight: 'bold' }}>Beschreibung:</Text> {selectedItem.description || 'Keine Beschreibung'}
                     </Text>
