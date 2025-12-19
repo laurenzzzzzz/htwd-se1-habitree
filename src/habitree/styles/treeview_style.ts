@@ -181,6 +181,17 @@ export const treeviewStyles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'black',
   },
+  infoBoxTitleExpanded: {
+    flex: 1,
+    marginRight: spacing.sm,
+  },
+  headerIcon: {
+    width: scale(20),
+    height: scale(20),
+  },
+  headerIconContainer: {
+    padding: 4,
+  },
   infoBoxContent: {
     padding: spacing.sm,
   },

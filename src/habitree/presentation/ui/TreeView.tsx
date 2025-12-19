@@ -348,7 +348,7 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
                 <>
                   <View style={treeviewStyles.infoBoxHeader}>
                     <Text 
-                      style={[treeviewStyles.infoBoxTitle, { flex: 1, marginRight: 8 }]} 
+                      style={[treeviewStyles.infoBoxTitle, treeviewStyles.infoBoxTitleExpanded]} 
                       numberOfLines={1} 
                       ellipsizeMode="tail"
                     >
@@ -367,9 +367,13 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
                             setMilestoneModalVisible(true);
                           }
                         }}
-                        style={{ padding: 4, marginRight: 8 }}
+                        style={[treeviewStyles.headerIconContainer, { marginRight: 8 }]}
                       >
-                        <Text style={{ fontSize: 20 }}>🏆</Text>
+                        <Image 
+                          source={require('@/assets/images/trophy.png')} 
+                          style={treeviewStyles.headerIcon} 
+                          contentFit="contain" 
+                        />
                       </TouchableOpacity>
                     )}
                     <TouchableOpacity
@@ -387,11 +391,11 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
                         setModalMode('custom');
                         setModalVisible(true);
                       }}
-                      style={{ padding: 4 }}
+                      style={treeviewStyles.headerIconContainer}
                     >
                       <Image 
                         source={require('@/assets/images/edit.png')} 
-                        style={{ width: 20, height: 20 }}
+                        style={treeviewStyles.headerIcon}
                         contentFit="contain"
                       />
                     </TouchableOpacity>

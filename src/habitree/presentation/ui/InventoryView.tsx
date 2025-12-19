@@ -105,15 +105,15 @@ export const InventoryView: React.FC<Props> = ({
                         Erstellungsdatum:
                       </Text>
                       <Text style={inventoryviewStyles.modalText}>
-                        {formatDate(selectedAchievement.createdAt)}
+                        {selectedAchievement.createdAt ? formatDate(selectedAchievement.createdAt) : '-'}
                       </Text>
-                    </View>
-                    <View style={{ marginBottom: 12 }}>
+                      </View>
+                      <View style={{ marginBottom: 12 }}>
                       <Text style={[inventoryviewStyles.modalText, { fontWeight: 'bold', marginTop: 8 }]}>
                         Startdatum:
                       </Text>
                       <Text style={inventoryviewStyles.modalText}>
-                        {formatDate(selectedAchievement.startDate)}
+                        {selectedAchievement.startDate ? formatDate(selectedAchievement.startDate) : '-'}
                       </Text>
                     </View>
                     {selectedAchievement.description && (

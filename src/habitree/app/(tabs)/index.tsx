@@ -280,9 +280,9 @@ export default function HomeScreen() {
         </View>
 
         {/* Habit List Container */}
-        <ThemedView style={styles.habitListContainer}>
+        <View style={styles.chartContainer}>
           {/* Today's Goals */}
-          <ThemedText type="subtitle" style={[styles.habitTitle, styles.habitTitleSpacing]}>
+          <ThemedText style={styles.chartTitle}>
             Heutige Habits:
           </ThemedText>
 
@@ -325,7 +325,7 @@ export default function HomeScreen() {
               Keine Habits angelegt.
             </ThemedText>
           )}
-        </ThemedView>
+        </View>
       </ScrollView>
 
       {/* FAB */}
