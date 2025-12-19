@@ -15,7 +15,7 @@ export class HabitService {
   async saveHabit(
     authToken: string,
     name: string,
-    description: string,
+    description?: string | null,
     frequency: string,
     startDate?: string,
     time?: string,
@@ -41,7 +41,7 @@ export class HabitService {
     authToken: string,
     id: number,
     name: string,
-    description: string,
+    description?: string | null,
     frequency: string,
     startDate?: string,
     time?: string,

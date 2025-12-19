@@ -163,13 +163,14 @@ export default function HomeScreen() {
   };
 
   const handleAddHabit = async () => {
-    if (newHabitName.trim() === '' || newHabitDescription.trim() === '') {
-      Alert.alert('Fehler', 'Bitte füllen Sie alle Felder aus.');
+    if (newHabitName.trim() === '') {
+      Alert.alert('Fehler', 'Bitte gib einen Namen ein.');
       return;
     }
 
     const frequency = newHabitFrequency || 'Täglich';
-    const result = await handleSaveHabit(newHabitName, newHabitDescription, frequency, newHabitStartDate, newHabitTime, newHabitWeekDays, newHabitIntervalDays);
+    const descValue = newHabitDescription.trim() === '' ? undefined : newHabitDescription;
+    const result = await handleSaveHabit(newHabitName, descValue, frequency, newHabitStartDate, newHabitTime, newHabitWeekDays, newHabitIntervalDays);
     if (result.success) {
       setNewHabitName('');
       setNewHabitDescription('');

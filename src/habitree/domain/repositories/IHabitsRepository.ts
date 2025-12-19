@@ -2,7 +2,7 @@ import { Habit } from '../entities/Habit';
 
 export type HabitPersistencePayload = {
     name: string;
-    description: string;
+  description?: string | null;
     frequency: string;
     startDate?: string; // dd.mm.yyyy
     time?: string; // hh:mm

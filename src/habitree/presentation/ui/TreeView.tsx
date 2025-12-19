@@ -93,7 +93,7 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
     const items: HabitItem[] = (habits || []).map(h => ({
       id: h.id,
       name: h.name,
-      description: h.description,
+      description: h.description ?? '',
       streak: typeof (h as any).getStreak === 'function' ? (h as any).getStreak() : 0,
     }));
     return items.sort((a, b) => b.streak - a.streak);
@@ -286,7 +286,7 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
                       {selectedItem.name}-Streak: {selectedItem.streak} Tage
                     </Text>
                     <Text style={treeviewStyles.infoBoxDescription} numberOfLines={1} ellipsizeMode="tail">
-                      <Text style={{ fontWeight: 'bold' }}>Beschreibung:</Text> {selectedItem.description}
+                      <Text style={{ fontWeight: 'bold' }}>Beschreibung:</Text> {selectedItem.description || 'Keine Beschreibung'}
                     </Text>
                     
                     {/* Progress Bar */}
