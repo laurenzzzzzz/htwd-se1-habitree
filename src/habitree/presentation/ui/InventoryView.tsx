@@ -38,6 +38,22 @@ export const InventoryView: React.FC<Props> = ({
         Erfolge
       </ThemedText>
 
+      <View style={{ marginBottom: 20 }}>
+        {[
+          "Erstelle dein 1. Habit",
+          "Habe 5 Habits gleichzeitig laufen",
+          "Erreiche eine 66 Tage Streak für eine Gewohnheit",
+          "Absolviere 7 Tage am Stück alle Habits",
+          "Hake 50x eine Gewohnheit ab",
+          "Schließe 30 Tage mindestens ein Habit pro Tag ab",
+          "Absolviere 66 Tage am Stück alle Habits"
+        ].map((item, index) => (
+          <ThemedText key={index} style={{ marginBottom: 8 }}>
+            • {item}
+          </ThemedText>
+        ))}
+      </View>
+
       {/* //Dummy Hardcoded: Render achievement badges in grid */}
       {achievementRows.map((row, rowIndex) => (
         <View key={rowIndex} style={inventoryviewStyles.badgeRow}>
