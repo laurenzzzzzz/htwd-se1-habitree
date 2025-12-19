@@ -52,6 +52,20 @@ export class HabitService {
     return this.repo.fetchHabits(authToken);
   }
 
+  async growHabit(authToken: string, id: number): Promise<Habit[]> {
+    await this.repo.growHabit(authToken, id);
+    return this.repo.fetchHabits(authToken);
+  }
+
+  async harvestHabit(authToken: string, id: number): Promise<Habit[]> {
+    await this.repo.harvestHabit(authToken, id);
+    return this.repo.fetchHabits(authToken);
+  }
+
+  async fetchHarvestedHabits(authToken: string): Promise<Habit[]> {
+    return this.repo.fetchHarvestedHabits(authToken);
+  }
+
   async fetchPredefinedHabits(authToken: string): Promise<any[]> {
     return this.repo.fetchPredefinedHabits(authToken);
   }

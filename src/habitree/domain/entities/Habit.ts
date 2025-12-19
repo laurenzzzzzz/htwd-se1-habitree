@@ -17,6 +17,8 @@ export type HabitData = {
   entries: HabitEntry[];
   currentStreak?: number | null;
   maxStreak?: number | null;
+  isHarvested?: number; // 0 = normal, 1 = tree8, 2 = geerntet
+  createdAt?: string | Date; // Timestamp when habit was created
 };
 
 /**
@@ -35,6 +37,8 @@ export class Habit {
   readonly entries: HabitEntry[];
   readonly currentStreak: number | null;
   readonly maxStreak: number | null;
+  readonly isHarvested: number;
+  readonly createdAt?: string | Date;
 
   constructor(data: HabitData) {
     this.id = data.id;
@@ -48,6 +52,8 @@ export class Habit {
     this.entries = data.entries;
     this.currentStreak = data.currentStreak ?? null;
     this.maxStreak = data.maxStreak ?? null;
+    this.isHarvested = data.isHarvested ?? 0;
+    this.createdAt = data.createdAt ?? undefined;
   }
 
   /**

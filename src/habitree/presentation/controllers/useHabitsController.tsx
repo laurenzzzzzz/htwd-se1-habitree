@@ -198,6 +198,48 @@ export function useHabitsController() {
     }
   }, [updateHabit]);
 
+  const growHabit = useCallback(async (id: number) => {
+    if (!authToken) throw new Error('Kein Auth-Token vorhanden');
+    try {
+      const updatedHabits = await habitService.growHabit(authToken, id);
+      setHabits(updatedHabits);
+      return updatedHabits;
+    } catch (error) {
+      throw error;
+    }
+  }, [authToken, habitService]);
+
+  const harvestHabit = useCallback(async (id: number) => {
+    if (!authToken) throw new Error('Kein Auth-Token vorhanden');
+    try {
+      const updatedHabits = await habitService.harvestHabit(authToken, id);
+      setHabits(updatedHabits);
+      return updatedHabits;
+    } catch (error) {
+      throw error;
+    }
+  }, [authToken, habitService]);
+
+  const handleGrowHabit = useCallback(async (id: number) => {
+    try {
+      await growHabit(id);
+      return { success: true };
+    } catch (error) {
+      console.error('growHabit error', error);
+      return { success: false, error };
+    }
+  }, [growHabit]);
+
+  const handleHarvestHabit = useCallback(async (id: number) => {
+    try {
+      await harvestHabit(id);
+      return { success: true };
+    } catch (error) {
+      console.error('harvestHabit error', error);
+      return { success: false, error };
+    }
+  }, [harvestHabit]);
+
   return {
     habits,
     filteredHabits,
@@ -214,6 +256,8 @@ export function useHabitsController() {
     handleToggleHabit,
     handleDeleteHabit,
     handleUpdateHabit,
+    handleGrowHabit,
+    handleHarvestHabit,
     fetchPredefinedHabits,
     today,
     isSameDay,

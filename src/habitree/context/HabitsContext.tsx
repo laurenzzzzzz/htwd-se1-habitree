@@ -21,6 +21,8 @@ export interface IHabitsContext {
   handleToggleHabit: (id: number, dateIso?: string) => Promise<{ success: boolean; error?: any }>;
   handleDeleteHabit: (id: number) => Promise<{ success: boolean; error?: any }>;
   handleUpdateHabit: (id: number, name: string, description: string | null | undefined, frequency: string, startDate?: string, time?: string, weekDays?: number[], intervalDays?: string) => Promise<{ success: boolean; error?: any }>;
+  handleGrowHabit: (id: number) => Promise<{ success: boolean; error?: any }>;
+  handleHarvestHabit: (id: number) => Promise<{ success: boolean; error?: any }>;
   isSameDay: (a: Date, b: Date) => boolean;
   setHabits: (habits: Habit[]) => void;
 }

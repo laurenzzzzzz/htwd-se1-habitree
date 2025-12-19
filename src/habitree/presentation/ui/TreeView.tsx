@@ -21,11 +21,20 @@ const INSEL_GROSS_IMAGE = require('@/assets/images/tree/insel_groß.png');
 const INSEL_KLEIN_IMAGE = require('@/assets/images/tree/insel_klein.png');
 
 /**
- * Bestimmt das korrekte Baum-Bild (tree1.png bis tree7.png) basierend auf der Streak-Zahl.
+ * Bestimmt das korrekte Baum-Bild (tree1.png bis tree8.png) basierend auf der Streak-Zahl.
  * @param streakNumber Die Streak-Zahl/den Fortschrittswert (entspricht 0-100)
  * @param isSelected Ob der Baum ausgewählt ist (dann treeX_selected.png)
+ * @param isGrown Ob der Baum zu tree8 wachsen soll
  */
-const getTreeImage = (streakNumber: number, isSelected: boolean = false) => {
+const getTreeImage = (streakNumber: number, isSelected: boolean = false, isGrown: boolean = false) => {
+  // Wenn Baum wachsen lassen wurde, nutze tree8
+  if (isGrown) {
+    if (isSelected) {
+      return require('@/assets/images/tree/tree8_selected.png');
+    }
+    return require('@/assets/images/tree/tree8.png');
+  }
+
   let treeNumber: number;
 
   if (!streakNumber || streakNumber <= 11) {
@@ -93,12 +102,14 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
     fetchPredefinedHabits,
     handleSaveHabit,
     handleUpdateHabit,
+    handleGrowHabit,
+    handleHarvestHabit,
   } = useHabits();
   const { streak, isLoading: isStreakLoading } = useStreakController();
 
   //type HabitItem = { id: number; streak: number; name: string; description: string };
 
-  type HabitItem = { id: number; streak: number; maxStreak?: number | null; name: string; description: string };
+  type HabitItem = { id: number; streak: number; maxStreak?: number | null; name: string; description: string; isHarvested?: number };
 
   const habitItems: HabitItem[] = useMemo(() => {
     const items: HabitItem[] = (habits || []).map(h => ({
@@ -107,18 +118,50 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
       description: h.description ?? '',
       streak: typeof (h as any).getStreak === 'function' ? (h as any).getStreak() : 0,
       maxStreak: (h as any).maxStreak ?? null,
+      isHarvested: (h as any).isHarvested ?? 0,
     }));
     return items.sort((a, b) => b.streak - a.streak);
   }, [habits]);
+
+  const [isInfoVisible, setIsInfoVisible] = useState(true); // Standardmäßig sichtbar
+  const [selectedItem, setSelectedItem] = useState<'main' | HabitItem>('main');
+  const [showStreakInfoModal, setShowStreakInfoModal] = useState(false); // Info-Modal für Streak-Erklärung
+  const [milestoneHabit, setMilestoneHabit] = useState<{ id: number; name: string; streak: number } | null>(null);
+  const [milestoneModalVisible, setMilestoneModalVisible] = useState(false);
+  const [grownHabitIds, setGrownHabitIds] = useState<Set<number>>(new Set());
 
   useEffect(() => {
     // ensure habits are loaded when visiting Tree tab
     fetchHabits();
   }, [fetchHabits]);
 
-  const [isInfoVisible, setIsInfoVisible] = useState(true); // Standardmäßig sichtbar
-  const [selectedItem, setSelectedItem] = useState<'main' | HabitItem>('main');
-  const [showStreakInfoModal, setShowStreakInfoModal] = useState(false); // Info-Modal für Streak-Erklärung
+  // Hydrate grownHabitIds from database (isHarvested = 1)
+  useEffect(() => {
+    if (habits && habits.length > 0) {
+      const grownIds = new Set<number>();
+      habits.forEach(habit => {
+        if ((habit as any).isHarvested === 1) {
+          grownIds.add(habit.id);
+        }
+      });
+      setGrownHabitIds(grownIds);
+    }
+  }, [habits]);
+
+  // Check for milestone habits (streak >= 66 and isHarvested = 0) and open modal
+  useEffect(() => {
+    if (habitItems.length > 0) {
+      const habitWith66Streak = habitItems.find(h => h.streak >= 66 && h.isHarvested === 0);
+      if (habitWith66Streak && !milestoneModalVisible) {
+        setMilestoneHabit({
+          id: habitWith66Streak.id,
+          name: habitWith66Streak.name,
+          streak: habitWith66Streak.streak,
+        });
+        setMilestoneModalVisible(true);
+      }
+    }
+  }, [habitItems, milestoneModalVisible]);
 
   // Modal/Edit state (reuse HabitModal like Habit view)
   const [modalVisible, setModalVisible] = useState(false);
@@ -145,7 +188,8 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
   // Helper-Komponente für eine kleine Insel mit Baum
   const SmallIslandWithTree = ({ habit, style, treeStyle }: { habit: HabitItem, style: any, treeStyle?: any }) => {
     const isSelected = selectedItem !== 'main' && selectedItem.id === habit.id;
-    const treeImg = getTreeImage(habit.streak, isSelected);
+    const isGrown = habit.streak >= 66 && grownHabitIds.has(habit.id); // Nur zeige tree8 wenn Baum gewachsen ist
+    const treeImg = getTreeImage(habit.streak, isSelected, isGrown);
     
     return (
       <TouchableOpacity 
@@ -310,6 +354,24 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
                     >
                       Informationen: {selectedItem.name}
                     </Text>
+                    {selectedItem.streak >= 66 && (
+                      <TouchableOpacity
+                        onPress={() => {
+                          // Show modal if isHarvested = 0 or 1 (not 2)
+                          if (selectedItem.isHarvested !== 2) {
+                            setMilestoneHabit({
+                              id: selectedItem.id,
+                              name: selectedItem.name,
+                              streak: selectedItem.streak,
+                            });
+                            setMilestoneModalVisible(true);
+                          }
+                        }}
+                        style={{ padding: 4, marginRight: 8 }}
+                      >
+                        <Text style={{ fontSize: 20 }}>🏆</Text>
+                      </TouchableOpacity>
+                    )}
                     <TouchableOpacity
                       onPress={() => {
                         const habit = habits.find(h => h.id === selectedItem.id);
@@ -523,6 +585,67 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
             >
               <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 14 }}>Verstanden</Text>
             </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+
+      {/* Milestone Modal (66+ Streak) */}
+      <Modal
+        visible={milestoneModalVisible}
+        animationType="fade"
+        transparent={true}
+        onRequestClose={() => setMilestoneModalVisible(false)}
+      >
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
+          <View style={{ backgroundColor: 'white', borderRadius: 12, padding: 20, marginHorizontal: 20, maxWidth: 400, alignItems: 'center' }}>
+            {/* Zurück Button */}
+            <TouchableOpacity
+              style={{ alignSelf: 'flex-start', marginBottom: 16, padding: 4 }}
+              onPress={() => setMilestoneModalVisible(false)}
+            >
+              <Text style={{ fontSize: 24, color: '#666' }}>←</Text>
+            </TouchableOpacity>
+
+            <Text style={{ fontSize: 22, fontWeight: 'bold', marginBottom: 12, color: '#000' }}>
+              🏆 Glückwunsch!
+            </Text>
+            <Text style={{ fontSize: 16, lineHeight: 24, color: '#333', marginBottom: 12, textAlign: 'center' }}>
+              "{milestoneHabit?.name}" hat {milestoneHabit?.streak} Tage Streak erreicht!
+            </Text>
+            <Text style={{ fontSize: 16, lineHeight: 24, color: '#333', marginBottom: 24, textAlign: 'center' }}>
+              Das ist eine großartige Leistung! 🌟
+            </Text>
+
+            {/* Action Buttons */}
+            <View style={{ width: '100%', gap: 12 }}>
+              <TouchableOpacity
+                style={{ backgroundColor: 'rgb(25, 145, 137)', paddingVertical: 12, paddingHorizontal: 20, borderRadius: 8, alignItems: 'center' }}
+                onPress={async () => {
+                  if (milestoneHabit) {
+                    await handleHarvestHabit(milestoneHabit.id);
+                    setMilestoneModalVisible(false);
+                    fetchHabits(); // Refresh habits after harvest
+                  }
+                }}
+              >
+                <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 16 }}>🍎 Früchte Ernten</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={{ backgroundColor: 'rgb(100, 200, 100)', paddingVertical: 12, paddingHorizontal: 20, borderRadius: 8, alignItems: 'center' }}
+                onPress={async () => {
+                  if (milestoneHabit) {
+                    const result = await handleGrowHabit(milestoneHabit.id);
+                    if (result.success) {
+                      setGrownHabitIds(prev => new Set([...prev, milestoneHabit.id]));
+                    }
+                    setMilestoneModalVisible(false);
+                  }
+                }}
+              >
+                <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 16 }}>🌱 Baum wachsen lassen</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </Modal>
