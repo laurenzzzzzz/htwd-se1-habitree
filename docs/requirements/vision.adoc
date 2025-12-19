@@ -1,7 +1,14 @@
 = Vision: Habitree
 :project-name: Habitree
 :project-system-name: Habitree
-:authors: Laurenz Born [laurenz.born@stud.htw-dresden.de](mailto:laurenz.born@stud.htw-dresden.de); Alexander Chlebowski [alexander.chlebowski@stud.htw-dresden.de](mailto:alexander.chlebowski@stud.htw-dresden.de); Leonhard Hermann [leonhard.hermann@stud.htw-dresden.de](mailto:leonhard.hermann@stud.htw-dresden.de); Johann Schmidt [johann.schmidt@stud.htw-dresden.de](mailto:johann.schmidt@stud.htw-dresden.de); Kimi Jerke [kimi.jerke@stud.htw-dresden.de](mailto:kimi.jerke@stud.htw-dresden.de); Jannes Lehmann [s86317@htw-dresden.de](mailto:s86317@htw-dresden.de); Maurice Harnisch [s87128@htw-dresden.de](mailto:s87128@htw-dresden.de)
+:revnumber: 4.0
+:revdate: {docdate}
+:toc: left
+:toclevels: 3
+:sectnums:
+:sectanchors:
+:icons: font
+:imagesdir: ./images
 
 include::../_includes/default-attributes.inc.adoc[]
 
@@ -87,7 +94,7 @@ auf eine digitale, leichtgewichtige und motivierende Nutzungserfahrung, die den 
 
 *Die Detaillierung nutzerseitiger Stakeholder erfolgt im UX‑Konzept via Personas.*
 
-// =====================================================================
+// ===================================================================== 
 == Produktüberblick
 
 === Bedarfe und Hauptfunktionen
@@ -98,44 +105,52 @@ auf eine digitale, leichtgewichtige und motivierende Nutzungserfahrung, die den 
 
 | *Routine leichter aufbauen und langfristig motiviert bleiben*
 | Hoch
-|- Streak Tracking +
-- einfach Fortschrittsvisualisierungen (z.B.: Baumwachstum, Wochenübersicht)
-| 30.05.2025
+|- Streak Tracking (Fortsetzungsserien der einzelnen Habits) +
+- einfache Fortschrittsvisualisierungen (z. B. Baumwachstum, Prozentuale Anzeige des Forschritts wobei 100% bei 66 Tagen erreicht werden sollen) +
+| R1: 28.11.2025 +
+*R2: 28.12.2025*
 
-| *Klarheit über eigenen Fortschritt und Gewohnheiten gewinnen*
+| *Klarheit über eigenen Fortschritt und tägliche Gewohnheiten gewinnen*
 | Hoch
-|- Dashboard mit Tages-/Wochenübersicht +
-- Verlaufsgrafiken
-| 27.06.2025
+|- Dashboard mit Tages und Wochenübersicht +
+- Anzeige der für den aktuellen Tag geplanten Gewohnheiten +
+- Verlaufsgrafiken zur Analyse des Fortschritts
+| R1: 27.06.2025 +
+R2: 28.11.2025 +
+*R3: 28.12.2025*
 
 | *Schnelles Erfassen und Verwalten von Gewohnheiten*
 | Hoch
-|- Einfaches Anlegen/Bearbeiten +
-- flexible Wiederholungsintervalle +
-- Erinnerungsfunktion
-| 27.06.2025
+|- Einfaches Anlegen, Bearbeiten und Löschen von Gewohnheiten +
+- Vorlagen (vordefinierte Habits) sowie eigene/benutzerdefinierte Habits, die man anlegen kann +
+- flexible Wiederholungsintervalle (z. B. täglich, wöchentlich, benutzerdefiniert) +
+- Erinnerungsfunktion inklusive Uhrzeit, zu der man Erinnert wird, dass man den Habit absolvieren soll +
+| R1: 27.06.2025 +
+R2: 28.11.2025 +
+*R3: 28.12.2025*
 
-| *Barrierearme Nutzung*
+| *Barrierearme und konsistente Nutzung*
 | Mittel
-|- App ist zweisprachig (Deutsch, Englisch) +
-- UI ist klar strukturiert und Übersichtlich (Testen durch 
-- Durchführung von Nutzer- Tests in Sprint Review) +
-- Gewährleisten von guter Lesbarkeit und Benutzerfreundlichkeit durch Bereitstellung hoher Kontraste und geeigneter Schriftart und Schriftform
-| 28.11.2025
+|- Zweisprachige Benutzeroberfläche (Deutsch, Englisch) +
+- klar strukturierte und konsistente UI +
+- Berücksichtigung von Nutzerfeedback aus Sprint Reviews +
+- gute Lesbarkeit durch ausreichende Kontraste sowie geeignete Schriftarten
+| R2: 28.11.2025
 
 | *Vertrauenswürdiger Umgang mit persönlichen Daten*
 | Hoch
-| - Anmeldung über ein Nutzerkonto +
- - datensparsame Speicherung (nur notwendige Habit- und Fortschrittsdaten) +
- - keine Weitergabe an Dritte +
- - technische Details (z. B. Verschlüsselung) werden in der Architektur spezifiziert.
-| xxx
+|- Anmeldung über ein persönliches Nutzerkonto +
+- datensparsame Speicherung (nur notwendige Habit- und Fortschrittsdaten) +
+- keine Weitergabe personenbezogener Daten an Dritte +
+- sicherer Umgang mit Daten (Details werden in der Architektur spezifiziert)
+| R1: 27.06.2025
 
 | *Verstehen, warum Gewohnheiten funktionieren oder scheitern*
 | Niedrig
-|- Optionaler Wissensbereich mit kurzen, leicht verständlichen Hinweißen zu Grundlagen der Habit- Bildung,
+|- Optionaler Wissensbereich mit kurzen, leicht verständlichen Hinweisen zu Grundlagen der Gewohnheitsbildung
 | xxx
 |===
+
 
 === Zusätzliche Produktanforderungen
 
@@ -151,7 +166,7 @@ App-Store Richtlinien: jedoch erst einmal kein produktiver Store- Release angeda
 
 * *Interaktion lokal:* +
 visuelles Feedback weniger als 300 ms +
-* *Netzwerk P95:* +
+* *Backend:* +
 API-Antwort weniger als 1000 ms +
 Start bis erster nutzbarer Screen weniger als 3 Sekunden +
 
@@ -197,7 +212,7 @@ Start bis erster nutzbarer Screen weniger als 3 Sekunden +
 
 | *Reaktionszeiten*  +
   - Lokale UI-Interaktionen (Tippen, Button-Feedback): maximal 300 ms  +
-  - API-Antwortzeiten (P95): maximal 1000 ms + 
+  - API-Antwortzeiten: maximal 1000 ms + 
   - Warmstart bis erster nutzbarer Screen: maximal 3 s +  
   **(Werte müssen durch Testen validiert werden!)** +
 | Mittel
@@ -210,8 +225,8 @@ Start bis erster nutzbarer Screen weniger als 3 Sekunden +
 
 
 | *Sicherheit & Datenschutz*  +
-  - Nutzung von JWT Authentication +
-  - Daten werden im Backend verschlüsselt übertragen (???) +  
+  - Nutzung von Firebase Authentication +
+  - Die Anmeldung des Nutzers wird überprüft   
   - Privatsphäre-Option: Nutzerprofil kann auf „privat“ oder „öffentlich“ gestellt werden.
 | Mittel
 
