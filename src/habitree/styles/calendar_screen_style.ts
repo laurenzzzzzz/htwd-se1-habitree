@@ -29,6 +29,32 @@ export const createCalendarScreenStyles = (width?: number, height?: number) => {
       padding: spacing.md,
       paddingBottom: spacing.xl,
     },
+    viewToggleRow: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      marginBottom: spacing.md,
+    },
+    viewTogglePill: {
+      flex: 1,
+      paddingVertical: Math.max(spacing.sm * 0.65, 10),
+      borderRadius: radius(999),
+      borderWidth: 2,
+      borderColor: PRIMARY,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: '#fff',
+      marginHorizontal: spacing.xs * 0.4,
+    },
+    viewTogglePillActive: {
+      backgroundColor: PRIMARY,
+    },
+    viewToggleText: {
+      color: PRIMARY,
+      fontWeight: '600',
+    },
+    viewToggleTextActive: {
+      color: '#fff',
+    },
     sectionCard: {
       borderWidth: 2,
       borderColor: PRIMARY,
