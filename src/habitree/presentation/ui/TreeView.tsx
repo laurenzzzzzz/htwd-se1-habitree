@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Image } from 'expo-image';
-import { View, ActivityIndicator, ScrollView, TouchableOpacity, Text, Alert } from 'react-native';
+import { View, ActivityIndicator, ScrollView, TouchableOpacity, Text, Alert, Modal } from 'react-native';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { ThemedText } from './ThemedText';
 import { ThemedView } from './ThemedView'; 
@@ -115,6 +115,7 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
 
   const [isInfoVisible, setIsInfoVisible] = useState(true); // Standardmäßig sichtbar
   const [selectedItem, setSelectedItem] = useState<'main' | HabitItem>('main');
+  const [showStreakInfoModal, setShowStreakInfoModal] = useState(false); // Info-Modal für Streak-Erklärung
 
   // Modal/Edit state (reuse HabitModal like Habit view)
   const [modalVisible, setModalVisible] = useState(false);
@@ -277,7 +278,9 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
             <>
               <View style={treeviewStyles.infoBoxHeader}>
                 <Text style={treeviewStyles.infoBoxTitle}>Informationen: habitree</Text>
-                <Ionicons name="information-circle-outline" size={24} color="black" />
+                <TouchableOpacity onPress={() => setShowStreakInfoModal(true)}>
+                  <Ionicons name="information-circle-outline" size={24} color="black" />
+                </TouchableOpacity>
               </View>
               <View style={treeviewStyles.infoBoxContent}>
                 <Text style={treeviewStyles.infoBoxStreakText}>
@@ -366,6 +369,19 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
             })()
           )}
         </View>
+      )}
+
+      {/* Overlay wenn HabitModal offen ist */}
+      {modalVisible && (
+        <View style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          zIndex: 1,
+        }} />
       )}
 
       <HabitModal
@@ -471,6 +487,37 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
           }
         }}
       />
+
+      {/* Streak Info Modal */}
+      <Modal
+        visible={showStreakInfoModal}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={() => setShowStreakInfoModal(false)}
+      >
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
+          <View style={{ backgroundColor: 'white', borderRadius: 12, padding: 20, marginHorizontal: 20, maxWidth: 400 }}>
+            <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 12, color: '#000' }}>
+              Was ist ein Streak?
+            </Text>
+            <Text style={{ fontSize: 14, lineHeight: 20, color: '#333', marginBottom: 16 }}>
+              Ein Streak ist eine ununterbrochene Folge von Tagen, an denen du alle deine Tages-Habits erfolgreich abgeschlossen hast.
+
+              {'\n\n'}
+              <Text style={{ fontWeight: 'bold' }}>Beispiel:</Text> Wenn du 5 Tage hintereinander alle deine Daily-Habits erledigst, hast du einen 5-Tage-Streak.
+
+              {'\n\n'}
+              <Text style={{ fontWeight: 'bold' }}>Dein habitree wächst</Text> mit jedem erfolgreichen Streak und wird größer, je länger dein Streak andauert!
+            </Text>
+            <TouchableOpacity
+              style={{ backgroundColor: 'rgb(25, 145, 137)', paddingVertical: 10, paddingHorizontal: 20, borderRadius: 8, alignItems: 'center' }}
+              onPress={() => setShowStreakInfoModal(false)}
+            >
+              <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 14 }}>Verstanden</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </ThemedView>
   );
 };
