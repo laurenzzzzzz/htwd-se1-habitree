@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Image } from 'expo-image';
 import { View, ActivityIndicator, ScrollView, TouchableOpacity, Text } from 'react-native';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
@@ -6,6 +6,8 @@ import { ThemedText } from './ThemedText';
 import { ThemedView } from './ThemedView'; 
 import { treeviewStyles } from '../../styles/treeview_style';
 import { TreeGrowth } from '../../domain/entities/TreeGrowth';
+import { useHabits } from '../../context/HabitsContext';
+import { useStreakController } from '../controllers/useStreakController';
 
 type Props = {
   treeGrowth: TreeGrowth | null;
@@ -82,37 +84,40 @@ const getTreeImage = (streakNumber: number, isSelected: boolean = false) => {
 };
 
 export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundColor }) => {
-  
-  // Mock-Daten für Habits mit Streak-Zahlen
-  // Sortiert nach Streak absteigend, damit größere Bäume oben stehen
-  const mockHabits = [
-    { id: 1, streak: 80, name: 'Joggen', description: '30 Minuten entspanntes Laufen im Park.' }, 
-    { id: 2, streak: 60, name: 'Lesen', description: '20 Seiten in einem Buch lesen.' }, 
-    { id: 3, streak: 50, name: 'Trinken', description: 'Mindestens 2 Liter Wasser trinken.' }, 
-    { id: 4, streak: 50, name: 'Meditieren', description: '10 Minuten Achtsamkeitsmeditation.' }, 
-    { id: 5, streak: 44, name: 'Lernen', description: 'Eine Stunde programmieren lernen.' }, 
-    { id: 6, streak: 34, name: 'Aufräumen', description: '15 Minuten die Wohnung aufräumen.' }, 
-    { id: 7, streak: 24, name: 'Kochen', description: 'Ein gesundes Abendessen zubereiten.' }, 
-    { id: 8, streak: 24, name: 'Spazieren', description: 'Ein kurzer Spaziergang an der frischen Luft.' },
-    { id: 9, streak: 15, name: 'Journaling', description: 'Gedanken und Erlebnisse des Tages aufschreiben.' },
-    { id: 10, streak: 10, name: 'Dehnen', description: '10 Minuten Stretching am Morgen.' },
-    { id: 11, streak: 5, name: 'Vokabeln', description: '10 neue Vokabeln lernen.' },
-    { id: 12, streak: 2, name: 'Zahnseide', description: 'Tägliche Zahnreinigung nicht vergessen.' },
-  ];
+  const { habits, fetchHabits, isLoading: isHabitsLoading } = useHabits();
+  const { streak, isLoading: isStreakLoading } = useStreakController();
+
+  type HabitItem = { id: number; streak: number; name: string; description: string };
+
+  const habitItems: HabitItem[] = useMemo(() => {
+    const items: HabitItem[] = (habits || []).map(h => ({
+      id: h.id,
+      name: h.name,
+      description: h.description,
+      streak: typeof (h as any).getStreak === 'function' ? (h as any).getStreak() : 0,
+    }));
+    return items.sort((a, b) => b.streak - a.streak);
+  }, [habits]);
+
+  useEffect(() => {
+    // ensure habits are loaded when visiting Tree tab
+    fetchHabits();
+  }, [fetchHabits]);
 
   const [isInfoVisible, setIsInfoVisible] = useState(true); // Standardmäßig sichtbar
-  const [selectedItem, setSelectedItem] = useState<'main' | typeof mockHabits[0]>('main');
+  const [selectedItem, setSelectedItem] = useState<'main' | HabitItem>('main');
 
-  // Konfigurierbare Streak-Zahl für den Haupt-Habit-Baum
-  const HABITREE_STREAK = 66;
+  // Hauptbaum: echte Streak-Tage (Gesamt-Streak)
+  const mainStreakDays = streak?.currentStreak ?? 0;
+  const mainGrowth = Math.min(100, mainStreakDays);
 
-  // Lade das dynamische Baum-Bild basierend auf der Streak-Zahl
-  const treeSource = getTreeImage(HABITREE_STREAK, selectedItem === 'main');
+  // Lade das dynamische Baum-Bild basierend auf der Streak-Zahl (0-100)
+  const treeSource = getTreeImage(mainGrowth, selectedItem === 'main');
 
-  const numberOfHabits = mockHabits.length;
+  const numberOfHabits = habitItems.length;
 
   // Helper-Komponente für eine kleine Insel mit Baum
-  const SmallIslandWithTree = ({ habit, style, treeStyle }: { habit: typeof mockHabits[0], style: any, treeStyle?: any }) => {
+  const SmallIslandWithTree = ({ habit, style, treeStyle }: { habit: HabitItem, style: any, treeStyle?: any }) => {
     const isSelected = selectedItem !== 'main' && selectedItem.id === habit.id;
     const treeImg = getTreeImage(habit.streak, isSelected);
     
@@ -141,16 +146,16 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
 
   const handleNextHabit = () => {
     if (selectedItem === 'main') return;
-    const currentIndex = mockHabits.findIndex(h => h.id === selectedItem.id);
-    const nextIndex = (currentIndex + 1) % mockHabits.length;
-    setSelectedItem(mockHabits[nextIndex]);
+    const currentIndex = habitItems.findIndex(h => h.id === selectedItem.id);
+    const nextIndex = (currentIndex + 1) % habitItems.length;
+    setSelectedItem(habitItems[nextIndex]);
   };
 
   const handlePrevHabit = () => {
     if (selectedItem === 'main') return;
-    const currentIndex = mockHabits.findIndex(h => h.id === selectedItem.id);
-    const prevIndex = (currentIndex - 1 + mockHabits.length) % mockHabits.length;
-    setSelectedItem(mockHabits[prevIndex]);
+    const currentIndex = habitItems.findIndex(h => h.id === selectedItem.id);
+    const prevIndex = (currentIndex - 1 + habitItems.length) % habitItems.length;
+    setSelectedItem(habitItems[prevIndex]);
   };
 
   const renderHabitIslands = () => {
@@ -161,11 +166,11 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
     while (habitIndex < numberOfHabits) {
       if (isPairRow) {
         const count = Math.min(2, numberOfHabits - habitIndex);
-        const habitsInRow = mockHabits.slice(habitIndex, habitIndex + count);
+        const habitsInRow = habitItems.slice(habitIndex, habitIndex + count);
         rows.push({ type: 'pair', habits: habitsInRow });
         habitIndex += count;
       } else {
-        const habitsInRow = mockHabits.slice(habitIndex, habitIndex + 1);
+        const habitsInRow = habitItems.slice(habitIndex, habitIndex + 1);
         rows.push({ type: 'middle', habits: habitsInRow });
         habitIndex += 1;
       }
@@ -200,7 +205,7 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
     ));
   };
 
-  if (isLoading) {
+  if (isLoading || isHabitsLoading || isStreakLoading) {
     return (
       <View style={[treeviewStyles.container, { backgroundColor }]}>
         <ActivityIndicator size="large" color="rgb(25, 145, 137)" />
@@ -255,17 +260,17 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
               </View>
               <View style={treeviewStyles.infoBoxContent}>
                 <Text style={treeviewStyles.infoBoxStreakText}>
-                  Erfolgreiche Streak: {HABITREE_STREAK} Tage
+                  Erfolgreiche Streak: {mainStreakDays} Tage
                 </Text>
                 <Text style={treeviewStyles.infoBoxDescription}>
-                  Du hast bereits an {HABITREE_STREAK} Tagen am Stück alle deiner Tages-Habits abgeschlossen und einen gigantischen habitree wachsen lassen!
+                  Du hast bereits an {mainStreakDays} Tagen am Stück alle deiner Tages-Habits abgeschlossen und einen gigantischen habitree wachsen lassen!
                 </Text>
               </View>
             </>
           ) : (
             // --- INDIVIDUAL HABIT INFO ---
             (() => {
-              const progress = Math.min(100, Math.round((selectedItem.streak / 66) * 100));
+              const progress = Math.min(100, selectedItem.streak);
               return (
                 <>
                   <View style={treeviewStyles.infoBoxHeader}>
