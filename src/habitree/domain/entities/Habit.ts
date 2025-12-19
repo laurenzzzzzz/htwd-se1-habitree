@@ -16,6 +16,7 @@ export type HabitData = {
   intervalDays?: number | null;
   entries: HabitEntry[];
   currentStreak?: number | null;
+  maxStreak?: number | null;
 };
 
 /**
@@ -33,6 +34,7 @@ export class Habit {
   readonly intervalDays?: number | null;
   readonly entries: HabitEntry[];
   readonly currentStreak: number | null;
+  readonly maxStreak: number | null;
 
   constructor(data: HabitData) {
     this.id = data.id;
@@ -45,6 +47,7 @@ export class Habit {
     this.intervalDays = data.intervalDays ?? null;
     this.entries = data.entries;
     this.currentStreak = data.currentStreak ?? null;
+    this.maxStreak = data.maxStreak ?? null;
   }
 
   /**

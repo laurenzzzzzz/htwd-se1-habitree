@@ -96,7 +96,9 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
   } = useHabits();
   const { streak, isLoading: isStreakLoading } = useStreakController();
 
-  type HabitItem = { id: number; streak: number; name: string; description: string };
+  //type HabitItem = { id: number; streak: number; name: string; description: string };
+
+  type HabitItem = { id: number; streak: number; maxStreak?: number | null; name: string; description: string };
 
   const habitItems: HabitItem[] = useMemo(() => {
     const items: HabitItem[] = (habits || []).map(h => ({
@@ -104,6 +106,7 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
       name: h.name,
       description: h.description ?? '',
       streak: typeof (h as any).getStreak === 'function' ? (h as any).getStreak() : 0,
+      maxStreak: (h as any).maxStreak ?? null,
     }));
     return items.sort((a, b) => b.streak - a.streak);
   }, [habits]);
@@ -131,6 +134,7 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
 
   // Hauptbaum: echte Streak-Tage (Gesamt-Streak)
   const mainStreakDays = streak?.currentStreak ?? 0;
+  const mainMaxStreak = streak?.longestStreak ?? null;
   const mainGrowth = Math.min(100, mainStreakDays);
 
   // Lade das dynamische Baum-Bild basierend auf der Streak-Zahl (0-100)
@@ -284,10 +288,11 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
               </View>
               <View style={treeviewStyles.infoBoxContent}>
                 <Text style={treeviewStyles.infoBoxStreakText}>
-                  Erfolgreiche Streak: {mainStreakDays} Tage
+                  Erfolgreiche Streak: {mainStreakDays} {mainStreakDays === 1 ? 'Tag' : 'Tage'}
+                  {mainMaxStreak ? <Text style={{ color: '#999' }}>      (beste Streak:{mainMaxStreak})</Text> : null}
                 </Text>
                 <Text style={treeviewStyles.infoBoxDescription}>
-                  Du hast bereits an {mainStreakDays} Tagen am Stück alle deiner Tages-Habits abgeschlossen und einen gigantischen habitree wachsen lassen!
+                  Du hast bereits an {mainStreakDays} {mainStreakDays === 1 ? 'Tag am Stück' : 'Tagen am Stück'} alle deiner Tages-Habits abgeschlossen und einen gigantischen habitree wachsen lassen!
                 </Text>
               </View>
             </>
@@ -338,7 +343,10 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
                       >
                         {selectedItem.name}
                       </Text>
-                      <Text style={[treeviewStyles.infoBoxStreakText, { marginBottom: 0 }]}>-Streak: {selectedItem.streak} Tage</Text>
+                      <Text style={[treeviewStyles.infoBoxStreakText, { marginBottom: 0 }]}>
+                        -Streak: {selectedItem.streak} {selectedItem.streak === 1 ? 'Tag' : 'Tage'}
+                        {selectedItem.maxStreak ? <Text style={{ color: '#999' }}> ({selectedItem.maxStreak})</Text> : null}
+                      </Text>
                     </View>
                     <Text style={treeviewStyles.infoBoxDescription} numberOfLines={1} ellipsizeMode="tail">
                       <Text style={{ fontWeight: 'bold' }}>Beschreibung:</Text> {selectedItem.description || 'Keine Beschreibung'}
