@@ -343,7 +343,7 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
           ) : (
             // --- INDIVIDUAL HABIT INFO ---
             (() => {
-              const progress = Math.min(100, selectedItem.streak);
+              const progress = Math.min(100, Math.round((selectedItem.streak / 66) * 100));
               return (
                 <>
                   <View style={treeviewStyles.infoBoxHeader}>
