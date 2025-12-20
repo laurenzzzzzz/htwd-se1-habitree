@@ -62,23 +62,47 @@ describe('HabitSchedulePolicy', () => {
         ...baseHabit,
         frequency: 'Wöchentlich',
         startDate: '01.01.2024',
-        weekDays: [1, 3, 5], // Monday, Wednesday, Friday
+        weekDays: [0, 2, 4], // Monday, Wednesday, Friday (0-indexed UI mapping)
       } as HabitScheduleLike;
 
       expect(shouldHabitOccurOnDate(habit, new Date(2024, 0, 3))).toBe(true); // Wednesday
       expect(shouldHabitOccurOnDate(habit, new Date(2024, 0, 4))).toBe(false); // Thursday
     });
 
-    it('handles interval-based habits using days difference', () => {
+    it('handles custom interval habits using days difference', () => {
       const habit = {
         ...baseHabit,
-        frequency: 'Intervalles',
+        frequency: 'Benutzerdefiniert',
         startDate: '01.01.2024',
         intervalDays: 2,
       } as HabitScheduleLike;
 
       expect(shouldHabitOccurOnDate(habit, new Date(2024, 0, 3))).toBe(true); // 2 days later
       expect(shouldHabitOccurOnDate(habit, new Date(2024, 0, 4))).toBe(false);
+    });
+
+    it('supports legacy interval frequency values', () => {
+      const habit = {
+        ...baseHabit,
+        frequency: 'Intervalles',
+        startDate: '01.01.2024',
+        intervalDays: 3,
+      } as HabitScheduleLike;
+
+      expect(shouldHabitOccurOnDate(habit, new Date(2024, 0, 4))).toBe(true);
+      expect(shouldHabitOccurOnDate(habit, new Date(2024, 0, 5))).toBe(false);
+    });
+
+    it('handles monthly schedules based on start day', () => {
+      const habit = {
+        ...baseHabit,
+        frequency: 'Monatlich',
+        startDate: '31.01.2024',
+      } as HabitScheduleLike;
+
+      expect(shouldHabitOccurOnDate(habit, new Date(2024, 1, 29))).toBe(true); // Feb (leap year)
+      expect(shouldHabitOccurOnDate(habit, new Date(2024, 2, 31))).toBe(true); // March 31
+      expect(shouldHabitOccurOnDate(habit, new Date(2024, 2, 30))).toBe(false);
     });
   });
 });

@@ -94,17 +94,23 @@ export class ExpoNotificationPort implements INotificationPort {
         const body = `Erinnerung: ${title} um ${label}`;
         const secondsUntil = Math.max(1, Math.floor((scheduledDate.getTime() - now.getTime()) / 1000));
 
-        if (Platform.OS === 'ios') {
-          await Notifications.scheduleNotificationAsync({
-            content: { title, body, data: { habitId: habit.id } },
-            trigger: { seconds: secondsUntil, repeats: false } as unknown as Notifications.NotificationTriggerInput,
-          });
-        } else {
-          await Notifications.scheduleNotificationAsync({
-            content: { title, body, data: { habitId: habit.id } },
-            trigger: scheduledDate as unknown as Notifications.NotificationTriggerInput,
-          });
-        }
+        const trigger: Notifications.NotificationTriggerInput =
+          Platform.OS === 'ios'
+            ? {
+                type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL,
+                seconds: secondsUntil,
+                repeats: false,
+              }
+            : {
+                type: Notifications.SchedulableTriggerInputTypes.DATE,
+                date: scheduledDate,
+                channelId: 'habit-reminders',
+              };
+
+        await Notifications.scheduleNotificationAsync({
+          content: { title, body, data: { habitId: habit.id } },
+          trigger,
+        });
 
         pushLog(`scheduled habit ${habit.id} at ${scheduledDate.toISOString()}`);
       }

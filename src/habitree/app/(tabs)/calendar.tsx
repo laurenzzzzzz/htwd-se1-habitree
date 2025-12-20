@@ -1,5 +1,7 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import { View, Pressable, ActivityIndicator, ScrollView, Alert, Image, useWindowDimensions } from 'react-native';
+import { Calendar, LocaleConfig } from 'react-native-calendars';
+import { useFocusEffect } from 'expo-router';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { ThemedText } from '@/presentation/ui/ThemedText';
 import { ThemedView } from '@/presentation/ui/ThemedView';
@@ -7,12 +9,42 @@ import { useHabits } from '../../context/HabitsContext';
 import HabitModal from '../../presentation/ui/HabitModal';
 import { styles as homeStyles } from '../../styles/index_style';
 import { shouldHabitOccurOnDate } from '../../domain/services/HabitSchedulePolicy';
-import { createCalendarScreenStyles } from '../../styles/calendar_screen_style';
+import { createCalendarScreenStyles, calendarThemeConfig } from '../../styles/calendar_screen_style';
 import { Colors } from '../../constants/Colors';
 
 // Bilder importieren
 const EditIcon = require('../../assets/images/edit.png');
 const DeleteIcon = require('../../assets/images/delete.png');
+
+LocaleConfig.locales.de = {
+  monthNames: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+  monthNamesShort: ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'],
+  dayNames: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
+  dayNamesShort: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
+  today: 'Heute',
+};
+LocaleConfig.defaultLocale = 'de';
+
+type CalendarDay = {
+  dateString: string;
+  day: number;
+  month: number;
+  year: number;
+  timestamp: number;
+};
+
+const buildIsoStringForDate = (date: Date) => {
+  const copy = new Date(date);
+  copy.setHours(12, 0, 0, 0);
+  return copy.toISOString();
+};
+
+const buildDateKey = (date: Date) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
 
 export default function CalendarScreen() {
   useThemeColor({}, 'background');
@@ -28,6 +60,7 @@ export default function CalendarScreen() {
     handleDeleteHabit,
     handleUpdateHabit,
     handleSaveHabit,
+    isSameDay,
     isLoading: isLoadingHabits,
   } = useHabits();
   // CalendarScreen render
@@ -65,28 +98,77 @@ export default function CalendarScreen() {
     }
   }, [modalMode, editHabitId]);
 
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
-  const tomorrow = new Date(today);
-  tomorrow.setDate(tomorrow.getDate() + 1);
-
-  const isSameDay = (a: Date, b: Date) =>
-    a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
-
-  const todayHabits = habits.filter((h: any) =>
-    Array.isArray(h.entries) && h.entries.some((e: any) => isSameDay(new Date(e.date), today))
-  );
-
-  const upcomingHabits = habits.filter((h: any) => {
-    const hasEntryForTomorrow = Array.isArray(h.entries) && h.entries.some((e: any) => isSameDay(new Date(e.date), tomorrow));
-    const shouldOccurTomorrow = shouldHabitOccurOnDate(h, tomorrow);
-    return shouldOccurTomorrow && !hasEntryForTomorrow;
+  const [today, setToday] = useState(() => {
+    const current = new Date();
+    current.setHours(0, 0, 0, 0);
+    return current;
   });
 
-  const handleToggle = async (id: number) => {
+  const [selectedDate, setSelectedDate] = useState(() => buildDateKey(today));
+  const [calendarInstanceKey, setCalendarInstanceKey] = useState(0);
+  const [activeTab, setActiveTab] = useState<'calendar' | 'all'>('calendar');
+
+  useEffect(() => {
+    const now = new Date();
+    now.setHours(0, 0, 0, 0);
+    setToday(now);
+    setSelectedDate(buildDateKey(now));
+    setCalendarInstanceKey((prev) => prev + 1);
+  }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      const now = new Date();
+      now.setHours(0, 0, 0, 0);
+      setToday(now);
+      setSelectedDate(buildDateKey(now));
+      setCalendarInstanceKey((prev) => prev + 1);
+    }, [])
+  );
+
+  const selectedDateObj = useMemo(() => {
+    const [year, month, day] = selectedDate.split('-').map(Number);
+    const parsed = new Date(year, (month || 1) - 1, day || 1);
+    parsed.setHours(0, 0, 0, 0);
+    return parsed;
+  }, [selectedDate]);
+
+  const selectedDateIsToday = useMemo(() => isSameDay(selectedDateObj, today), [selectedDateObj, today, isSameDay]);
+
+  const formattedSelectedDate = useMemo(
+    () => selectedDateObj.toLocaleDateString('de-DE', { weekday: 'long', day: '2-digit', month: 'long' }),
+    [selectedDateObj]
+  );
+
+  const selectedDateShortLabel = useMemo(
+    () => selectedDateObj.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' }),
+    [selectedDateObj]
+  );
+
+  const selectedDayHabits = useMemo(
+    () =>
+      habits.filter((habit: any) => {
+        const occurs = shouldHabitOccurOnDate(habit, selectedDateObj);
+        const hasEntryForDay = Array.isArray(habit.entries) && habit.entries.some((entry: any) => isSameDay(new Date(entry.date), selectedDateObj));
+        return occurs || hasEntryForDay;
+      }),
+    [habits, selectedDateObj, isSameDay]
+  );
+
+  const markedDates = useMemo(
+    () => ({
+      [selectedDate]: {
+        selected: true,
+        selectedColor: Colors.light.accent,
+        selectedTextColor: '#000',
+      },
+    }),
+    [selectedDate]
+  );
+
+  const handleToggle = async (id: number, date: Date = selectedDateObj) => {
     try {
-      await handleToggleHabit(id, new Date().toISOString());
+      await handleToggleHabit(id, buildIsoStringForDate(date));
     } catch (e) {
       console.warn('Toggle failed', e);
     }
@@ -95,176 +177,202 @@ export default function CalendarScreen() {
   return (
     <ThemedView style={calendarStyles.screenContainer}>
       <ScrollView contentContainerStyle={calendarStyles.scrollContent}>
-      {/* Heutige Habits Section */}
-      <View style={calendarStyles.sectionCard}>
-        <View style={[calendarStyles.sectionBanner, calendarStyles.sectionBannerToday]}>
-          <ThemedText type="subtitle" style={[homeStyles.habitTitle, calendarStyles.sectionHeaderTitle]}>
-            Heutige Habits
-          </ThemedText>
+        <View style={calendarStyles.viewToggleRow}>
+          <Pressable
+            onPress={() => setActiveTab('calendar')}
+            style={[
+              calendarStyles.viewTogglePill,
+              activeTab === 'calendar' && calendarStyles.viewTogglePillActive,
+            ]}
+          >
+            <ThemedText
+              style={[
+                calendarStyles.viewToggleText,
+                activeTab === 'calendar' && calendarStyles.viewToggleTextActive,
+              ]}
+            >
+              Kalender
+            </ThemedText>
+          </Pressable>
+          <Pressable
+            onPress={() => setActiveTab('all')}
+            style={[
+              calendarStyles.viewTogglePill,
+              activeTab === 'all' && calendarStyles.viewTogglePillActive,
+            ]}
+          >
+            <ThemedText
+              style={[
+                calendarStyles.viewToggleText,
+                activeTab === 'all' && calendarStyles.viewToggleTextActive,
+              ]}
+            >
+              Alle Habits
+            </ThemedText>
+          </Pressable>
         </View>
 
-        {isLoadingHabits ? (
-          <View style={calendarStyles.loadingContainer}>
-            <ActivityIndicator size="small" color={Colors.light.accent} />
-          </View>
-        ) : todayHabits.length > 0 ? (
-          todayHabits.map((habit: any) => {
-            const entryForToday = habit.entries.find((e: any) => isSameDay(new Date(e.date), today));
-            const checked = entryForToday?.status ?? false;
-            return (
-              <View key={habit.id} style={homeStyles.habitItem}>
-                <Pressable onPress={() => handleToggle(habit.id)} style={calendarStyles.habitPressable}>
-                  <View style={[homeStyles.checkbox, checked && homeStyles.checkboxChecked]}>
-                    {checked && <ThemedText style={homeStyles.checkmark}>✓</ThemedText>}
-                  </View>
-                  <View style={homeStyles.habitTextContainer}>
-                    <ThemedText style={homeStyles.habitLabel}>{habit.name}</ThemedText>
-                    <ThemedText style={homeStyles.habitDescription}>{habit.description} ({habit.frequency})</ThemedText>
-                  </View>
-                </Pressable>
-                <View style={calendarStyles.actionRow}>
-                  <Pressable onPress={() => {
-                    // open edit modal prefilled
-                    setEditHabitId(habit.id);
-                    setNewHabitName(habit.name || '');
-                    setNewHabitDescription(habit.description || '');
-                    setNewHabitStartDate(habit.startDate ? new Date(habit.startDate).toLocaleDateString('de-DE') : '');
-                    setNewHabitTime(habit.time || '');
-                    setNewHabitFrequency(habit.frequency || '');
-                    setNewHabitWeekDays(habit.weekDays || []);
-                    setNewHabitIntervalDays(habit.intervalDays ? String(habit.intervalDays) : '');
-                    setModalMode('custom');
-                    setModalVisible(true);
-                  }} style={calendarStyles.actionControl}>
-                    <Image source={EditIcon} style={calendarStyles.actionIcon} /> 
-                  </Pressable>
-                  <Pressable onPress={() => {
-                    Alert.alert('Löschen', 'Habit wirklich löschen?', [
-                      { text: 'Abbrechen', style: 'cancel' },
-                      { text: 'Löschen', style: 'destructive', onPress: async () => {
-                        await handleDeleteHabit(habit.id);
-                      } }
-                    ]);
-                  }} style={calendarStyles.actionControl}>
-                    <Image source={DeleteIcon} style={calendarStyles.actionIcon} />
-                  </Pressable>
-                </View>
+        {activeTab === 'calendar' ? (
+          <>
+            {/* Kalender Section */}
+            <View style={calendarStyles.sectionCard}>
+              <View style={[calendarStyles.sectionBanner, calendarStyles.sectionBannerCalendar]}>
+                <ThemedText type="subtitle" style={[homeStyles.habitTitle, calendarStyles.sectionHeaderTitle]}>
+                  Kalender
+                </ThemedText>
               </View>
-            );
-          })
-        ) : (
-          <ThemedText style={homeStyles.noHabitsText}>Keine Habits für heute.</ThemedText>
-        )}
-      </View>
-
-      {/* Anstehende Habits Section */}
-      <View style={calendarStyles.sectionCard}>
-        <View style={[calendarStyles.sectionBanner, calendarStyles.sectionBannerUpcoming]}>
-          <ThemedText type="subtitle" style={[homeStyles.habitTitle, calendarStyles.sectionHeaderTitle]}>
-            Morgige Habits
-          </ThemedText>
-        </View>
-
-        {isLoadingHabits ? (
-          <View style={calendarStyles.loadingContainer}>
-            <ActivityIndicator size="small" color={Colors.light.accent} />
-          </View>
-        ) : upcomingHabits.length > 0 ? (
-          upcomingHabits.map((habit: any) => (
-            <View key={habit.id} style={homeStyles.habitItem}>
-              <View style={calendarStyles.habitPressable}>
-                <View style={homeStyles.habitTextContainer}>
-                  <ThemedText style={homeStyles.habitLabel}>{habit.name}</ThemedText>
-                  <ThemedText style={homeStyles.habitDescription}>{habit.description} ({habit.frequency})</ThemedText>
-                </View>
-              </View>
-              <View style={calendarStyles.actionRow}>
-                <Pressable onPress={() => {
-                  // open edit modal prefilled
-                  setEditHabitId(habit.id);
-                  setNewHabitName(habit.name || '');
-                  setNewHabitDescription(habit.description || '');
-                  setNewHabitStartDate(habit.startDate ? new Date(habit.startDate).toLocaleDateString('de-DE') : '');
-                  setNewHabitTime(habit.time || '');
-                  setNewHabitFrequency(habit.frequency || '');
-                  setNewHabitWeekDays(habit.weekDays || []);
-                  setNewHabitIntervalDays(habit.intervalDays ? String(habit.intervalDays) : '');
-                  setModalMode('custom');
-                  setModalVisible(true);
-                }} style={calendarStyles.actionControl}>
-                  <Image source={EditIcon} style={calendarStyles.actionIcon} />
-                </Pressable>
-                <Pressable onPress={() => {
-                  Alert.alert('Löschen', 'Habit wirklich löschen?', [
-                    { text: 'Abbrechen', style: 'cancel' },
-                    { text: 'Löschen', style: 'destructive', onPress: async () => {
-                      await handleDeleteHabit(habit.id);
-                    } }
-                  ]);
-                }} style={calendarStyles.actionControl}>
-                  <Image source={DeleteIcon} style={calendarStyles.actionIcon} />
-                </Pressable>
+              <ThemedText style={calendarStyles.calendarHint}>
+                Wähle einen Tag aus, um deine Habits zu sehen.
+              </ThemedText>
+              <View style={calendarStyles.calendarWrapper}>
+                <Calendar
+                  key={`${calendarInstanceKey}-${selectedDate}`}
+                  style={calendarStyles.calendarComponent}
+                  current={selectedDate}
+                  initialDate={selectedDate}
+                  onDayPress={(day: CalendarDay) => setSelectedDate(day.dateString)}
+                  markedDates={markedDates}
+                  theme={calendarThemeConfig}
+                  firstDay={1}
+                  enableSwipeMonths
+                  hideExtraDays
+                />
               </View>
             </View>
-          ))
-        ) : (
-          <ThemedText style={homeStyles.noHabitsText}>Keine anstehenden Habits.</ThemedText>
-        )}
-      </View>
 
-      {/* Alle Habits Section */}
-      <View style={calendarStyles.sectionCard}>
-        <View style={[calendarStyles.sectionBanner, calendarStyles.sectionBannerAll]}>
-          <ThemedText type="subtitle" style={[homeStyles.habitTitle, calendarStyles.sectionHeaderTitle]}>
-            Alle Habits
-          </ThemedText>
-        </View>
+            {/* Habits am ausgewählten Tag */}
+            <View style={calendarStyles.sectionCard}>
+              <View style={[calendarStyles.sectionBanner, calendarStyles.sectionBannerToday]}>
+                <ThemedText type="subtitle" style={[homeStyles.habitTitle, calendarStyles.sectionHeaderTitle]}>
+                  {selectedDateIsToday ? 'Heutige Habits' : `Habits am Tag ${selectedDateShortLabel}`}
+                </ThemedText>
+              </View>
+              <View style={calendarStyles.selectedDateRow}>
+                <ThemedText style={calendarStyles.selectedDateText}>{formattedSelectedDate}</ThemedText>
+                {selectedDateIsToday && (
+                  <View style={calendarStyles.selectedDateBadge}>
+                    <ThemedText style={calendarStyles.selectedDateBadgeText}>Heute</ThemedText>
+                  </View>
+                )}
+              </View>
 
-        {isLoadingHabits ? (
-          <View style={calendarStyles.loadingContainer}>
-            <ActivityIndicator size="small" color={Colors.light.accent} />
-          </View>
-        ) : habits.length > 0 ? (
-          habits.map((habit: any) => (
-            <View key={habit.id} style={homeStyles.habitItem}>
-              <View style={calendarStyles.habitPressable}>
-                <View style={homeStyles.habitTextContainer}>
-                  <ThemedText style={homeStyles.habitLabel}>{habit.name}</ThemedText>
-                  <ThemedText style={homeStyles.habitDescription}>{habit.description} ({habit.frequency})</ThemedText>
+              {isLoadingHabits ? (
+                <View style={calendarStyles.loadingContainer}>
+                  <ActivityIndicator size="small" color={Colors.light.accent} />
                 </View>
-              </View>
-              <View style={calendarStyles.actionRow}>
-                <Pressable onPress={() => {
-                  // open edit modal prefilled
-                  setEditHabitId(habit.id);
-                  setNewHabitName(habit.name || '');
-                  setNewHabitDescription(habit.description || '');
-                  setNewHabitStartDate(habit.startDate ? new Date(habit.startDate).toLocaleDateString('de-DE') : '');
-                  setNewHabitTime(habit.time || '');
-                  setNewHabitFrequency(habit.frequency || '');
-                  setNewHabitWeekDays(habit.weekDays || []);
-                  setNewHabitIntervalDays(habit.intervalDays ? String(habit.intervalDays) : '');
-                  setModalVisible(true);
-                }} style={calendarStyles.actionControl}>
-                  <Image source={EditIcon} style={calendarStyles.actionIcon} />
-                </Pressable>
-                <Pressable onPress={() => {
-                  Alert.alert('Löschen', 'Habit wirklich löschen?', [
-                    { text: 'Abbrechen', style: 'cancel' },
-                    { text: 'Löschen', style: 'destructive', onPress: async () => {
-                      await handleDeleteHabit(habit.id);
-                    } }
-                  ]);
-                }} style={calendarStyles.actionControl}>
-                  <Image source={DeleteIcon} style={calendarStyles.actionIcon} />
-                </Pressable>
-              </View>
+              ) : selectedDayHabits.length > 0 ? (
+                selectedDayHabits.map((habit: any) => {
+                  const entryForSelectedDay = Array.isArray(habit.entries)
+                    ? habit.entries.find((e: any) => isSameDay(new Date(e.date), selectedDateObj))
+                    : null;
+                  const checked = entryForSelectedDay?.status ?? false;
+                  return (
+                    <View key={habit.id} style={homeStyles.habitItem}>
+                      {selectedDateIsToday ? (
+                        <Pressable onPress={() => handleToggle(habit.id, selectedDateObj)} style={calendarStyles.habitPressable}>
+                          <View style={[homeStyles.checkbox, checked && homeStyles.checkboxChecked]}>
+                            {checked && <ThemedText style={homeStyles.checkmark}>✓</ThemedText>}
+                          </View>
+                          <View style={homeStyles.habitTextContainer}>
+                            <ThemedText style={homeStyles.habitLabel}>{habit.name}</ThemedText>
+                            <ThemedText style={homeStyles.habitDescription}>{habit.description} ({habit.frequency})</ThemedText>
+                          </View>
+                        </Pressable>
+                      ) : (
+                        <View style={calendarStyles.habitPressable}>
+                          <View style={homeStyles.habitTextContainer}>
+                            <ThemedText style={homeStyles.habitLabel}>{habit.name}</ThemedText>
+                            <ThemedText style={homeStyles.habitDescription}>{habit.description} ({habit.frequency})</ThemedText>
+                          </View>
+                        </View>
+                      )}
+                      <View style={calendarStyles.actionRow}>
+                        <Pressable onPress={() => {
+                          setEditHabitId(habit.id);
+                          setNewHabitName(habit.name || '');
+                          setNewHabitDescription(habit.description || '');
+                          setNewHabitStartDate(habit.startDate ? new Date(habit.startDate).toLocaleDateString('de-DE') : '');
+                          setNewHabitTime(habit.time || '');
+                          setNewHabitFrequency(habit.frequency || '');
+                          setNewHabitWeekDays(habit.weekDays || []);
+                          setNewHabitIntervalDays(habit.intervalDays ? String(habit.intervalDays) : '');
+                          setModalMode('custom');
+                          setModalVisible(true);
+                        }} style={calendarStyles.actionControl}>
+                          <Image source={EditIcon} style={calendarStyles.actionIcon} />
+                        </Pressable>
+                        <Pressable onPress={() => {
+                          Alert.alert('Löschen', 'Habit wirklich löschen?', [
+                            { text: 'Abbrechen', style: 'cancel' },
+                            { text: 'Löschen', style: 'destructive', onPress: async () => {
+                              await handleDeleteHabit(habit.id);
+                            } }
+                          ]);
+                        }} style={calendarStyles.actionControl}>
+                          <Image source={DeleteIcon} style={calendarStyles.actionIcon} />
+                        </Pressable>
+                      </View>
+                    </View>
+                  );
+                })
+              ) : (
+                <ThemedText style={homeStyles.noHabitsText}>Keine Habits für diesen Tag.</ThemedText>
+              )}
             </View>
-          ))
+          </>
         ) : (
-          <ThemedText style={homeStyles.noHabitsText}>Keine Habits angelegt.</ThemedText>
+          <View style={calendarStyles.sectionCard}>
+            <View style={[calendarStyles.sectionBanner, calendarStyles.sectionBannerAll]}>
+              <ThemedText type="subtitle" style={[homeStyles.habitTitle, calendarStyles.sectionHeaderTitle]}>
+                Alle Habits
+              </ThemedText>
+            </View>
+
+            {isLoadingHabits ? (
+              <View style={calendarStyles.loadingContainer}>
+                <ActivityIndicator size="small" color={Colors.light.accent} />
+              </View>
+            ) : habits.length > 0 ? (
+              habits.map((habit: any) => (
+                <View key={habit.id} style={homeStyles.habitItem}>
+                  <View style={calendarStyles.habitPressable}>
+                    <View style={homeStyles.habitTextContainer}>
+                      <ThemedText style={homeStyles.habitLabel}>{habit.name}</ThemedText>
+                      <ThemedText style={homeStyles.habitDescription}>{habit.description} ({habit.frequency})</ThemedText>
+                    </View>
+                  </View>
+                  <View style={calendarStyles.actionRow}>
+                    <Pressable onPress={() => {
+                      setEditHabitId(habit.id);
+                      setNewHabitName(habit.name || '');
+                      setNewHabitDescription(habit.description || '');
+                      setNewHabitStartDate(habit.startDate ? new Date(habit.startDate).toLocaleDateString('de-DE') : '');
+                      setNewHabitTime(habit.time || '');
+                      setNewHabitFrequency(habit.frequency || '');
+                      setNewHabitWeekDays(habit.weekDays || []);
+                      setNewHabitIntervalDays(habit.intervalDays ? String(habit.intervalDays) : '');
+                      setModalVisible(true);
+                    }} style={calendarStyles.actionControl}>
+                      <Image source={EditIcon} style={calendarStyles.actionIcon} />
+                    </Pressable>
+                    <Pressable onPress={() => {
+                      Alert.alert('Löschen', 'Habit wirklich löschen?', [
+                        { text: 'Abbrechen', style: 'cancel' },
+                        { text: 'Löschen', style: 'destructive', onPress: async () => {
+                          await handleDeleteHabit(habit.id);
+                        } }
+                      ]);
+                    }} style={calendarStyles.actionControl}>
+                      <Image source={DeleteIcon} style={calendarStyles.actionIcon} />
+                    </Pressable>
+                  </View>
+                </View>
+              ))
+            ) : (
+              <ThemedText style={homeStyles.noHabitsText}>Keine Habits angelegt.</ThemedText>
+            )}
+          </View>
         )}
-      </View>
       </ScrollView>
 
       {/* FAB */}
