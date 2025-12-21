@@ -171,19 +171,31 @@ Die Architektur der Habit-Tracking-App verfolgt das Ziel, eine robuste, nutzerfr
 ---
 === Internationalisierung (i18next) 
 
+_Status: Geplantes Feature._
+
 *Begründung:* +
 - Kompatibel mit React Native +
 - Einfache JSON-basierte Übersetzungsstruktur +
 - Skalierbar für zukünftige Sprachen und Erweiterungen +
 
+*Nächste Schritte:* +
+- i18next-Setup im Presentation-Layer verdrahten +
+- Übersetzungsdateien für Deutsch/Englisch anlegen +
+
 ---
 
 === Offline-Funktionalität
+
+_Status: Geplantes Feature – derzeit nur Auth-Tokens werden lokal zwischengespeichert._
 
 *Begründung:* +
 - Nutzer sollen Gewohnheiten auch ohne Internetverbindung (z. B. im Flugmodus) erfassen können +
 - Verwendung lokaler Speicherung (*AsyncStorage* / JSON) zur Synchronisation mit dem Backend bei Wiederverbindung +
 - Stellt sicher, dass Eingaben nicht verloren gehen, wenn kurzfristig keine Verbindung besteht +
+
+*Nächste Schritte:* +
+- Persistente Cache-Schicht für Habits & Streaks aufbauen +
+- Konfliktauflösungskonzept für spätere Synchronisierung definieren +
 
 ---
 
@@ -200,21 +212,80 @@ Die Architektur der Habit-Tracking-App verfolgt das Ziel, eine robuste, nutzerfr
 *Vorgehensweise:* +
 - Express.js-Server aufgesetzt und über *Prisma* an *PostgreSQL* angebunden +
 - Kommunikation erfolgt über REST-API +
-//- *Firebase Auth* integriert für Nutzerverwaltung +
+- *Firebase Auth* war hier ursprünglich vorgesehen, ist aber verworfen (siehe Abschnitt "Authentifizierung") +
 - Setup wurde dokumentiert, sodass Teammitglieder es lokal reproduzieren und erweitern +
 
 
-//Alles ab hier ist jetzt nichtmehr aktuell und müsste angepasst werden auf das von oben(falls das jetzt so bleibt)
 == Schichten oder Architektur-Framework
 
-Für die Umsetzung der Habit-Tracking-App wird eine klassische mehrschichtige Architektur verwendet, kombiniert mit modernen Webtechnologien und einem komponentenbasierten Aufbau. Die Architektur ist so konzipiert, dass sie wartbar, erweiterbar und skalierbar bleibt.
+Die Codebasis folgt konsequent einer Domain-Driven-Design-Struktur (DDD).
 
-* **Infrastruktur:** Eigener Server im Rechenzentrum (für erhöhte Kontrolle über Datenschutz und Ausfallsicherheit)
-* **Datenbank:** PostgreSQL – relationale Datenbank zur strukturierten Speicherung von Nutzern, Gewohnheiten und Zeitstempeln. Unterstützt komplexe zeitbasierte Abfragen (z. B. "Alle Habits im Mai").
-* **Backend:** Node.js mit Express.js – schnelles Setup und einfache API-Definition. Verantwortlich für Authentifizierung, Geschäftslogik und Anbindung an die Datenbank.
-* **API:** REST-API mit Express-Routen (`/habits`, `/logs`, `/users`) – saubere, klar getrennte Endpunkte.
-* **ORM:** Prisma – verbindet Backend und Datenbank. Bietet Typsicherheit, einfaches Datenmodellieren und Migrationstools.
-* **Frontend:** EXPO (React Native) – eine Codebasis für iOS und Android, schnelle UI-Entwicklung, Zugriff auf native Funktionen, unterstützt Offline-Speicherung.
+=== Architektur auf einen Blick
+
+[cols="1,2,2",options="header"]
+|===
+| Layer | Beschreibung | Beispiele
+| Presentation Layer | Visualisiert Informationen und ermöglicht Nutzereingaben (UI) | [presentation/controllers/useHabitsController.tsx], [presentation/ui/HabitList.tsx], [app/_layout.tsx]
+| Service Layer | Orchestriert Anwendungsabläufe mit Hilfe der Fachobjekte | [application/services/HabitService.ts], [application/services/AuthenticationService.ts], [context/AuthContext.tsx]
+| Domain Layer | Enthält fachliche Regeln und den Zustand der Geschäftsobjekte | [domain/entities/Habit.ts], [domain/entities/User.ts], [domain/repositories/IHabitsRepository.ts]
+| Infrastructure Layer | Liefert technische Basis für Persistenz, Kommunikation und Sicherheit | [infrastructure/adapters/ApiHabitsRepository.ts], [infrastructure/adapters/SecureStoreAuthRepository.ts], [infrastructure/di/ServiceContainer.ts]
+|===
+
+=== Ordnerstruktur (Top-Level src/habitree)
+
+----
+src/habitree/
+├── domain/              # Entitäten + Repository-Schnittstellen
+├── application/         # Services
+├── infrastructure/      # Adapter + Dependency Injection
+├── presentation/        # Provider, Controller-Hooks, UI
+├── app/                 # Expo Router Screens
+├── context/             # AuthContext & globale Provider
+├── constants/, hooks/, styles/, assets/
+----
+
+=== Layer-Verantwortlichkeiten im Detail
+
+==== Domänenschicht – domain/
+* **entities/** – Enthält alle Fachobjekte wie [/domain/entities/Habit.ts], [/domain/entities/User.ts] oder [/domain/entities/Entry.ts]. Hier werden Berechnungen (z. B. Streak), Validierungen und der Zustand der Geschäftsobjekte definiert.
+* **repositories/** – Beinhaltet die Repository-Schnittstellen, etwa [/domain/repositories/IHabitsRepository.ts], [/domain/repositories/IAuthRepository.ts] oder [/domain/repositories/IAchievementRepository.ts]. Diese Interfaces beschreiben, welche Datenzugriffe ein Service benötigt.
+* **ports/** – Zusätzliche Schnittstellen zu technischen Diensten wie Benachrichtigungen (siehe [/domain/ports/INotificationPort.ts]). Dient als Erweiterungspunkt für nicht-datenbankbezogene Abhängigkeiten.
+* **policies/** – Bündelt fachliche Regeln, die nicht zu einer einzelnen Entity gehören, z. B. [/domain/policies/HabitSchedulePolicy.ts] für Wiederholungslogik und Payload-Validierung vor der Persistenz.
+* **Regeln:** Die Domäne importiert ausschließlich Standard-TypeScript, keinerlei Frameworks. HTTP, Persistenz oder UI sind an dieser Stelle unbekannt.
+
+==== Anwendungsschicht (Service Layer) – application/
+* **services/** – Enthält Use-Case-spezifische Koordinatoren wie [/application/services/AuthService.ts], [/application/services/HabitService.ts], [/application/services/QuoteService.ts] und [/application/services/ProfileService.ts]. Sie orchestrieren mehrere Ports und kapseln Fehlerbehandlung sowie Domänenlogik.
+* **types/** – Gemeinsame Typsammlungen wie [/application/types/ApplicationServices.ts], die der Präsentationsschicht beschreiben, welche Services via DI verfügbar sind.
+* **Regeln:** Services sind zustandslos, greifen nur über Interfaces auf Infrastruktur zu und enthalten keine UI-spezifischen Details.
+
+==== Infrastruktur – infrastructure/
+* **adapters/** – Technische Implementierungen der Domänenports, etwa [/infrastructure/adapters/ApiHabitsRepository.ts] für REST-Kommunikation oder [/infrastructure/adapters/SecureStoreAuthRepository.ts] für lokale Speicherung. Jeder Adapter kümmert sich um HTTP-Header, Tokenverwaltung, Fehlerbehandlung und wandeln einfache Transportdaten (DTOs) in Domänenobjekte um.
+* **di/** – Der ServiceContainer [/infrastructure/di/ServiceContainer.ts] erstellt sämtliche Adapter und Services einmal zentral und stellt sie  der App bereit.
+* **Regeln:** Neue externe Systeme (Push, Analytics, weitere Endpoints) landen immer zuerst als Adapter. Nur der Service-Container verdrahtet konkrete Implementierungen mit Interfaces.
+
+==== Präsentationsschicht – presentation/
+* **providers/** – Beispielsweise [/presentation/providers/ApplicationServicesProvider.tsx] veröffentlichen die Services im React-Kontext und bilden die Brücke zum Expo Router.
+* **controllers/** – Hooks wie [/presentation/controllers/useAuthController.tsx] oder [/presentation/controllers/useHabitsController.tsx] kapseln UI-Status, Loading/Error-Handling und delegieren an die Anwendungsschicht.
+* **ui/** – Präsentationskomponenten wie [/presentation/ui/HabitList.tsx], [/presentation/ui/QuoteBanner.tsx] oder generische Bausteine (ThemedView, Collapsible). Sie enthalten keine Geschäftslogik und reagieren ausschließlich auf Props.
+* **Regeln:** Keine direkten Infrastrukturimporte; sämtliche Abhängigkeiten werden über `useApplicationServices()` oder Controller-Hooks gedeckt.
+
+==== Expo Router & Kontext – app/, context/
+* **app/** – Enthält die Expo-Router-Struktur: Layout ([/app/_layout.tsx]), Auth-Stack ([/app/(auth)/login.tsx]) und Tab-Navigation ([/app/(tabs)/index.tsx]). Jeder Screen nutzt Controller-Hooks, um sich mit der Anwendungsschicht zu verbinden.
+* **context/** – Der globale AuthContext ([/context/AuthContext.tsx]) kombiniert `AuthService` mit dem SecureStore-Adapter, speichert Token/User und stellt `signIn/signOut` für alle Screens bereit.
+* **Regeln:** `ApplicationServicesProvider` und `AuthProvider` umschließen das gesamte Router-Layout, sodass alle Screens denselben Service-Container nutzen.
+
+=== Arbeitsprinzipien
+
+* Abhängigkeiten verlaufen stets von Präsentation → Anwendung → Domäne; Infrastruktur implementiert nur Schnittstellen der domäne.
+* Backend-Endpoints (`/auth`, `/habits`, `/profile`, `/quotes`, `/streaks`, `/achievements`) werden ausschließlich über Infrastrukturadapter adressiert.
+
+=== Feature-Workflow
+
+1. **Domäne:** Entität oder Repository-Schnittstelle ergänzen.
+2. **Infrastruktur:** Adapter implementieren.
+3. **Anwendung:** Service erweitern und im `ServiceContainer` registrieren.
+4. **Präsentation:** Controller-Hook + UI/Screen ergänzen.
+5. **Tests:** Unit-Tests für Services, Integrationstests für Adapter, UI-Tests für Komponenten.
 
 
 == Architektursichten (Views)
@@ -233,7 +304,7 @@ Weitere optionale Sichten (nur bei Bedarf):
 === Kontextabgrenzung
 //Level 1 im C4-Modell
 image::c4-habitree-level1.png[]
-Das C4-Level-1-Diagramm zeigt das Kontextdiagramm des Projekts „Habitreee“, einer Habit-Tracking-App zur Förderung positiver Gewohnheiten. Es stellt die wichtigsten Stakeholder, deren Rollen sowie deren Beziehungen zum System und zur Projektgruppe dar.
+Das C4-Level-1-Diagramm zeigt das Kontextdiagramm der App „Habitreee“, einer Habit-Tracking-App zur Förderung positiver Gewohnheiten. Es stellt die wichtigsten Stakeholder, deren Rollen sowie deren Beziehungen zum System und zur Projektgruppe dar.
 
 
 === Container
@@ -282,4 +353,18 @@ Die  Ziele des Darmodes sind primär die Entlastung der Augen und die Erhöhung 
 |Relationale Datenbank|  Eine Datenbank, die Daten in Tabellen mit Beziehungen zueinander speichert
 |Framework| Ein vorgefertigtes Softwaregerüst, das Entwicklern beim Erstellen von Anwendungen hilft
 |MVP (Minimum Viable Product)|Minimal umsetzbare Produktversion mit Kernfunktionen zur Validierung des Konzepts
+|Domain-Driven Design (DDD)|Architekturstil, der Geschäftslogik in Domänenmodell, Anwendung, Infrastruktur und Präsentation trennt und Fachsprache mit Code synchron hält
+|Repository|Abstraktion des Datenzugriffs, die Entitäten unabhängig von konkreten Speichertechnologien bereitstellt
+|Port|Schnittstelle zu externen Diensten (z. B. Notifications), damit die Domäne keine technischen Details kennen muss
+|Policy|Bündelt fachliche Regeln, die nicht zu einer einzelnen Entität gehören, etwa Zeit- oder Wiederholungslogik
+|Adapter|Konkrete Implementierung eines Ports, die HTTP, lokale Speicherung oder andere Technik mit der Domäne verbindet
+|Dependency Injection (DI)|Muster, bei dem Abhängigkeiten von außen bereitgestellt werden, um Code testbar und entkoppelt zu halten
+|Composition Root|Zentraler Ort (z. B. ServiceContainer), an dem alle konkreten Implementierungen registriert und miteinander verdrahtet werden
+|Expo Router|Dateibasiertes Routing-System von Expo/React Native zur Strukturierung von Screens, Layouts und Navigations-Stacks
+|Controller-Hook|Präsentationsspezifischer Hook, der UI-Zustand, Validierung und Service-Aufrufe kapselt
+|Provider|React-Komponente, die Werte oder Services über Context an den Komponentenbaum weitergibt
+| DTO (Data Transfer Object)|Ein schlankes Transportobjekt, das beim Austausch über Schnittstellen nur die benötigten Felder enthält und später ins Domänenmodell gemappt wird
+| ServiceContainer|Zentrale Klasse, die alle Services und Adapter einmalig erstellt und per Dependency Injection dem restlichen System bereitstellt
+| SecureStore|Expo-Modul, das Schlüssel-Wert-Paare verschlüsselt auf dem Gerät speichert (z. B. Tokens)
+| AsyncStorage|Einfacher Key-Value-Speicher von React Native, um Daten lokal persistieren zu können (z. B. für geplantes Offline-Caching)
 |===
