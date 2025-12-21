@@ -6,18 +6,54 @@ include::../_includes/default-attributes.inc.adoc[]
 == Zweck
 Dieses Dokument beschreibt wesentliche Entwurfsentscheidungen auf Ebene der Komponenten und Module. Diese dienen als Vorgabe für die Implementierung und erleichtern das Systemverständnis.
 
+//kein Plan ob das hier rein muss sowas
+
+== Designentscheidungen nach Komponenten
+=== Authentifizierung & Sessions
+* **Automatisches Wiederanmelden:** Beim Start prüft der AuthProvider, ob ein gespeichertes Token im SecureStore liegt. Ist es noch gültig, bleibt die Sitzung aktiv, sonst erscheint direkt der Login-Screen.
+* **Token erneuern:** Es gibt nur ein Token. Läuft er ab, meldet sich der Nutzer erneut an. Damit bleibt die Backend-Logik überschaubar und wir müssen keine weiteren Token-Typen pflegen.
+
+=== Tagesplan & Habitlisten
+* **Optimistic Updates:** `useHabitsController` setzt den UI-Status sofort auf „erledigt“, bevor `POST /habits/{id}/entries` abgeschlossen ist. Schlägt der Request fehl, wird der lokale Zustand zurückgesetzt. Somit sieht der Nutzer direkt das ein Habit erledigt ist, statt auf eine Server-Antwort zu warten. Dies erhöht die wahrgenommene Performance der App.
+* **Sortierung im Client:** Die Habits werden clientseitig nach Startzeit sortiert, damit verschiedene Listen (heute, Archiv, Filter) ohne zusätzliche Backend-Routen möglich sind und UI-Anpassungen ohne Backend-Deployment getestet werden können.
+
+=== Offline-Stand
+* **Gespeicherte Tokens:** Derzeit schreibt nur `SecureStoreAuthRepository` die Authentifizierungsdaten verschlüsselt ins Gerät. Habit-Listen werden ausschließlich live vom Server geladen; Caching ist als zukünftige Erweiterung markiert.
+
+=== UI-Konzepte
+* **Controller-Hooks:** Jeder Screen nutzt eigene Hooks wie `useHabitsController`. Diese halten ihren Zustand selbst, daher brauchen wir keinen globalen Store bzw. eine zentrale Datensammelstelle, auf die jede Komponente zugreifen müsste. Änderungen passieren direkt im jeweiligen Screen und bleiben dadurch überschaubar.
+
+* **Theming:** ThemedView/ThemedText nutzen presentation/styles/colors.ts, sodass alle Screens dieselben Farbwerte ziehen, UI-Änderungen (z. B. neue Palette oder Dark Mode) nur an einer Stelle angepasst werden müssen und keine Komponente eigene Farben pflegt.
+
 == Ausgewählte Sichten
 === Sequenzdiagramm **Registrierung**
 image::./images/Sequenzdiagramm_Registrierung.png[]
 
+
 === Sequenzdiagramm Login
 image::./images/Sequenzdiagramm_Anmeldung.png[]
 
+
 == Schnittstellen
-// Dokumentation oder Verweise auf Schnittstellen, z.B. REST-APIs
+// Dokumentation oder Verweise auf Schnittstellen, z.B REST-APIs
+[cols="1,1,2,2",options="header"]
+|===
+| Endpoint | Methode | Anfrage (wichtige Felder) | Antwort / Hinweise
+| `/auth/register` | POST | `{ email, password, displayName }` | 201 + Login-Token + Nutzerprofil
+| `/auth/login` | POST | `{ email, password }` | 200 + Login-Token + Nutzerprofil
+| `/habits` | GET | Header `Authorization: Bearer <Token>` | Liste aller Habits inkl. Plan und Streak
+| `/habits` | POST | `{ title, schedule, reminderTime }` | 201 + neu angelegtes Habit
+| `/habits/{id}` | PATCH | Felder wie `{ title?, reminderTime?, isArchived? }` | 200 + aktualisiertes Habit
+| `/habits/{id}` | DELETE | — | 204 (kein Inhalt)
+| `/habits/{id}/entries` | POST | `{ date, status }` | 201 + aktualisierte Streak-Information
+| `/profile` | GET | — | Aktuelles Profil und Statistiken
+| `/profile` | PATCH | `{ displayName?, avatarUrl? }` | 200 + aktualisiertes Profil
+| `/quotes/daily` | GET | — | Text des Tageszitats
+|===
 
 == Datenmodell
 image::./images/Datenmodell_Datenbank.png[]
+
 
 == Umsetzungen und Erweiterungen der Architektur durch User Stories
 
