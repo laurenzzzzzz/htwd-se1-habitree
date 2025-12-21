@@ -5,7 +5,7 @@ import { useFocusEffect } from 'expo-router';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { ThemedText } from '@/presentation/ui/ThemedText';
 import { ThemedView } from '@/presentation/ui/ThemedView';
-import { useHabits } from '../../context/HabitsContext';
+import { useHabitsController } from '../../presentation/controllers/useHabitsController';
 import HabitModal from '../../presentation/ui/HabitModal';
 import { styles as homeStyles } from '../../styles/index_style';
 import { shouldHabitOccurOnDate } from '../../domain/policies/HabitSchedulePolicy';
@@ -62,7 +62,7 @@ export default function CalendarScreen() {
     handleSaveHabit,
     isSameDay,
     isLoading: isLoadingHabits,
-  } = useHabits();
+  } = useHabitsController();
   // CalendarScreen render
 
   // modal/edit state

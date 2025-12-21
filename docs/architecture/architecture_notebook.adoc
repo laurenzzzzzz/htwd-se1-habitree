@@ -227,7 +227,7 @@ Die Codebasis folgt konsequent einer Domain-Driven-Design-Struktur (DDD).
 |===
 | Layer | Beschreibung | Beispiele
 | Presentation Layer | Visualisiert Informationen und ermöglicht Nutzereingaben (UI) | [presentation/controllers/useHabitsController.tsx], [presentation/ui/HabitList.tsx], [app/_layout.tsx]
-| Service Layer | Orchestriert Anwendungsabläufe mit Hilfe der Fachobjekte | [application/services/HabitService.ts], [application/services/AuthenticationService.ts]
+| Service Layer | Orchestriert Anwendungsabläufe mit Hilfe der Fachobjekte | [application/services/HabitService.ts], [application/services/AuthService.ts]
 | Domain Layer | Enthält fachliche Regeln und den Zustand der Geschäftsobjekte | [domain/entities/Habit.ts], [domain/entities/User.ts], [domain/repositories/IHabitsRepository.ts]
 | Infrastructure Layer | Liefert technische Basis für Persistenz, Kommunikation und Sicherheit | [infrastructure/adapters/ApiHabitsRepository.ts], [infrastructure/adapters/SecureStoreAuthRepository.ts], [infrastructure/di/ServiceContainer.ts]
 |===

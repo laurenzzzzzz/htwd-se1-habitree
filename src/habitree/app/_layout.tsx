@@ -3,7 +3,6 @@ import { Appearance, Text } from 'react-native';
 import React from 'react';
 import { ThemeProvider, DefaultTheme } from '@react-navigation/native';
 import { useAuth, AuthProvider } from '../context/AuthContext';
-import { HabitsProvider } from '../context/HabitsContext';
 import { ApplicationServicesProvider } from '../presentation/providers/ApplicationServicesProvider';
 import { applicationServices } from '../infrastructure/di/ServiceContainer';
 import { Colors } from '../constants/Colors';
@@ -50,9 +49,7 @@ export default function RootLayout() {
   return (
     <ApplicationServicesProvider services={applicationServices}>
       <AuthProvider>
-        <HabitsProvider>
-          <RootLayoutContent />
-        </HabitsProvider>
+        <RootLayoutContent />
       </AuthProvider>
     </ApplicationServicesProvider>
   );

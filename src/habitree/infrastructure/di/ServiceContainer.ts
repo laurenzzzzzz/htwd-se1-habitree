@@ -8,7 +8,6 @@ import { ApiStreakRepository } from '../adapters/ApiStreakRepository';
 import { HabitService } from '../../application/services/HabitService';
 import { QuoteService } from '../../application/services/QuoteService';
 import { ProfileService } from '../../application/services/ProfileService';
-import { AuthenticationService } from '../../application/services/AuthenticationService';
 import { AuthService } from '../../application/services/AuthService';
 import { TreeGrowthService } from '../../application/services/TreeGrowthService';
 import { AchievementService } from '../../application/services/AchievementService';
@@ -29,8 +28,7 @@ const notificationPort = new ExpoNotificationPort();
 
 // Auth persistence service (keeps using SecureStoreAuthRepository inside AuthService)
 const authRepoForPersistence = new SecureStoreAuthRepository();
-export const authService = new AuthService(authRepoForPersistence);
-export const authenticationService = new AuthenticationService(authApiRepo, authService);
+export const authService = new AuthService(authRepoForPersistence, authApiRepo);
 
 export const habitService = new HabitService(habitsRepo);
 export const quoteService = new QuoteService(quotesRepo);
@@ -44,7 +42,6 @@ export const applicationServices: ApplicationServices = {
   habitService,
   quoteService,
   profileService,
-  authenticationService,
   authService,
   treeGrowthService,
   achievementService,

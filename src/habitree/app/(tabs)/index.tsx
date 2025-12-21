@@ -16,7 +16,7 @@ import { ThemedView } from '@/presentation/ui/ThemedView';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { createHomeStyles } from '../../styles/index_style';
 import { useAuth } from '../../context/AuthContext';
-import { useHabits } from '../../context/HabitsContext';
+import { useHabitsController } from '../../presentation/controllers/useHabitsController';
 import { useQuoteController } from '../../presentation/controllers/useQuoteController';
 import { useStreakController } from '../../presentation/controllers/useStreakController';
 import HabitModal from '../../presentation/ui/HabitModal';
@@ -42,7 +42,7 @@ export default function HomeScreen() {
     handleSaveHabit,
     handleToggleHabit,
     isSameDay,
-  } = useHabits();
+  } = useHabitsController();
   // HomeScreen render
   const { quote, fetchQuote } = useQuoteController();
   const { streak, isLoading: isLoadingStreak } = useStreakController();
