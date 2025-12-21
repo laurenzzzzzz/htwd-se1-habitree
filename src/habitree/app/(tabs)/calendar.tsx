@@ -8,7 +8,7 @@ import { ThemedView } from '@/presentation/ui/ThemedView';
 import { useHabits } from '../../context/HabitsContext';
 import HabitModal from '../../presentation/ui/HabitModal';
 import { styles as homeStyles } from '../../styles/index_style';
-import { shouldHabitOccurOnDate } from '../../domain/services/HabitSchedulePolicy';
+import { shouldHabitOccurOnDate } from '../../domain/policies/HabitSchedulePolicy';
 import { createCalendarScreenStyles, calendarThemeConfig } from '../../styles/calendar_screen_style';
 import { Colors } from '../../constants/Colors';
 

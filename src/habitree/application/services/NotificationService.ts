@@ -1,6 +1,6 @@
 import { Habit } from '../../domain/entities/Habit';
 import INotificationPort from '../../domain/ports/INotificationPort';
-import { isSameDay } from '../../domain/services/HabitSchedulePolicy';
+import { isSameDay } from '../../domain/policies/HabitSchedulePolicy';
 
 export class NotificationService {
   constructor(private readonly port: INotificationPort) {}

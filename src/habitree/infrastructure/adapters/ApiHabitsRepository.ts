@@ -4,7 +4,7 @@ import { Habit, HabitData } from '../../domain/entities/Habit';
 import {
   buildHabitPersistenceRequest,
   HabitPersistenceRequestBody,
-} from '../../domain/services/HabitSchedulePolicy';
+} from '../../domain/policies/HabitSchedulePolicy';
 
 const API_BASE_URL = 'http://iseproject01.informatik.htw-dresden.de:8000';
 const HABITS_API_URL = `${API_BASE_URL}/habits`;

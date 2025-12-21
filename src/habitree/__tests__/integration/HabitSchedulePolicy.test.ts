@@ -4,7 +4,7 @@ import {
   formatDateForPersistence,
   formatTimeForPersistence,
   HabitScheduleLike,
-} from '../../domain/services/HabitSchedulePolicy';
+} from '../../domain/policies/HabitSchedulePolicy';
 import { HabitPersistencePayload } from '../../domain/repositories/IHabitsRepository';
 
 describe('HabitSchedulePolicy', () => {

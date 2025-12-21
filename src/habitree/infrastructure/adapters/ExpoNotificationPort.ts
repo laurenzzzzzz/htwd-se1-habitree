@@ -2,7 +2,7 @@ import * as Notifications from 'expo-notifications';
 import { Platform } from 'react-native';
 import { Habit } from '../../domain/entities/Habit';
 import INotificationPort from '../../domain/ports/INotificationPort';
-import { isSameDay } from '../../domain/services/HabitSchedulePolicy';
+import { isSameDay } from '../../domain/policies/HabitSchedulePolicy';
 
 const notificationLogs: string[] = [];
 
