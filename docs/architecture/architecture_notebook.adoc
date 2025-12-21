@@ -18,7 +18,7 @@ Dieses Dokument beschreibt die Philosophie, Entscheidungen, Nebenbedingungen, Be
 
 //Formulieren Sie eine Reihe von Zielen, die die Architektur in ihrer Struktur und ihrem Verhalten erfüllen muss. Identifizieren Sie kritische Fragen, die von der Architektur adressiert werden müssen, z.B. besondere Hardware-Abhängigkeiten, die vom Rest des Systems isoliert werden sollten oder Sicherstellung der Funktionsfähigkeit unter besonderen Bedingungen (z.B. Offline-Nutzung).
 
-Die Architektur der Habit-Tracking-App verfolgt das Ziel, eine robuste, nutzerfreundliche und wartbare mobile Anwendung bereitzustellen. Sie muss auch unter mobilen Bedingungen zuverlässig funktionieren, inklusive Offline-Nutzung, sicherem Umgang mit Nutzerdaten und reibungsloser Benutzererfahrung. Im Fokus stehen dabei folgende zentrale Ziele:
+Die Architektur der Habit-Tracking-App verfolgt das Ziel, eine robuste, nutzerfreundliche und wartbare mobile Anwendung bereitzustellen. Sie muss auch unter mobilen Bedingungen zuverlässig funktionieren, idealerweise inklusive Offline-Nutzung, sicherem Umgang mit Nutzerdaten und reibungsloser Benutzererfahrung. Im Fokus stehen dabei folgende zentrale Ziele:
 
 * **Performance**
 ** *Geringe Latenz bei UI-Interaktionen:* Die App soll möglichst sofort auf Benutzereingaben reagieren, ohne Ruckler beim Scrollen oder Wechseln zwischen Ansichten.
@@ -26,12 +26,12 @@ Die Architektur der Habit-Tracking-App verfolgt das Ziel, eine robuste, nutzerfr
 
 * **Zuverlässigkeit**
 ** *Robuste Services:* Bei Dienstausfällen auf Serverseite (z. B. Neustarts) darf es nicht zu sehr langfristigen Funktionsverlust kommen.
-** *Health-Checks und Rollback:* Das System soll bei Inkonsistenzen in Datenbeständen o. ä. automatisch einen Rollback durchführen bzw. diesen beheben.
+** *Health-Checks und Rollback:* Wünschenswert wäre, dass das System  bei Inkonsistenzen in Datenbeständen o. ä. automatisch einen Rollback durchführen bzw. diese behebt.
 
 * **Sicherheit**
 ** *Authentifizierung:* Nutzerregistrierung und -login sollen über ein sicheres Auth-System einerfolgen.
 ** *Datenverschlüsselung:* Sensible Daten (z. B. persönliche Gewohnheiten) werden sicher gespeichert.
-** *Anmeldung & Sessions:* Nutzer bleiben über Sessions angemeldet. Session laufen nach vordefiniertem Zeitraum (z. B. 2 Wochen) automatisch ab.
+** *Anmeldung & Sessions:* Nutzer bleiben über Sessions angemeldet.
 
 * **Portabilität**
 ** *Gemeinsame Code-Basis (Android & iOS):* Pflege einer einzigen Codebasis für beide Plattformen. (Auch wenn sich der Fokus im Rahmen des Moduls aus zeitgründen auf der Entwicklung der iOS Version fokussiert)
@@ -40,8 +40,9 @@ Die Architektur der Habit-Tracking-App verfolgt das Ziel, eine robuste, nutzerfr
 * **Echtzeit-Updates**
 ** *Aktuelle Anzeige von Status & Logs:* Änderungen (z. B. „Habit abgehakt“) sollen unmittelbar im UI sichtbar sein – ggf. über Polling oder Push-Ansätze.
 
-* **Offline-Support**
-** *Lokales Caching von Nutzerdaten:* Die App funktioniert auch ohne Internetverbindung, indem Daten lokal zwischengespeichert und später synchronisiert werden.
+//
+//* **Offline-Support**
+//** *Lokales Caching von Nutzerdaten:* Die App funktioniert auch ohne Internetverbindung, indem Daten lokal zwischengespeichert und später synchronisiert werden.
 
 * **Wartbarkeit**
 ** *Modularität:* Sauber getrennte Komponenten und Services erleichtern Weiterentwicklung.
@@ -51,11 +52,11 @@ Die Architektur der Habit-Tracking-App verfolgt das Ziel, eine robuste, nutzerfr
 ** *Horizontale Skalierung:* bei Nutzerwachstum
 ** *Effiziente Datenbank* 
 
-* **Barrierefreiheit**
-** *Kontrast & Schriftgrößen:* App unterstützt Systemeinstellungen für Barrierefreiheit.
+//* **Barrierefreiheit**
+//** *Kontrast & Schriftgrößen:* App unterstützt Systemeinstellungen für Barrierefreiheit.
 
-* **Internationalisierung**
-** *Mehrsprachigkeit vorbereitet:* Inhalte können in verschiedene Sprachen übersetz werden.
+//* **Internationalisierung**
+//** *Mehrsprachigkeit vorbereitet:* Inhalte können in verschiedene Sprachen übersetz werden.
 
 
 
@@ -65,7 +66,7 @@ Die Architektur der Habit-Tracking-App verfolgt das Ziel, eine robuste, nutzerfr
 * Die App wird als mobile Anwendung umgesetzt, welche iOS (und Android gleichermaßen)  unterstützen soll.
 * Die Zielgruppe sind vor allem Einzelpersonen, die persönliche Routinen tracken wollen, eine Mehrbenutzerfähigkeit (z.B. Teams oder Gruppenfunktionen) ist  nicht vorgesehen.
 * Die initiale Entwicklung erfolgt durch ein kleines Team mit begrenzter Programmiererfahrung, daher sind einfache Tools, gute Dokumentation und Typsicherheit wichtig.
-* Es ist vorgesehen, dass die App offlinefähig ist mittels lokalem Caching und späterer Synchronisation.
+//* Es ist vorgesehen, dass die App offlinefähig ist mittels lokalem Caching und späterer Synchronisation.
 * Datenschutz ist wichtig: DSGVO-Konformität sollte berücksichtigt werden, weshalb persönliche Daten sicher gespeichert werden müssen und auf Wunsch vollständig löschbar sind.
 * Benutzerverwaltung und Authentifizierung werden selbst entwickelt.
 * Das Backend wird auf einem selbstverwalteten Server betrieben – eigene Datenbank zur Speicherung der Nutzdaten der jeweiligen Nutzer (Fortschritte etc.).
@@ -226,7 +227,7 @@ Die Codebasis folgt konsequent einer Domain-Driven-Design-Struktur (DDD).
 |===
 | Layer | Beschreibung | Beispiele
 | Presentation Layer | Visualisiert Informationen und ermöglicht Nutzereingaben (UI) | [presentation/controllers/useHabitsController.tsx], [presentation/ui/HabitList.tsx], [app/_layout.tsx]
-| Service Layer | Orchestriert Anwendungsabläufe mit Hilfe der Fachobjekte | [application/services/HabitService.ts], [application/services/AuthenticationService.ts], [context/AuthContext.tsx]
+| Service Layer | Orchestriert Anwendungsabläufe mit Hilfe der Fachobjekte | [application/services/HabitService.ts], [application/services/AuthenticationService.ts]
 | Domain Layer | Enthält fachliche Regeln und den Zustand der Geschäftsobjekte | [domain/entities/Habit.ts], [domain/entities/User.ts], [domain/repositories/IHabitsRepository.ts]
 | Infrastructure Layer | Liefert technische Basis für Persistenz, Kommunikation und Sicherheit | [infrastructure/adapters/ApiHabitsRepository.ts], [infrastructure/adapters/SecureStoreAuthRepository.ts], [infrastructure/di/ServiceContainer.ts]
 |===
