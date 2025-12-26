@@ -6,10 +6,12 @@
 === 1.1 Download
 
 . Download: https://nodejs.org
+. Download: Docker Desktop
 
 === 1.2 Installation
 
 . Installation von nodejs folgen
+. Installation von Docker Desktop folgen
 
 === 1.3 Überprüfung
 
@@ -19,11 +21,51 @@
 ----
 node -v
 npm -v
+docker -v
 ----
 
 
 
 == 2. Habitree - Expo App starten
+
+Bitte beachten jeweils auf Handy und PC den eduVPN aktivieren, da der Backend Server im HTW Netzwerk ist.
+
+
+=== 2.1 Mit Docker (empfohlen)
+
+==== Erstausführung (einmalig)
+
+. Docker Container bauen:
++
+[source,shell]
+----
+docker build -t habitree-dev ./src/habitree
+----
+
+. Volume für node_modules erstellen:
++
+[source,shell]
+----
+docker volume create habitree-node
+----
+
+. Dependencies installieren:
++
+[source,shell]
+----
+docker run --rm -it -v "$(pwd)/src/habitree:/app" -v habitree-node:/app/node_modules habitree-dev npm ci
+----
+
+==== Container starten (jede Ausführung)
+
+[source,shell]
+----
+docker run --rm -it -v "$(pwd)/src/habitree:/app" -v habitree-node:/app/node_modules -p 8081:8081 -p 19000:19000 -p 19001:19001 -p 19002:19002 -p 19006:19006 habitree-dev
+----
+
+Scanne den angezeigten QR-Code mit der **Expo Go App** auf deinem Smartphone. Dank `--tunnel` funktioniert das auch übers Internet.
+
+=== 2.2 Lokal ohne Docker
 
 [source,shell]
 ----
@@ -33,4 +75,4 @@ npx expo install --fix <- Installiert und Updatet alle Packages
 npx expo start --tunnel --go --clear
 ----
 
-. Scanne den angezeigten QR-Code mit der **Expo Go App** auf deinem Smartphone.
+Scanne den angezeigten QR-Code mit der **Expo Go App** auf deinem Smartphone.

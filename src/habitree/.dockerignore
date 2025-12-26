@@ -1,0 +1,9 @@
+node_modules
+.expo
+.expo-shared
+dist
+web-build
+coverage
+npm-debug.log*
+.DS_Store
+.git
