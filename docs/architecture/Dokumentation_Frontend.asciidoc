@@ -1,6 +1,22 @@
 = Dokumentation Frontend
 
 
+== 0. Öffnen im Container (Devcontainer)
+
+Falls du mit Visual Studio Code arbeitest, kannst du das Projekt auch direkt im Container (Devcontainer) öffnen. Das bietet eine einheitliche Entwicklungsumgebung ohne lokale Einrichtung.
+
+. Voraussetzungen:
+	* Docker Desktop installiert und gestartet
+	* Visual Studio Code mit der Erweiterung "Dev Containers" (bzw. "Devcontainer")
+
+. Schritte:
+ 1. Öffne den Projektordner in Visual Studio Code.
+ 2. Klicke unten links auf "><" oder öffne die Befehlspalette (F1) und wähle "Reopen in Container" ("Im Container erneut öffnen").
+ 3. Warte, bis der Container gebaut und gestartet ist. Es wird bereits automatisch npx ci ausgeführt.
+ 4. Führe die gewohnten Befehle im Container-Terminal aus (z.B. npx expo start`).
+
+
+
 == 1. Node.js installieren
 
 === 1.1 Download
@@ -31,41 +47,7 @@ docker -v
 Bitte beachten jeweils auf Handy und PC den eduVPN aktivieren, da der Backend Server im HTW Netzwerk ist.
 
 
-=== 2.1 Mit Docker (empfohlen)
-
-==== Erstausführung (einmalig)
-
-. Docker Container bauen:
-+
-[source,shell]
-----
-docker build -t habitree-dev ./src/habitree
-----
-
-. Volume für node_modules erstellen:
-+
-[source,shell]
-----
-docker volume create habitree-node
-----
-
-. Dependencies installieren:
-+
-[source,shell]
-----
-docker run --rm -it -v "$(pwd)/src/habitree:/app" -v habitree-node:/app/node_modules habitree-dev npm ci
-----
-
-==== Container starten (jede Ausführung)
-
-[source,shell]
-----
-docker run --rm -it -v "$(pwd)/src/habitree:/app" -v habitree-node:/app/node_modules -p 8081:8081 -p 19000:19000 -p 19001:19001 -p 19002:19002 -p 19006:19006 habitree-dev
-----
-
-Scanne den angezeigten QR-Code mit der **Expo Go App** auf deinem Smartphone. Dank `--tunnel` funktioniert das auch übers Internet.
-
-=== 2.2 Lokal ohne Docker
+=== 2.1 Lokal ohne Docker
 
 [source,shell]
 ----
