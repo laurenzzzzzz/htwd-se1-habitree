@@ -1,0 +1,34 @@
+== Überblick & Whitebox-Tests
+
+Wir testen vor allem die Fachlogik (z. B. Streak, TreeGrowth, Achievements, Quotes) mit Whitebox-Unit-Tests.
+Ziel ist, kritische Business-Entscheidungen (z. B. wann ein Streak aktiv ist) deterministisch und reproduzierbar zu testen.
+
+== Namenskonventionen
+
+Test-Dateien heißen nach Muster:
+- *.entity.test.ts
+- *.integration.test.ts
+
+Testnamen folgen einem klaren, beschreibenden Stil (z. B. should_do_X_when_Y oder kurze englische Sätze).
+Beispiele aus dem aktuellen Code:
+- isActive should return true when lastCompletionDate is today
+- getMilestoneMessage returns simple days message for streak < 7
+
+== Code Coverage (aktueller Stand)
+
+Aktueller Stand: ~71 % Lines, ~73 % Statements, ~68 % Functions, ~80 % Branches.
+
+Hohe Abdeckung bei Domain-Entities & Streak-Logik, Lücken v. a. bei Auth/Profil/Quote-Services.
+Fokus lag auf Business-Logik, Service-Layer kommt als nächstes.
+
+== CI & Badge
+
+Wir haben eine GitHub Actions CI, die Tests und Coverage ausführt. Fügt im Projekt ein Badge ein, damit der Build-Status sichtbar ist. Beispiel:
+
+image::https://github.com/laurenzzzzzz/htwd-se1-habitree/actions/workflows/ci.yml/badge.svg[Build]
+
+Kurze Befehle zum lokalen Ausführen:
+- npm test            -> führt alle Tests aus (Jest)
+- npm run test:coverage -> führt Tests und Coaverage-Report aus
+
+Hinweis: Das Badge-URL-Template funktioniert, sobald das Repo auf GitHub liegt und die Workflow-Datei im Pfad .github/workflows/ci.yml existiert.
