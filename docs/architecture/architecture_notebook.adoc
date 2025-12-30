@@ -326,6 +326,31 @@ Das C4-Level-2-Container-Diagramm zeigt die technische Struktur der Habitreee-An
 //Beschreibt die physischen Knoten (Rechner) des Systems und Komponenten, die in diesen Knoten ausgeführt werden. Diese Sicht wird nicht benötigt, wenn das System in einem einzelnen Prozess oder Thread ausgeführt wird.
 image::deployment-diagram-habitree.svg[]
 
+== Externe Schnittstellen und Integrationen
+
+=== Überblick
+
+* **Primäre Plattform:** iOS (React Native/Expo) +
+* **Optional:** Browsernutzung und Android (nicht primär unterstützt) +
+
+=== Geplante externe Integrationen
+
+Folgende Integrationen sind für zukünftige Versionen vorgesehen:
+
+* Apple Fitness
+* Google/Apple Kalender
+* Wearables (z. B. HealthKit, Schrittzähler)
+* Produktivitätstools
+
+=== Potenzielle Fehlerszenarien
+
+* Keine Internetverbindung (z. B. HTW-Netz/VPN-Anforderungen) +
+* Server-/Datenbankausfälle +
+* Datenpersistenzfehler +
+* Fehlende Push-Benachrichtigungen +
+* Falsche Erinnerungszeiten oder Zeitzonenfehler +
+* Fehlerhafte Baumvisualisierung +
+
 == Glossar für technische Fachbegriffe
 [%header]
 |===

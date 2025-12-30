@@ -165,11 +165,9 @@ image::Persona-Tom_Neumann.png[Tom Neumann,200,200]
 
 *Ergänzung:* verhaltenspsychologische Ansätze (Nudging, Feedback-Loops), Wissensbereich, motivierende Micro-Interactions
 
-=== Arbeitsmittel und Schnittstellen
+=== Arbeitsmittel und Plattformen
 
-* Endgeräte: primär für Smartphone, nur für IOS; Browsernutzung möglich, aber nicht primär unterstützt
-* geplante Integrationen (später): Apple Fitness, Google/Apple Kalender, Wearables, Produktivitätstools
-* technischer Überblick: Expo/React Native (Frontend) ⇄ Node.js/Express (Backend, REST) ⇄ PostgreSQL (DB via Prisma ORM); Auth via JWT + PasswordHashing
+* Endgeräte: primär für Smartphone (iOS)
 
 === Physische/soziale Umgebung
 
@@ -204,19 +202,11 @@ image::Persona-Tom_Neumann.png[Tom Neumann,200,200]
 * Rot‑Grün‑Schwäche berücksichtigen (keine allein farbcodierten Stati; redundante Iconografie/Text)
 * einfache Sprache und progressive Offenlegung komplexer Funktionen
 
-=== Systeme und Plattformen
 
-* unterstützt: iOS (React Native/Expo). Browser: optional (nicht primär)
 
-=== Datensicherheit (Soll-Konzept)
 
-* Transport: TLS 1.2+; Auth:JWT; Sitzungen mit Token-Refresh
-* Daten: Minimierung, Trennung PII/Nutzungsdaten; Hashing sensibler Tokens; Backups (verschlüsselt)
-* Rollen-/Rechtekonzept (später): Privat/Öffentlich je Profilfeld
 
-=== Verfügbarkeit
 
-* Ziel SLA: 99,5 % (Entwicklungsphase: Best Effort); planbare Wartungsfenster mit Vorankündigung
 
 // =====================================================================
 == Wireframes & Wireflow
@@ -427,14 +417,7 @@ visuell ansprechende Erfahrung. Sie schafft Verbindung zwischen digitalem Verhal
 
 * Screenreader‑Labels (aria‑), Fokusreihenfolge, dynamische Textgröße, Haptik optional
 
-// =====================================================================
-== Technischer Überblick (Kurz)
 
-* Frontend: Expo/React Native; State‑Management (z. B. Zustand/Redux) nach Bedarf
-* Backend: Node.js/Express; REST; DB: PostgreSQL via Prisma ORM
-* Observability: Log‑Aggregation; Crashlytics; Performance‑Metriken (TTI, CLS analog)
-
-// =====================================================================
 == Qualitätssicherung
 
 === Definition of Done (UI)
