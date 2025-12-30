@@ -1,14 +1,17 @@
+/**
+ * Startpunkt des Express-Servers: bindet Routen, Auth-Middleware und Cronjobs.
+ */
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import { verifyJwtToken } from './middleware/authMiddleware.js'; 
+import { verifyJwtToken } from './middleware/authMiddleware.js';
 import habitsRoutes from './routes/habits.js';
 import userRoutes from './routes/user.js';
 import { createDailyHabitEntries } from './utils/generateDailyEntries.js';
 import { recalculateStreaks } from './utils/streak.js';
-import authRoutes from './routes/auth.js'; 
-import quotesRoutes from './routes/quotes.js'; 
-import cron from 'node-cron'
+import authRoutes from './routes/auth.js';
+import quotesRoutes from './routes/quotes.js';
+import cron from 'node-cron';
 
 dotenv.config();
 

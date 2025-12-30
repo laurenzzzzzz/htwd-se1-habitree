@@ -1,8 +1,15 @@
-// src/utils/generateDailyEntries.js
+/**
+ * Erstellt tägliche HabitEntries für fällige Habits, sofern noch keiner existiert.
+ * @module utils/generateDailyEntries
+ */
 import { PrismaClient } from '@prisma/client';
 import { isHabitDue } from './streak.js';
 const prisma = new PrismaClient();
 
+/**
+ * Erzeugt HabitEntry-Einträge für den aktuellen Tag, falls fällig und noch nicht vorhanden.
+ * @returns {Promise<void>}
+ */
 export async function createDailyHabitEntries() {
   // Nutze den lokalen Tagesbeginn (Mitternacht) statt UTC,
   // damit z.B. 00:08 in Europe/Berlin nicht auf den Vortag (UTC) zeigt.

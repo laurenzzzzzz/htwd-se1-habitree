@@ -1,0 +1,532 @@
+openapi: 3.0.3
+info:
+  title: Habitree Backend API
+  version: 1.1.0
+  description: Aktuelle Definition der REST-Endpunkte des Habitree-Backends (Express + Prisma + JWT).
+servers:
+  - url: http://iseproject01.informatik.htw-dresden.de:8000
+    description: Externer Server
+  - url: http://localhost:8000
+    description: Lokale Entwicklung
+paths:
+  /auth/register:
+    post:
+      summary: Nutzer registrieren
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthRegisterRequest'
+      responses:
+        '201':
+          description: Registrierung erfolgreich
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '400': { description: Ungültige Eingabe }
+        '409': { description: E-Mail bereits registriert }
+  /auth/login:
+    post:
+      summary: Nutzer anmelden
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthLoginRequest'
+      responses:
+        '200':
+          description: Login erfolgreich
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '401': { description: Ungültige Anmeldedaten }
+  /auth/password:
+    put:
+      summary: Passwort ändern (authentifiziert)
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangePasswordRequest'
+      responses:
+        '200': { description: Passwort geändert }
+        '400': { description: Ungültige Eingabe }
+        '401': { description: Nicht autorisiert }
+
+  /user/status:
+    get:
+      summary: Login-Status des aktuellen Nutzers
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Status des eingeloggten Nutzers
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserStatusResponse'
+        '401': { description: Nicht autorisiert }
+
+  /user/streak:
+    get:
+      summary: Streak-Informationen des aktuellen Nutzers
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Streak-Daten
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserStreakResponse'
+        '401': { description: Nicht autorisiert }
+
+  /user/username:
+    put:
+      summary: Benutzernamen aktualisieren
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUsernameRequest'
+      responses:
+        '200':
+          description: Benutzername geändert
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateUsernameResponse'
+        '400': { description: Ungültige Eingabe }
+        '401': { description: Nicht autorisiert }
+
+  /habits:
+    get:
+      summary: Alle Habits des Nutzers
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Liste der Habits inkl. Einträgen
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Habit'
+        '401': { description: Nicht autorisiert }
+    post:
+      summary: Neues Habit anlegen
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HabitCreateRequest'
+      responses:
+        '201':
+          description: Habit erstellt
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Habit'
+        '400': { description: Ungültige Eingabe }
+        '401': { description: Nicht autorisiert }
+
+  /habits/predefined:
+    get:
+      summary: Öffentliche Habit-Vorlagen abrufen
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Liste der Vorlagen
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PredefinedHabit'
+        '401': { description: Nicht autorisiert }
+
+  /habits/{id}:
+    put:
+      summary: Habit aktualisieren
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HabitUpdateRequest'
+      responses:
+        '200': { description: Habit aktualisiert, content: { application/json: { schema: { $ref: '#/components/schemas/Habit' } } } }
+        '400': { description: Ungültige Eingabe }
+        '401': { description: Nicht autorisiert }
+        '404': { description: Habit nicht gefunden oder kein Zugriff }
+    delete:
+      summary: Habit löschen
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200': { description: Habit gelöscht }
+        '401': { description: Nicht autorisiert }
+        '404': { description: Habit nicht gefunden oder kein Zugriff }
+
+  /habits/{id}/grow:
+    put:
+      summary: Habit als wachsend markieren (isHarvested = 1)
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200': { description: Habit aktualisiert }
+        '401': { description: Nicht autorisiert }
+        '404': { description: Habit nicht gefunden oder kein Zugriff }
+
+  /habits/{id}/harvest:
+    put:
+      summary: Habit ernten (isHarvested = 2)
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200': { description: Habit aktualisiert }
+        '401': { description: Nicht autorisiert }
+        '404': { description: Habit nicht gefunden oder kein Zugriff }
+
+  /habits/{id}/toggle:
+    put:
+      summary: Status eines Habit-Eintrags für ein Datum umschalten
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ToggleHabitRequest'
+      responses:
+        '200':
+          description: Entry aktualisiert
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HabitEntry'
+        '401': { description: Nicht autorisiert }
+        '404': { description: HabitEntry nicht gefunden }
+
+  /habits/daily:
+    post:
+      summary: Tägliche Habit-Einträge für fällige Habits erzeugen
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Anzahl erzeugter Einträge
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateDailyResponse'
+        '401': { description: Nicht autorisiert }
+
+  /habits/today:
+    get:
+      summary: Habits mit Einträgen für den heutigen Tag
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Habits mit heutigen Entries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Habit'
+        '401': { description: Nicht autorisiert }
+
+  /habits/harvested:
+    get:
+      summary: Geerntete Habits des Nutzers (isHarvested = 2)
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Geerntete Habits
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Habit'
+        '401': { description: Nicht autorisiert }
+
+  /quotes:
+    get:
+      summary: Alle Quotes abrufen (öffentlich)
+      responses:
+        '200':
+          description: Liste der Quotes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Quote'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    AuthRegisterRequest:
+      type: object
+      required: [email, password]
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 6
+        username:
+          type: string
+          description: Optional, ansonsten wird die E-Mail-Präfix verwendet.
+
+    AuthLoginRequest:
+      type: object
+      required: [email, password]
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+
+    ChangePasswordRequest:
+      type: object
+      required: [oldPassword, newPassword]
+      properties:
+        oldPassword: { type: string }
+        newPassword:
+          type: string
+          minLength: 6
+
+    AuthResponse:
+      type: object
+      properties:
+        message: { type: string }
+        token: { type: string }
+        user:
+          $ref: '#/components/schemas/AuthUser'
+
+    AuthUser:
+      type: object
+      properties:
+        userId: { type: integer }
+        email: { type: string, format: email }
+        username: { type: string }
+
+    UserStatusResponse:
+      type: object
+      properties:
+        isLoggedIn: { type: boolean }
+        userId: { type: integer }
+        email: { type: string, format: email }
+        username: { type: string }
+
+    UserStreakResponse:
+      type: object
+      properties:
+        userId: { type: integer }
+        currentStreak: { type: integer }
+        maxStreak: { type: integer }
+        lastCompletionDate:
+          type: string
+          format: date-time
+
+    UpdateUsernameRequest:
+      type: object
+      required: [username]
+      properties:
+        username:
+          type: string
+          minLength: 3
+
+    UpdateUsernameResponse:
+      type: object
+      properties:
+        message: { type: string }
+        user:
+          $ref: '#/components/schemas/AuthUser'
+
+    Habit:
+      type: object
+      properties:
+        id: { type: integer }
+        userId: { type: integer }
+        name: { type: string }
+        description: { type: string, nullable: true }
+        frequency:
+          type: string
+          enum: [Täglich, Wöchentlich, Monatlich, Benutzerdefiniert]
+        startDate:
+          type: string
+          format: date
+          description: Format dd.mm.yyyy im Client, wird als Datum gespeichert.
+        time:
+          type: string
+          pattern: '^\d{2}:\d{2}$'
+        weekDays:
+          type: array
+          items:
+            type: integer
+            minimum: 0
+            maximum: 6
+          nullable: true
+        intervalDays:
+          type: integer
+          minimum: 1
+          nullable: true
+        isHarvested:
+          type: integer
+          description: 0 = aktiv, 1 = wachsend, 2 = geerntet
+        entries:
+          type: array
+          items:
+            $ref: '#/components/schemas/HabitEntry'
+
+    HabitEntry:
+      type: object
+      properties:
+        id: { type: integer }
+        habitId: { type: integer }
+        userId: { type: integer }
+        date: { type: string, format: date-time }
+        status: { type: boolean }
+        note: { type: string, nullable: true }
+
+    PredefinedHabit:
+      type: object
+      properties:
+        id: { type: integer }
+        name: { type: string }
+        description: { type: string }
+        frequency: { type: string }
+
+    HabitCreateRequest:
+      type: object
+      required: [name, frequency, startDate, time]
+      properties:
+        name: { type: string }
+        description: { type: string, nullable: true }
+        frequency:
+          type: string
+          enum: [Täglich, Wöchentlich, Monatlich, Benutzerdefiniert]
+        startDate:
+          type: string
+          format: date
+          description: Erwartet dd.mm.yyyy vom Client
+        time:
+          type: string
+          pattern: '^\d{2}:\d{2}$'
+        weekDays:
+          type: array
+          items:
+            type: integer
+            minimum: 0
+            maximum: 6
+          description: Pflicht für wöchentliche Habits
+        intervalDays:
+          type: integer
+          minimum: 1
+          description: Pflicht für benutzerdefinierte Habits
+
+    HabitUpdateRequest:
+      type: object
+      properties:
+        name: { type: string }
+        description: { type: string, nullable: true }
+        frequency:
+          type: string
+          enum: [Täglich, Wöchentlich, Monatlich, Benutzerdefiniert]
+        startDate:
+          type: string
+          format: date
+        time:
+          type: string
+          pattern: '^\d{2}:\d{2}$'
+        weekDays:
+          type: array
+          items:
+            type: integer
+            minimum: 0
+            maximum: 6
+        intervalDays:
+          type: integer
+          minimum: 1
+
+    ToggleHabitRequest:
+      type: object
+      required: [date]
+      properties:
+        date:
+          type: string
+          format: date-time
+          description: Datum des Entries, wird auf Tagesgrenze normalisiert
+
+    CreateDailyResponse:
+      type: object
+      properties:
+        message: { type: string }
+        count: { type: integer }
+
+    Quote:
+      type: object
+      properties:
+        id: { type: integer }
+        quote: { type: string }

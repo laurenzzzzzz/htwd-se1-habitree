@@ -1,3 +1,7 @@
+/**
+ * Authentifizierungsrouten (Register/Login/Passwort ändern).
+ * @module routes/auth
+ */
 import express from 'express';
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
@@ -11,7 +15,14 @@ const router = express.Router();
 const JWT_SECRET = process.env.JWT_SECRET || 'your_super_secret_fallback_key'; 
 const SALT_ROUNDS = 10; // Empfohlene Runden für bcrypt
 
-// POST /auth/register: Neuen Benutzer registrieren
+/**
+ * Registriert einen neuen Nutzer und liefert einen JWT.
+ * @function registerUser
+ * @async
+ * @param {express.Request} req - Erwartet `email`, `password` und optional `username` im Body.
+ * @param {express.Response} res - Antwort mit JWT und Nutzer-Daten oder Fehlermeldung.
+ * @returns {Promise<void>}
+ */
 router.post('/register', async (req, res) => {
     const { email, password, username } = req.body;
 
@@ -55,7 +66,14 @@ router.post('/register', async (req, res) => {
 });
 
 
-// POST /auth/login: Benutzer anmelden
+/**
+ * Meldet einen Nutzer an und gibt einen JWT zurück.
+ * @function loginUser
+ * @async
+ * @param {express.Request} req - Erwartet `email` und `password` im Body.
+ * @param {express.Response} res - Antwort mit JWT und Nutzer-Daten oder Fehlermeldung.
+ * @returns {Promise<void>}
+ */
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
@@ -95,6 +113,14 @@ router.post('/login', async (req, res) => {
     }
 });
 
+/**
+ * Aktualisiert das Passwort des eingeloggten Nutzers.
+ * @function changePassword
+ * @async
+ * @param {express.Request} req - Erwartet `oldPassword` und `newPassword` im Body; JWT liefert `req.user.id`.
+ * @param {express.Response} res - Antwort mit Erfolgsmeldung oder Fehlermeldung.
+ * @returns {Promise<void>}
+ */
 router.put('/password', verifyJwtToken, async (req, res) => {
     // userId kommt von der verifyJwtToken Middleware
     const userId = req.user.id; 

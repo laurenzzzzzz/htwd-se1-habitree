@@ -1,3 +1,7 @@
+/**
+ * Habit-Routen (CRUD, Toggle, Daily Entries, Baumstatus).
+ * @module routes/habits
+ */
 import express from 'express';
 import { PrismaClient } from '@prisma/client';
 import { isHabitDue } from '../utils/streak.js';
@@ -5,7 +9,14 @@ import { isHabitDue } from '../utils/streak.js';
 const router = express.Router();
 const prisma = new PrismaClient();
 
-// GET /habits – alle Habits des eingeloggten Users abrufen
+/**
+ * Liefert alle nicht geernteten Habits des eingeloggten Nutzers.
+ * @function listHabits
+ * @async
+ * @param {express.Request} req - Erwartet JWT, nutzt `req.user.id`.
+ * @param {express.Response} res - Antwort mit Habit-Liste oder Fehler.
+ * @returns {Promise<void>}
+ */
 router.get('/', async (req, res) => {
   try {
     const userId = req.user.id;
@@ -27,7 +38,14 @@ router.get('/', async (req, res) => {
   }
 });
 
-// GET /habits/predefined – Alle Habit-Vorlagen abrufen (Öffentliche Route)
+/**
+ * Listet öffentliche Habit-Vorlagen.
+ * @function listPredefinedHabits
+ * @async
+ * @param {express.Request} req - Keine Parameter erforderlich.
+ * @param {express.Response} res - Antwort mit Vorlagen oder Fehler.
+ * @returns {Promise<void>}
+ */
 router.get('/predefined', async (req, res) => {
   try {
     console.log(' Predefined Habits werden abgerufen...');
@@ -49,7 +67,14 @@ router.get('/predefined', async (req, res) => {
   }
 });
 
-// POST /habits – neuen Habit erstellen
+/**
+ * Erstellt ein neues Habit für den eingeloggten Nutzer.
+ * @function createHabit
+ * @async
+ * @param {express.Request} req - Erwartet u.a. `name`, `frequency`, `startDate`, `time`, optional `weekDays`, `intervalDays`.
+ * @param {express.Response} res - Antwort mit neuem Habit und optional initialem Entry.
+ * @returns {Promise<void>}
+ */
 router.post('/', async (req, res) => {
   const userId = req.user.id;
   const { name, description, frequency, startDate, time, weekDays, intervalDays } = req.body;
@@ -127,7 +152,14 @@ router.post('/', async (req, res) => {
   }
 });
 
-// PUT /habits/:id – Habit aktualisieren
+/**
+ * Aktualisiert ein bestehendes Habit des eingeloggten Nutzers.
+ * @function updateHabit
+ * @async
+ * @param {express.Request} req - Pfadparam `id`; Body wie beim Erstellen (optional).
+ * @param {express.Response} res - Antwort mit aktualisiertem Habit oder Fehler.
+ * @returns {Promise<void>}
+ */
 router.put('/:id', async (req, res) => {
   const userId = req.user.id;
   const { id } = req.params;
@@ -204,7 +236,14 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// DELETE /habits/:id – Habit löschen
+/**
+ * Löscht ein Habit des eingeloggten Nutzers.
+ * @function deleteHabit
+ * @async
+ * @param {express.Request} req - Pfadparam `id` und JWT (`req.user.id`).
+ * @param {express.Response} res - Antwort mit Erfolgsmeldung oder Fehler.
+ * @returns {Promise<void>}
+ */
 router.delete('/:id', async (req, res) => {
   const userId = req.user.id;
   const { id } = req.params;
@@ -222,7 +261,14 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-// PUT /habits/:id/grow – Baum wachsen lassen (isHarvested = 1)
+/**
+ * Markiert ein Habit als wachsend (`isHarvested = 1`).
+ * @function growHabit
+ * @async
+ * @param {express.Request} req - Pfadparam `id` und JWT (`req.user.id`).
+ * @param {express.Response} res - Antwort mit aktualisiertem Habit oder Fehler.
+ * @returns {Promise<void>}
+ */
 router.put('/:id/grow', async (req, res) => {
   const userId = req.user.id;
   const { id } = req.params;
@@ -245,7 +291,14 @@ router.put('/:id/grow', async (req, res) => {
   }
 });
 
-// PUT /habits/:id/harvest – Früchte ernten (isHarvested = 2)
+/**
+ * Markiert ein Habit als geerntet (`isHarvested = 2`).
+ * @function harvestHabit
+ * @async
+ * @param {express.Request} req - Pfadparam `id` und JWT (`req.user.id`).
+ * @param {express.Response} res - Antwort mit aktualisiertem Habit oder Fehler.
+ * @returns {Promise<void>}
+ */
 router.put('/:id/harvest', async (req, res) => {
   const userId = req.user.id;
   const { id } = req.params;
@@ -268,7 +321,14 @@ router.put('/:id/harvest', async (req, res) => {
   }
 });
 
-//  PUT /habits/:id/toggle – Status für heutigen Tag umschalten
+/**
+ * Schaltet den Status eines Habit-Eintrags für ein Datum um.
+ * @function toggleHabitEntry
+ * @async
+ * @param {express.Request} req - Pfadparam `id`; Body mit `date`; JWT liefert `req.user.id`.
+ * @param {express.Response} res - Antwort mit aktualisiertem Entry oder Fehler.
+ * @returns {Promise<void>}
+ */
 router.put('/:id/toggle', async (req, res) => {
   const { id } = req.params;
   const userId = req.user.id; // Vom JWT-Token
@@ -324,7 +384,14 @@ router.put('/:id/toggle', async (req, res) => {
   }
 });
 
-// POST /habits/daily – erstellt für alle Habits einen HabitEntry für heute
+/**
+ * Erstellt für heute fehlende Habit-Einträge für fällige Habits.
+ * @function createDailyHabitEntries
+ * @async
+ * @param {express.Request} req - JWT liefert `req.user.id`.
+ * @param {express.Response} res - Antwort mit Anzahl der erstellten Einträge.
+ * @returns {Promise<void>}
+ */
 router.post('/daily', async (req, res) => {
   try {
     const userId = req.user.id;
@@ -375,7 +442,14 @@ router.post('/daily', async (req, res) => {
   }
 });
 
-// GET /habits/today – Alle Habits des Users mit den dazugehörigen Einträgen für heute abrufen
+/**
+ * Liefert Habits des Nutzers mit Einträgen für den heutigen Tag.
+ * @function listTodaysHabits
+ * @async
+ * @param {express.Request} req - JWT liefert `req.user.id`.
+ * @param {express.Response} res - Antwort mit Habits und heutigen Entries oder Fehler.
+ * @returns {Promise<void>}
+ */
 router.get('/today', async (req, res) => {
   try {
     const userId = req.user.id;
@@ -423,7 +497,14 @@ router.get('/today', async (req, res) => {
   }
 });
 
-// GET /habits/harvested – Alle geernteten Habits des Users abrufen (isHarvested = 2)
+/**
+ * Listet alle geernteten Habits des Nutzers (`isHarvested = 2`).
+ * @function listHarvestedHabits
+ * @async
+ * @param {express.Request} req - JWT liefert `req.user.id`.
+ * @param {express.Response} res - Antwort mit geernteten Habits oder Fehler.
+ * @returns {Promise<void>}
+ */
 router.get('/harvested', async (req, res) => {
   try {
     const userId = req.user.id;

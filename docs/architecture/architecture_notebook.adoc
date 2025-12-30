@@ -2,21 +2,14 @@
 Laurenz Born <laurenz.born@stud.htw-dresden.de>; Alexander Chlebowski <alexander.chlebowski@stud.htw-dresden.de>; Leonhard Hermann <leonhard.hermann@stud.htw-dresden.de>; Johann Schmidt <johann.schmidt@stud.htw-dresden.de>; Kimi Jerke <kimi.jerke@stud.htw-dresden.de>; Jannes Lehmann <s86317@htw-dresden.de>
 {localdatetime}
 include::../_includes/default-attributes.inc.adoc[]
-// Platzhalter für weitere Dokumenten-Attribute
 
 
 == Zweck
 Dieses Dokument beschreibt die Philosophie, Entscheidungen, Nebenbedingungen, Begründungen, wesentliche Elemente und andere übergreifende Aspekte des Systems, die Einfluss auf Entwurf und Implementierung haben.
 
-//Hinweise: Bearbeiten Sie immer die Abschnitte 2-6 dieser Vorlage. Nachfolgende Abschnitte sind empfohlen, aber optional und sollten je nach Umfang der künftigen Wartungsarbeiten, Fähigkeiten des Entwicklungsteams und Bedeutung anderer architektureller Belange.
-
-//Anmerkung: Die Architektur legt wesentliche EINSCHRÄNKUNGEN für den Systementwurf fest und ist ein Schlüssel für die Erfüllung nicht-funktionaler Eigenschaften!
 
 
 == Architekturziele 
-//Hinweise: Beschreiben Sie den zentralen Ansatz für ihre Architektur. Identifizieren Sie alle Aspekte, die die Philosophie beeinflussen, z.B. komplexe Auslieferung Aspekte, Anpassung von Altsystemen oder besondere Geschwindigkeitsanforderungen. Muss es besonders robust sein, um eine langfristige Wartung und Pflege zu ermöglichen?
-
-//Formulieren Sie eine Reihe von Zielen, die die Architektur in ihrer Struktur und ihrem Verhalten erfüllen muss. Identifizieren Sie kritische Fragen, die von der Architektur adressiert werden müssen, z.B. besondere Hardware-Abhängigkeiten, die vom Rest des Systems isoliert werden sollten oder Sicherstellung der Funktionsfähigkeit unter besonderen Bedingungen (z.B. Offline-Nutzung).
 
 Die Architektur der Habit-Tracking-App verfolgt das Ziel, eine robuste, nutzerfreundliche und wartbare mobile Anwendung bereitzustellen. Sie muss auch unter mobilen Bedingungen zuverlässig funktionieren, idealerweise inklusive Offline-Nutzung, sicherem Umgang mit Nutzerdaten und reibungsloser Benutzererfahrung. Im Fokus stehen dabei folgende zentrale Ziele:
 
@@ -40,10 +33,6 @@ Die Architektur der Habit-Tracking-App verfolgt das Ziel, eine robuste, nutzerfr
 * **Echtzeit-Updates**
 ** *Aktuelle Anzeige von Status & Logs:* Änderungen (z. B. „Habit abgehakt“) sollen unmittelbar im UI sichtbar sein – ggf. über Polling oder Push-Ansätze.
 
-//
-//* **Offline-Support**
-//** *Lokales Caching von Nutzerdaten:* Die App funktioniert auch ohne Internetverbindung, indem Daten lokal zwischengespeichert und später synchronisiert werden.
-
 * **Wartbarkeit**
 ** *Modularität:* Sauber getrennte Komponenten und Services erleichtern Weiterentwicklung.
 ** *Dokumentation:* Saubere Schnittstellen und Struktur fördern Problemlösungen bei Fehlern und Ergänzungen leichter zu implementieren. 
@@ -52,16 +41,9 @@ Die Architektur der Habit-Tracking-App verfolgt das Ziel, eine robuste, nutzerfr
 ** *Horizontale Skalierung:* bei Nutzerwachstum
 ** *Effiziente Datenbank* 
 
-//* **Barrierefreiheit**
-//** *Kontrast & Schriftgrößen:* App unterstützt Systemeinstellungen für Barrierefreiheit.
-
-//* **Internationalisierung**
-//** *Mehrsprachigkeit vorbereitet:* Inhalte können in verschiedene Sprachen übersetz werden.
-
 
 
 == Annahmen und Abhängigkeiten
-//[List the assumptions and dependencies that drive architectural decisions. This could include sensitive or critical areas, dependencies on legacy interfaces, the skill and experience of the team, the availability of important resources, and so forth]
 * Zugriff auf eigenen Server.
 * Die App wird als mobile Anwendung umgesetzt, welche iOS (und Android gleichermaßen)  unterstützen soll.
 * Die Zielgruppe sind vor allem Einzelpersonen, die persönliche Routinen tracken wollen, eine Mehrbenutzerfähigkeit (z.B. Teams oder Gruppenfunktionen) ist  nicht vorgesehen.
@@ -77,7 +59,6 @@ Die Architektur der Habit-Tracking-App verfolgt das Ziel, eine robuste, nutzerfr
 * Anfängliche Überlegungen zur Nutzung von R für die Erstellung von statisitischen Grafiken wurden aufgrund von Implementierungsaufwand verworfen. 
 
 == Architektur-relevante Anforderungen
-//Fügen Sie eine Referenz / Link zu den Anforderungen ein, die implementiert werden müssen, um die Architektur zu erzeugen.
 
 * Das System muss eine persistente Speicherung von Nutzerdaten und Habit-Daten ermöglichen.
 * Die Anwendung muss Nutzerregistrierung und -authentifizierung unterstützen.
@@ -86,10 +67,8 @@ Die Architektur der Habit-Tracking-App verfolgt das Ziel, eine robuste, nutzerfr
 * Die Lösung muss modular aufgebaut sein, um eine Trennung zwischen Präsentation, Logik und Datenzugriff zu ermöglichen.
 * Es muss eine Schnittstelle zur Kommunikation zwischen Frontend und Backend bereitgestellt werden 
 * Die Architektur soll wartbar und erweiterbar sein.
-//* Die Anwendung muss mehrere Nutzer gleichzeitig unterstützen 
 
 == Entscheidungen, Nebenbedingungen und Begründungen
-//[List the decisions that have been made regarding architectural approaches and the constraints being placed on the way that the developers build the system. These will serve as guidelines for defining architecturally significant parts of the system. Justify each decision or constraint so that developers understand the importance of building the system according to the context created by those decisions and constraints. This may include a list of DOs and DON’Ts to guide the developers in building the system.]
 
 
 === Frontend-Technologie: Expo (React Native)
@@ -323,7 +302,6 @@ Das C4-Level-2-Container-Diagramm zeigt die technische Struktur der Habitreee-An
 
 
 === Verteilungsdiagramm (Deployment Diagramm)
-//Beschreibt die physischen Knoten (Rechner) des Systems und Komponenten, die in diesen Knoten ausgeführt werden. Diese Sicht wird nicht benötigt, wenn das System in einem einzelnen Prozess oder Thread ausgeführt wird.
 image::deployment-diagram-habitree.svg[]
 
 == Externe Schnittstellen und Integrationen
@@ -332,6 +310,11 @@ image::deployment-diagram-habitree.svg[]
 
 * **Primäre Plattform:** iOS (React Native/Expo) +
 * **Optional:** Browsernutzung und Android (nicht primär unterstützt) +
+
+=== Schnittstellen- und Code-Dokumentation
+
+* **REST-API (OpenAPI 3.0):** Die Spezifikation liegt in `docs/architecture/openapi.yaml`. Für eine interaktive Ansicht kann z. B. Redoc gestartet werden (`redoc-cli serve docs/architecture/openapi.yaml`) oder Swagger UI mit diesem Pfad gefüttert werden.
+* **Backend-Code-Doku (JSDoc):** Unter `docs/api/index.html` liegt die generierte HTML-Dokumentation der Express-Routen, Middleware und Utils. Regeneration bei Codeänderungen: im Verzeichnis `src/backend` `npx jsdoc -c jsdoc.json` ausführen.
 
 === Geplante externe Integrationen
 

@@ -1,0 +1,17 @@
+{
+  "source": {
+    "include": ["src"],
+    "includePattern": ".+\\.js$",
+    "excludePattern": ".+\\.test\\.js$"
+  },
+  "opts": {
+    "destination": "../../docs/api",
+    "recurse": true,
+    "encoding": "utf8"
+  },
+  "plugins": [],
+  "templates": {
+    "cleverLinks": false,
+    "monospaceLinks": false
+  }
+}

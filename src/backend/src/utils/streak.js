@@ -1,7 +1,16 @@
+/**
+ * Streak- und Fälligkeitslogik.
+ * @module utils/streak
+ */
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
-// Hilfsfunktion: Prüft, ob ein Habit am gegebenen Tag fällig ist
+/**
+ * Prüft, ob ein Habit am gegebenen Tag fällig ist.
+ * @param {Object} habit Prisma Habit-Objekt
+ * @param {Date} date Tag, der geprüft wird
+ * @returns {boolean}
+ */
 export function isHabitDue(habit, date) {
   if (!habit.startDate || !habit.frequency) return false;
   const start = new Date(habit.startDate);
@@ -46,9 +55,11 @@ export function isHabitDue(habit, date) {
   return false;
 }
 
-// Berechnet Streaks neu, indem von GESTERN rückwärts gezählt wird
-// bis zum ersten Tag, an dem die Anforderung nicht erfüllt wurde
-// HEUTE wird NICHT gezählt (nur bereits abgeschlossene Tage)
+/**
+ * Berechnet User- und Habit-Streaks neu (rückwärts ab gestern).
+ * Heute wird nicht gezählt.
+ * @returns {Promise<void>}
+ */
 export async function recalculateStreaks() {
   const now = new Date();
   const yesterday = new Date(now);

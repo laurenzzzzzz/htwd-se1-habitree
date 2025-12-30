@@ -1,4 +1,8 @@
-import jwt from 'jsonwebtoken'; // NEU: JWT importieren
+/**
+ * Middleware zur JWT-Prüfung. Verifiziert Tokens, lädt den User und hängt ihn an req.user an.
+ * @module middleware/authMiddleware
+ */
+import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import { PrismaClient } from '@prisma/client';
 
@@ -7,7 +11,12 @@ const prisma = new PrismaClient();
 // Lese den Secret aus der .env oder nutze den gleichen Fallback wie in auth.js
 const JWT_SECRET = process.env.JWT_SECRET || 'your_super_secret_fallback_key'; 
 
-// Funktion umbenannt und Logik ersetzt
+/**
+ * Verifiziert ein JWT aus dem Authorization-Header und lädt den Nutzer.
+ * @param {express.Request} req
+ * @param {express.Response} res
+ * @param {express.NextFunction} next
+ */
 export async function verifyJwtToken(req, res, next) { 
     let token = null;
 

@@ -1,12 +1,22 @@
-// routes/user.js
+/**
+ * Benutzerbezogene Routen (Status, Streak, Username).
+ * @module routes/user
+ */
 import express from 'express';
-import { verifyJwtToken } from '../middleware/authMiddleware.js'; 
+import { verifyJwtToken } from '../middleware/authMiddleware.js';
 import { PrismaClient } from '@prisma/client';
 
 const router = express.Router();
 const prisma = new PrismaClient();
 
-// GET /user/status – Gibt den Status des eingeloggten Users zurück
+/**
+ * Gibt den Login-Status des aktuellen Nutzers zurück.
+ * @function getUserStatus
+ * @async
+ * @param {express.Request} req - JWT liefert `req.user` mit `id`, `email`, `username`.
+ * @param {express.Response} res - Antwort mit Statusobjekt.
+ * @returns {Promise<void>}
+ */
 router.get('/status', verifyJwtToken, async (req, res) => {
 
     // req.user enthält jetzt die User-ID (Int), Email und Username
@@ -19,7 +29,14 @@ router.get('/status', verifyJwtToken, async (req, res) => {
 });
 
 
-// GET /user/streak – Streak Informationen des aktuellen Users abrufen
+/**
+ * Liefert Streak-Informationen des aktuellen Nutzers.
+ * @function getUserStreak
+ * @async
+ * @param {express.Request} req - JWT liefert `req.user.id`.
+ * @param {express.Response} res - Antwort mit `currentStreak` und `maxStreak` oder Fehler.
+ * @returns {Promise<void>}
+ */
 router.get('/streak', verifyJwtToken, async (req, res) => {
   try {
     const userId = req.user.id; // Kommt aus dem JWT-Token
@@ -49,7 +66,14 @@ router.get('/streak', verifyJwtToken, async (req, res) => {
   }
 });
 
-// PUT /user/username – Benutzernamen des aktuellen Users aktualisieren
+/**
+ * Aktualisiert den Benutzernamen des eingeloggten Nutzers.
+ * @function updateUsername
+ * @async
+ * @param {express.Request} req - Erwartet `username` im Body; JWT liefert `req.user.id`.
+ * @param {express.Response} res - Antwort mit aktualisierten Userdaten oder Fehler.
+ * @returns {Promise<void>}
+ */
 router.put('/username', verifyJwtToken, async (req, res) => {
   const userId = req.user.id;
   const { username } = req.body;

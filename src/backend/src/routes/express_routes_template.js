@@ -1,3 +1,7 @@
+/**
+ * Vorlage für neue Express-Routenmodule.
+ * @module routes/express_routes_template
+ */
 import express from 'express';
 import { PrismaClient } from '@prisma/client';
 
