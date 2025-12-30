@@ -1,0 +1,86 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+//model Name wichtig mit dem Arbeiten im Frontend @@für Datenbank Tabelle falls dieser Abweichen sollte vom model Namen
+
+// Quotes
+model Quote {
+  id       Int      @id @default(autoincrement())
+  quote    String 
+
+  @@map("quote")
+}
+
+// Nutzer 
+model User {
+    id                Int           @id @default(autoincrement()) 
+  email             String        @unique
+  username          String?       // Auf optional gesetzt, da es beim Login nicht immer da ist
+  passwordHash      String        
+  createdAt         DateTime      @default(now())
+  habits            Habit[]       // User-spezifische Habits
+  habitEntries      HabitEntry[]  // Einträge
+  maxStreak         Int           @default(0)
+  currentStreak     Int           @default(0)
+
+  @@map("user")
+}
+
+// Habits (Die Vorlagen-Definitionen)
+model PredefinedHabit {
+  id          Int       @id @default(autoincrement())
+  name        String    @unique // Name sollte in der Vorlagenliste einzigartig sein
+  description String
+  frequency   String
+  habits      Habit[]   // Alle User-Instanzen, die von dieser Vorlage stammen
+  
+  @@map("predefined_habit")
+}
+
+// Habits von Nutzern 
+model Habit {
+  id          Int           @id @default(autoincrement())
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      Int           
+  name        String
+  description String?
+  startDate   DateTime? // optional für Migration
+  time        String?   // optional für Migration
+  frequency   String // (Täglich, Wöchentlich, Monatlich, Benutzerdefiniert)
+  weekDays    Int[]    @default([])   // [0..6] 0=Montag .. 6=Sonntag (für Wöchentlich)
+  intervalDays Int?     // für Benutzerdefiniert: alle X Tage (z.B. 2, 4, 7)
+  createdAt   DateTime      @default(now())
+  entries     HabitEntry[]
+  currentStreak Int          @default(0)
+  maxStreak     Int          @default(0)
+  isHarvested   Int         @default(0)
+
+  // Verknüpfung zur Vorlage 
+  predefined      PredefinedHabit? @relation(fields: [predefinedHabitId], references: [id])
+  predefinedHabitId Int?
+  
+  @@map("habit")
+}
+
+// Habits Entries
+model HabitEntry {
+  id       Int      @id @default(autoincrement())
+  habit    Habit    @relation(fields: [habitId], references: [id], onDelete: Cascade)
+  habitId  Int
+  date     DateTime
+  status   Boolean  @default(false)
+  note     String?  // Auf optional gesetzt
+  
+  user     User?    @relation(fields: [userId], references: [id])
+  userId   Int?     // NEU: Fremdschlüssel ist jetzt Int
+
+  @@unique([habitId, date])
+  @@map("habitEntry")
+}
+

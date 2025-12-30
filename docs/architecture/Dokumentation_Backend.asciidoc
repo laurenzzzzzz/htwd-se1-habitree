@@ -1,6 +1,35 @@
 = Dokumentation Backend
 
-== Backend Einrichten für Projekt
+Kurzer Überblick zum Backend der Habitree-App (Node/Express, PostgreSQL via Prisma). Der Dienst läuft aktuell auf dem externen Server `iseproject01.informatik.htw-dresden.de:8000`; lokal kann er mit den unten stehenden Schritten gestartet werden.
+
+== Voraus­setzungen
+* Node.js 18+ 
+* PostgreSQL (oder bestehender Zugang zum Projekt-DB-Server)
+* Git, npm
+
+== Ordnerstruktur
+[options="header"]
+|===
+|Pfad | Inhalt / Zweck | Beispiel-Dateien
+|src/backend | Backend-Root, npm-Projekt | `package.json`, `.env`, `package-lock.json`
+|src/backend/src | Quellcode (ESM, JavaScript) | `index.js`
+|src/backend/src/routes | Express-Routen pro Ressource | `habits.js`, `user.js`, `auth.js`, `quotes.js`, `express_routes_template.js`
+|src/backend/src/middleware | Middleware (z. B. Auth) | `authMiddleware.js`
+|src/backend/src/utils | Hilfsfunktionen/Jobs | `generateDailyEntries.js`, `streak.js`
+|src/backend/prisma | Prisma-Schema, Migrationen, Seeds | `schema.prisma`, `migrations/*`, `seed.js`
+|src/backend/generated | (generiert) Prisma Client (per `prisma generate`) | `client`-Artefakte
+|===
+
+== Umgebung (.env)
+[options="header"]
+|===
+|Variable | Zweck | Beispiel
+|DATABASE_URL | PostgreSQL-URL | `postgresql://user:pass@host:5432/HabitTrackerDatabase?schema=public`
+|PORT | Port des Express-Servers | `8000`
+|JWT_SECRET | Secret für Auth (falls genutzt) | `supersecret`
+|===
+
+== Backend Einrichten
 
 .1 Projekt initialisieren:
 
@@ -14,7 +43,7 @@ npm init -y
 
 [source,shell]
 ----
-npm install express prisma @prisma/client cors dotenv
+npm install express prisma @prisma/client dotenv cors axios bcrypt jsonwebtoken node-cron
 ----
 
 [options="header"]
@@ -23,8 +52,12 @@ npm install express prisma @prisma/client cors dotenv
 |express          |Webserver-Framework
 |prisma           |ORM (für Datenbankzugriff)
 |@prisma/client   |Generierter Prisma-Client-Code
-|cors             |Erlaubt Cross-Origin-Zugriffe (z. B. von der Frontend-App)
 |dotenv           |Lädt Umgebungsvariablen aus einer `.env`-Datei
+|cors             |Cross-Origin Requests erlauben 
+|axios            |HTTP-Client 
+|bcrypt           |Passworthashing
+|jsonwebtoken     |JWT-Erzeugung/-Prüfung (Auth)
+|node-cron        |Geplante Jobs (tägliche Habit-Einträge/Streaks)
 |===
 
 .3 Prisma initialisieren:
@@ -35,6 +68,7 @@ npx prisma init
 ----
 
 Erstellt:
+
 * `prisma/schema.prisma` – das Datenbankschema
 * `.env` – Datei für Umgebungsvariablen (z. B. DB-Verbindung)
 
@@ -42,7 +76,7 @@ Erstellt:
 
 . Datenmodell in `prisma/schema.prisma` definieren.
 
-. Migration ausführen:
+* Migration ausführen:
 
 [source,shell]
 ----
@@ -50,7 +84,8 @@ npx prisma migrate dev --name init
 ----
 // Erstellt das Datenmodell in der Datenbank
 
-.4 TypeScript-Unterstützung aktivieren:
+
+.4 ts-node (für Prisma Seed / optionale TS-Nutzung)
 
 [source,shell]
 ----
@@ -61,11 +96,19 @@ npm install --save-dev ts-node
 * Windowsdefender Firewall mit erweitertet Sicherheit öffnen
 * unter *Eingehender* und *Ausgehender Regel* neue Regel ``Port 8000 für Server öffnen`` erstellt damit ausgehende und eingehende Anfragen nicht geblockt werden
 
-.6 Abhängigkeiten für Firebase installieren
-[source,shell]
-----
-npm install firebase-admin
-----
+== Starten (Lokal)
+* Installieren: `npm install`
+* Prisma-Migrationen anwenden: `npx prisma migrate deploy`
+* Dev-Mode (Nodemon): `npm run dev` (startet `src/index.js` mit automatischem Reload)
+* Direkt starten (ohne Nodemon): `node src/index.js`
+
+== Deployment (Externer Server)
+1. Code aktualisieren: `git pull`
+2. Installieren: `npm ci`
+3. Migrationen: `npx prisma migrate deploy`
+4. Starten als Dienst (Beispiel PM2): `pm2 start src/index.js --name habitree-backend`
+5. Port 8000 freigeben (eingehend/ausgehend) wie oben beschrieben
+
 == Datenbankeinträge ändern / hinzufügen / löschen
 
 .*Datenbank verändern (Tabellen erstellen)*
@@ -109,12 +152,12 @@ npx prisma studio
 == Express Routen
 
 Die Express-Routen definieren, wie unsere Backend-API auf Anfragen vom Frontend reagiert. +
-Eine eigene Datei für die Habit-Routen wurde bereits erstellt: `routes/habits.ts`. Diese Datei wird dann im Hauptserver `index.ts` eingebunden. +
-Für jede Route wird eine neue .js angelegt unter dem Ordner `routes`
+Vorhandene Routenmodule: `routes/habits.js`, `routes/user.js`, `routes/auth.js`, `routes/quotes.js` (plus das Template `express_routes_template.js`). Diese werden in `src/index.js` eingebunden. +
+Für jede neue Ressource wird ein eigenes `.js`-Modul im Ordner `routes` angelegt.
 
 === Routen Template
 
-[source,ts]
+[source,js]
 ----
 import express from 'express';
 import { PrismaClient } from '@prisma/client';
@@ -217,11 +260,11 @@ export default router;
 
 Damit die Route verwendet wird, muss sie im Hauptserver (`index.js`) importiert werden:
 
-[source,ts]
+[source,js]
 ----
 import express from 'express';
-import habitsRouter from './routes/habits'; // Pfad anpassen
-import __modelsRouter__ from './routes/__models__'
+import habitsRouter from './routes/habits.js'; // Pfad anpassen
+import __modelsRouter__ from './routes/__models__.js'
 
 const app = express();
 app.use(express.json()); // Damit JSON-Daten im Body gelesen werden können
