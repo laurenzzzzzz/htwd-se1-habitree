@@ -140,13 +140,6 @@ Die Architektur der Habit-Tracking-App verfolgt das Ziel, eine robuste, nutzerfr
 - Unterstützt 2-Faktor-Authentifizierung, Social Logins und Passwort-Reset +
 - Spart Entwicklungszeit, da keine eigene Authentifizierungslogik nötig ist +
 
-*DO:* +
-- Firebase Authentication verwenden (inkl. Passwort-Hashing) +
-
-*DON’T:* +
-- Passwörter selbst speichern oder eigene Authentifizierung entwickeln +
-
-
 ====
 ---
 === Internationalisierung (i18next) 
@@ -194,6 +187,43 @@ _Status: Geplantes Feature – derzeit nur Auth-Tokens werden lokal zwischengesp
 - Kommunikation erfolgt über REST-API +
 - *Firebase Auth* war hier ursprünglich vorgesehen, ist aber verworfen (siehe Abschnitt "Authentifizierung") +
 - Setup wurde dokumentiert, sodass Teammitglieder es lokal reproduzieren und erweitern +
+
+---
+
+=== Containerisierung: Docker & Development Container
+
+*Begründung:* +
+- *Konsistente Entwicklungsumgebung:* Der Dev Container (`.devcontainer/Dockerfile`) stellt sicher, dass alle Entwickler, unabhängig vom Host-Betriebssystem (Windows, macOS, Linux), in einer identischen Umgebung arbeiten.
+- *Keine lokalen Installationen notwendig:* Node.js, npm, Git und weitere Tools sind bereits im Container vorhanden. Entwickler müssen diese nicht manuell installieren – nur Docker und VS Code sind erforderlich.
+- *Automatischer Setup beim Containerstart:* Das `devcontainer.json`-Konfigurationsfile startet automatisch `npm ci`, installiert Expo-Dependencies und bootet den Expo-Dev-Server mit `npx expo start`.
+- *Schnelle Onboarding:* (Neue) Entwickler können sofort produktiv arbeiten, ohne komplexe lokale Setups durchführen zu müssen.
+- *Isolierte Abhängigkeiten:* Mehrere Projekte z.B. im Rahmen anderer Module bzw. Veranstaltungen können parallel entwickelt werden, ohne dass Versionskonflikte von Node.js, npm oder anderen Tools entstehen.
+
+*Was läuft im Container:* +
+Das Dockerfile basiert auf dem offiziellen `node:20-slim`-Image und enthält:
+
+- **Node.js 20:** Basis für die Expo-App und Backend-Entwicklung
+- **npm-Toolchain:** Mit zusätzlich installierten Build-Tools (g++, make, python3) für native Abhängigkeiten
+- **Expo Dev Server:** Wird beim Containerstart automatisch gestartet und läuft auf Port `8081`
+- **Development-Tools:** Git, ca-certificates und weitere Utilities für die Entwicklung
+- **Umgebungsvariablen:** EXPO_DEV_SERVER_LISTEN_HOST=0.0.0.0 für Zugriff von außen, EXPO_NO_TELEMETRY=1 zur Deaktivierung von Telemetrie
+
+Exponierte Ports:
+- `8081`: Expo Dev Server (Hauptentwicklungsserver)
+- `19000, 19001, 19002, 19006`: Zusätzliche Expo-Ports für Tunnel, Debugging und Metro Bundler
+
+*Rollen in der Architektur:* +
+- **Frontend-Entwicklung:** Der Dev Container ist primär für die Expo-Frontend-Entwicklung ausgelegt. Entwickler können die React Native App im Container entwickeln und über Expo Go oder einen Tunnel auf ihrem Gerät testen.
+- **Integration mit VS Code:** Das `devcontainer.json` integriert den Container nahtlos mit VS Code, mit vordefinierten Extensions (ESLint, GitHub Copilot Chat, Prettier) und automatischem Port-Forwarding.
+
+*Nebenbedingung:* +
+- Docker und Docker Desktop müssen installiert sein +
+- Initiales Setup beim ersten Container-Start dauert länger (npm ci, Expo-Installation)
+- Container benötigt angemessene Hardware-Ressourcen 
+
+*Nächste mögliche Schritte:* +
+- Bei Bedarf Backend und Datenbank als separate Services in Docker definieren (docker-compose.yml für lokale Entwicklung) +
+- Deployment-Container für Backend-Produktion separat konfigurieren +
 
 
 == Schichten oder Architektur-Framework
