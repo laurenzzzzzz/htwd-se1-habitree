@@ -1,25 +1,86 @@
 == Überblick & Whitebox-Tests
 
-Wir testen vor allem die Fachlogik (z. B. Streak, TreeGrowth, Achievements, Quotes) mit Whitebox-Unit-Tests.
-Ziel ist, kritische Business-Entscheidungen (z. B. wann ein Streak aktiv ist) deterministisch und reproduzierbar zu testen.
+Wir testen vor allem die Fachlogik (z. B. Streak, TreeGrowth, Achievements, Quotes, User-Validierung) mit Whitebox-Unit-Tests.
+Ziel ist, kritische Business-Entscheidungen (z. B. wann ein Streak aktiv ist, ob eine E-Mail valide ist) deterministisch und reproduzierbar zu testen.
+
+Zusätzlich haben wir Integration-Tests für Services (Auth, Profile, Quote, Habit), die das Zusammenspiel mehrerer Komponenten prüfen.
+
+== Teststruktur
+
+=== Domain-Tests (Unit)
+Tests für einzelne Entities und deren Logik:
+- `Habit.entity.test.ts` - Streak-Berechnung, Completion Rate, Milestones
+- `User.test.ts` - E-Mail-Validierung, Username-Regeln, Display Name
+- `Quote.test.ts` - Quote-Formatierung, Validierung, Preview-Funktionen
+
+=== Integration-Tests
+Tests für Service-Layer und Zusammenspiel mehrerer Komponenten:
+- `AuthService.test.ts` - Login, Registrierung, SignIn/Out (Happy & Error Paths)
+- `ProfileService.test.ts` - Username/Password Update mit Validierungen
+- `QuoteService.test.ts` - Random Quote, Edge Cases, Error Handling
+- `HabitService.integration.test.ts` - Create, Toggle, E2E Workflow
+- `HabitSchedulePolicy.test.ts` - Schedule-Logik (Täglich, Wöchentlich, Intervall, Monatlich)
 
 == Namenskonventionen
 
 Test-Dateien heißen nach Muster:
-- *.entity.test.ts
-- *.integration.test.ts
+- `*.test.ts` für Domain-Tests
+- `*.entity.test.ts` für Entity-Tests
+- `*.integration.test.ts` für Integration-Tests
 
-Testnamen folgen einem klaren, beschreibenden Stil (z. B. should_do_X_when_Y oder kurze englische Sätze).
+Testnamen folgen einem klaren, beschreibenden Stil (z. B. `should_do_X_when_Y` oder kurze englische Sätze).
 Beispiele aus dem aktuellen Code:
-- isActive should return true when lastCompletionDate is today
-- getMilestoneMessage returns simple days message for streak < 7
+- `isActive should return true when lastCompletionDate is today`
+- `getMilestoneMessage returns simple days message for streak < 7`
+- `should reject invalid email formats`
+- `should successfully update username with valid data`
 
 == Code Coverage (aktueller Stand)
 
 Aktueller Stand: ~71 % Lines, ~73 % Statements, ~68 % Functions, ~80 % Branches.
 
-Hohe Abdeckung bei Domain-Entities & Streak-Logik, Lücken v. a. bei Auth/Profil/Quote-Services.
-Fokus lag auf Business-Logik, Service-Layer kommt als nächstes.
+Hohe Abdeckung bei:
+- Domain-Entities (Habit, User, Quote)
+- Streak-Logik & Milestones
+- Auth & Profile Services
+- HabitService & Schedule-Policies
+
+Lücken v. a. bei:
+- TreeGrowthService
+- AchievementService
+- NotificationService
+- StreakService
+
+Fokus lag auf Business-Logik und kritischen User-Flows (Auth, Habits, Profile). Service-Layer wird weiter ausgebaut.
+
+== Was wir testen
+
+=== Habit-Logik
+- Streak-Berechnung (aktiv/inaktiv basierend auf lastCompletionDate)
+- Completion Rate über verschiedene Zeiträume
+- Milestone-Messages (7, 30, 100 Tage etc.)
+- Toggle-Verhalten mit verschiedenen Schedules
+
+=== User-Validierung
+- E-Mail-Format (valide/invalide Fälle)
+- Username-Regeln (Länge, Sonderzeichen)
+- Display Name Fallback-Logik
+
+=== Auth & Profile
+- Login mit gültigen/ungültigen Credentials
+- Registrierung (Duplicate-Checks, Validierung)
+- Profil-Updates (Username, Password) mit Error-Handling
+
+=== Quote-System
+- Random Quote Selection
+- Quote-Formatierung (Author, Text, Source)
+- Edge Cases (leere Daten, fehlende Felder)
+
+=== Schedule-Policies
+- Daily Schedule (jeden Tag fällig)
+- Weekly Schedule (bestimmte Wochentage)
+- Interval Schedule (alle X Tage)
+- Monthly Schedule (bestimmte Tage im Monat)
 
 == CI & Badge
 
@@ -28,7 +89,14 @@ Wir haben eine GitHub Actions CI, die Tests und Coverage ausführt. Fügt im Pro
 image::https://github.com/laurenzzzzzz/htwd-se1-habitree/actions/workflows/ci.yml/badge.svg[Build]
 
 Kurze Befehle zum lokalen Ausführen:
-- npm test            -> führt alle Tests aus (Jest)
-- npm run test:coverage -> führt Tests und Coaverage-Report aus
+- `npm test` - führt alle Tests aus (Jest)
+- `npm run test:coverage` - führt Tests und Coverage-Report aus
 
-Hinweis: Das Badge-URL-Template funktioniert, sobald das Repo auf GitHub liegt und die Workflow-Datei im Pfad .github/workflows/ci.yml existiert.
+Hinweis: Das Badge-URL-Template funktioniert, sobald das Repo auf GitHub liegt und die Workflow-Datei im Pfad `.github/workflows/ci.yml` existiert.
+
+== Nächste Schritte
+
+- Coverage weiter ausbauen (Ziel: >80%)
+- Fehlende Service-Tests ergänzen (Tree, Achievements, Notifications, Streak)
+- Edge Cases für bestehende Tests erweitern
+- Performance-Tests für kritische Funktionen
