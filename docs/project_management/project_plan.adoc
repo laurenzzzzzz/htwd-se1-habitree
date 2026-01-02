@@ -298,6 +298,16 @@ In Software Engineering 2 setzte sich dieses Verhalten verstärkt fort:
 - Fehlende Beiträge einzelner gefährden nicht nur Ergebnisse, sondern auch kaskadierend Motivation und Fairness im Team  +
 - Frühes und konsequentes Handeln ist entscheidend, damit sich die unerledigten Task der Person nicht aufsummieren +
 - Man sollte sich nicht einlullen lassen und nicht immer Ausreden wie 'Das werde ich heute Abend noch machen...' akzeotieren. +
+| Ungeeignete Sprintlänge und ungenaue Sprintplanung im universitären Kontext
+| - Einführung eines Kapazitätenboards zur Verfassung verfügbarer Arbeitszeit +
+- Wenn innerhalb eines Sprints noch mehr Kapazität besteht und bereits alle Artefakte abgearbeitet wurden, werden in einem Meeting mit dem gesamten Team neue Artefakte in den Sprint aufgenommen. +
+- Wenn User Stories od. andere Artefakte nicht abgeschlossen werden können innerhalb eines Sprints, werden sie erst einmal in den Product Backlog zurückgeführt +
+- Ggf. werden Stories die nicht abgearbeitet konnten in feinere Einheiten zerlegt am Sprintende (innerhalb von Refinement Meetings), allenfalls wird deren Komplexität aber vom Team erneut kritisch überprüft. +
+| - Eine feste Sprintlänge von vier Wochen ist im Studium nur eingeschränkt planbar, da Arbeitsbelastung (u.a. durch andere Module oder dem Projektseminar aber auch durch außeruniversitäre Belastungen einzelner Mitglieder) stark schwankt +
+- Kapazitäten lassen sich im Studium nur bedingt und kurzfristig planen +
+- Sowohl die Über als auch die Unterplanung eines Sprints wirken sich negativ auf die Effizienz innerhalb des Teams aus, da immer Abstimmungs oder zusätzlicher Klärungsbedarf besteht. +
+- Sprintziele müssen selbstverständlich realistisch und flexibel geplant werden +
+- Mittels eines stabilen Product Backlogs kann man auch kleinere Sprintschwankungen während des Semestersgut austahieren. +
 |===
 
 === Positive Ereignisse
