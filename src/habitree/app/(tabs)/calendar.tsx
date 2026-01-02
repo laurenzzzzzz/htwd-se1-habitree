@@ -389,6 +389,7 @@ export default function CalendarScreen() {
       <HabitModal
         visible={modalVisible}
         mode={modalMode ?? (editHabitId ? 'custom' : null)}
+        submitLabel={editHabitId ? 'Speichern' : 'Hinzufügen'}
         onClose={() => {
           setModalVisible(false);
           setEditHabitId(null);

@@ -63,6 +63,7 @@ export const createInventoryViewStyles = (
       padding: spacing.lg,
       borderRadius: radius(14),
       width: modalWidth,
+      maxHeight: height ? height * 0.7 : 500,
       alignItems: 'center',
     },
     modalTitle: {

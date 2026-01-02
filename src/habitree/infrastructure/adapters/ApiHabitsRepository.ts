@@ -89,6 +89,26 @@ export class ApiHabitsRepository implements IHabitsRepository {
     });
   }
 
+  async growHabit(authToken: string, id: number): Promise<void> {
+    await axios.put(`${HABITS_API_URL}/${id}/grow`, {}, {
+      headers: { Authorization: `Bearer ${authToken}` },
+    });
+  }
+
+  async harvestHabit(authToken: string, id: number): Promise<void> {
+    await axios.put(`${HABITS_API_URL}/${id}/harvest`, {}, {
+      headers: { Authorization: `Bearer ${authToken}` },
+    });
+  }
+
+  async fetchHarvestedHabits(authToken: string): Promise<Habit[]> {
+    const response = await axios.get<HabitData[]>(`${HABITS_API_URL}/harvested`, {
+      headers: { Authorization: `Bearer ${authToken}` },
+    });
+    // Convert raw data to domain entities
+    return response.data.map(data => new Habit(data));
+  }
+
   async fetchPredefinedHabits(authToken: string): Promise<any[]> {
     const response = await axios.get<any[]>(`${HABITS_API_URL}/predefined`, {
       headers: { Authorization: `Bearer ${authToken}` },

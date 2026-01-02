@@ -1,16 +1,20 @@
-
 import React, { useMemo } from 'react';
 import { Image } from 'expo-image';
-import { Modal, Pressable, Text, View } from 'react-native';
+import { Modal, Pressable, Text, View, ScrollView } from 'react-native';
 import { ThemedText } from './ThemedText';
 import { ThemedView } from './ThemedView';
 import { inventoryviewStyles } from '../../styles/inventory_style';
 import { Achievement } from '../../domain/entities/Achievement';
+import { Habit } from '../../domain/entities/Habit';
 
 type Props = {
-  achievements: Achievement[];
+  achievements: (Achievement | Habit)[];
   selectedAchievementId: number | null;
   onSelectAchievement: (id: number | null) => void;
+};
+
+const isHabit = (item: Achievement | Habit): item is Habit => {
+  return 'name' in item && 'startDate' in item && 'createdAt' in item;
 };
 
 export const InventoryView: React.FC<Props> = ({ 
@@ -18,15 +22,18 @@ export const InventoryView: React.FC<Props> = ({
   selectedAchievementId, 
   onSelectAchievement 
 }) => {
-  // //Dummy Hardcoded: Organize achievements into rows for display
-  // In real implementation, would fetch row organization from backend
   const achievementRows = useMemo(() => {
-    const rows: Achievement[][] = [];
+    const rows: (Achievement | Habit)[][] = [];
     for (let i = 0; i < achievements.length; i += 3) {
       rows.push(achievements.slice(i, i + 3));
     }
     return rows;
   }, [achievements]);
+
+  const formatDate = (date: string | Date): string => {
+    const d = new Date(date);
+    return d.toLocaleDateString('de-DE');
+  };
 
   const selectedAchievement = useMemo(() => {
     return achievements.find((a) => a.id === selectedAchievementId);
@@ -38,7 +45,7 @@ export const InventoryView: React.FC<Props> = ({
         Erfolge
       </ThemedText>
 
-      {/* //Dummy Hardcoded: Render achievement badges in grid */}
+      {/* Render achievement badges in grid */}
       {achievementRows.map((row, rowIndex) => (
         <View key={rowIndex} style={inventoryviewStyles.badgeRow}>
           {row.map((achievement) => (
@@ -46,17 +53,25 @@ export const InventoryView: React.FC<Props> = ({
               key={achievement.id}
               onPress={() => onSelectAchievement(achievement.id)}
             >
-              <Image 
-                source={achievement.imageUrl} 
-                style={inventoryviewStyles.badge} 
-                contentFit="contain" 
-              />
+              {isHabit(achievement) ? (
+                <Image 
+                  source={require('@/assets/images/tree/tree8.png')} 
+                  style={inventoryviewStyles.badge} 
+                  contentFit="contain" 
+                />
+              ) : (
+                <Image 
+                  source={(achievement as Achievement).imageUrl} 
+                  style={inventoryviewStyles.badge} 
+                  contentFit="contain" 
+                />
+              )}
             </Pressable>
           ))}
         </View>
       ))}
 
-      {/* Achievement Details Modal */}
+      {/* Achievement/Habit Details Modal */}
       <Modal
         visible={selectedAchievementId !== null}
         animationType="fade"
@@ -66,22 +81,71 @@ export const InventoryView: React.FC<Props> = ({
         <View style={inventoryviewStyles.modalOverlay}>
           <View style={inventoryviewStyles.modalContent}>
             {selectedAchievement && (
-              <>
-                <Image
-                  source={selectedAchievement.imageUrl}
-                  style={{ width: 80, height: 80, marginBottom: 16 }}
-                  contentFit="contain"
-                />
-                <Text style={inventoryviewStyles.modalTitle}>
-                  {selectedAchievement.name}
-                </Text>
-                <Text style={inventoryviewStyles.modalText}>
-                  {selectedAchievement.description}
-                </Text>
-                <Text style={inventoryviewStyles.modalText}>
-                  Freigeschaltet: {selectedAchievement.getFormattedUnlockDate()}
-                </Text>
-              </>
+              <ScrollView>
+                {isHabit(selectedAchievement) ? (
+                  <>
+                    <Image
+                      source={require('@/assets/images/tree/tree8.png')}
+                      style={{ width: 80, height: 80, marginBottom: 16, alignSelf: 'center' }}
+                      contentFit="contain"
+                    />
+                    <Text style={inventoryviewStyles.modalTitle}>
+                      {selectedAchievement.name}
+                    </Text>
+                    <View style={{ marginBottom: 12 }}>
+                      <Text style={[inventoryviewStyles.modalText, { fontWeight: 'bold', marginTop: 8 }]}>
+                        Name:
+                      </Text>
+                      <Text style={inventoryviewStyles.modalText}>
+                        {selectedAchievement.name}
+                      </Text>
+                    </View>
+                    <View style={{ marginBottom: 12 }}>
+                      <Text style={[inventoryviewStyles.modalText, { fontWeight: 'bold', marginTop: 8 }]}>
+                        Erstellungsdatum:
+                      </Text>
+                      <Text style={inventoryviewStyles.modalText}>
+                        {selectedAchievement.createdAt ? formatDate(selectedAchievement.createdAt) : '-'}
+                      </Text>
+                      </View>
+                      <View style={{ marginBottom: 12 }}>
+                      <Text style={[inventoryviewStyles.modalText, { fontWeight: 'bold', marginTop: 8 }]}>
+                        Startdatum:
+                      </Text>
+                      <Text style={inventoryviewStyles.modalText}>
+                        {selectedAchievement.startDate ? formatDate(selectedAchievement.startDate) : '-'}
+                      </Text>
+                    </View>
+                    {selectedAchievement.description && (
+                      <View style={{ marginBottom: 12 }}>
+                        <Text style={[inventoryviewStyles.modalText, { fontWeight: 'bold', marginTop: 8 }]}>
+                          Beschreibung:
+                        </Text>
+                        <Text style={inventoryviewStyles.modalText}>
+                          {selectedAchievement.description}
+                        </Text>
+                      </View>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    <Image
+                      source={(selectedAchievement as Achievement).imageUrl}
+                      style={{ width: 80, height: 80, marginBottom: 16 }}
+                      contentFit="contain"
+                    />
+                    <Text style={inventoryviewStyles.modalTitle}>
+                      {(selectedAchievement as Achievement).name}
+                    </Text>
+                    <Text style={inventoryviewStyles.modalText}>
+                      {(selectedAchievement as Achievement).description}
+                    </Text>
+                    <Text style={inventoryviewStyles.modalText}>
+                      Freigeschaltet: {(selectedAchievement as Achievement).getFormattedUnlockDate()}
+                    </Text>
+                  </>
+                )}
+              </ScrollView>
             )}
             <Pressable
               style={inventoryviewStyles.closeButton}

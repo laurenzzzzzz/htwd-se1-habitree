@@ -2,7 +2,7 @@ import { Habit } from '../entities/Habit';
 
 export type HabitPersistencePayload = {
     name: string;
-    description: string;
+  description?: string | null;
     frequency: string;
     startDate?: string; // dd.mm.yyyy
     time?: string; // hh:mm
@@ -20,6 +20,9 @@ export interface IHabitsRepository {
     id: number,
     payload: HabitPersistencePayload
   ): Promise<void>;
+  growHabit(authToken: string, id: number): Promise<void>;
+  harvestHabit(authToken: string, id: number): Promise<void>;
+  fetchHarvestedHabits(authToken: string): Promise<Habit[]>;
 
   fetchPredefinedHabits(authToken: string): Promise<any[]>;
 }

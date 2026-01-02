@@ -8,13 +8,17 @@ export type HabitEntry = {
 export type HabitData = {
   id: number;
   name: string;
-  description: string;
+  description?: string | null;
   frequency: string;
   time?: string | null;
   startDate?: string | Date | null;
   weekDays?: number[];
   intervalDays?: number | null;
   entries: HabitEntry[];
+  currentStreak?: number | null;
+  maxStreak?: number | null;
+  isHarvested?: number; // 0 = normal, 1 = tree8, 2 = geerntet
+  createdAt?: string | Date; // Timestamp when habit was created
 };
 
 /**
@@ -24,52 +28,73 @@ export type HabitData = {
 export class Habit {
   readonly id: number;
   readonly name: string;
-  readonly description: string;
+  readonly description: string | null;
   readonly frequency: string;
   readonly time?: string | null;
   readonly startDate?: string | Date | null;
   readonly weekDays?: number[];
   readonly intervalDays?: number | null;
   readonly entries: HabitEntry[];
+  readonly currentStreak: number | null;
+  readonly maxStreak: number | null;
+  readonly isHarvested: number;
+  readonly createdAt?: string | Date;
 
   constructor(data: HabitData) {
     this.id = data.id;
     this.name = data.name;
-    this.description = data.description;
+    this.description = data.description ?? null;
     this.frequency = data.frequency;
     this.time = data.time ?? null;
     this.startDate = data.startDate ?? null;
     this.weekDays = data.weekDays ?? [];
     this.intervalDays = data.intervalDays ?? null;
     this.entries = data.entries;
+    this.currentStreak = data.currentStreak ?? null;
+    this.maxStreak = data.maxStreak ?? null;
+    this.isHarvested = data.isHarvested ?? 0;
+    this.createdAt = data.createdAt ?? undefined;
   }
 
   /**
    * Calculates the current streak (consecutive completed days)
    */
   getStreak(): number {
+    // Prefer backend-provided streak (already korrekt gerechnet, excl. heute)
+    if (this.currentStreak !== null && this.currentStreak !== undefined) {
+      return this.currentStreak;
+    }
+
     if (this.entries.length === 0) return 0;
 
+    // Fallback: lokal berechnen, aber HEUTE nicht zählen und Lücken beenden den Streak
     const sortedEntries = [...this.entries]
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
-    let streak = 0;
     const today = new Date();
-    let currentDate = new Date(today);
+    today.setHours(0, 0, 0, 0);
+    let expectedDate = new Date(today);
+    expectedDate.setDate(expectedDate.getDate() - 1); // starte mit gestern
+
+    let streak = 0;
 
     for (const entry of sortedEntries) {
       const entryDate = new Date(entry.date);
-      
-      if (!this.isSameDay(currentDate, entryDate)) {
-        currentDate.setDate(currentDate.getDate() - 1);
-        if (!this.isSameDay(currentDate, entryDate)) {
-          break;
-        }
+      entryDate.setHours(0, 0, 0, 0);
+
+      // Heute wird nicht gezählt
+      if (this.isSameDay(entryDate, today)) {
+        continue;
+      }
+
+      // Gap im Datum? -> Streak endet
+      if (!this.isSameDay(entryDate, expectedDate)) {
+        break;
       }
 
       if (entry.status) {
         streak++;
-        currentDate.setDate(currentDate.getDate() - 1);
+        expectedDate.setDate(expectedDate.getDate() - 1);
       } else {
         break;
       }

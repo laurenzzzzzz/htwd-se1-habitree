@@ -15,7 +15,7 @@ export class HabitService {
   async saveHabit(
     authToken: string,
     name: string,
-    description: string,
+    description?: string | null,
     frequency: string,
     startDate?: string,
     time?: string,
@@ -41,7 +41,7 @@ export class HabitService {
     authToken: string,
     id: number,
     name: string,
-    description: string,
+    description?: string | null,
     frequency: string,
     startDate?: string,
     time?: string,
@@ -50,6 +50,20 @@ export class HabitService {
   ): Promise<Habit[]> {
     await this.repo.updateHabit(authToken, id, { name, description, frequency, startDate, time, weekDays, intervalDays });
     return this.repo.fetchHabits(authToken);
+  }
+
+  async growHabit(authToken: string, id: number): Promise<Habit[]> {
+    await this.repo.growHabit(authToken, id);
+    return this.repo.fetchHabits(authToken);
+  }
+
+  async harvestHabit(authToken: string, id: number): Promise<Habit[]> {
+    await this.repo.harvestHabit(authToken, id);
+    return this.repo.fetchHabits(authToken);
+  }
+
+  async fetchHarvestedHabits(authToken: string): Promise<Habit[]> {
+    return this.repo.fetchHarvestedHabits(authToken);
   }
 
   async fetchPredefinedHabits(authToken: string): Promise<any[]> {

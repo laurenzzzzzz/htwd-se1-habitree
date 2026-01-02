@@ -53,8 +53,11 @@ export default function ParallaxScrollView({
         scrollIndicatorInsets={{ bottom }}
         contentContainerStyle={{ paddingBottom: bottom }}>
         <Animated.View
-          style={[parallaxScrollViewStyles.header, { backgroundColor: headerBackgroundColor[colorScheme] }, headerAnimatedStyle]}
-        >
+          style={[
+            parallaxScrollViewStyles.header,
+            { backgroundColor: headerBackgroundColor[colorScheme === 'dark' ? 'dark' : 'light'] },
+            headerAnimatedStyle,
+          ]}>
           {headerImage}
         </Animated.View>
         <ThemedView style={parallaxScrollViewStyles.content}>{children}</ThemedView>

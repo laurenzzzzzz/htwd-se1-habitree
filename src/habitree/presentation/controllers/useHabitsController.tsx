@@ -68,7 +68,7 @@ export function useHabitsController() {
   }, [habitService, authToken]);
 
   const saveHabit = useCallback(
-    async (name: string, description: string, frequency: string, startDate?: string, time?: string, weekDays?: number[], intervalDays?: string) => {
+    async (name: string, description: string | null | undefined, frequency: string, startDate?: string, time?: string, weekDays?: number[], intervalDays?: string) => {
       if (!authToken) throw new Error('Kein Auth-Token vorhanden');
       try {
         const updatedHabits = await habitService.saveHabit(authToken, name, description, frequency, startDate, time, weekDays, intervalDays);
@@ -107,7 +107,7 @@ export function useHabitsController() {
     }
   }, [authToken, habitService, rescheduleNotifications]);
 
-  const updateHabit = useCallback(async (id: number, name: string, description: string, frequency: string, startDate?: string, time?: string, weekDays?: number[], intervalDays?: string) => {
+  const updateHabit = useCallback(async (id: number, name: string, description: string | null | undefined, frequency: string, startDate?: string, time?: string, weekDays?: number[], intervalDays?: string) => {
     if (!authToken) throw new Error('Kein Auth-Token vorhanden');
     try {
       const updatedHabits = await habitService.updateHabit(authToken, id, name, description, frequency, startDate, time, weekDays, intervalDays);
@@ -151,7 +151,7 @@ export function useHabitsController() {
    * Handler for habit creation
    */
   const handleSaveHabit = useCallback(
-    async (name: string, description: string, frequency: string, startDate?: string, time?: string, weekDays?: number[], intervalDays?: string) => {
+    async (name: string, description: string | null | undefined, frequency: string, startDate?: string, time?: string, weekDays?: number[], intervalDays?: string) => {
       try {
         await saveHabit(name, description, frequency, startDate, time, weekDays, intervalDays);
         return { success: true };
@@ -188,7 +188,7 @@ export function useHabitsController() {
     }
   }, [deleteHabit]);
 
-  const handleUpdateHabit = useCallback(async (id: number, name: string, description: string, frequency: string, startDate?: string, time?: string, weekDays?: number[], intervalDays?: string) => {
+  const handleUpdateHabit = useCallback(async (id: number, name: string, description: string | null | undefined, frequency: string, startDate?: string, time?: string, weekDays?: number[], intervalDays?: string) => {
     try {
       await updateHabit(id, name, description, frequency, startDate, time, weekDays, intervalDays);
       return { success: true };
@@ -197,6 +197,48 @@ export function useHabitsController() {
       return { success: false, error };
     }
   }, [updateHabit]);
+
+  const growHabit = useCallback(async (id: number) => {
+    if (!authToken) throw new Error('Kein Auth-Token vorhanden');
+    try {
+      const updatedHabits = await habitService.growHabit(authToken, id);
+      setHabits(updatedHabits);
+      return updatedHabits;
+    } catch (error) {
+      throw error;
+    }
+  }, [authToken, habitService]);
+
+  const harvestHabit = useCallback(async (id: number) => {
+    if (!authToken) throw new Error('Kein Auth-Token vorhanden');
+    try {
+      const updatedHabits = await habitService.harvestHabit(authToken, id);
+      setHabits(updatedHabits);
+      return updatedHabits;
+    } catch (error) {
+      throw error;
+    }
+  }, [authToken, habitService]);
+
+  const handleGrowHabit = useCallback(async (id: number) => {
+    try {
+      await growHabit(id);
+      return { success: true };
+    } catch (error) {
+      console.error('growHabit error', error);
+      return { success: false, error };
+    }
+  }, [growHabit]);
+
+  const handleHarvestHabit = useCallback(async (id: number) => {
+    try {
+      await harvestHabit(id);
+      return { success: true };
+    } catch (error) {
+      console.error('harvestHabit error', error);
+      return { success: false, error };
+    }
+  }, [harvestHabit]);
 
   return {
     habits,
@@ -214,6 +256,8 @@ export function useHabitsController() {
     handleToggleHabit,
     handleDeleteHabit,
     handleUpdateHabit,
+    handleGrowHabit,
+    handleHarvestHabit,
     fetchPredefinedHabits,
     today,
     isSameDay,
