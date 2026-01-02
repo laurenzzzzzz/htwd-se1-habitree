@@ -10,8 +10,8 @@ export const createInventoryViewStyles = (
   height?: number,
   options: InventoryStyleOptions = {},
 ) => {
-  const { spacing, font, radius, scale } = createResponsiveHelpers(width, height);
-  const modalWidth = width ? Math.min(width * 0.85, 520) : undefined;
+  const { spacing, font, radius, scale, width: screenWidth } = createResponsiveHelpers(width, height);
+  const modalWidth = Math.min(screenWidth * 0.9, 560);
   const backgroundColorValue = options.backgroundColor ?? '#fff';
 
   return StyleSheet.create({
@@ -53,7 +53,7 @@ export const createInventoryViewStyles = (
     },
     modalOverlay: {
       flex: 1,
-      backgroundColor: 'rgba(0, 0, 0, 0.7)',
+      backgroundColor: 'rgba(0, 0, 0, 0.3)',
       justifyContent: 'center',
       alignItems: 'center',
       padding: spacing.md,

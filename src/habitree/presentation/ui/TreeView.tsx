@@ -333,7 +333,7 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
               <View style={treeviewStyles.infoBoxContent}>
                 <Text style={treeviewStyles.infoBoxStreakText}>
                   Erfolgreiche Streak: {mainStreakDays} {mainStreakDays === 1 ? 'Tag' : 'Tage'}
-                  {mainMaxStreak ? <Text style={{ color: '#999' }}>      (beste Streak:{mainMaxStreak})</Text> : null}
+                  {mainMaxStreak ? <Text style={{ color: '#999' }}>      (Beste: {mainMaxStreak})</Text> : null}
                 </Text>
                 <Text style={treeviewStyles.infoBoxDescription}>
                   Du hast bereits an {mainStreakDays} {mainStreakDays === 1 ? 'Tag am Stück' : 'Tagen am Stück'} alle deiner Tages-Habits abgeschlossen und einen gigantischen habitree wachsen lassen!
@@ -535,7 +535,7 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
               });
               await fetchHabits();
             } else {
-              Alert.alert('Fehler', res.error || 'Speichern fehlgeschlagen.');
+              Alert.alert('Fehler', String(res.error || 'Speichern fehlgeschlagen.'));
             }
           } else {
             if (newHabitName.trim() === '') {
