@@ -9,7 +9,7 @@ Dieses Handbuch unterstützt Nutzer dabei, die **Habit Tracker App** zu starten,
 * Node.js installiert
 * `npx expo` verfügbar
 * Internetzugang
-* (Optional) Uni-VPN
+* Uni-VPN
 
 == 3. Zugriff auf das System / Projekt
 * GitHub Repository: https://github.com/laurenzzzzzz/htwd-se1-habitree/tree/main
@@ -22,30 +22,27 @@ git clone https://github.com/laurenzzzzzz/htwd-se1-habitree.git
 ```
 2. **VS Code öffnen**  
 3. Menü: **Datei → Ordner öffnen**  
-4. Ordner auswählen:
-```bash
-htwd-se1-habitree/src/habitree
-```
 
 == 5. Projekt aktualisieren
+
 * Git Pull ausführen, um neueste Änderungen zu holen:
 ```bash
 git pull
 ```
-* Abhängigkeiten installieren:
-```bash
-npm install
-```
 
 == 6. Expo starten
 
-```bash
-npx expo start
-```
+Bitte beachten jeweils auf Handy und PC den eduVPN aktivieren, da der Backend Server im HTW Netzwerk ist.
 
-* QR-Code im Browser-UI scannen, Handy verbindet sich über Internet
-* Android: a
-* iOS: i
+[source,shell]
+----
+cd src/habitree
+npm ci
+npx expo install --fix <- Installiert und Updatet alle Packages
+npx expo start --tunnel --go --clear
+----
+
+Scanne den angezeigten QR-Code mit der **Expo Go App** auf deinem Smartphone.
 
 == 7. Benutzeroberfläche
 
@@ -138,8 +135,15 @@ Die untere Navigationsleiste ist in allen Ansichten sichtbar und ermöglicht den
 
 === 8.2 Gewohnheit abhaken
 
-
 === 8.3 Gewohnheit bearbeiten / löschen
+
+=== 8.4 Alle Gewohnheiten anzeigen
+
+=== 8.5 Baum anzeigen und wachsen lassen
+
+=== 8.6 Abzeichen verdienen und anzeigen lassen
+
+=== 8.7 Anmelden/ Abmelden/ Registrieren
 
 
 == 9. Selten genutzte Funktionen
@@ -152,11 +156,11 @@ Die untere Navigationsleiste ist in allen Ansichten sichtbar und ermöglicht den
 - Account löschen
 
 == 10. FAQ / Häufige Probleme
-- **Warum sehe ich den QR-Code nicht?** → Stelle sicher, dass Expo läuft und dein Handy im gleichen Netzwerk ist.
+- **Warum sehe ich den QR-Code nicht?** - Stelle sicher, dass Expo läuft und die VPN an ist damit dein Handy im gleichen Netzwerk ist.
 
-- **Meine Habits verschwinden nach einem Update?** → Prüfe, ob du dich mit deinem Account eingeloggt hast.
+- **Meine Habits verschwinden nach einem Update?** - Prüfe, ob du dich mit deinem Account eingeloggt hast und das Netzwerk noch gleich ist.
 
-- **Der Baum wächst nicht?** → Nur wenn du deine Habits regelmäßig abhaken kannst, steigt der Fortschritt.
+- **Der Baum wächst nicht?** - Nur wenn du deine Habits regelmäßig abhaken kannst, steigt der Fortschritt.
 
 == 11. Tipps & Tricks
 - Starte mit kleinen Gewohnheiten – lieber 5 Minuten lesen als gleich ein ganzes Buch.
