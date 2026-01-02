@@ -6,7 +6,7 @@ import { ThemedText } from './ThemedText';
 import { ThemedView } from './ThemedView'; 
 import { treeviewStyles } from '../../styles/treeview_style';
 import { TreeGrowth } from '../../domain/entities/TreeGrowth';
-import { useHabits } from '../../context/HabitsContext';
+import { useHabitsController } from '../controllers/useHabitsController';
 import { useStreakController } from '../controllers/useStreakController';
 import HabitModal from './HabitModal';
 
@@ -104,7 +104,7 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
     handleUpdateHabit,
     handleGrowHabit,
     handleHarvestHabit,
-  } = useHabits();
+  } = useHabitsController();
   const { streak, isLoading: isStreakLoading } = useStreakController();
 
   //type HabitItem = { id: number; streak: number; name: string; description: string };
