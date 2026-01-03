@@ -84,15 +84,10 @@ Fokus lag auf Business-Logik und kritischen User-Flows (Auth, Habits, Profile). 
 
 == CI & Badge
 
-Wir haben eine GitHub Actions CI, die Tests und Coverage ausführt. Fügt im Projekt ein Badge ein, damit der Build-Status sichtbar ist. Beispiel:
-
-image::https://github.com/laurenzzzzzz/htwd-se1-habitree/actions/workflows/ci.yml/badge.svg[Build]
-
 Kurze Befehle zum lokalen Ausführen:
 - `npm test` - führt alle Tests aus (Jest)
 - `npm run test:coverage` - führt Tests und Coverage-Report aus
 
-Hinweis: Das Badge-URL-Template funktioniert, sobald das Repo auf GitHub liegt und die Workflow-Datei im Pfad `.github/workflows/ci.yml` existiert.
 
 == Nächste Schritte
 
