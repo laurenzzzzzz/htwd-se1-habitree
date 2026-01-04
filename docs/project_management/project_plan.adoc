@@ -308,6 +308,7 @@ In Software Engineering 2 setzte sich dieses Verhalten verstärkt fort:
 - Sowohl die Über als auch die Unterplanung eines Sprints wirken sich negativ auf die Effizienz innerhalb des Teams aus, da immer Abstimmungs oder zusätzlicher Klärungsbedarf besteht. +
 - Sprintziele müssen selbstverständlich realistisch und flexibel geplant werden +
 - Mittels eines stabilen Product Backlogs kann man auch kleinere Sprintschwankungen während des Semestersgut austahieren. +
+- Ferner ist für studentische Projekte eine Adaptivität teilweise wichtiger als eine strikte Methodentreue.
 |===
 
 === Positive Ereignisse
@@ -386,6 +387,24 @@ Definition of Ready enthalten +
 - Finden einer Balance zwischen Projekterfolg und Teamspirit +
 - Schutz des Teams vor dauerhafter Mehrbelastung durch einzelne Mitglieder ist wichtig um andere Mitglieder nicht auch zu demotivieren!  +
 - Einbindung von Betreuern (Professor/Coach) als letzte Eskalationsstufe +
+| Sprint Management in Abhängigkeit von äußeren Umständen
+| - Einführung eines differenzierten Sprint Managements um mit stark schwankenden Kapazitäten (bedingt durch Stress basierend auf anderen Modulen/ Seminaren oder auch außeruniversitären Belastungen) klar zu kommen. +
+- Es müssen hierbei 2 Zustände berücksichtigt werden: +
+*(1) Teammitglieder sind mit den einzelnen Sprintaufgaben deutlich vor Sprintende fertig:* +
+- Deutlich vor Sprintende  bedeutet über 10 Tage Leerlaufzeit +
+- Durchführung eines `Sprint- Refill- Meetings` +
+*- Ziel:*  Vermeidung ungenutzer Leerlaufzeit und Sicherstellung kontinuierlicher Wertlieferung und Anwendungs- Verbesserung +
+*- Grund:* Studenten haben nicht die Zeit, solche wertvollen Leerlaufzeiten ungenutzt zu lassen, sondern müssen so effizient wie möglich Features releasen. (v.a. da Stress gerade zu Ende des Semesters allgemein stark ansteigt) +
+- Aufnahme von zusätzlichen Stories aus dem Product Backlog in den laufenden Sprint, inklusive kurzer Neubewertung von Komplexität, Risiken und Abhängigkeiten zu nachgelagerten Inhalten und Taskableitung. +
+*(2) Nicht alle Artefakte können vor dem definierten Sprintende abgeschlossen werden:* +
+- Herausnahme der Stories aus dem Sprint +
+- Ansprechen in der Retrospektive und Ermittlung der Gründe für die Fehlende Abarbeitung +
+- Erneutes Refinement- Meeting und ggf. Überarbeitung der Artefakte (nur falls diese wirklich zu komplex sein sollten; häufig ist schlichtweg Stress, induziert durch andere Fächer und Seminare der Universität Schuld an der fehlenden Abarbeitung) +
+- Wiedereingliederung der alten Stories in den nächsten Sprint, noch vor den neuen Stories +
+*-Anmerkung:* Dieses Vorgehen weicht von klassischen Scrum- Prinzipien ab, vor allem da man nicht einfach einen festgelegten Sprint mit neuen Inhalten befüllen sollte, wenn man all seine Task schon vor der eigentlichen Zeit abgearbeitet und validiert hat. +
+Wir haben uns dazu entschieden, dass dennoch so auszuleben, da das Zeitfenster für dieses Projekt allgemein sehr klein ist und wir uns die entstehende Leerlaufzeit nicht in dem Umfang leisten können. +
+Grund hierfür ist das universitäre Umfeld in dem sich die Projektteilnehmer befinden. Dies zeichnet sich aus durch unregelmäßige Kapazitäten, Prüfungsphasen und Deadlines in anderen Modulen oder dem Projektseminar, die teilweiße kurzfristig und unerwartet aufkommen.
+
 |===
 
 
@@ -444,7 +463,7 @@ Definition of Ready enthalten +
 | Integration in den Scrum- Zyklus
 |- Sprint Reviews enthalten nun auch Akzeptanztests zu vorher ausgewählten Stories/ Features der Anwendung. Somit sollen auch statische Tests manuell durch andere Personen als den Ersteller abgedeckt werden. + 
 - Weitere statische Tests werden auch innerhalb der Weekly- Meetings durch andere Personen (insbesonders durch unseren PO) des Teams vorgenommen. +
-- Vor allem bei Sprint Review- Tests mit externen Stakeholdern,erfolgt im Vorfeld eine kurze Absprache mit dem Scrum Master, PO und dem enstprechenden Entwickler, welche konkreten Kriterien zur Testevaluation hinzugezogen werden müssen.
+- Vor allem bei Sprint Review- Tests mit externen Stakeholdern,erfolgt im Vorfeld eine kurze Absprache mit dem Scrum Master, PO und dem enstprechenden Entwickler, welche konkreten Kriterien zur Testevaluation hinzugezogen werden müssen. +
 |===
 
 
