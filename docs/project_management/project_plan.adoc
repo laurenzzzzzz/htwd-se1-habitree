@@ -450,27 +450,154 @@ Definition of Ready enthalten +
 
 
 
----
-open points:
+| Test-Framework & Werkzeuge
+a|*Framework:* +
+- Wir nutzen Jest als Test-Framework mit dem `jest-expo` Preset, damit alles mit React Native und Expo zusammenpasst +
+- Die genaue Konfiguration steht in unserer `jest.config.js`, wo wir auch bestimmte React Native Module von der Transformation ausschließen mussten +
 
-Dokument anlegen: testing.adoc mit Test- Ordnerstruktur +
-Namenskonventionen für tests nieder schreiben +
+*Mocking:* +
+- Für unsere Tests mocken wir die Repository-Interfaces mit Jest Mock Functions (`jest.fn()`) +
+- Wir haben eigene Mock-Implementierungen geschrieben (z.B. `MockHabitsRepository` in den Integrationstests), damit wir keine echten API-Calls machen müssen +
+- So stellen wir sicher, dass unsere Tests wirklich *Independent* laufen (FIRST-Prinzip) +
 
-Mocking vorhanden ???
+*Code Coverage:* +
+- Jest misst automatisch unsere Code Coverage für die `domain/**` und `application/**` Layer +
+- Wir haben uns Coverage-Schwellwerte gesetzt: +
+  * Branches: 60% +
+  * Functions: 60% +
+  * Lines: 60% +
+  * Statements: 60% +
+- Mit `npm run test:coverage` können wir uns den Coverage-Report anzeigen lassen +
 
+| Automatisierung & CI/CD
+a|*GitHub Actions Workflow:* +
+- Unsere Tests laufen automatisch bei jedem Push auf den `main` Branch (wenn was in `src/**` geändert wurde) +
+- Der Workflow in `.github/workflows/main.yml` läuft so ab: +
+  (1) Code auschecken +
+  (2) Node.js (Version 20.x) installieren +
+  (3) Dependencies installieren mit `npm ci` +
+  (4) Security Scan mit Shai-Hulud Detector durchführen +
+  (5) Expo Doctor für Projekt-Check laufen lassen +
+  (6) Alle Tests mit `npm test` ausführen +
+- Wenn Tests fehlschlagen, bricht der ganze Build ab und wir sehen das direkt in GitHub +
 
-Welche Qualitätseigenschaften testes du am meisten? Folie 28 +
+*Lokale Entwicklung:* +
+- `npm test`: Führt alle Tests einmal aus +
+- `npm run test:watch`: Tests laufen kontinuierlich im Hintergrund während wir entwickeln +
+- `npm run test:coverage`: Zeigt uns den Coverage-Report an +
 
+| Testorganisation & Struktur
+a|*Ordnerstruktur:* +
+Wir haben unsere Tests im `__tests__/` Ordner nach Testtypen organisiert: +
+[source]
+----
+__tests__/
+├── domain/              # Unit Tests für Entities
+│   ├── Habit.entity.test.ts
+│   ├── User.test.ts
+│   └── Quote.test.ts
+├── integration/         # Integrationstests für Services
+│   ├── HabitService.integration.test.ts
+│   ├── QuoteService.test.ts
+│   ├── AuthService.test.ts
+│   ├── ProfileService.test.ts
+│   └── HabitSchedulePolicy.test.ts
+└── system/             # Manuelle Systemtests
+    └── SYSTEMTESTS.md
+----
 
-Automatisiertes vs Exploratives Testen was machen wir genau? +
-- Automatisiertes Testen: Machen wir bei Push/Pull Requests und den Code auf Git Hub Pushen doer Pullen mit Git Hub Actions +
-- Exploratives: Unit Tests +
+*Namenskonventionen:* +
+- Alle Testdateien enden auf `.test.ts` oder `.test.tsx` +
+- Jede Datei testet genau eine Entity oder einen Service (z.B. `User.test.ts` testet nur `User.ts`) +
 
+*Aufbau einer Testdatei:* +
+- `describe()` Blöcke fassen Tests für eine Funktion/Methode zusammen +
+- `beforeEach()` setzt vor jedem Test alles zurück (Mocks, State), damit die Tests unabhängig sind +
+- `it()` bzw. `test()` schreibt den einzelnen Testfall +
 
-Konkrete Umsetzung der White Box tests kurz hier niederschreiben und genauer noch mal in Testing.adoc ergänzen +
+| Konkrete Umsetzung White-Box-Tests
+a|*Wie wir White-Box testen:* +
+- Jest misst automatisch die Coverage und zeigt uns welche Code-Zeilen noch nicht getestet sind +
+- Wir konzentrieren uns auf Domain- und Application-Layer (UI und Infrastructure testen wir anders) +
+- Ziel ist es, alle wichtigen Kontrollflüsse und if/else-Verzweigungen abzudecken +
 
-Testorganisation (Seite 24- 30) muss erklärt werden. +
+*Konkrete Beispiele aus unserem Code:* +
+- In `Habit.entity.test.ts` testen wir z.B. die `getStreak()` Funktion mit: +
+  * Leerem Array (was passiert wenn keine Entries da sind?) +
+  * Genau einem Entry (Grenzfall) +
+  * Mehreren aufeinanderfolgenden Tagen (Normalfall) +
+  * Lücke mittendrin (Streak muss abbrechen) +
+  * Entry mit `status: false` (Streak-Unterbrechung) +
+  * Unsortierten Entries (testet die Sortier-Logik) +
+- Bei `User.test.ts` für die Email-Validierung testen wir: +
+  * Gültige Emails wie `test@example.com` (Positivtests) +
+  * Fehlende @, fehlende Domain, fehlende TLD (alle Negativtest-Branches) +
+  * Leerzeichen und leere Strings (Edge Cases) +
 
-Beispiele bei First Regeln nennen +
+*Unsere Testdaten-Strategie:* +
+- Äquivalenzklassen bilden: Gültige Eingaben vs. ungültige Eingaben trennen +
+- Grenzwerte testen: z.B. Username mit 3 Zeichen (Minimum), 50 Zeichen (Maximum), leer (ungültig) +
 
-Fragen aus Vorlesung von Prof. Anke beantworten- ggf. im Q&A
+| Manuelle & Explorative Tests
+a|*Systemtests (Manuell):* +
+- Haben wir in `__tests__/system/SYSTEMTESTS.md` dokumentiert +
+- Machen wir vor jedem Release - dauert ca. 5 Minuten durchzuklicken +
+- Unsere Testfälle sind: +
+  * ST-01: Login-Flow durchgehen +
+  * ST-02: Habit anlegen, bearbeiten, löschen (CRUD) +
+  * ST-03: Habit mehrere Tage abhaken und Streak checken +
+  * ST-04: Validierungen testen (z.B. leere Felder) +
+- Wenn wir dabei Bugs finden, legen wir sofort ein GitHub Issue mit Label `defect` an +
+
+*Explorative Tests:* +
+- Machen wir in unseren Weekly-Meetings zusammen mit dem PO +
+- Einfach mal neue Features durchklicken ohne festen Plan +
+- Fokus liegt auf Usability und unerwarteten Fehlern die uns auffallen +
+
+*Akzeptanztests:* +
+- Haben wir in Sprint Reviews gemacht, z.B. mit Team 1C +
+- Die haben unsere App getestet und geschaut ob die User Stories erfüllt sind +
+- Deren Feedback und gefundene Fehler haben wir dokumentiert und als neue Tasks angelegt +
+
+| Konkrete Beispiele zu FIRST-Prinzipien
+a|Wir achten bei unseren Tests auf die FIRST-Prinzipien: +
+
+*Fast (Schnell):* +
+- Unsere Unit Tests laufen alle in unter 2 Sekunden durch +
+- Beispiel: In `HabitService.integration.test.ts` nutzen wir `MockHabitsRepository` statt echtem Server, deshalb geht's schnell +
+
+*Independent (Unabhängig):* +
+- Jeder Test kann alleine laufen, ohne dass vorher andere Tests durchgelaufen sein müssen +
+- Beispiel: In `QuoteService.test.ts` (Zeile 9-15) initialisieren wir in `beforeEach()` immer ein frisches Mock-Repository +
+
+*Repeatable (Wiederholbar):* +
+- Tests liefern immer das gleiche Ergebnis, egal wann und wo wir sie laufen lassen +
+- Beispiel: `AuthService.test.ts` mockt alle Repository-Calls, damit nichts von externer API oder Datenbank abhängt +
+
+*Self-Validating (Selbstvalidierend):* +
+- Jeder Test sagt klar "Pass" oder "Fail", ohne dass wir was manuell prüfen müssen +
+- Beispiel: `Quote.test.ts:83` hat klare Assertion → `expect(quote.isValid()).toBe(false)` +
+
+*Timely (Rechtzeitig):* +
+- Wir schreiben Tests parallel zur Implementierung, nicht erst später +
+- User Stories setzen wir nur auf *Done*, wenn die Tests grün sind +
+
+| Welche Qualitätseigenschaften wir am meisten testen
+a|Wir orientieren uns am ISO 25010 Software-Qualitätsmodell und fokussieren uns besonders auf: +
+
+(1) *Funktionale Korrektheit:* +
+- Wir testen ob unsere Business-Logik richtig funktioniert (z.B. Streak-Berechnung, Email-Validierung) +
+- Positivtests: Funktioniert es mit korrekten Eingaben? +
+- Negativtests: Werden Fehler richtig behandelt? +
+
+(2) *Zuverlässigkeit:* +
+- Testen ob die App auch bei Fehlern stabil bleibt +
+- Beispiel: `AuthService.test.ts:81-86` testet was passiert wenn jemand falsche Login-Daten eingibt +
+
+(3) *Wartbarkeit:* +
+- Durch unsere Layer-Architektur (Domain, Application, Infrastructure) können wir einzelne Teile gut testen +
+- Dependency Injection macht's einfach: Services bekommen Repositories als Parameter, die wir dann einfach mocken können +
+
+(4) *Portabilität:* +
+- Unsere Tests laufen überall: Linux, macOS, Windows +
+- Keine Abhängigkeiten von spezieller Hardware oder Betriebssystem-Features +
