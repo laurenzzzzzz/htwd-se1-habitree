@@ -257,7 +257,7 @@ des Projektes. Projekt  enthält eigene Gedanken und Ideen und ist somit hinsich
 | Wissen und Kenntnisse sind anwendbar und können individuell angepasst werden, sodass diese nochmals mehr den Bedürfnissen des Teams entsprechen.
 |===
 
-== Software Engineering 2
+== Ereignisse und Praktiken in Software-Engineering 2
 === Negative Ereignisse
 |===
 |*Ereignis* |*Maßnahme* |*Erkenntnis*
