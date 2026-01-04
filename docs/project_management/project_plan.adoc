@@ -111,7 +111,7 @@ Update/Delete/Add {Beschreibungstext(Deutsch)} (Datei)
 
 === Definition of Ready
 [none]
-Die Definition of Ready beschreibt, wann ein Backlog Item als “bereit zur Umsetzung” gilt. Dazu müssen folgende Inhalte stimmen: 
+Die Definition of Ready beschreibt, wann ein Backlog Item als "bereit zur Umsetzung" gilt. Dazu müssen folgende Inhalte stimmen: 
 
 - Die Akzeptanzkriterien sind klar formuliert 
 - Die Abhängigkeiten zu anderen Issues sind geklärt 
@@ -298,6 +298,16 @@ In Software Engineering 2 setzte sich dieses Verhalten verstärkt fort:
 - Fehlende Beiträge einzelner gefährden nicht nur Ergebnisse, sondern auch kaskadierend Motivation und Fairness im Team  +
 - Frühes und konsequentes Handeln ist entscheidend, damit sich die unerledigten Task der Person nicht aufsummieren +
 - Man sollte sich nicht einlullen lassen und nicht immer Ausreden wie 'Das werde ich heute Abend noch machen...' akzeotieren. +
+| Ungeeignete Sprintlänge und ungenaue Sprintplanung im universitären Kontext
+| - Einführung eines Kapazitätenboards zur Verfassung verfügbarer Arbeitszeit +
+- Wenn innerhalb eines Sprints noch mehr Kapazität besteht und bereits alle Artefakte abgearbeitet wurden, werden in einem Meeting mit dem gesamten Team neue Artefakte in den Sprint aufgenommen. +
+- Wenn User Stories od. andere Artefakte nicht abgeschlossen werden können innerhalb eines Sprints, werden sie erst einmal in den Product Backlog zurückgeführt +
+- Ggf. werden Stories die nicht abgearbeitet konnten in feinere Einheiten zerlegt am Sprintende (innerhalb von Refinement Meetings), allenfalls wird deren Komplexität aber vom Team erneut kritisch überprüft. +
+| - Eine feste Sprintlänge von vier Wochen ist im Studium nur eingeschränkt planbar, da Arbeitsbelastung (u.a. durch andere Module oder dem Projektseminar aber auch durch außeruniversitäre Belastungen einzelner Mitglieder) stark schwankt +
+- Kapazitäten lassen sich im Studium nur bedingt und kurzfristig planen +
+- Sowohl die Über als auch die Unterplanung eines Sprints wirken sich negativ auf die Effizienz innerhalb des Teams aus, da immer Abstimmungs oder zusätzlicher Klärungsbedarf besteht. +
+- Sprintziele müssen selbstverständlich realistisch und flexibel geplant werden +
+- Mittels eines stabilen Product Backlogs kann man auch kleinere Sprintschwankungen während des Semestersgut austahieren. +
 |===
 
 === Positive Ereignisse
@@ -385,82 +395,47 @@ Definition of Ready enthalten +
 |*Kategorie* | *Praktik*
 
 | Test-Management & Qualitätssicherung
-|*Unsere Tests orientieren sich an den FIRST-Prinzipien*: +
-(1) *Fast*: Tests laufen schnell, keine echten API- oder Netzwerkaufrufe +
-(2) *Independent*: Tests sind unabhängig voneinander (`beforeEach` / Reset des Zustands) +
-(3) *Repeatable*: Tests sind reproduzierbar, keine externen Abhängigkeiten +
-(4) *Self-Validating*: Tests enthalten klare Assertions +
-(5) *Timely*: Tests werden begleitend zur Implementierung erstellt +
-- Habitree wird sowohl *verifiziert* (funktionale Korrektheit) als auch *validiert* (Erfüllung der User Stories). +
+| Tests orientieren sich an den *FIRST-Prinzipien* (Fast, Independent, Repeatable, Self-Validating, Timely). +
+- *Verifikation* (funktionale Korrektheit) und *Validierung* (Erfüllung der User Stories) +
+- *White-Box-Tests*: Prüfung interner Logik mittels Code Coverage (Ziel: 60% für Branches, Functions, Lines, Statements) +
+- *Black-Box-Tests*: Prüfung aus Nutzersicht anhand von User Stories und Akzeptanzkriterien +
+- Testmethoden: Äquivalenzklassenanalyse, Grenzwertanalyse +
+- Namenskonvention: `<Funktion>_<Szenario>_<ErwartetesErgebnis>` +
+- Detaillierte Testdokumentation in `testing.adoc`
 
-*Unsere Tests untergliedern sich in mehrere Arten:* +
-(1) *White-Box-Tests*: +
-- Messung mittels der KPI `Code Coverage` +
-- Ziel: Prüfung interner Logik, Kontrollflüsse und Randfälle  auf Basis der Implementierung +
-(2) *Black-Box-Tests*: +
-- Prüfung des Systemverhaltens aus Nutzersicht anhand von User Stories und Akzeptanzkriterien +
-- Der interne Code wird dabei als unbekannt betrachtet
-- Diese Tests erfolgen sowohl explorativ (manuelles Durchklicken) als auch strukturiert +
+| Testpyramide & Testarten
+| *Teststufen:* +
+(1) Unit-Tests zur Überprüfung einzelner Methoden +
+(2) Integrationstests für die Zusammenarbeit mehrerer Units +
+(3) Systemtests für das gesamte System +
+*Unterteilung:* Positivtests (valider Input) und Negativtests (Exception-Handling)
 
-*Methoden der Tests:* +
-(1) Äquivalenzklassenanalyse  +
-(2) Grenzwertanalyse +
+| Test-Framework & Werkzeuge
+| *Framework:* Jest mit `jest-expo` Preset für React Native/Expo +
+*Mocking:* Repository-Interfaces mit `jest.fn()`, eigene Mock-Implementierungen (z.B. `MockHabitsRepository`) +
+*Coverage:* Automatische Messung für `domain/**` und `application/**` Layer, Report via `npm run test:coverage`
 
-*Namenskonventionen:* +
-- standardisiert: +
-`<Funktion>_<Szenario>_<ErwartetesErgebnis>` +
+| Automatisierung & CI/CD
+| *GitHub Actions Workflow* bei Push auf `main`: +
+(1) Code auschecken → (2) Node.js 20.x installieren → (3) `npm ci` → (4) Security Scan → (5) Expo Doctor → (6) `npm test` +
+*Lokale Befehle:* `npm test`, `npm run test:watch`, `npm run test:coverage`
 
-*Ordnerstruktur:* +
-- Vorhanden und dokumentiert im Dokument `testing.adoc` +
-- Tests werden fortlaufend während des Sprints erstellt und spätestens zur Prüfung der *Definition of Done* abgeschlossen. +
-- Eine User Story darf nur dann auf *Done* gesetzt werden, wenn alle relevanten Tests erfolgreich sind. +
+| Testorganisation & Struktur
+| *Ordnerstruktur:* `__tests__/domain/` (Unit), `__tests__/integration/` (Integration), `__tests__/system/` (Manuelle Systemtests) +
+*Dateikonvention:* `*.test.ts` / `*.test.tsx`, eine Datei pro Entity/Service +
+*Aufbau:* `describe()` für Funktionen, `beforeEach()` für Reset, `it()`/`test()` für Testfälle
 
-| Unterteilung der Testarten
-|*- Einführung einer Testpyramide mit klaren Teststufen:* +
-  (1) Unit-Tests zur Überprüfung einzelner Methoden (je Test i.d.R. eine Methode) +
-  (2) Integrationstest um die Zusammenarbeit mehrerer Units zu testen.  +
-  (3) Systemtests für das gesamte System. +
-  *- Testfälle werden in Positiv und Negativtests untergliedert:* +
-  (1) Positivtests: Das Verhaltens des System under Tests bei korrekter Nutzung wird untersucht, was bedeutet, dass nur valider Input als Testdaten eingefügt wird. +
-  (2) Negativtests: Das Verhalten des System under Tests bei fehlerhaften/unzureichenden Input wird überprüft, sodass insbesonders dessen Exception- Handling ersichtlich wird. 
-  
 | Integration ins GitHub-Board
-|- Bugs, die durch Tests gefunden werden, werden als Issues mit dem label `defect` versehen +
-- Defects erscheinen automatisch im separaten Defect-Board +
-- Defects werden basierend auf Ihrem Risiko und Ihrer Komplexität geschätzt und priorisiert. Für die Priorisierung wird auch der Geschäftswert der betreffenden Funktionalität betrachtet. Ist dieser hoch, so muss das Fixing zeitnah erfolgen!  +
-- Bugs, die von den einzelnen Entwicklern selber im jeweiligen Sprint gefunden wurden, werden sofort durch die zuständigen Programmierer behoben. +
+| Bugs werden als Issues mit Label `defect` erfasst und erscheinen automatisch im separaten Defect-Board. +
+Priorisierung nach Risiko, Komplexität und Geschäftswert.
 
+| Integration in den Scrum-Zyklus
+| Sprint Reviews enthalten Akzeptanztests zu ausgewählten Stories/Features. +
+Statische Tests in Weekly-Meetings durch PO. +
+Vorab-Absprache der Testevaluationskriterien mit Scrum Master, PO und Entwickler.
 
-| Integration in den Scrum- Zyklus
-|- Sprint Reviews enthalten nun auch Akzeptanztests zu vorher ausgewählten Stories/ Features der Anwendung. Somit sollen auch statische Tests manuell durch andere Personen als den Ersteller abgedeckt werden. + 
-- Weitere statische Tests werden auch innerhalb der Weekly- Meetings durch andere Personen (insbesonders durch unseren PO) des Teams vorgenommen. +
-- Vor allem bei Sprint Review- Tests mit externen Stakeholdern,erfolgt im Vorfeld eine kurze Absprache mit dem Scrum Master, PO und dem enstprechenden Entwickler, welche konkreten Kriterien zur Testevaluation hinzugezogen werden müssen.
+| Manuelle & Explorative Tests
+| *Systemtests:* Dokumentiert in `__tests__/system/SYSTEMTESTS.md` (ST-01 bis ST-04: Login, CRUD, Streak, Validierungen) +
+*Explorative Tests:* In Weekly-Meetings mit PO, Fokus auf Usability +
+*Akzeptanztests:* In Sprint Reviews mit externem Team (z.B. Team 1C)
 |===
-
-
-
-
----
-open points:
-
-Dokument anlegen: testing.adoc mit Test- Ordnerstruktur +
-Namenskonventionen für tests nieder schreiben +
-
-Mocking vorhanden ???
-
-
-Welche Qualitätseigenschaften testes du am meisten? Folie 28 +
-
-
-Automatisiertes vs Exploratives Testen was machen wir genau? +
-- Automatisiertes Testen: Machen wir bei Push/Pull Requests und den Code auf Git Hub Pushen doer Pullen mit Git Hub Actions +
-- Exploratives: Unit Tests +
-
-
-Konkrete Umsetzung der White Box tests kurz hier niederschreiben und genauer noch mal in Testing.adoc ergänzen +
-
-Testorganisation (Seite 24- 30) muss erklärt werden. +
-
-Beispiele bei First Regeln nennen +
-
-Fragen aus Vorlesung von Prof. Anke beantworten- ggf. im Q&A
