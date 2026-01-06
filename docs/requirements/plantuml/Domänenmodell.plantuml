@@ -1,5 +1,5 @@
 @startuml
-title Domänenmodell – Habit Tracker (integriert mit HabitStack)
+title Domänenmodell – Habitree
 
 skinparam classAttributeIconSize 0
 
@@ -8,96 +8,57 @@ skinparam classAttributeIconSize 0
 '=======================
 
 class User {
-  - email
-  - username
-  - createdAt
-  - Recovery Mode ()
+  - id: Int
+  - email: String
+  - username: String
+  - passwordHash: String
+  - createdAt: DateTime
+  - currentStreak: Int
+  - maxStreak: Int
 }
 
 class Habit {
-  - name
-  - description
-  - frequency
-  - createdAt
-  - currentStreak ()
-  - maxStreak ()
+  - id: Int
+  - name: String
+  - description: String?
+  - frequency: String
+  - startDate: DateTime
+  - time: String
+  - weekDays: Int[]
+  - intervalDays: Int?
+  - createdAt: DateTime
+  - currentStreak: Int
+  - maxStreak: Int
+  - isHarvested: Int (0=Nein, 1=Wachsend, 2=Geerntet)
 }
 
 class HabitEntry {
-  - date
-  - status
-  - note
-}
-class Tagebucheintrag {
-  - date: Date
-  - content: Text
-  - mood: String
-  - weather: String
+  - id: Int
+  - date: DateTime
+  - status: Boolean
+  - note: String?
 }
 
-class Tagebuch {
-  - title
-  - createdAt
-}
-class seasonal_challenges {
-  - title
-  - description
-  - season
-  - isActive
-}
-class Statistik {
-  - totalHabits
-  - completedEntries
-  - successRate
-  - averageMood
+class PredefinedHabit {
+  - id: Int
+  - name: String
+  - description: String
+  - frequency: String
 }
 
-class Dashboard {
-  - dailyOverview
-  - weeklySummary
-  - habitHighlights
+class Quote {
+  - id: Int
+  - quote: String
 }
-class Grafen {
-  - type
-  - dataRange
-  - title
-}
-class Wissensbereich {
-  - topic
-  - content
-  - mediaType
-}
-class HabitStack {
-  - name
-  - ammount of Habits
-  - order
-}
-
 
 '=======================
 ' Beziehungen
 '=======================
-Wissensbereich - User : wird genutzt von >
-Tagebuch "1" *- "0..*" Tagebucheintrag : enthält >
-
 
 User "1" *-- "0..*" Habit : besitzt >
-User "1" -- "0..*"HabitStack : erstellt Stack >
-User "0..*"-- "0..*"seasonal_challenges : nutzt >
-User "1" *- "0..*" Tagebuch : führt >
+User "1" -- "0..*" HabitEntry : hat >
 
-HabitStack "1" o-- "1..*" Habit : enthält >
-seasonal_challenges -- "1..*" Habit : beinhaltet >
-
-
+PredefinedHabit "0..1" -- "0..*" Habit : dient als Vorlage für >
 Habit "1" *-- "0..*" HabitEntry : enthält >
-Habit *- Statistik : bekommt Daten von <
-
-
-Statistik *-- Dashboard : zeigt Daten >
-Statistik *- Grafen : wird interpretiert als >
-
-
-
 
 @enduml

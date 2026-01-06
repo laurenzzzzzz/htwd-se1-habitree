@@ -82,7 +82,13 @@ quote ist Pflichtfeld | Zitat, Spruch
 
 == Domänenmodell
 // Fügen Sie hier eine Abbildung mit ihrem Domänenmodell ein
-image::Domänenmodell.png[]
+//image::Domänenmodell.png[]
+[plantuml]
+....
+include::plantuml/Domänenmodell.plantuml[]
+....
+
+
 
 == Übersicht benutztes Wissen(Quellen)
 |===
