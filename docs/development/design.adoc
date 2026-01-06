@@ -99,7 +99,7 @@ Der Nutzer soll unmittelbar nach dem App-Start eine chronologische Übersicht se
 * Task #171: Filterlogik für geplante Habits
 * Task #172: Design der Tagesplan-Anzeige
 
-==== Link zum Sequenzdiagramm:
+==== Sequenzdiagramm:
 //link:plantuml/Sequenzdiagramm_AutomatischeAnzeige_Tagesplan.md[]
 [mermaid]
 ....
