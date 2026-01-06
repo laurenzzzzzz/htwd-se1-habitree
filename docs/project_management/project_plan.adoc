@@ -111,7 +111,7 @@ Update/Delete/Add {Beschreibungstext(Deutsch)} (Datei)
 
 === Definition of Ready
 [none]
-Die Definition of Ready beschreibt, wann ein Backlog Item als “bereit zur Umsetzung” gilt. Dazu müssen folgende Inhalte stimmen: 
+Die Definition of Ready beschreibt, wann ein Backlog Item als "bereit zur Umsetzung" gilt. Dazu müssen folgende Inhalte stimmen: 
 
 - Die Akzeptanzkriterien sind klar formuliert 
 - Die Abhängigkeiten zu anderen Issues sind geklärt 
@@ -340,7 +340,7 @@ dem Scrum Master als Arbeitsunterstützung (z.B.: Ansprechen in Retrospektive, w
 	-	Das Review bestätigte sowohl funktionale Stärken als auch  Verbesserungspotenziale für die nächsten Sprints +
 |===
 
-=== Managementtechniken
+=== Managementpraktiken
 |===
 |*Kategorie* |*Praktik* 
 | Meeting-Struktur- Verbesserung
@@ -414,209 +414,47 @@ Grund hierfür ist das universitäre Umfeld in dem sich die Projektteilnehmer be
 |*Kategorie* | *Praktik*
 
 | Test-Management & Qualitätssicherung
-|*Unsere Tests orientieren sich an den FIRST-Prinzipien*: +
-(1) *Fast*: Tests laufen schnell, keine echten API- oder Netzwerkaufrufe +
-(2) *Independent*: Tests sind unabhängig voneinander (`beforeEach` / Reset des Zustands) +
-(3) *Repeatable*: Tests sind reproduzierbar, keine externen Abhängigkeiten +
-(4) *Self-Validating*: Tests enthalten klare Assertions +
-(5) *Timely*: Tests werden begleitend zur Implementierung erstellt +
-- Habitree wird sowohl *verifiziert* (funktionale Korrektheit) als auch *validiert* (Erfüllung der User Stories). +
+| Tests orientieren sich an den *FIRST-Prinzipien* (Fast, Independent, Repeatable, Self-Validating, Timely). +
+- *Verifikation* (funktionale Korrektheit) und *Validierung* (Erfüllung der User Stories) +
+- *White-Box-Tests*: Prüfung interner Logik mittels Code Coverage (Ziel: 60% für Branches, Functions, Lines, Statements) +
+- *Black-Box-Tests*: Prüfung aus Nutzersicht anhand von User Stories und Akzeptanzkriterien +
+- Testmethoden: Äquivalenzklassenanalyse, Grenzwertanalyse +
+- Namenskonvention: `<Funktion>_<Szenario>_<ErwartetesErgebnis>` +
+- Detaillierte Testdokumentation in `testing.adoc`
 
-*Unsere Tests untergliedern sich in mehrere Arten:* +
-(1) *White-Box-Tests*: +
-- Messung mittels der KPI `Code Coverage` +
-- Ziel: Prüfung interner Logik, Kontrollflüsse und Randfälle  auf Basis der Implementierung +
-(2) *Black-Box-Tests*: +
-- Prüfung des Systemverhaltens aus Nutzersicht anhand von User Stories und Akzeptanzkriterien +
-- Der interne Code wird dabei als unbekannt betrachtet
-- Diese Tests erfolgen sowohl explorativ (manuelles Durchklicken) als auch strukturiert +
-
-*Methoden der Tests:* +
-(1) Äquivalenzklassenanalyse  +
-(2) Grenzwertanalyse +
-
-*Namenskonventionen:* +
-- standardisiert: +
-`<Funktion>_<Szenario>_<ErwartetesErgebnis>` +
-
-*Ordnerstruktur:* +
-- Vorhanden und dokumentiert im Dokument `testing.adoc` +
-- Tests werden fortlaufend während des Sprints erstellt und spätestens zur Prüfung der *Definition of Done* abgeschlossen. +
-- Eine User Story darf nur dann auf *Done* gesetzt werden, wenn alle relevanten Tests erfolgreich sind. +
-
-| Unterteilung der Testarten
-|*- Einführung einer Testpyramide mit klaren Teststufen:* +
-  (1) Unit-Tests zur Überprüfung einzelner Methoden (je Test i.d.R. eine Methode) +
-  (2) Integrationstest um die Zusammenarbeit mehrerer Units zu testen.  +
-  (3) Systemtests für das gesamte System. +
-  *- Testfälle werden in Positiv und Negativtests untergliedert:* +
-  (1) Positivtests: Das Verhaltens des System under Tests bei korrekter Nutzung wird untersucht, was bedeutet, dass nur valider Input als Testdaten eingefügt wird. +
-  (2) Negativtests: Das Verhalten des System under Tests bei fehlerhaften/unzureichenden Input wird überprüft, sodass insbesonders dessen Exception- Handling ersichtlich wird. 
-  
-| Integration ins GitHub-Board
-|- Bugs, die durch Tests gefunden werden, werden als Issues mit dem label `defect` versehen +
-- Defects erscheinen automatisch im separaten Defect-Board +
-- Defects werden basierend auf Ihrem Risiko und Ihrer Komplexität geschätzt und priorisiert. Für die Priorisierung wird auch der Geschäftswert der betreffenden Funktionalität betrachtet. Ist dieser hoch, so muss das Fixing zeitnah erfolgen!  +
-- Bugs, die von den einzelnen Entwicklern selber im jeweiligen Sprint gefunden wurden, werden sofort durch die zuständigen Programmierer behoben. +
-
-
-| Integration in den Scrum- Zyklus
-|- Sprint Reviews enthalten nun auch Akzeptanztests zu vorher ausgewählten Stories/ Features der Anwendung. Somit sollen auch statische Tests manuell durch andere Personen als den Ersteller abgedeckt werden. + 
-- Weitere statische Tests werden auch innerhalb der Weekly- Meetings durch andere Personen (insbesonders durch unseren PO) des Teams vorgenommen. +
-- Vor allem bei Sprint Review- Tests mit externen Stakeholdern,erfolgt im Vorfeld eine kurze Absprache mit dem Scrum Master, PO und dem enstprechenden Entwickler, welche konkreten Kriterien zur Testevaluation hinzugezogen werden müssen. +
-|===
-
-
-
+| Testpyramide & Testarten
+| *Teststufen:* +
+(1) Unit-Tests zur Überprüfung einzelner Methoden +
+(2) Integrationstests für die Zusammenarbeit mehrerer Units +
+(3) Systemtests für das gesamte System +
+*Unterteilung:* Positivtests (valider Input) und Negativtests (Exception-Handling)
 
 | Test-Framework & Werkzeuge
-a|*Framework:* +
-- Wir nutzen Jest als Test-Framework mit dem `jest-expo` Preset, damit alles mit React Native und Expo zusammenpasst +
-- Die genaue Konfiguration steht in unserer `jest.config.js`, wo wir auch bestimmte React Native Module von der Transformation ausschließen mussten +
-
-*Mocking:* +
-- Für unsere Tests mocken wir die Repository-Interfaces mit Jest Mock Functions (`jest.fn()`) +
-- Wir haben eigene Mock-Implementierungen geschrieben (z.B. `MockHabitsRepository` in den Integrationstests), damit wir keine echten API-Calls machen müssen +
-- So stellen wir sicher, dass unsere Tests wirklich *Independent* laufen (FIRST-Prinzip) +
-
-*Code Coverage:* +
-- Jest misst automatisch unsere Code Coverage für die `domain/**` und `application/**` Layer +
-- Wir haben uns Coverage-Schwellwerte gesetzt: +
-  * Branches: 60% +
-  * Functions: 60% +
-  * Lines: 60% +
-  * Statements: 60% +
-- Mit `npm run test:coverage` können wir uns den Coverage-Report anzeigen lassen +
+| *Framework:* Jest mit `jest-expo` Preset für React Native/Expo +
+*Mocking:* Repository-Interfaces mit `jest.fn()`, eigene Mock-Implementierungen (z.B. `MockHabitsRepository`) +
+*Coverage:* Automatische Messung für `domain/**` und `application/**` Layer, Report via `npm run test:coverage`
 
 | Automatisierung & CI/CD
-a|*GitHub Actions Workflow:* +
-- Unsere Tests laufen automatisch bei jedem Push auf den `main` Branch (wenn was in `src/**` geändert wurde) +
-- Der Workflow in `.github/workflows/main.yml` läuft so ab: +
-  (1) Code auschecken +
-  (2) Node.js (Version 20.x) installieren +
-  (3) Dependencies installieren mit `npm ci` +
-  (4) Security Scan mit Shai-Hulud Detector durchführen +
-  (5) Expo Doctor für Projekt-Check laufen lassen +
-  (6) Alle Tests mit `npm test` ausführen +
-- Wenn Tests fehlschlagen, bricht der ganze Build ab und wir sehen das direkt in GitHub +
-
-*Lokale Entwicklung:* +
-- `npm test`: Führt alle Tests einmal aus +
-- `npm run test:watch`: Tests laufen kontinuierlich im Hintergrund während wir entwickeln +
-- `npm run test:coverage`: Zeigt uns den Coverage-Report an +
+| *GitHub Actions Workflow* bei Push auf `main`: +
+(1) Code auschecken → (2) Node.js 20.x installieren → (3) `npm ci` → (4) Security Scan → (5) Expo Doctor → (6) `npm test` +
+*Lokale Befehle:* `npm test`, `npm run test:watch`, `npm run test:coverage`
 
 | Testorganisation & Struktur
-a|*Ordnerstruktur:* +
-Wir haben unsere Tests im `__tests__/` Ordner nach Testtypen organisiert: +
-[source]
-----
-__tests__/
-├── domain/              # Unit Tests für Entities
-│   ├── Habit.entity.test.ts
-│   ├── User.test.ts
-│   └── Quote.test.ts
-├── integration/         # Integrationstests für Services
-│   ├── HabitService.integration.test.ts
-│   ├── QuoteService.test.ts
-│   ├── AuthService.test.ts
-│   ├── ProfileService.test.ts
-│   └── HabitSchedulePolicy.test.ts
-└── system/             # Manuelle Systemtests
-    └── SYSTEMTESTS.md
-----
+| *Ordnerstruktur:* `__tests__/domain/` (Unit), `__tests__/integration/` (Integration), `__tests__/system/` (Manuelle Systemtests) +
+*Dateikonvention:* `*.test.ts` / `*.test.tsx`, eine Datei pro Entity/Service +
+*Aufbau:* `describe()` für Funktionen, `beforeEach()` für Reset, `it()`/`test()` für Testfälle
 
-*Namenskonventionen:* +
-- Alle Testdateien enden auf `.test.ts` oder `.test.tsx` +
-- Jede Datei testet genau eine Entity oder einen Service (z.B. `User.test.ts` testet nur `User.ts`) +
+| Integration ins GitHub-Board
+| Bugs werden als Issues mit Label `defect` erfasst und erscheinen automatisch im separaten Defect-Board. +
+Priorisierung nach Risiko, Komplexität und Geschäftswert.
 
-*Aufbau einer Testdatei:* +
-- `describe()` Blöcke fassen Tests für eine Funktion/Methode zusammen +
-- `beforeEach()` setzt vor jedem Test alles zurück (Mocks, State), damit die Tests unabhängig sind +
-- `it()` bzw. `test()` schreibt den einzelnen Testfall +
-
-| Konkrete Umsetzung White-Box-Tests
-a|*Wie wir White-Box testen:* +
-- Jest misst automatisch die Coverage und zeigt uns welche Code-Zeilen noch nicht getestet sind +
-- Wir konzentrieren uns auf Domain- und Application-Layer (UI und Infrastructure testen wir anders) +
-- Ziel ist es, alle wichtigen Kontrollflüsse und if/else-Verzweigungen abzudecken +
-
-*Konkrete Beispiele aus unserem Code:* +
-- In `Habit.entity.test.ts` testen wir z.B. die `getStreak()` Funktion mit: +
-  * Leerem Array (was passiert wenn keine Entries da sind?) +
-  * Genau einem Entry (Grenzfall) +
-  * Mehreren aufeinanderfolgenden Tagen (Normalfall) +
-  * Lücke mittendrin (Streak muss abbrechen) +
-  * Entry mit `status: false` (Streak-Unterbrechung) +
-  * Unsortierten Entries (testet die Sortier-Logik) +
-- Bei `User.test.ts` für die Email-Validierung testen wir: +
-  * Gültige Emails wie `test@example.com` (Positivtests) +
-  * Fehlende @, fehlende Domain, fehlende TLD (alle Negativtest-Branches) +
-  * Leerzeichen und leere Strings (Edge Cases) +
-
-*Unsere Testdaten-Strategie:* +
-- Äquivalenzklassen bilden: Gültige Eingaben vs. ungültige Eingaben trennen +
-- Grenzwerte testen: z.B. Username mit 3 Zeichen (Minimum), 50 Zeichen (Maximum), leer (ungültig) +
+| Integration in den Scrum-Zyklus
+| Sprint Reviews enthalten Akzeptanztests zu ausgewählten Stories/Features. +
+Statische Tests in Weekly-Meetings durch PO. +
+Vorab-Absprache der Testevaluationskriterien mit Scrum Master, PO und Entwickler.
 
 | Manuelle & Explorative Tests
-a|*Systemtests (Manuell):* +
-- Haben wir in `__tests__/system/SYSTEMTESTS.md` dokumentiert +
-- Machen wir vor jedem Release - dauert ca. 5 Minuten durchzuklicken +
-- Unsere Testfälle sind: +
-  * ST-01: Login-Flow durchgehen +
-  * ST-02: Habit anlegen, bearbeiten, löschen (CRUD) +
-  * ST-03: Habit mehrere Tage abhaken und Streak checken +
-  * ST-04: Validierungen testen (z.B. leere Felder) +
-- Wenn wir dabei Bugs finden, legen wir sofort ein GitHub Issue mit Label `defect` an +
-
-*Explorative Tests:* +
-- Machen wir in unseren Weekly-Meetings zusammen mit dem PO +
-- Einfach mal neue Features durchklicken ohne festen Plan +
-- Fokus liegt auf Usability und unerwarteten Fehlern die uns auffallen +
-
-*Akzeptanztests:* +
-- Haben wir in Sprint Reviews gemacht, z.B. mit Team 1C +
-- Die haben unsere App getestet und geschaut ob die User Stories erfüllt sind +
-- Deren Feedback und gefundene Fehler haben wir dokumentiert und als neue Tasks angelegt +
-
-| Konkrete Beispiele zu FIRST-Prinzipien
-a|Wir achten bei unseren Tests auf die FIRST-Prinzipien: +
-
-*Fast (Schnell):* +
-- Unsere Unit Tests laufen alle in unter 2 Sekunden durch +
-- Beispiel: In `HabitService.integration.test.ts` nutzen wir `MockHabitsRepository` statt echtem Server, deshalb geht's schnell +
-
-*Independent (Unabhängig):* +
-- Jeder Test kann alleine laufen, ohne dass vorher andere Tests durchgelaufen sein müssen +
-- Beispiel: In `QuoteService.test.ts` (Zeile 9-15) initialisieren wir in `beforeEach()` immer ein frisches Mock-Repository +
-
-*Repeatable (Wiederholbar):* +
-- Tests liefern immer das gleiche Ergebnis, egal wann und wo wir sie laufen lassen +
-- Beispiel: `AuthService.test.ts` mockt alle Repository-Calls, damit nichts von externer API oder Datenbank abhängt +
-
-*Self-Validating (Selbstvalidierend):* +
-- Jeder Test sagt klar "Pass" oder "Fail", ohne dass wir was manuell prüfen müssen +
-- Beispiel: `Quote.test.ts:83` hat klare Assertion → `expect(quote.isValid()).toBe(false)` +
-
-*Timely (Rechtzeitig):* +
-- Wir schreiben Tests parallel zur Implementierung, nicht erst später +
-- User Stories setzen wir nur auf *Done*, wenn die Tests grün sind +
-
-| Welche Qualitätseigenschaften wir am meisten testen
-a|Wir orientieren uns am ISO 25010 Software-Qualitätsmodell und fokussieren uns besonders auf: +
-
-(1) *Funktionale Korrektheit:* +
-- Wir testen ob unsere Business-Logik richtig funktioniert (z.B. Streak-Berechnung, Email-Validierung) +
-- Positivtests: Funktioniert es mit korrekten Eingaben? +
-- Negativtests: Werden Fehler richtig behandelt? +
-
-(2) *Zuverlässigkeit:* +
-- Testen ob die App auch bei Fehlern stabil bleibt +
-- Beispiel: `AuthService.test.ts:81-86` testet was passiert wenn jemand falsche Login-Daten eingibt +
-
-(3) *Wartbarkeit:* +
-- Durch unsere Layer-Architektur (Domain, Application, Infrastructure) können wir einzelne Teile gut testen +
-- Dependency Injection macht's einfach: Services bekommen Repositories als Parameter, die wir dann einfach mocken können +
-
-(4) *Portabilität:* +
-- Unsere Tests laufen überall: Linux, macOS, Windows +
-- Keine Abhängigkeiten von spezieller Hardware oder Betriebssystem-Features +
+| *Systemtests:* Dokumentiert in `__tests__/system/SYSTEMTESTS.md` (ST-01 bis ST-04: Login, CRUD, Streak, Validierungen) +
+*Explorative Tests:* In Weekly-Meetings mit PO, Fokus auf Usability +
+*Akzeptanztests:* In Sprint Reviews mit externem Team (z.B. Team 1C)
+|===

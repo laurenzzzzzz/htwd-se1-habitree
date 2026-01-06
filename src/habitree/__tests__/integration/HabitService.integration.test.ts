@@ -79,6 +79,42 @@ class MockHabitsRepository implements IHabitsRepository {
   getLastToggleDate(): string | null {
     return this.lastToggleDate;
   }
+
+  // --- Ergänzte Methoden, damit das Mock das Interface vollständig implementiert ---
+  async deleteHabit(authToken: string, id: number): Promise<void> {
+    if (this.shouldFail) {
+      throw new Error('API Error: Delete fehlgeschlagen');
+    }
+    const idx = this.habits.findIndex(h => h.id === id);
+    if (idx === -1) {
+      throw new Error('Habit nicht gefunden');
+    }
+    this.habits.splice(idx, 1);
+  }
+
+  async updateHabit(authToken: string, id: number, payload: HabitPersistencePayload): Promise<void> {
+    if (this.shouldFail) {
+      throw new Error('API Error: Update fehlgeschlagen');
+    }
+    const habit = this.habits.find(h => h.id === id);
+    if (!habit) {
+      throw new Error('Habit nicht gefunden');
+    }
+    habit.name = payload.name;
+    habit.description = payload.description;
+    habit.frequency = payload.frequency;
+    if (payload.startDate !== undefined) habit.startDate = payload.startDate;
+    if (payload.time !== undefined) habit.time = payload.time;
+    if (payload.weekDays !== undefined) habit.weekDays = payload.weekDays;
+    if (payload.intervalDays !== undefined) habit.intervalDays = Number(payload.intervalDays);
+  }
+
+  async fetchPredefinedHabits(authToken: string): Promise<any[]> {
+    if (this.shouldFail) {
+      throw new Error('API Error: Server nicht erreichbar');
+    }
+    return [];
+  }
 }
 
 describe('HabitService Integration Tests', () => {
