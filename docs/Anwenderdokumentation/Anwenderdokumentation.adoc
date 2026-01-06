@@ -1,7 +1,7 @@
 = Benutzerhandbuch – Habit Tracker (Expo)
 
 == 1. Ziel des Dokuments
-Dieses Handbuch unterstützt Nutzer dabei, die **Habit Tracker App** zu starten, Gewohnheiten anzulegen und Fortschritte zu verfolgen.
+Dieses Handbuch unterstützt Nutzer dabei, die **Habit Tracker App** zu starten und erklärt die Bedienung der App.
 
 == 2. Voraussetzungen
 * Expo Go App auf dem Handy
