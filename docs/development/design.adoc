@@ -46,16 +46,21 @@ include::../development/plantuml/sequenzdiagramme.md[lines=19..55]
 [cols="1,1,2,2",options="header"]
 |===
 | Endpoint | Methode | Anfrage (wichtige Felder) | Antwort / Hinweise
-| `/auth/register` | POST | `{ email, password, displayName }` | 201 + Login-Token + Nutzerprofil
-| `/auth/login` | POST | `{ email, password }` | 200 + Login-Token + Nutzerprofil
-| `/habits` | GET | Header `Authorization: Bearer <Token>` | Liste aller Habits inkl. Plan und Streak
-| `/habits` | POST | `{ title, schedule, reminderTime }` | 201 + neu angelegtes Habit
-| `/habits/{id}` | PATCH | Felder wie `{ title?, reminderTime?, isArchived? }` | 200 + aktualisiertes Habit
-| `/habits/{id}` | DELETE | — | 204 (kein Inhalt)
-| `/habits/{id}/entries` | POST | `{ date, status }` | 201 + aktualisierte Streak-Information
-| `/profile` | GET | — | Aktuelles Profil und Statistiken
-| `/profile` | PATCH | `{ displayName?, avatarUrl? }` | 200 + aktualisiertes Profil
-| `/quotes/daily` | GET | — | Text des Tageszitats
+| `/auth/register` | POST | `{ email, password, username }` | 201 + Token + Nutzerdaten
+| `/auth/login` | POST | `{ email, password }` | 200 + Token + Nutzerdaten
+| `/auth/password` | PUT | `{ oldPassword, newPassword }` | 200 + Erfolg (Passwort geändert)
+| `/habits` | GET | Header `Authorization: Bearer <Token>` | Liste aller aktiven (nicht geernteten) Habits
+| `/habits` | POST | `{ name, description, frequency, startDate, time, ... }` | 201 + neu angelegtes Habit
+| `/habits/{id}` | PUT | Felder wie POST | 200 + aktualisiertes Habit
+| `/habits/{id}` | DELETE | — | 200 + Erfolg
+| `/habits/{id}/toggle` | PUT | `{ date }` | 200 + Habit-Status für Datum umgeschaltet
+| `/habits/today` | GET | — | Habits, die heute fällig sind (inkl. Entry)
+| `/habits/{id}/grow` | PUT | — | 200 + Habitstatus wird "wachsend"
+| `/habits/{id}/harvest` | PUT | — | 200 + Habitstatus wird "geerntet"
+| `/user/status` | GET | — | Login-Status + Nutzerdaten
+| `/user/streak` | GET | — | Current Streak & Max Streak
+| `/user/username` | PUT | `{ username }` | 200 + aktualisierte Nutzerdaten
+| `/quotes` | GET | — | Liste aller Zitate
 |===
 
 == Datenmodell
