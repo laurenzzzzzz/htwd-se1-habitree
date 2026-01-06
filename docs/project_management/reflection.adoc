@@ -5,7 +5,7 @@
 :toc: left
 :sectnums:
 
-== Einleitung
+
 
 Dieses Dokument reflektiert die Team- und Prozessarbeit des Projekts *Habitree* im Rahmen des Moduls *Software Engineering 2*.  
 Der Fokus liegt gemäß den Vorgaben auf:
@@ -18,127 +18,12 @@ Der Fokus liegt gemäß den Vorgaben auf:
 
 Technische Details stehen bewusst nicht im Mittelpunkt. Erfahrungen aus *Software Engineering 1* werden an relevanten Stellen als Grundlage einbezogen, die Reflexion bezieht sich jedoch überwiegend auf SE2.
 
----
-
-== Reflexion (Draft) Stichpunkte
-Reflexion Software Engineering 2- Team 3A, Habitree
-Vorgaben:
-1.	Fokus auf Team und Prozess, nicht Technik 
-2.	Klare Verbindungen zu SCRUM- Praktiken, Projektmanagement, Risiken und Tools
-3.	Konkrete Beispiele, Ursachen, Methodiken und Lessons Learned
-4.	Kohärenz mit allen geschehenen Dingen
-5.	Fokus auf SE2, wobei SE1. Zur Referenz mit hinzubezogen werden darf (?)
-Draft:
-Top 3 Erfolge:
-1.	Professionalisierung des Projekt Management durch Umstellung auf Git Hub.
-=> Umstellung von einem überladenen und redundanten Tool- Mix ( Power Point, Miro und Git Hub…) hinzu klar strukturierten Git Hub Projektboard mit sinnvollen Sichten, Labels und Workflows.
-
-Maßnahmen:
-> Reduktion der überflüssigen Views und Labels
-> Einführung klarer Sichten
-> Definition klarer Task Typen
-> Vereinheitlichung von User- Story- Formaten, Labels und Task- Formaten
-> Ergänzung von Akzeptanzkriterien zu den Task
-
-Ergebnis:
-> Transparente Arbeitsteilung, klare Zuordnung von Issues
-> Weniger Doppelpflege, Medienbrüche und Verwirrung innerhalb des Teams => Effizientere Teamarbeit
-> Besserer Bezug zwischen User Stories, Task, Sprints und Iterationen wird ersichtlich 
-2.	Einführung strukturierter Scrum- Meetings & KPI’s 
-=> Kontinuierliche Steuerung und Reflexion des Projektes durch regelmäßige Meetings und messbare Kennzahlen
-
-Maßnahmen:
-> Etablierung fester Meetingstruktur:
-=> Weekly- Meetings (30-45 min) mit Status- Besprechung, Aufgabenverteilung und Kapazität
-=> Sprint Planning Meeting: Zu Beginn jedes 4 Wochen Sprints
-=> Retrospektive: Zu Ende des Sprints, Darstellung  der positiven/negativen Punkte von den einzelnen Teammitgliedern
-=> Reviews mit weiteren Team zu Sprintende wird weiter beibehalten wie auch Meetings Meetings mit Professor/Coach
-> Einführung von Key Performance Indikatoren
-1. => Hapiness- Index (Stimmung, Motivation)
-2. => Kapazitäten Board (Erst Power Point, dann Git- Hub Board, verfügbare Stunden je Teammmitglied und Woche  werden demonstriert) 
-3. => Task/ Fortschrittsquote: Aus Sichten in Git Hub erlesbar
-Soll- Werte:
-Formeln: 
-
-Nutzen: 
-1. Überlastung und Demotivation der einzelnen Teammitglieder früh sichtbar
-2. Bewusste Anpassung von Sprintumfängen und Aufgabenverteilung basierend auf dem Kapazitätsboard
-3. Bessere Diskussionen in der Retro das das sich nun quantifizieren lässt.
-3.	Starker Teamzusammenhalt und klare Rollenverteilung 
-=> Aufbau eines stabilen, Wertschätzenden Teams mit klaren Regeln, Vision und funktionierender Zusammenarbeit
-=> Erfolgreiche Integration eines neuen uns zugelosten Mitglieds (Maurice) in bestehende Strukturen
-Klare Rollen:
-> Product Owner: 
-(1) Domänenwissen (laß Bücher wie Atomic Habits etc.)
-(2) Konkreter Überblick über Vision, Features und User Stories
-(3) Priorisiert User Stories und nimmt diese in Sprint Planning auf, wo diese anschließend mit Scrum Master und den Entwickler Team gewichtet und geschätzt werden
-> Scrum Master:
-(1) Organisation und Protokoll aller Meetings
-(2) Moderation von Konflikten/ Hilfe bei Konfliktlösung
-(3) Unterstützung des Product Owners, Aktualisierung der Vision
-(4) Pflege des Project Plans 
-> Dev.- Team:
-(1) Architektur, Domänenmodell, Konkrete Umsetzung d. User Stories, Prototyp- Entwicklung
-(2) Genaue Zuständigkeiten innerhalb des Dev- Teams gestreut 
-Gemanagte Probleme, welchen Maßgeblich die jetzige Stabile Teamstruktur mit bildeten:
-(1) Austritt von Frederic: Aufgaben erfolgreich neu verteilt, Risiko der Mehrbelastung erkannt, geschätzt, Gegenmaßnahmen gefunden und verringert
-(2) Teammitglied arbeitet nicht konstant: Nettes Ansprechen, Ermahnen und Ermutigung mehr zu leisten ohne Klima der Angst zu erzeugen
-(3) Teamevents, gemeinsamer Besuch des Weihnachtsmarktes in Dresden um Abkapselung/ Alleingänger zu verhindern.
-(4) Kommunikationsprobleme, da sehr viele synchrone/ asynchrone  Kommunikationskanäle vorlagen: Konsolidierung auf wenige & wichtige Kanäle
-Ergebnis:
-(1) Hohe Beteiligung/ Teilnahmensquote in Meetings
-(2) Jeder kennt seine Rolle und Beitrag: Mitglieder bekommen Gefühl von Wichtigkeit und Wertschätzung, was teilweise als Positiv in den Retrospektiven angeführt wird
-(3) Kein Klima der Angst, aufgrund  von flachen Hierachien und etablierten Verhaltenskodizes (keine Beleidigung, Mobbing, Diskriminierung), bei hoher Arbeitsmotivation 
-
-Top 3 Misserfolge:
-1.	Inkonsistenzen und Redundanzen durch parallele Nutzung mehrerer Tool ( Power Point, Git Hub, Miro):
-> Zu Beginn des Projektes wurde Projektmanagement gleichzeitig in Git Hub, Power Point und teilweise Miro wie auch Whats App/Discord gepflegt
-> Es kam zu Doppelpflege, Mehraufwand, widersprüchlichen Informationen und fehlende Aktualität (z.B.: Bei Task und Asignees)
-Gründe hierfür waren:
-(1)=> Scrum Master wollte Team zentraler koordinieren und hat gesehen bei seiner Werkstudententätigkeit, das in berufl. Praxis Projektmanagement häufig über Tools wie Power Point funktioniert
-=> Das wollte er adaptieren und auf unser Projekt anwenden, da die Team Stärke unseres Teams ähnlich groß war wie die Teams innerhalb seines Unternehmens
-(2) => Team beklagte noch in Software Engineering 1, dass es teilweise unklar ist, welche Aufgaben wann & wie erledigt werden sollen, sodass Scrum Master zentraler Taskvergabe vorsah, jedoch auch zu Lasten der Agilität des Teams
-(3) => Gut gestaltete und Designte Power Points fördern allein durch Ihre optik die Motivation => Scrum Master wollte, dass Team effizienter arbeitet
-Learning daraus:
-=> Nicht jedes Team managet sich gleich
-=> Projekte innerhalb der Software Entwicklung brauchen andere Vorangehens weisen als Projekte innerhalb der Wirtschaftsprüfung
-=> Gut gestaltete Power Points steigern in der Tat Motivation, jedoch zu einem unverhältnismäßig hohen Aufwand, der bei der Bearbeitung anfällt
-
-Was hätten wir tun können:
-=> Git Hub Workflows schon eher etablieren und Power Point nur als Präsentationsmedium für Stakeholder- Arbeit nutzen
-=> Git hub Workflows hätten in Form eines internen Meetings schon in SE1 oder zu Beginn des Semesters SE2 festgelegt werden müssen
-2.	Unklare Rollenverteilung und fehlende Scrum- Methodik in SE1 bis in die Anfangsphase von SE2 hinein:
-Bereits zu Beginn in SE1 wurden die Scrum- Rollen mit ihren Verantwortlichkeiten definiert, eindeutig festgelegt und in Git Hub manifestiert. 
-Dennoch kam es dazu, dass die einzelnen Teammitglieder Ihre Scrum Rolle nicht auslebten. 
-Das führte zu:
-(1) Unkenntnis bei Verantwortlichkeiten (z.B.: Schätzung der Komplexität und des Aufwandes von User Stories, Priorisierung von User Stories)
-(2) Aufgaben blieben liegen (z.B.: Erstellung von passenden Wireframes für einzelne User Stories, Checken der DoD bevor eine Story als Done deklariert wurde)
-(3) Fehlerhafte/Ineffiziente Meetingabfolge => Nur Weekly und Retrospektiven, keine Sprint Panning Meeting zu Beginn eines Sprints
-Gründe:
-(1) Unkenntnis über die Reihenfolge der Scrum Abläufe, Vergessen über lange Semesterpause
-(2) Weglassen der konkreten Scrum Abläufe aus Bequemlichkeit => Lieber ein Meeting für alles als die konkreten Scrum Meetings
-(3) Fehlende Vorerfahrung des Teams mit agilen Methoden (in allen vorherigen Semestern in der Uni ist die Software einfach entwickelt worden, ohne auf Nebenaspekte wie Projektmanagement sich konzentrieren zu müssen)
-Maßnahmen:
-(1)  Sehr langes und ausführliches Meeting, indem wir als Team gemeinsam die Scrum Abläufe und Workflows besprachen => Scrum Master diente als Vermittler der Abläufe du studierte vorher noch einmal intensiv die Abläufe
-(2) Seither: Akribisches Achten darauf, dass alle Scrum Prinzipien eingehalten werden
-Was hätten wir tun können:
-(1)  Direkt zu Beginn des Semesters eine Zusammenkunft einleiten lassen, in der wir unseren Way of Working reflektieren und anpassen => Erstes Meeting in SE2 war relativ spät         
-(2) Schon im Vorhinein mit Professor oder Coach Rücksprache zu unseren letzten Arbeitsergebnissen halten (war angedacht, wurde aber verworfen)
-(3) Jeder hätte alleine über die Ferien nachdenken können, was er wie im Projekt anders machen wöllte & das hätte dann konsolidiert werden können 
-Was läuft nun besser:
-TBC…
-
-
-
-== Reflexion Draft:
-
-
-Reflexion des Teams 3A- Habitree im Modul Software Engineering 2
+== Einleitung
 Im Rahmen des Modules Software Engineering 2 reflektiert Team 3A den Verlauf der gemeinsamen Projektarbeit an der Habit- Tracking App ‚Habitree‘. Der Fokus dieser Reflexion liegt hierbei bewusst auf der Zusammenarbeit im Team, der Organisation des Projektes und der Anwendung agiler Vorgehensweisen und Praktiken entlang des Softwareentwicklungsprozesses. Aufbauend auf unseren Teaminternen Erfahrungen, Learnings und Expertisen aus dem Modul Software Engineering 1, wurden Arbeitsweisen, Rollenverständnis und eingesetzte Werkzeuge kritisch hinterfragt, angepasst und optimiert. Die folgenden Ausführungen basieren auf Retrospektiven, Sprint Reviews und weiterer Kommunikation innerhalb des Teams und sollen zentrale Probleme, deren abgeleiteten Erkenntnisse sowie große Erfolge mit deren jeweiligen Erfolgsfaktoren nachvollziehbar darstellen.
 Im Projektverlauf konnten mehrere Maßnahmen identifiziert werden, die sich messbar positiv auf den Teamerfolg ausgewirkt haben.
 
-=== Erfolge
-==== Erfolg 1 - Simplifizierung Arbeitsprozesse und der Arbeit mit dem Github-Project
+== Erfolge
+=== Erfolg 1 - Simplifizierung Arbeitsprozesse und der Arbeit mit dem Github-Project
 Unter anderem kam es zu einer Professionalisierung, Standardisierung und vorallem Vereinfachung des Projekt Management durch Umstellung  von vielen verschiedenen Projektmanagementwerkzeugen auf hauptsächlich GitHub.
 Aufgrund einer für unseren Anspruch unzureichenden Note in Software Engineering 1 entschied sich der Scrum Master über die Ferien das Projektmanagement anzupassen um dessen Leistung zu steigern.
 Dies endete allerdings in einem überladenen Tool- Mix, in welchen eine in der Cloud befindliche Power Point- im Vorfeld von Meetings erstellt wurde und Überblick über die aktuellen Themen, nächsten Schritte, Probleme und Verantwortlichkeiten geben sollte. 
@@ -151,37 +36,19 @@ Um neue, präzisere und effizientere Strukturen zu erschaffen, beschlossen wir u
 So wurden wichtige Sichten wie  ‚Sprint- Backlog -> Tasks from Userstories‘ oder ein ‚Product Backlog -> Userstories‘ angepast und vereinfacht um ein schnelles und übersichtliches Arbeiten mit diesen zu ermöglichen und somit besser nach gängigen Scrum- Methoden zu agieren. Die verbesserte Übersichtlichkeit und Verständlichkeit schaffte ein einheitliches Methodenverständnis unter allen Akteuren des Teams. Überflüssige Tools bzw. Medien wie PowerPoint wurden abgeschafft. Neben der nun minimierten Doppelpflege, Medienbrüchen und Verwirrung innerhalb des Teams, resultierte diese Maßnahme auch in einer transparenteren Arbeitsteilung und einen klaren Zuordnung von Task. Anders als in einer Power Point Tabelle, werden auf Git Hub die einzelnen Mitglieder explizit benachrichtigt, wenn Sie einem bestimmten Task zugeordnet wurden. Dies verhindert, dass Aufgaben übersehen oder vergessen werden. Die alleinige Nutzung von Github zur Zuordnung von Aufgaben ermöglicht einen Zentralen Ort, an dem alle Teammitglieder deren Aufgaben einsehen und bearbeiten können.  
 Durch die Einführung von klareren und feingranulareren Labels, aber gleichzeitig der Minimierung der Labelanzahl auf das nötigste, weiß jedes Mitglied auch was für eine Art Task er genau abarbeiten muss. Hierfür nahmen wir eine Untergliederung in Story-, Documentation- und Implementation- Task vor. Während Story Task abgeleitete Programmierungs- bzw Implementations-Aufgaben im Code zur Erfüllung von den User Stories darstellen, adressieren Documentation Task konkrete Dinge die in die einzelnen Dokumenten niedergeschrieben werden müssen und Implementation Task dienen zur Bearbeitung allgemeiner Technischer Probleme und Aufgabenstellungen welche nicht direkt aus einer User Story abgeleitet wurden bzw. werden können. Wenn ein Mitglied nun einen Task assigned wird, weiß es somit intuitiv auf welche Problemdimension der jeweilige Task referenziert.  
 
-==== Erfolg 2 - Einführung strukturierter Scrum- Meetings & KPI’s
+=== Erfolg 2 - Einführung strukturierter Scrum- Meetings & KPI’s
 Neben dem effizienteren Projektmanagement wurde auch die Scrum- Arbeitsweise nochmals überarbeitet und optimiert. Unter anderem wurde eine feste Meeting- Struktur eingeführt bzw. umgestaltet mit Weekly- Meetings welche in Ihrer Dauer auf 30- 60 min/Woche eingeschränkt wurden. Zudem wurden auch zu Beginn eines jeden Sprints ein ‚Sprint- Planning‘- Meeting eingeführt, in welchem vom Product Owner im Vorfeld priorisierte User Stories, die in den Sprint aufgenommen werden sollen vom Rest des Teams gewichtet werden und anschließend Task abgeleitet werden. Hierbei validiert ins besonders das Entwicklerteam die technische Umsetzung und Machbarkeit der einzelnen Stories. Dies stellt eine Orientierung an bestehenden Scrum- Prinzipien dar und ermöglicht eine effizientere Arbeitsweise innerhalb des Teams.
 Zudem wurden Key Performance Indikatoren (KPI’s) eingeführt, welche kontinuierlich den Projekterfolg messen sollen. Als messbare Kennzahlen hierfür wurden vom Scrum Master ein ‚Hapiness Index‘, eine  ‚Task- Sucess- Rate‘ und eine ‚Capacity- Board‘ eingeführt. Der Hapiness- Score soll einen Überblick über die Zufriedenheit geben der einzelnen Teammitglieder. In jeder Retrospektive wird vom Scrum Master abgefragt, wie zufrieden die einzelnen Teammitglieder sind, im Hinblick auf das Projekt, dessen Fortschritt und die Zusammenarbeit innerhalb des Teams. Die Zufriedenheit soll hierbei quantifiziert werden was bedeutet, dass jedes Mitglied seine emotionale Stimmung anhand einer Skala von 1- 10 bewerten soll, wobei 10 die höchstmögliche emotionale Grundstimmung darstellt und 1 den worst- case abdeckt. In unserem Kapazitäten- Board, welches initial auf der Power Point gepflegt, dann jedoch auf Git Hub transferiert wurde, wird der Einsatz von den einzelnen Teammitgliedern für das Projekt je Woche gepflegt. In jeden Weekly wird somit vom Scrum Master erfasst wie viele Wochenstunden in der kommenden Woche, die einzelnen Akteure einsetzbar sind. Hierbei kann man sich entscheiden zwischen den Größen: Kein Einsatz, 1-2 h/Woche, 2-3h/Woche, 5-7h/Woche oder mehr als 7h/Woche entscheiden. Um ein Betrügen zu verhindern, wird im Nachgang jeweils überprüft, dass die erbrachte Arbeitsleistung der angegebenen Arbeitszeit in etwa entspricht und dass nicht konstant ein Akteur weniger arbeitet als andere. Für besonders motivierte Mitglieder, die mehr als 5 mal über 7 Stunden arbeiteten soll zu Ende des Projektes eine Belohnung in Form eines spendierten Essens erfolgen. Die Task- Fortschrittsrate gibt Überblick über die absolvierten Task pro Woche bzw. Sprint an. Sie zeigt klare Tendenzen hinsichtlich Effizienz und Organisation innerhalb des Teams an und lässt sich bei Bedarf auch auf einzelne Mitglieder runterbrechen.  Wichtig zu erwähne ist, dass die angeführten KPI’s keine direkte Kontrolle der Mitarbeiter beinhalten sollten, sondern lediglich den Scrum Master grobe Tendenzen innerhalb Arbeitsweise, Projektfortschritts und Betriebsklima geben sollen. Durch die Metriken sind unter anderem Überlastung und Demotivation der Arbeiter ersichtlich und eine bewusste Anpassung von Sprintumfängen und Aufgabenverteilung sowie besser Diskussionen in der Retrospektive möglich, da sich nun einzelne Gefühle quantifizieren lassen. 
 
-==== Erfolg 3 - Starker Teamzusammenhalt und klare Rollenverteilung
+=== Erfolg 3 - Starker Teamzusammenhalt und klare Rollenverteilung
 Als einen weiteren positiven Punkt lässt sich der grundsätzlich starke Teamzusammenhalt und die klare Rollenverteilung anbringen. Prinzipiell wurde innerhalb der Module SE1 und SE2 ein wertschätzendes Team mit klaren Regeln, Visionen und bis auf eine Ausnahme  funktionierender Zusammenarbeit gebildet. Zudem wurde zu Beginn des Software Engineering 2 Modules auch erfolgreich ein neues und zugelostes Teammitglied integriert in die bestehenden Strukturen. Unsere Rollen sind klar verteilt und wurden in SE2 geschärft. So haben wir zu einem den Product Owner, welcher das Domänenwissen über Habits hat, sowie einen konkreten Überblick über Vision, User Stories und Features hat. Er priorisiert User Stories, welche anschließend in dem Sprint Planning- Meeting vor allem mit dem Entwickler- Team gewichtet und geschätzt werden hinsichtlich Komplexität und Aufwand. Der Scrum Master ist für die Organisation und Abwicklung aller Meetings vorhanden, sofern es keine spezialisierten Dev.- Team Meetings sind. Zudem ist er die unterstützende Instanz bei Konflikten und Problemen. Weitere Aufgaben von Ihm ist das grobe Projektcontrolling, auch hinsichtlich eingesetzter Techniken, also ob die Ist- Techniken mit den aus der Vorlesung und Praktikum gegebenen Soll- Techniken übereinstimmen. Zudem unterstützt er den auch den Product Owner. Das Dev.- Team ist für die konkrete Implementierung und Validierung von ‚Habitree‘ zuständig, wobei sich auch innerhalb dieses Teams spezifische Zuständigkeitsbereiche ergeben. So gibt es zum Beispiel Verantwortliche für das Backend, Frontend und das Testen. Ein Problem, was sich dabei ergibt sind Wissensinseln, die aber durch wöchentliche Meetings und einem Austausch innerhalb des gesamten Entwicklerteams ausgeglichen werden sollen. Die jetzige Beständigkeit unserer Teamstruktur baut auf verschiedenen Problemen auf, die in der Vergangenheit erfolgreich gemanagt wurden. Unter anderem bewältigten wir den Austritt eines Teammitgliedes noch in SE1,sowie  das ein Teammitglied nicht konstant arbeitet oder auch Kommunikationsprobleme durch verschiedene synchrone und asynchrone Kommunikationswege. Diese Hürden führten dazu, dass jeder seine Rolle und seinen Beitrag für das Team kennt. Alles in allem haben wir fast immer eine hohe Teilnehmerquote in Meetings und ein wertschätzendes Klima aufgebaut mit relativ flachen Hierarchien.
 
 
 Die beschriebenen Erfolge zeigen, dass es dem Team im Verlauf von Software Engineering 2 gelungen ist Strukturen, Prozesse und Zusammenarbeit deutlich zu professionalisieren. Gleichzeitig legte aber auch gerade diese zunehmende Strukturierung und Optimierung Schwachstellen offen, die zuvor entweder verdeckt waren oder aufgrund geringer Komplexität keine wesentliche Rollen spielten.
 
 
-=== Misserfolge: //pls leo noch gliedern in jeweils Misserfolg 1,2,3
-Im Folgenden werden daher drei zentrale Misserfolge bzw. Probleme beschrieben, die den Verlauf des Software Engineering- Projektes negativ beeinflussten, aus denen jedoch konkrete Maßnahmen und langfristige Erkenntnisse abgeleitet wurden.
-Die ersten beiden Probleme adressieren den Übergang der eher informellen Zusammenarbeit zu einem strukturierten, sprintbasierten Vorgehen. Zu Beginn lässt sich daher die Inkonsistenzen und Redundanzen durch die parallele Nutzung mehrerer Projektmanagement- Tools anführen. Zu Beginn von Software Engineering 2 wurde das Projektmanagement gleichzeitig in Git Hub, Power Point und teilweise Miro, wie auch What’s App oder Discord durchgeführt. Dadurch kam es zu Doppelpflege, Mehraufwand, Medienbrüchen, sowie widersprüchlichen Informationen mit fehlender Aktualität (z.B.: bei Task und deren Asignees). Gründe hierfür waren, dass der Scrum Master sein Team zentraler koordinieren wollte und bei seiner Werkstudententätigkeit gesehen hat, dass in der beruflichen Praxis, dass Projektmanagement häufig auch über Tools wie Power Point ablaufen kann. Dies sollte dann auf das Habitree- Team adaptiert werden, da die Gruppenstärke unseres Teams ähnlich groß war wie die Teams innerhalb des Unternehmens. Zudem beklagte das Team in Software Engineering 1 noch, dass es teilweise unklar sei, welche Aufgaben wann und wie erledigt werden müssen, sodass der Scrum Master eine zentralere Taskvergabe vorsah, jedoch auch zu Lasten der Agilität des Teams. Die Erkenntnisse daraus waren, dass sich nicht jedes Team gleich managet. Projekte innerhalb des Softwareentwicklung bedürfen anderen Herangehensweisen als Projekte innerhalb der Wirtschaftsprüfung. Gut gestaltete und aufbereitete Power Points fördern die Motivation innerhalb des Teams, führen jedoch auch zu einem unverhältnismäßig hohen Aufwand bei der Bearbeitung. Git Hub Workflows hätten schon eher festgelegt und etabliert sein müssen. Power Point eignet sich primär als Präsentationsmedium für die Stakeholder- Arbeit. Unser Projektmanagement in Software-Engineering 1 war teilweise chaotisch, weswegen es schon zu Beginn von Software-Engineering 2 ein zentrales Meeting hätte geben müssen, indem bestehende Workflows mit dem Einverständnis aller Teilnehmer überarbeitet hätten werden müssen.
-Zudem gab es auch vor allem in der Anfangsphase eine unklare Rollenverteilung und fehlende Scrum- Methodik in SE1 bis zur Anfangsphase von SE2. Bereits im ersten Teil des Modules wurden formale Scrum- Rollen mit ihren jeweiligen Verantwortlichkeiten definiert und in Git Hub manifestiert. Allerdings wurden diese Rollen nicht wie benötigt ausgelebt. Schlussendlich resultierte dies in einer Unkenntnis bei Verantwortlichkeiten. Beispielsweise wusste niemand wer genau User Stories erstellen, priorisieren oder diese hinsichtlich ihres Aufwandes schätzen sollte. Außerdem blieben Aufgaben teilweise liegen wie z.B.: die Erstellung passender Wireframes zu einzelnen User Stories oder das Checken der Definition of Done, bevor eine Story als absolviert deklariert wurde. Zudem kam es zu einer Fehlerhaften und Ineffizienten Meetingabfolge, ohne z.B.: Sprint Planning- Meetings zu Beginn eines neuen Sprints. Gründe hierfür waren unter anderem eine Unkenntnis und fehlende Vorerfahrung über die Reihenfolge der Scrum- Abläufe oder das Vergessen dieser über die lange Semesterpause hinweg. Teilweise wurden bestehende Scrum- Praktiken auch aus Bequemlichkeit weggelassen, sodass es jede Woche nur ein sehr langes Meeting gab für alle Dinge, als konkrete Scrum- Meeting. Auch ist in den vorherigen Semestern in der Uni die Software einfach entwickelt worden, ohne sich auf andere Aspekte wie Projektmanagement konzentrieren zu müssen. 
-Als direkte Maßnahme wurde ein sehr langes und ausführliches Meeting, indem das Team gemeinsam die Scrum Abläufe und Workflows besprachen. Der Scrum Master diente als Vermittler der Abläufe und studierte vorher noch einmal intensiv die Methodiken und Praktiken aus der agilen Softwareentwicklung.  Seither wird akribisch darauf geachtet, dass alle Scrum- Prinzipien eingehalten und korrekt umgesetzt werden.
-Die Situation wäre schneller gelöst, hätten wir bereits im Vorfeld mit dem Professor oder dem Coach eine Rücksprache bezüglich unserer letzten Arbeitsergebnisse gehalten. Dies war initial angedacht, wurde jedoch verworfen. Zudem hätte auch über die Ferien jedes Mitglied allein die bisherige Arbeitsweise reflektieren können und für sich effizientere Wege ermitteln können. Das hätte man dann direkt in der ersten Woche des Semesters in einem gemeinsamen Meeting konsolidieren können.
-Unser letzter Misserfolg bezieht sich vor allem auf die (nahezu ausschließlich) positive Arbeitsweise im Team. Seit Software Engineering 1 gab es ein Mitglied innerhalb unseres Teams welches die Grenzen flacher Hierarchien und Selbstorganisation  systematisch austestete und auf die Probe stellte durch anhaltende Demotivation und geringer Beteiligung in Meetings. Trotz gleichberechtigter Entscheidungsfindung und mehrfacher Versuche zur intrinsischen Motivation, kam es über Monate hinweg zu keiner verlässlichen Mitarbeit. Vereinbarte Aufgaben, wie z.B.: die Erstellung von Sequenzdiagrammen oder die Ausarbeitung von Wireframes wurden nur passiv oder gar nicht wahrgenommen und Abwesenheiten bei Meetings wurden nicht transparent kommuniziert. Team ging anfänglich davon aus, dass Selbstorganisation und Gleichrangigkeit ausreichen würden, um Engagement sicherzustellen. Prinzipiell funktionierte dies, jedoch erwies sich diese Annahme für diese spezifische Person in diesem Fall als falsch. Erst durch stärker hierarchische Führung, expliziter Aufgabenverteilung, Deadlines und der Androhung einer Eskalation an den Professor oder Coach konnte minimale Verbindlichkeit hergestellt werden.  Somit wurde für uns klar, das eine maximal partizipative Führung ohne Hierarchien in einer Vielzahl von Situationen funktioniert, jedoch nicht bei jedem Teammitglied gleichermaßen.
-In Fällen anhaltender Demotivation oder mangelnder Verlässlichkeit ist situativ eine stärker autoritäre bzw. delegierende Führung notwendig. Führung bedeutet auch Verantwortung klar zuzuweisen und notfalls konsequent zu eskalieren, um das Team und das Projekt zu schützen. Weiterführend vor allem auch im Hinblick auf die Arbeitsweise im Team wurde die Erkenntnis gewonnen, dass je mehr Druck auf dem Team lastet, desto eher wünscht es sich eine autoritärere und delegierende Führung, in der jeder genau weiß, welche Aufgaben er bis wann zu tun hat.
-Die Mitglieder forderten zum Ende des Projektes und mit aufkommendem Stress z.B.: vom Scrum Master explizite Task Zuweisungen mit klaren Definitionen/ Beschriftungen was genau bis wann erfolgen soll. Dies deckt sich auch mit einigen Erfahrungen die Unternehmer beim z.B.: Krisenmanagement erzielten. Trotzdem achteten wir maximal darauf auch in schwereren Phasen bestehende Best- Practices der iterativen und agilen Entwicklung im Projektmanagement beizubehalten (wie z.B.: Meeting Struktur oder auch Freiheiten bei der Task- Vergabe, sodass niemand gegen seinen Willen zum Aufgaben abarbeiten gezwungen wurde). 
-Zusammenfassend zeigt sich dass die bestehenden Misserfolge im Team größtenteils nicht technischer Natur waren sondern das Projektmanagement betrafen. Sie referenzierten auf strukturelle, organisatorische und zwischenmenschliche Schwächen, die ohne die zunehmende Projektkomplexität vermutlich verborgen geblieben wären.  Gerade durch die bewusste Auseinandersetzung mit den Problemen, die in diesem Semester nochmals deutlich besser erfolgte als im Letzten, konnte das Team seine Arbeitsweise reflektieren, anpassen und professionalisieren. 
-Im Vergleich zum Beginn von Software Engineering 1 arbeitet das Team heute deutlich strukturierter, transparenter und zielgerichteter. Rollen, Verantwortlichkeiten, Workflows und Schemata sind aktiv definiert und von jedem Teammitglied verstanden. Auch der zwischenmenschliche Umgang mit Problemen, Risiken und Leistungsunterschieden hat sich merklich geändert. 
-Zusammenfassend kann man konstatieren, dass eine erfolgreiche Softwareentwicklung nicht allein von technischen Fähigkeiten und Implementierungsspezifischer Details abhängt, sondern auch im hohen Maße von funktionierenden Prozessen, klarer Kommunikation und situationsspezifischer Führung. Nur wenn diese Dinge vorhanden sind und auch eine positive zwischenmenschliche Ebene innerhalb des Teams sichergestellt wird, lassen sich Projekte skalieren und spezifische Dinge auch automatisieren (z.B.: durch KI- Nutzung). Andernfalls sind solche Dinge obsolet und sogar gefährlich, da z.B.: KI den Mitgliedern den Eindruck vermittelt, dass die bisherige Arbeitsweisen funktionieren, da ja immer wieder Ergebnisse erzielt werden können.
-Software-Engineering umfasst viel mehr als nur die bloße Implementierung einer von kleineren Code- Aufgaben in Uni- Projekten wie z.B.: Single Page Applikation oder einer AES, weswegen wir uns zu Beginn wunderten, warum keine Programmierspezifischen Details gelehrt wurden. Nach einem Jahr Software-Entwicklung verstehen wir nun als Team, dass standardisierte Workflows und Verantwortlichkeiten, klare und strukturierte Dokumentation sowie Requirement-Engineering unabdingbar sind für das Management komplexer Code- Projekte. Diese Einsicht stellt den größten Lernerfolg unseres Teams da und ist zeitgleich die Basis für alle bisherigen Erfolge und Misserfolge. 
-Nach 2 Semestern Software-Entwicklung  hat unser Team so viele Erkenntnisse und Eindrücke gewonnen, dass man davon ausgehen kann nun eine tragfähige Grundlage für zukünftige Projekte im Studium und im beruflichen Umfeld zu besitzen.
 
-
-
-
-
-== Überarbeitete Misserfolge (Mit Gliederung :D)
+== Misserfolge
 
 Die beschriebenen Erfolge zeigen, dass es dem Team im Verlauf von Software Engineering 2 gelungen ist Strukturen, Prozesse und Zusammenarbeit deutlich zu professionalisieren. Gleichzeitig legte aber auch gerade diese zunehmende Strukturierung und Optimierung Schwachstellen offen, die zuvor entweder verdeckt waren oder aufgrund geringer Komplexität keine wesentliche Rollen spielten.
 Im Folgenden werden daher drei zentrale Misserfolge bzw. Probleme beschrieben, die den Verlauf des Software Engineering- Projektes negativ beeinflussten, aus denen jedoch konkrete Maßnahmen und langfristige Erkenntnisse abgeleitet wurden.
