@@ -4,47 +4,19 @@
 Dieses Handbuch unterstützt Nutzer dabei, die **Habit Tracker App** zu starten, Gewohnheiten anzulegen und Fortschritte zu verfolgen.
 
 == 2. Voraussetzungen
-* Windows-PC oder Mac mit **VS Code**
-* Expo Go auf dem Handy
-* Node.js installiert
-* `npx expo` verfügbar
+* Expo Go App auf dem Handy
 * Internetzugang
-* Uni-VPN
+* Uni-VPN bzw. Verbindung zum HTW-Dresden Netzwerk
 
-== 3. Zugriff auf das System / Projekt
-* GitHub Repository: https://github.com/laurenzzzzzz/htwd-se1-habitree/tree/main
-* Hinweis: Um lokal zu arbeiten, muss das Projekt aus GitHub geklont werden.
+== 3. App auf dem Handy starten
 
-== 4. Projekt lokal öffnen
-1. GitHub Repository klonen:
-```bash
-git clone https://github.com/laurenzzzzzz/htwd-se1-habitree.git
-```
-2. **VS Code öffnen**  
-3. Menü: **Datei → Ordner öffnen**  
-
-== 5. Projekt aktualisieren
-
-* Git Pull ausführen, um neueste Änderungen zu holen:
-```bash
-git pull
-```
-
-== 6. Expo starten
-
-Bitte beachten jeweils auf Handy und PC den eduVPN aktivieren, da der Backend Server im HTW Netzwerk ist.
-
-[source,shell]
-----
-cd src/habitree
-npm ci
-npx expo install --fix <- Installiert und Updatet alle Packages
-npx expo start --tunnel --go --clear
-----
+Bitte beachten das auf dem Handy der eduVPN aktiviert sein muss bzw. im Netz der HTW-Dresden sein muss.
 
 Scanne den angezeigten QR-Code mit der **Expo Go App** auf deinem Smartphone.
 
-== 7. Benutzeroberfläche
+Hinweis: Würde man die App tatsächlich veröffentlichen wäre der QR-Code nicht notwendig, da die App dann über den App Store/Play Store installiert werden könnte.
+
+== 4. Benutzeroberfläche
 
 === Startseite (Home)
 
@@ -130,35 +102,26 @@ Die untere Navigationsleiste ist in allen Ansichten sichtbar und ermöglicht den
 * Inventar  
 * Profil  
 
-== 8. Hauptaufgaben / Features
-=== 8.1 Neue Gewohnheit anlegen
+== 5. Hauptaufgaben / Features
+=== 5.1 Neue Gewohnheit anlegen
 
-=== 8.2 Gewohnheit abhaken
+=== 5.2 Gewohnheit abhaken
 
-=== 8.3 Gewohnheit bearbeiten / löschen
+=== 5.3 Gewohnheit bearbeiten / löschen
 
-=== 8.4 Alle Gewohnheiten anzeigen
+=== 5.4 Alle Gewohnheiten anzeigen
 
-=== 8.5 Baum anzeigen und wachsen lassen
+=== 5.5 Baum anzeigen und wachsen lassen
 
-=== 8.6 Abzeichen verdienen und anzeigen lassen
+=== 5.6 Abzeichen verdienen und anzeigen lassen
 
-=== 8.7 Anmelden/ Abmelden/ Registrieren
+=== 5.7 Anmelden/ Abmelden/ Registrieren
 
 
-== 9. Selten genutzte Funktionen
-- Freunde hinzufügen und verbinden
+== 7. FAQ / Häufige Probleme
+//- **Warum sehe ich den QR-Code nicht?** - Stelle sicher, dass Expo läuft und die VPN an ist damit dein Handy im gleichen Netzwerk ist.
 
-- Benachrichtigungen aktivieren/deaktivieren
-
-- Dark Mode einschalten
-
-- Account löschen
-
-== 10. FAQ / Häufige Probleme
-- **Warum sehe ich den QR-Code nicht?** - Stelle sicher, dass Expo läuft und die VPN an ist damit dein Handy im gleichen Netzwerk ist.
-
-- **Meine Habits verschwinden nach einem Update?** - Prüfe, ob du dich mit deinem Account eingeloggt hast und das Netzwerk noch gleich ist.
+- **Meine Habits werden nicht geladen / Ich kann mich nicht einloggen** - Prüfe, ob du dich mit deinem Account eingeloggt hast und du Zugriff zum HTW-Netzwerk hast.
 
 - **Der Baum wächst nicht?** - Nur wenn du deine Habits regelmäßig abhaken kannst, steigt der Fortschritt.
 
@@ -166,8 +129,6 @@ Die untere Navigationsleiste ist in allen Ansichten sichtbar und ermöglicht den
 - Starte mit kleinen Gewohnheiten – lieber 5 Minuten lesen als gleich ein ganzes Buch.
 
 - Nutze die Streak-Anzeige als Motivation: schon 3 Tage geschafft, jetzt nicht abbrechen!
-
-- Verbinde dich mit Freunden – gemeinsam bleibt man eher dran und es macht mehr Spass.
 
 == 12. Abschluss / Weiterführende Links
 GitHub Repository: https://github.com/laurenzzzzzz/htwd-se1-habitree
