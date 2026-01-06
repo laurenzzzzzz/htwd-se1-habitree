@@ -98,5 +98,5 @@ Der Nutzer soll unmittelbar nach dem App-Start eine chronologische Übersicht se
 //link:plantuml/Sequenzdiagramm_AutomatischeAnzeige_Tagesplan.md[]
 [mermaid]
 ....
-include::../development/plantuml/Sequenzdiagramm_AutomatischeAnzeige_Tagesplan.md[lines=2..28]
+include::../development/plantuml/Sequenzdiagramm_AutomatischeAnzeige_Tagesplan.md[lines=2..31]
 ....

@@ -134,14 +134,14 @@ sequenceDiagram
     autonumber
     actor Nutzer as Nutzer
     participant Expo as Expo App (React Native)
-    participant FEHabit as useHabitController
-    participant ApiRepo as ApiHabitRepository
+    participant FEHabit as useHabitsController
+    participant ApiRepo as ApiHabitsRepository
     participant Express as Express Router (/habits)
     participant Prisma as Prisma ORM
     participant PG as PostgreSQL (HabitTrackerDatabase)
 
     Nutzer->>Expo: Habit-Daten eingeben
-    Expo->>FEHabit: createHabit(habitData)
+    Expo->>FEHabit: saveHabit(habitData)
     FEHabit->>ApiRepo: POST /habits (habitData)
 
     ApiRepo->>Express: HTTP Request (JSON HabitData)
@@ -174,22 +174,22 @@ Als Nutzer möchte ich ein Habit abhaken können, um meinen täglichen Fortschri
 sequenceDiagram
     autonumber
     participant Expo as Expo App (React Native)
-    participant FEHabit as useHabitController
-    participant ApiRepo as ApiHabitRepository
+    participant FEHabit as useHabitsController
+    participant ApiRepo as ApiHabitsRepository
     participant Express as Express Router (/habits)
     participant Prisma as Prisma ORM
     participant PG as PostgreSQL (HabitTrackerDatabase)
 
-    Expo->>FEHabit: toggleHabit(id)
-    FEHabit->>ApiRepo: PATCH /habits/:id
-    ApiRepo->>Express: HTTP Request
-    Express->>Prisma: prisma.habit.update({ where: { id }, data: { checked } })
-    Prisma->>PG: UPDATE "Habit" SET checked = ...
-    PG-->>Prisma: UpdatedHabit
-    Prisma-->>Express: UpdatedHabit
-    Express-->>ApiRepo: UpdatedHabit
-    ApiRepo-->>FEHabit: UpdatedHabit
-    FEHabit-->>Expo: UI aktualisieren
+    Expo ->> FEHabit: toggleHabit(id, dateIso?)
+    FEHabit ->> ApiRepo: PUT /habits/:id/toggle { date }
+    ApiRepo ->> Express: HTTP Request (date)
+    Express ->> Prisma: prisma.habit.toggle(..., date)
+    Prisma ->> PG: ...
+    PG -->> Prisma: UpdatedHabit
+    Prisma -->> Express: UpdatedHabit
+    Express -->> ApiRepo: UpdatedHabit
+    ApiRepo -->> FEHabit: UpdatedHabit
+    FEHabit -->> Expo: UI aktualisieren
 ```
 
 
@@ -203,13 +203,13 @@ Als Nutzer möchte ich eine Übersicht meiner Habits sehen können, um meinen Fo
 sequenceDiagram
     autonumber
     participant Expo as Expo App (React Native)
-    participant FEHabit as useHabitController
-    participant ApiRepo as ApiHabitRepository
+    participant FEHabit as useHabitsController
+    participant ApiRepo as ApiHabitsRepository
     participant Express as Express Router (/habits)
     participant Prisma as Prisma ORM
     participant PG as PostgreSQL (HabitTrackerDatabase)
 
-    Expo->>FEHabit: getHabits()
+    Expo->>FEHabit: fetchHabits()
     FEHabit->>ApiRepo: GET /habits
     ApiRepo->>Express: HTTP Request
     Express->>Prisma: prisma.habit.findMany()
