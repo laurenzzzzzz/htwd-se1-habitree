@@ -69,8 +69,27 @@ Ein weiterer Misserfolg besteht in der Entstehung von Inselkompetenzen und einen
 Zukünftig könnte man Pair Programming einführen, um Wissen direkt zwischen den Rollen auszutauschen. Zudem muss ein noch stärkerer Fokus auf eine saubere, konsistente und nicht zu überladene Dokumentation gelegt werden, sodass man sich Rollenwissen direkt anlesen kann. Zudem könnte man auch Backup- Rollen definieren, sodass jeder Zuständigkeitsbereich von mindestens zwei Gruppenmitglieder prinzipiell erledigt werden kann. 
 Wir erkannten, dass technische Spezialisierung zwar effizient erscheint, jedoch langfristig zu strukturellen Risiken führen kann. Um eine nachhaltige Arbeitsweise im Team hervorbringen zu können, muss Wissen aktiv geteilt und ausgetauscht werden, statt sich nur in seine Domäne einzuarbeiten. Software Engineering ist Teamarbeit und bedarf neben technischen auch eine Vielzahl sozialer Kompetenzen.
 
-//Brauch noch arbeit
+
 === Misserfolg 3 - Scheitern selbstorganisierter Zusammenarbeit bei geringer individueller Motivation eines Teammitgliedes
+Ein weiterer Misserfolg zeigte sich darin, dass die selbstorganisierte Zusammenarbeit nicht durchgehend stabil funktionierte. So wurde bereits gegen Ende von Software Engineering 1 deutlich, dass einzelne Teammitglieder unterschiedlich stark zur Gruppenleistung beitrugen. 
+Diese Entwicklung setzte sich in Software Engineering 2 fort und wurde mit wachsendem Projektumfang noch stärker ersichtlich. +
+Trotz einer allgemein positiven Teamdynamik nahm u.a. ein Mitglied wenn überhaupt nur passiv an den Meetings teil und 
+erledigte seine Task nur mit geringer Qualität. 
+So mussten Aufgaben wie Wireframes, Sequenzdiagramme oder auch Teile des Benutzerhandbuches von anderen Mitgliedern entweder verbessert oder gänzlich übernommen werden um den internen Qualitätsanforderungen zu entsprechen.
+// ---Versuch 1
+Auch mit dem Stakeholdermanagement gab es zeitweise Probleme, sodass sich Features teilweise von den entsprechenden Entwicklern selber konstruiert werden mussten.
+//--- 
+Verstärkt wurde diese Situation dadurch, dass unsere Teamkultur auf flachen Hierachien, Freiwilligkeit sowie Vertrauen basierte. Solche Strukturen sind wirkungsvoll, solange Motivation, Arbeitsweise und Wissen aller Mitarbeiter relativ ähnlich sind. Divergiert der Reifegrad der Mitarbeiter jedoch signifikant, stößt ein demokratischer Führungsstil an seine Grenzen. 
+//--- Versuch 2
+So kam es zum Beispiel auch in der Stakeholderkommunikation zeitweise zu Verzögerungen.
+//---
+Um den Projektfortschritt dennoch sicherzustellenb, passten wir unseren Führungsstil situativ an, orientiert am Reifegradmodell von Hersey und Blanchard. Auch wenn uns bewusst ist, dass dies ein Stilbruch mit gängigen Scrum- Methoden ist, führten wir so für Arbeiter mit geringerer Motivation verbindliche Prozesse ein, mit klar definierten Aufgaben und Deadlines. Dies zeigte kurzfristig Verbesserung, konnte aber dennoch nicht die fehlende Motivation einzelner Arbeiter verbessern.  +
+Selbstorganisation ist nicht in allen Teamkonstellationen und unter allen Umgebungsvariablen gleichmäßig einsetzbar. Dies zeigte auch ein Wachstum in dem Bedarf vieler Teammitglieder nach einer stärkeren Taskdelegation mit klareren zeitlichen Rahmen im Zuge des steigenden Projektdruckes zu Semesterende hin. +
+Für zukünftige Projekte nehmen wir uns mit Probleme frühzeitig offen anzusprechen und Gründe für die fehlende Motivation aktiv zu klären. Zudem bedarf es gleich von Anfang an klaren Rollen, Erwartungen und Eskalationsprozessen um transparenz zu schaffen und die Grundidee der partizipativen Zusammenarbeit maximal umsetzen zu können.   
+
+
+
+//Alte Version
 Unser letzter Misserfolg bezieht sich auf anhaltenden Schwierigkeiten mit einem Teammitglied, deren Ursprung bereits in Software-Engineering 1 lag und sich über den gesamten Zeitraum von Software- Engineering 2 deutlich abzeichnete. Trotz der grundsätzlich positiven Dynamik im Team stellte dieses Mitglied die Grenzen flacher Hierarchien und selbstogranisierter, demokratischer Arbeitsweisen wiederholt auf die Probe. 
 Dies zeigte sich vor allem in Form von niedriger Motivation, passiven Verhalten in Meetings und nicht angemeldetes Fehlen in Meetings etc. 
 Zugewiesene oder vereinbarte Aufgaben wie z.B.: die Erstellung von Wireframes oder Sequenzdiagramme und die Anfertigung eines Benutzerhandbuches wurden teilweise gar nicht, und wenn nur oberflächlich oder mit KI- generierten Inhalten eingereicht. Da dieses Verhalten in keiner Weise unseren internen Qualitätsanforderungen entspricht, entstand ein aktiver Schaden in unserer Arbeitskultur, da teilweise unzureichende Arbeit weiterverarbeitet oder von anderen Mitgliedern zeitaufwendig verbessert werden musste. 
