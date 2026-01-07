@@ -104,7 +104,7 @@ export function useHabitsController() {
       const isAllDone = areAllDueForTodayCompleted(updatedHabits);
       if (!wasAllDone && isAllDone && notificationService && quoteService) {
         try {
-          const q = await quoteService.fetchQuote();
+          const q = await quoteService.fetchQuoteOfDay();
           const title = 'Stark! Alle Gewohnheiten erledigt';
           const body = q?.quote ? q.quote : 'Großartig! Du hast heute alles geschafft.';
           await notificationService.showImmediate(title, body, { type: 'all-done-today' });
