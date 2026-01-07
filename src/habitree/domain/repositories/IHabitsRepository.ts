@@ -8,6 +8,7 @@ export type HabitPersistencePayload = {
     time?: string; // hh:mm
     weekDays?: number[];
     intervalDays?: string;
+    durationDays?: string; // Laufzeit in Tagen (UI-Eingabe)
 };
 
 export interface IHabitsRepository {

@@ -8,8 +8,9 @@ export type HabitScheduleLike = Pick<
   entries?: Habit['entries'];
 };
 
-export type HabitPersistenceRequestBody = Omit<HabitPersistencePayload, 'intervalDays'> & {
+export type HabitPersistenceRequestBody = Omit<HabitPersistencePayload, 'intervalDays' | 'durationDays'> & {
   intervalDays?: number;
+  durationDays?: number;
   weekDays?: number[];
 };
 
@@ -52,6 +53,10 @@ export function buildHabitPersistenceRequest(
     intervalDays:
       payload.intervalDays && payload.intervalDays.trim() !== ''
         ? Number(payload.intervalDays)
+        : undefined,
+    durationDays:
+      payload.durationDays && payload.durationDays.trim() !== ''
+        ? Number(payload.durationDays)
         : undefined,
   };
 }

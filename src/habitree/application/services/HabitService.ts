@@ -20,9 +20,10 @@ export class HabitService {
     startDate?: string,
     time?: string,
     weekDays?: number[],
-    intervalDays?: string
+    intervalDays?: string,
+    durationDays?: string
   ): Promise<Habit[]> {
-    await this.repo.saveHabit(authToken, { name, description, frequency, startDate, time, weekDays, intervalDays });
+    await this.repo.saveHabit(authToken, { name, description, frequency, startDate, time, weekDays, intervalDays, durationDays });
     return this.repo.fetchHabits(authToken);
   }
 
@@ -46,9 +47,10 @@ export class HabitService {
     startDate?: string,
     time?: string,
     weekDays?: number[],
-    intervalDays?: string
+    intervalDays?: string,
+    durationDays?: string
   ): Promise<Habit[]> {
-    await this.repo.updateHabit(authToken, id, { name, description, frequency, startDate, time, weekDays, intervalDays });
+    await this.repo.updateHabit(authToken, id, { name, description, frequency, startDate, time, weekDays, intervalDays, durationDays });
     return this.repo.fetchHabits(authToken);
   }
 

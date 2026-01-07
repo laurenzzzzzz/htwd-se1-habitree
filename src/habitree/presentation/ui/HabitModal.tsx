@@ -24,6 +24,7 @@ type Props = {
     newHabitFrequency: string;
     newHabitWeekDays: number[];
     newHabitIntervalDays: string;
+    newHabitDurationDays?: string;
     setNewHabitName: (s: string) => void;
     setNewHabitDescription: (s: string) => void;
     setNewHabitStartDate: (s: string) => void;
@@ -31,6 +32,7 @@ type Props = {
     setNewHabitFrequency: (s: string) => void;
     setNewHabitWeekDays: (days: number[]) => void;
     setNewHabitIntervalDays: (s: string) => void;
+    setNewHabitDurationDays?: (s: string) => void;
     onAddPredefined: (label: string, description: string, frequency: string) => void;
     onSelectPredefined?: (p: Predefined) => void;
     onAddCustom: () => void;
@@ -50,6 +52,7 @@ export default function HabitModal({
     newHabitFrequency,
     newHabitWeekDays,
     newHabitIntervalDays,
+    newHabitDurationDays,
     setNewHabitName,
     setNewHabitDescription,
     setNewHabitStartDate,
@@ -57,6 +60,7 @@ export default function HabitModal({
     setNewHabitFrequency,
     setNewHabitWeekDays,
     setNewHabitIntervalDays,
+    setNewHabitDurationDays,
     onAddPredefined,
     onSelectPredefined,
     onAddCustom,
@@ -80,6 +84,7 @@ export default function HabitModal({
         setNewHabitFrequency('');
         setNewHabitWeekDays([]);
         setNewHabitIntervalDays('');
+        setNewHabitDurationDays && setNewHabitDurationDays('');
         setDatePickerVisible(false);
         setTimePickerVisible(false);
         onClose();
@@ -198,6 +203,21 @@ export default function HabitModal({
                                                 <Text style={habitModalStyles.iconButtonText}>⏰</Text>
                                             </Pressable>
                                         </View>
+                                    </View>
+
+                                    {/* Duration Input (Laufzeit) */}
+                                    <View style={habitModalStyles.marginTop}>
+                                        <ThemedText style={habitModalStyles.label}>Laufzeit (Tage)</ThemedText>
+                                        <TextInput
+                                            placeholder="z.B. 66"
+                                            value={newHabitDurationDays || ''}
+                                            onChangeText={setNewHabitDurationDays ? setNewHabitDurationDays : () => {}}
+                                            keyboardType="number-pad"
+                                            style={[loginStyles.input, habitModalStyles.inputFontFix]}
+                                        />
+                                        <Pressable style={{ marginTop: 6 }} onPress={() => alert('Psychologisch werden ~66 Tage oft als sinnvoll angesehen, um neue Gewohnheiten zu festigen. Kürzere Laufzeiten eignen sich zum Einstieg, längere für nachhaltige Etablierung.') }>
+                                            <Text style={{ color: '#666', textDecorationLine: 'underline' }}>Warum 66 Tage?</Text>
+                                        </Pressable>
                                     </View>
 
                                     {/* Frequency Dropdown */}

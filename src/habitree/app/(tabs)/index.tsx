@@ -57,6 +57,7 @@ export default function HomeScreen() {
   const [newHabitFrequency, setNewHabitFrequency] = useState('');
   const [newHabitWeekDays, setNewHabitWeekDays] = useState<number[]>([]);
   const [newHabitIntervalDays, setNewHabitIntervalDays] = useState('');
+  const [newHabitDurationDays, setNewHabitDurationDays] = useState('');
   const [streakModalVisible, setStreakModalVisible] = useState(false);
   const [selectedBar, setSelectedBar] = useState<number | null>(null);
 
@@ -170,7 +171,7 @@ export default function HomeScreen() {
 
     const frequency = newHabitFrequency || 'Täglich';
     const descValue = newHabitDescription.trim() === '' ? undefined : newHabitDescription;
-    const result = await handleSaveHabit(newHabitName, frequency, descValue, newHabitStartDate, newHabitTime, newHabitWeekDays, newHabitIntervalDays);
+    const result = await handleSaveHabit(newHabitName, frequency, descValue, newHabitStartDate, newHabitTime, newHabitWeekDays, newHabitIntervalDays, newHabitDurationDays);
     if (result.success) {
       setNewHabitName('');
       setNewHabitDescription('');
@@ -179,6 +180,7 @@ export default function HomeScreen() {
       setNewHabitFrequency('');
       setNewHabitWeekDays([]);
       setNewHabitIntervalDays('');
+      setNewHabitDurationDays('');
       setModalVisible(false);
       setHabitMode(null);
     } else {
@@ -357,6 +359,7 @@ export default function HomeScreen() {
         newHabitFrequency={newHabitFrequency}
         newHabitWeekDays={newHabitWeekDays}
         newHabitIntervalDays={newHabitIntervalDays}
+        newHabitDurationDays={newHabitDurationDays}
         setNewHabitName={setNewHabitName}
         setNewHabitDescription={setNewHabitDescription}
         setNewHabitStartDate={setNewHabitStartDate}
@@ -364,6 +367,7 @@ export default function HomeScreen() {
         setNewHabitFrequency={setNewHabitFrequency}
         setNewHabitWeekDays={setNewHabitWeekDays}
         setNewHabitIntervalDays={setNewHabitIntervalDays}
+        setNewHabitDurationDays={setNewHabitDurationDays}
         onAddPredefined={handleAddPredefinedHabit}
         onAddCustom={handleAddHabit}
       />

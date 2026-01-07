@@ -68,10 +68,10 @@ export function useHabitsController() {
   }, [habitService, authToken]);
 
   const saveHabit = useCallback(
-    async (name: string, frequency: string, description?: string | null | undefined, startDate?: string, time?: string, weekDays?: number[], intervalDays?: string) => {
+    async (name: string, frequency: string, description?: string | null | undefined, startDate?: string, time?: string, weekDays?: number[], intervalDays?: string, durationDays?: string) => {
       if (!authToken) throw new Error('Kein Auth-Token vorhanden');
       try {
-        const updatedHabits = await habitService.saveHabit(authToken, name, frequency, description, startDate, time, weekDays, intervalDays);
+        const updatedHabits = await habitService.saveHabit(authToken, name, frequency, description, startDate, time, weekDays, intervalDays, durationDays);
         setHabits(updatedHabits);
         await rescheduleNotifications(updatedHabits);
         return updatedHabits;
@@ -130,10 +130,10 @@ export function useHabitsController() {
     }
   }, [authToken, habitService, rescheduleNotifications]);
 
-  const updateHabit = useCallback(async (id: number, name: string, frequency: string, description?: string | null | undefined, startDate?: string, time?: string, weekDays?: number[], intervalDays?: string) => {
+  const updateHabit = useCallback(async (id: number, name: string, frequency: string, description?: string | null | undefined, startDate?: string, time?: string, weekDays?: number[], intervalDays?: string, durationDays?: string) => {
     if (!authToken) throw new Error('Kein Auth-Token vorhanden');
     try {
-      const updatedHabits = await habitService.updateHabit(authToken, id, name, frequency, description, startDate, time, weekDays, intervalDays);
+      const updatedHabits = await habitService.updateHabit(authToken, id, name, frequency, description, startDate, time, weekDays, intervalDays, durationDays);
       setHabits(updatedHabits);
       await rescheduleNotifications(updatedHabits);
       return updatedHabits;
@@ -174,9 +174,9 @@ export function useHabitsController() {
    * Handler for habit creation
    */
   const handleSaveHabit = useCallback(
-    async (name: string, frequency: string, description?: string | null | undefined, startDate?: string, time?: string, weekDays?: number[], intervalDays?: string) => {
+    async (name: string, frequency: string, description?: string | null | undefined, startDate?: string, time?: string, weekDays?: number[], intervalDays?: string, durationDays?: string) => {
       try {
-        await saveHabit(name, frequency, description, startDate, time, weekDays, intervalDays);
+        await saveHabit(name, frequency, description, startDate, time, weekDays, intervalDays, durationDays);
         return { success: true };
       } catch (error) {
         console.error('saveHabit error:', error);
