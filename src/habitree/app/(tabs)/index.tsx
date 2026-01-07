@@ -126,16 +126,16 @@ export default function HomeScreen() {
     <Modal
       visible={statsModalVisible}
       transparent
-      animationType="slide"
+      animationType="fade"
       onRequestClose={() => setStatsModalVisible(false)}
     >
-      <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.4)', justifyContent: 'center', alignItems: 'center' }}>
-        <View style={{ width: '85%', padding: 16, borderRadius: 12, backgroundColor: '#fff' }}>
-          <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 8 }}>{selectedHabit?.name ?? 'Habit'}</Text>
-          <Text style={{ marginBottom: 6 }}>{`Streak: ${selectedHabit?.streak ?? 0} Tage`}</Text>
-          <Text style={{ marginBottom: 16 }}>{selectedHabit?.description ? selectedHabit.description : 'Keine Beschreibung vorhanden.'}</Text>
-          <Pressable onPress={() => setStatsModalVisible(false)} style={{ alignSelf: 'flex-end', paddingVertical: 8, paddingHorizontal: 12, backgroundColor: '#ddd', borderRadius: 8 }}>
-            <Text>Schließen</Text>
+      <View style={styles.statsModalOverlay}>
+        <View style={styles.statsModalContent}>
+          <Text style={styles.statsModalTitle}>{selectedHabit?.name ?? 'Habit'}</Text>
+          <Text style={styles.statsModalStreakText}>{`Streak: ${selectedHabit?.streak ?? 0} Tage`}</Text>
+          <Text style={styles.statsModalDescription}>{selectedHabit?.description ? selectedHabit.description : 'Keine Beschreibung vorhanden.'}</Text>
+          <Pressable onPress={() => setStatsModalVisible(false)} style={styles.statsModalCloseButton}>
+            <Text style={styles.statsModalCloseButtonText}>Schließen</Text>
           </Pressable>
         </View>
       </View>

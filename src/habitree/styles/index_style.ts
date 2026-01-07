@@ -422,6 +422,47 @@ export const createHomeStyles = (
       textAlign: 'center',
       width: '100%',
     },
+    statsModalOverlay: {
+      flex: 1,
+      backgroundColor: '#00000088',
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: spacing.md,
+    },
+    statsModalContent: {
+      width: modalWidth,
+      padding: cardPadding,
+      borderRadius: cardRadius,
+      backgroundColor: '#fff',
+      shadowColor: '#000',
+      shadowOpacity: 0.2,
+      shadowRadius: 12,
+      elevation: 5,
+    },
+    statsModalTitle: {
+      fontSize: font(18),
+      fontWeight: 'bold',
+      marginBottom: spacing.sm,
+    },
+    statsModalStreakText: {
+      marginBottom: spacing.xs,
+    },
+    statsModalDescription: {
+      marginBottom: spacing.md,
+    },
+    statsModalCloseButton: {
+      alignSelf: 'center',
+      paddingVertical: spacing.sm,
+      paddingHorizontal: spacing.lg,
+      backgroundColor: 'rgb(25, 145, 137)',
+      borderRadius: radius(8),
+      marginTop: spacing.sm,
+    },
+    statsModalCloseButtonText: {
+      color: 'white',
+      fontWeight: 'bold',
+      fontSize: font(14),
+    },
   });
 };
 
