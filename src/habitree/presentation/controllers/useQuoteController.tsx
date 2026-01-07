@@ -10,7 +10,7 @@ export function useQuoteController() {
   const fetchQuote = useCallback(async () => {
     setIsLoading(true);
     try {
-      const q = await quoteService.fetchQuote();
+      const q = await quoteService.fetchQuoteOfDay();
       setQuote(q);
     } finally {
       setIsLoading(false);
