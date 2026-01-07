@@ -1,14 +1,265 @@
 = Test Cases: {project-name}
-Laurenz Born <laurenz.born@stud.htw-dresden.de>; Alexander Chlebowski <alexander.chlebowski@stud.htw-dresden.de>; Leonhard Hermann <leonhard.hermann@stud.htw-dresden.de>; Johann Schmidt <johann.schmidt@stud.htw-dresden.de>; Kimi Jerke <kimi.jerke@stud.htw-dresden.de>; Jannes Lehmann <s86317@htw-dresden.de>
-{localdatetime}
-include::../_includes/default-attributes.inc.adoc[]
-// Platzhalter für weitere Dokumenten-Attribute
-
+include::../_includes/_default-attributes.inc.adoc[]
 
 == Allgemeine Informationen
 
+Dieses Dokument beschreibt, wie wir in unserem Projekt testen und welche Testfälle wir dafür abdecken.
+Der Fokus liegt bei uns klar auf automatisierten Tests, weil wir damit Business-Logik reproduzierbar prüfen können und später bei Änderungen ein sauberes Regressionstest-Netz haben.
+
+Wir testen vor allem die Fachlogik rund um Habits (Streak, Schedules, Completion Rate), User-Validierung, Auth/Profile-Flows und Quotes.
+Dazu kommen Integrationstests im Service-Layer, wo mehrere Komponenten zusammenspielen (z.B. Service + Repository, Validierung, Fehlerfälle).
+
+=== Begriffe & Testobjekt (SUT)
+
+*System under Test (SUT)* ist jeweils die konkrete Einheit, die wir prüfen.
+Bei Unit-Tests ist das meistens eine einzelne Entity oder Policy (z.B. `Habit` oder `HabitSchedulePolicy`).
+Bei Integration-Tests ist es typischerweise ein Service inkl. seiner Abhängigkeiten (z.B. `AuthService` mit Repository/Hasher).
+
+=== Teststufen (wie wir das einordnen)
+
+Wir orientieren uns an den üblichen Teststufen:
+
+- *Unit-/Modultests:* isolierte Logik einzelner Module/Entities (Whitebox, weil wir die Implementierung kennen).
+- *Integrationstests:* Zusammenspiel mehrerer Units über technische Schnittstellen (z.B. Service + Repo, Validierungen, Fehlerbehandlung).
+- *System-/Abnahmetests:* sind bei uns aktuell eher „leichtgewichtig“ (manuelle Smoke-Tests), weil wir im Belegprojekt den Schwerpunkt auf automatisierte Unit/Integration legen. Das ist aber im Dokument bewusst benannt, damit klar ist, was existiert und was geplant ist.
+
+=== Wie wir Testfälle finden
+
+Bei der Testfallfindung nutzen wir zwei typische Denkmuster:
+
+1. *Whitebox / Coverage-orientiert:* Wir leiten Tests aus Verzweigungen und Zuständen im Code ab (z.B. `if lastCompletionDate is today` vs. `yesterday`).
+2. *Blackbox / Spezifikationsorientiert:* Wir denken in Eingabe → Verhalten → Ausgabe und arbeiten mit Äquivalenzklassen und Grenzwerten.
+   Beispiel User-Validierung: „gültige E-Mail“ vs „ungültige E-Mail“ als Klassen; Grenzwerte bei Längen/Leerstring usw.
+
+Damit ist nachvollziehbar, warum unsere Tests die wichtigen Fälle abdecken (Happy Path + Negativtests).
+
+=== Testfall-Format 
+
+Jeder Testfall folgt im Kern dem AAA-Schema:
+
+- *Arrange:* Initialzustand herstellen + Testdaten aufbauen
+- *Act:* Aktion ausführen (Methodenaufruf / Service Call)
+- *Assert:* Ergebnis prüfen (Return Value, State Change, Error)
+
+Für das Dokument halten wir pro Testfall fest:
+Vorbedingungen, Testdaten/Eingaben, Schritte, erwartetes Ergebnis und (wenn sinnvoll) Nachbedingungen.
+
+=== Testqualität
+
+Unsere Tests sollen:
+- schnell laufen (damit man sie wirklich ständig ausführt),
+- unabhängig sein,
+- wiederholbar (kein „funktioniert nur auf meinem Rechner“),
+- self-validating (true/false über Assertions),
+- und zeitnah zum Code entstehen.
+
+=== Tools, Ausführung & Struktur
+
+Wir testen mit Jest in TypeScript.
+
+Lokale Ausführung:
+- `npm test`
+- `npm run test:coverage`
+
+Ordner-/Datei-Logik:
+Unit- und Integrationstests sind getrennt und die Dateien sind sprechend benannt.
+
+Namenskonvention:
+- `*.test.ts` für Domain/Unit
+- `*.entity.test.ts` für Entities
+- `*.integration.test.ts` für Integration
+
+=== Mocking / Isolation
+
+Wenn wir Services testen, isolieren wir Abhängigkeiten, die sonst Tests langsam oder flaky machen würden (z.B. Repos/DB, externe Services, Zeit/Zufall).
+Domainobjekte und reine Logik mocken wir nicht – die sollen „echt“ getestet werden.
+
+=== Code Coverage (aktueller Stand)
+
+Aktuell liegen wir grob bei ~71% Lines / ~73% Statements / ~68% Functions / ~80% Branches.
+
+Stark abgedeckt:
+Habit/User/Quote-Domain und die Kernflüsse in Auth/Profile + Schedule Policies.
+
+Lücken (Stand jetzt):
+TreeGrowthService, AchievementService, NotificationService, StreakService.
+Die sind als nächste Schritte eingeplant (siehe unten).
+
 == Test Cases
 
-=== Test Case 01
+Hinweis: Die IDs sind bewusst „TC-xx“, damit man in Reviews/Abgaben schnell referenzieren kann.
+Status ist immer dabei, damit klar ist, ob der Test bereits existiert oder noch geplant ist.
 
-=== Test Case 02
+=== Test Case 01 – Habit: Streak aktiv/inaktiv
+
+*ID:* TC-01
+*Level:* Unit (Whitebox)
+*SUT:* `Habit` Entity (Streak-Logik)
+*Status:* umgesetzt
+
+*Vorbedingungen:* Habit existiert, `lastCompletionDate` ist gesetzt oder nicht gesetzt.
+
+*Testdaten / Äquivalenzklassen:*
+Wir unterscheiden z.B.:
+- `lastCompletionDate = today` (Streak aktiv)
+- `lastCompletionDate = yesterday` (je nach Schedule noch aktiv/gerade so ok)
+- `lastCompletionDate < yesterday` (Streak inaktiv)
+- `lastCompletionDate = null` (kein Streak)
+
+*Schritte (AAA):*
+Arrange: Habit mit passendem `lastCompletionDate` erstellen.
+Act: `isActive()` bzw. Streak-Berechnung aufrufen.
+Assert: `true/false` bzw. Streak-Wert entspricht Erwartung.
+
+*Erwartetes Ergebnis:*
+Streak-Status ist deterministisch und passt zur Logik.
+
+=== Test Case 02 – Habit: Completion Rate & Milestones
+
+*ID:* TC-02
+*Level:* Unit
+*SUT:* `Habit` Completion-Rate + Milestone-Messages
+*Status:* umgesetzt
+
+Hier testen wir typische Zeiträume (z.B. Woche/Monat) und ob Milestone-Texte korrekt sind.
+Wichtig sind Grenzwerte, z.B. „< 7 Tage“ vs. „genau 7 Tage“ (Milestone springt).
+
+=== Test Case 03 – Habit: Schedule Policies (Daily/Weekly/Interval/Monthly)
+
+*ID:* TC-03
+*Level:* Unit
+*SUT:* `HabitSchedulePolicy`
+*Status:* umgesetzt
+
+Wir prüfen, ob „fällig“ korrekt berechnet wird, z.B.:
+- Daily: jeden Tag fällig
+- Weekly: nur an bestimmten Wochentagen
+- Interval: alle X Tage (Grenzwert: genau X vs X-1 / X+1)
+- Monthly: definierte Tage im Monat (Sonderfall: Monatswechsel)
+
+=== Test Case 04 – User: E-Mail Validierung (Äquivalenzklassen + Negativtests)
+
+*ID:* TC-04
+*Level:* Unit (Blackbox-Denke, aber im Unit-Test umgesetzt)
+*SUT:* `User` Entity / Validator
+*Status:* umgesetzt
+
+Wir nutzen hier klar Äquivalenzklassen:
+- gültige Mails (Standardform)
+- ungültige Mails (kein @, leere Strings, ungültige Domain, doppelte Sonderzeichen, …)
+
+Erwartung: Ungültige Formate werden sauber rejected (Error/Exception/false), gültige gehen durch.
+
+=== Test Case 05 – User: Username/DisplayName Regeln
+
+*ID:* TC-05
+*Level:* Unit
+*SUT:* `User` (Username-Regeln, DisplayName Fallback)
+*Status:* umgesetzt
+
+Hier sind Grenzwerte wichtig (Länge, Sonderzeichen) + Fallback-Logik.
+
+=== Test Case 06 – AuthService: Login / Registrierung (Happy + Error Paths)
+
+*ID:* TC-06
+*Level:* Integration
+*SUT:* `AuthService`
+*Status:* umgesetzt
+
+*Vorbedingungen:* Repository/Hasher sind als Test-Implementierung oder Mock vorhanden.
+
+Wir prüfen:
+- Login mit gültigen Credentials
+- Login mit falschem Passwort
+- Registrierung mit Duplicate-Check (E-Mail existiert schon)
+- sauberes Error Handling (kein „500“, sondern erwartete Fehler)
+
+=== Test Case 07 – ProfileService: Update Username/Password
+
+*ID:* TC-07
+*Level:* Integration
+*SUT:* `ProfileService`
+*Status:* umgesetzt
+
+Wir testen, dass Validierungen greifen und Updates nur bei gültigen Daten passieren.
+Negativtests: ungültiger Username, zu schwaches Passwort, fehlender User.
+
+=== Test Case 08 – Quote-System: Random Quote + Edge Cases
+
+*ID:* TC-08
+*Level:* Unit/Integration (je nach Implementierung)
+*SUT:* `QuoteService` + Quote-Validierung/Formatierung
+*Status:* umgesetzt
+
+Wichtig sind Edge Cases:
+- leere Quote-Liste
+- fehlende Felder (Author/Text/Source)
+- konsistente Formatierung im Output
+
+=== Test Case 09 – HabitService: Create/Toggle Workflow (Service Zusammenspiel)
+
+*ID:* TC-09
+*Level:* Integration
+*SUT:* `HabitService`
+*Status:* umgesetzt
+
+Hier geht’s um den „realen“ Flow:
+Habit anlegen → togglen → State/History prüfen → Schedule-Logik bleibt konsistent.
+Zusätzlich Negativtests (invalid payload, missing user, etc.).
+
+=== Test Case 10 – TreeGrowthService (aktuell Lücke)
+
+*ID:* TC-10
+*Level:* Unit/Integration (je nachdem ob nur Logik oder mit Persistence)
+*SUT:* `TreeGrowthService`
+*Status:* geplant
+
+Ziel: Wachstum/State-Transitions sauber testen, inkl. Grenzwerte (z.B. „genau genug Punkte“ vs „knapp drunter“).
+
+=== Test Case 11 – AchievementService (aktuell Lücke)
+
+*ID:* TC-11
+*Level:* Unit/Integration
+*SUT:* `AchievementService`
+*Status:* geplant
+
+Ziel: Achievements werden genau dann vergeben, wenn Bedingungen erfüllt sind (und nicht doppelt).
+Negativtests: keine Achievements bei falschen Inputs/States.
+
+=== Test Case 12 – Notification/Streak Services (aktuell Lücke)
+
+*ID:* TC-12
+*Level:* Integration
+*SUT:* `NotificationService`, `StreakService`
+*Status:* geplant
+
+Hier ist wichtig, externe Abhängigkeiten zu mocken (z.B. E-Mail/Push/Provider), damit Tests schnell und stabil bleiben.
+
+== System- und Abnahmetests (Lightweight)
+
+Wir machen zusätzlich einfache manuelle Smoke-Tests, einfach um sicherzugehen, dass das Gesamtsystem „benutzbar“ ist (UI-Flow).
+Das ist kein riesiger Katalog, aber es ist bewusst dokumentiert:
+
+- Registrierung/Login über UI testen
+- Habit erstellen + togglen
+- Profil ändern
+- Quotes anzeigen lassen
+
+== CI / Automatisierung
+
+Bei Push/PR sollen Tests automatisiert laufen (CI), damit kaputte Änderungen direkt auffallen.
+Idee: `npm test` und optional `npm run test:coverage` als Pipeline-Step.
+
+== Umgang mit gefundenen Bugs
+
+Wenn ein Test fehlschlägt oder ein Fehler auffällt, wird das als Issue dokumentiert (Bug).
+Dann wird kurz geklärt, ob es ein Testproblem ist (falsch spezifiziert/ausgeführt), ein Umgebungsproblem oder ein echter Code-Defekt.
+Je nach Priorität wird direkt gefixt oder als Bugfix-Item eingeplant.
+
+== Nächste Schritte
+
+Als nächstes wollen wir:
+1. Coverage Richtung >80% bringen.
+2. Die fehlenden Services (Tree/Achievements/Notifications/Streak) systematisch ergänzen.
+3. Mehr Negativtests/Robustheit reindrehen (falsche Inputs, kaputte Dependencies).
+4. CI sauber durchziehen, damit Tests bei PRs automatisch laufen.
