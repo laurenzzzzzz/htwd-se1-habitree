@@ -5,7 +5,7 @@ import { Habit } from '../../domain/entities/Habit';
 import { FilterKey } from '../../constants/HomeScreenConstants';
 
 export function useHabitsController() {
-  const { habitService, notificationService } = useApplicationServices();
+  const { habitService, notificationService, quoteService } = useApplicationServices();
   const { authToken, isLoggedIn } = useAuth();
   const [habits, setHabits] = useState<Habit[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -82,18 +82,41 @@ export function useHabitsController() {
     [authToken, habitService, rescheduleNotifications]
   );
 
+  const areAllDueForTodayCompleted = useCallback((list: Habit[]): boolean => {
+    const t = new Date();
+    t.setHours(0, 0, 0, 0);
+    const dueToday = list
+      .map(h => ({ h, entry: h.entries.find(e => isSameDay(new Date(e.date), t)) }))
+      .filter(x => !!x.entry);
+    if (dueToday.length === 0) return false;
+    return dueToday.every(x => !!x.entry && x.entry.status === true);
+  }, [isSameDay]);
+
   const toggleHabit = useCallback(async (id: number, dateIso?: string) => {
     if (!authToken) throw new Error('Kein Auth-Token vorhanden');
     const targetDateIso = dateIso ?? new Date().toISOString();
     try {
+      const wasAllDone = areAllDueForTodayCompleted(habits);
       const updatedHabits = await habitService.toggleHabit(authToken, id, targetDateIso);
       setHabits(updatedHabits);
       await rescheduleNotifications(updatedHabits);
+      // After update: if we transitioned into "all done today", show motivational notification
+      const isAllDone = areAllDueForTodayCompleted(updatedHabits);
+      if (!wasAllDone && isAllDone && notificationService && quoteService) {
+        try {
+          const q = await quoteService.fetchQuote();
+          const title = 'Stark! Alle Gewohnheiten erledigt';
+          const body = q?.quote ? q.quote : 'Großartig! Du hast heute alles geschafft.';
+          await notificationService.showImmediate(title, body, { type: 'all-done-today' });
+        } catch (e) {
+          console.warn('could not send all-done notification', e);
+        }
+      }
       return updatedHabits;
     } catch (error) {
       throw error;
     }
-  }, [authToken, habitService, rescheduleNotifications]);
+  }, [authToken, habitService, habits, areAllDueForTodayCompleted, rescheduleNotifications, notificationService, quoteService]);
 
   const deleteHabit = useCallback(async (id: number) => {
     if (!authToken) throw new Error('Kein Auth-Token vorhanden');
