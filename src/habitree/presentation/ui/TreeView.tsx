@@ -641,7 +641,7 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
                   if (milestoneHabit) {
                     const result = await handleGrowHabit(milestoneHabit.id);
                     if (result.success) {
-                      setGrownHabitIds(prev => new Set([...prev, milestoneHabit.id]));
+                      setGrownHabitIds(prev => new Set([...Array.from(prev), milestoneHabit.id]));
                     }
                     setMilestoneModalVisible(false);
                   }
