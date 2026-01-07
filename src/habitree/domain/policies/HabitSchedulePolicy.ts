@@ -122,6 +122,41 @@ export function isSameDay(dateA: Date, dateB: Date): boolean {
   );
 }
 
+/**
+ * Finds the first valid date for a weekly habit starting from the given date.
+ */
+export function findFirstValidDateForWeekdays(startDateStr: string, weekDays: number[]): string {
+  if (!weekDays || weekDays.length === 0) return startDateStr;
+
+  const parts = startDateStr.trim().split('.');
+  if (parts.length !== 3) return startDateStr;
+  
+  const [d, m, y] = parts.map(Number);
+  const date = new Date(y, m - 1, d);
+  date.setHours(0, 0, 0, 0);
+
+  // Safety break to prevent infinite loops
+  let safety = 0;
+  while (safety < 365) {
+     // JS getDay: 0=Sun, 1=Mon...
+     // Our mapping: 0=Mon...6=Sun
+     const jsDay = date.getDay();
+     const ourDay = (jsDay + 6) % 7;
+
+     if (weekDays.includes(ourDay)) {
+        const dd = String(date.getDate()).padStart(2, '0');
+        const mm = String(date.getMonth() + 1).padStart(2, '0');
+        const yy = date.getFullYear();
+        return `${dd}.${mm}.${yy}`;
+     }
+
+     // Add 1 day
+     date.setDate(date.getDate() + 1);
+     safety++;
+  }
+  return startDateStr;
+}
+
 function sanitizeDateString(value?: string): string | null {
   if (!value) return null;
   const trimmed = value.trim();
