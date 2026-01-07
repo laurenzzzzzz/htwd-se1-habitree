@@ -211,9 +211,9 @@ export function useHabitsController() {
     }
   }, [deleteHabit]);
 
-  const handleUpdateHabit = useCallback(async (id: number, name: string, frequency: string, description?: string | null | undefined, startDate?: string, time?: string, weekDays?: number[], intervalDays?: string) => {
+  const handleUpdateHabit = useCallback(async (id: number, name: string, frequency: string, description?: string | null | undefined, startDate?: string, time?: string, weekDays?: number[], intervalDays?: string, durationDays?: string) => {
     try {
-      await updateHabit(id, name, frequency, description, startDate, time, weekDays, intervalDays);
+      await updateHabit(id, name, frequency, description, startDate, time, weekDays, intervalDays, durationDays);
       return { success: true };
     } catch (error) {
       console.error('updateHabit error', error);
