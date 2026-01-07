@@ -42,6 +42,7 @@ export const createHabitModalStyles = (width?: number, height?: number) => {
         betweenContent: {
             alignSelf: 'center',
             width: '92%',
+            maxHeight: '95%',
             backgroundColor: '#fff',
             borderRadius: radius(16),
             padding: spacing.md,
@@ -85,13 +86,14 @@ export const createHabitModalStyles = (width?: number, height?: number) => {
             marginBottom: spacing.md,
         },
         subtitle: {
-            marginBottom: spacing.sm,
+            marginBottom: spacing.md * 1.3,
             textAlign: 'center',
         },
         label: {
-            marginBottom: spacing.xs,
+            marginBottom: spacing.xs * 0.4,
             fontWeight: '500',
             fontSize: font(14),
+            marginLeft: spacing.xs * 0.5,
         },
         inputRowContainer: {
             flexDirection: 'row',
@@ -114,29 +116,40 @@ export const createHabitModalStyles = (width?: number, height?: number) => {
         },
         inputWithIcon: {
             width: '100%',
-            position: 'relative',
+            flexDirection: 'row',
+            alignItems: 'center',
         },
         inputFontFix: {
             fontSize: font(16),
+            paddingVertical: spacing.sm,
+            height: 'auto',
+            marginTop: 0,
+        },
+        inputWithIconFix: {
+            paddingVertical: spacing.xs,
+            height: 'auto',
+            marginTop: 0,
+        },
+        dropdownFix: {
+            paddingVertical: spacing.xs,
+            height: 'auto',
+            marginTop: 0, 
         },
         inputInner: {
             flex: 1,
-            paddingRight: scale(56),
             paddingVertical: 0,
             backgroundColor: 'transparent',
         },
         iconInside: {
-            position: 'absolute',
-            right: spacing.xs,
-            top: '100%',
             justifyContent: 'center',
             alignItems: 'center',
-            width: scale(44),
-            height: scale(44),
-            borderRadius: radius(10),
+            width: scale(30),
+            height: scale(30),
+            borderRadius: radius(6),
             backgroundColor: '#f0f0f0',
             borderWidth: 1,
             borderColor: '#ccc',
+            marginLeft: spacing.xs,
         },
         predefinedItem: {
             paddingVertical: spacing.sm,
@@ -183,7 +196,7 @@ export const createHabitModalStyles = (width?: number, height?: number) => {
             fontSize: font(16),
         },
         marginTop: {
-            marginTop: spacing.sm,
+            marginTop: spacing.xs * 0.1,
         },
         weekdayGrid: {
             flexDirection: 'row',
@@ -218,6 +231,20 @@ export const createHabitModalStyles = (width?: number, height?: number) => {
         },
         disabledButton: {
             opacity: 0.5,
+        },
+        infoLinkContainer: {
+            marginTop: spacing.xs * 0.1,
+            marginBottom: spacing.xs * 1.3,
+            alignSelf: 'flex-start',
+            marginLeft: spacing.xs * 0.5,
+        },
+        noMarginBottom: {
+            marginBottom: 0,
+        },
+        infoLinkText: {
+            color: '#666',
+            textDecorationLine: 'underline',
+            fontSize: font(12),
         },
     });
 };

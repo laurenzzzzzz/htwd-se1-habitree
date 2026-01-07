@@ -168,40 +168,46 @@ export default function HabitModal({
                                     />
 
                                     {/* Start Date Input */}
-                                    <View style={habitModalStyles.inputRowContainer}>
-                                        <View style={[habitModalStyles.inputWithIcon, loginStyles.input]}>
-                                            <TextInput
-                                                placeholder="Startdatum (dd.mm.yyyy)"
-                                                value={newHabitStartDate}
-                                                onChangeText={setNewHabitStartDate}
-                                                style={habitModalStyles.inputInner}
-                                                editable={false}
-                                            />
-                                            <Pressable
-                                                style={habitModalStyles.iconInside}
-                                                onPress={() => setDatePickerVisible(true)}
-                                            >
-                                                <Text style={habitModalStyles.iconButtonText}>📅</Text>
-                                            </Pressable>
+                                    <View style={habitModalStyles.marginTop}>
+                                        <ThemedText style={habitModalStyles.label}>Startdatum</ThemedText>
+                                        <View style={habitModalStyles.inputRowContainer}>
+                                            <View style={[habitModalStyles.inputWithIcon, loginStyles.input, habitModalStyles.inputWithIconFix]}>
+                                                <TextInput
+                                                    placeholder="dd.mm.yyyy"
+                                                    value={newHabitStartDate}
+                                                    onChangeText={setNewHabitStartDate}
+                                                    style={habitModalStyles.inputInner}
+                                                    editable={false}
+                                                />
+                                                <Pressable
+                                                    style={habitModalStyles.iconInside}
+                                                    onPress={() => setDatePickerVisible(true)}
+                                                >
+                                                    <Text style={habitModalStyles.iconButtonText}>📅</Text>
+                                                </Pressable>
+                                            </View>
                                         </View>
                                     </View>
 
                                     {/* Time Input */}
-                                    <View style={habitModalStyles.inputRowContainer}>
-                                        <View style={[habitModalStyles.inputWithIcon, loginStyles.input]}>
-                                            <TextInput
-                                                placeholder="Uhrzeit (hh:mm)"
-                                                value={newHabitTime}
-                                                onChangeText={setNewHabitTime}
-                                                style={habitModalStyles.inputInner}
-                                                editable={false}
-                                            />
-                                            <Pressable
-                                                style={habitModalStyles.iconInside}
-                                                onPress={() => setTimePickerVisible(true)}
-                                            >
-                                                <Text style={habitModalStyles.iconButtonText}>⏰</Text>
-                                            </Pressable>
+                                    <View style={habitModalStyles.marginTop}>
+                                        <ThemedText style={habitModalStyles.label}>Erinnerungszeit</ThemedText>
+                                        <View style={habitModalStyles.inputRowContainer}>
+                                            <View style={[habitModalStyles.inputWithIcon, loginStyles.input, habitModalStyles.inputWithIconFix]}>
+                                                <TextInput
+                                                    placeholder="hh:mm"
+                                                    value={newHabitTime}
+                                                    onChangeText={setNewHabitTime}
+                                                    style={habitModalStyles.inputInner}
+                                                    editable={false}
+                                                />
+                                                <Pressable
+                                                    style={habitModalStyles.iconInside}
+                                                    onPress={() => setTimePickerVisible(true)}
+                                                >
+                                                    <Text style={habitModalStyles.iconButtonText}>⏰</Text>
+                                                </Pressable>
+                                            </View>
                                         </View>
                                     </View>
 
@@ -209,23 +215,25 @@ export default function HabitModal({
                                     <View style={habitModalStyles.marginTop}>
                                         <ThemedText style={habitModalStyles.label}>Laufzeit (Tage)</ThemedText>
                                         <TextInput
-                                            placeholder="z.B. 66"
+                                            placeholder="z.B. 66 oder leer lassen für unbegrenzt"
                                             value={newHabitDurationDays || ''}
                                             onChangeText={setNewHabitDurationDays ? setNewHabitDurationDays : () => {}}
                                             keyboardType="number-pad"
-                                            style={[loginStyles.input, habitModalStyles.inputFontFix]}
+                                            style={[loginStyles.input, habitModalStyles.inputFontFix, habitModalStyles.noMarginBottom]}
                                         />
-                                        <Pressable style={{ marginTop: 6 }} onPress={() => alert('Psychologisch werden ~66 Tage oft als sinnvoll angesehen, um neue Gewohnheiten zu festigen. Kürzere Laufzeiten eignen sich zum Einstieg, längere für nachhaltige Etablierung.') }>
-                                            <Text style={{ color: '#666', textDecorationLine: 'underline' }}>Warum 66 Tage?</Text>
+                                        <Pressable style={habitModalStyles.infoLinkContainer} onPress={() => alert('Psychologisch werden 66 Tage oft als sinnvoll angesehen, um neue Gewohnheiten zu festigen. Kürzere Laufzeiten eignen sich zum Einstieg, längere für nachhaltige Etablierung.') }>
+                                            <Text style={habitModalStyles.infoLinkText}>Warum 66 Tage?</Text>
                                         </Pressable>
                                     </View>
 
                                     {/* Frequency Dropdown */}
-                                    
-                                    <FrequencyDropdown
-                                        selectedFrequency={newHabitFrequency}
-                                        onSelectFrequency={setNewHabitFrequency}
-                                    />
+                                    <View style={habitModalStyles.marginTop}>
+                                        <ThemedText style={habitModalStyles.label}>Häufigkeit</ThemedText>
+                                        <FrequencyDropdown
+                                            selectedFrequency={newHabitFrequency}
+                                            onSelectFrequency={setNewHabitFrequency}
+                                        />
+                                    </View>
 
                                     {/* Interval Input - Only show if frequency is Benutzerdefiniert */}
                                     {newHabitFrequency === 'Benutzerdefiniert' && (
