@@ -17,6 +17,7 @@ import { useThemeColor } from '@/hooks/useThemeColor';
 import { createHomeStyles } from '../../styles/index_style';
 import { useAuth } from '../../context/AuthContext';
 import { useHabitsController } from '../../presentation/controllers/useHabitsController';
+import { Habit } from '../../domain/entities/Habit';
 import { useQuoteController } from '../../presentation/controllers/useQuoteController';
 import { useStreakController } from '../../presentation/controllers/useStreakController';
 import HabitModal from '../../presentation/ui/HabitModal';
@@ -42,6 +43,7 @@ export default function HomeScreen() {
     handleSaveHabit,
     handleToggleHabit,
     isSameDay,
+    habits,
   } = useHabitsController();
   // HomeScreen render
   const { quote, fetchQuote } = useQuoteController();
@@ -60,22 +62,23 @@ export default function HomeScreen() {
   const [streakModalVisible, setStreakModalVisible] = useState(false);
   const [selectedBar, setSelectedBar] = useState<number | null>(null);
 
-  const exampleHabits = [
-    { id: 1, name: 'Lesen', streak: 70 },
-    { id: 2, name: 'Sport', streak: 20 },
-    { id: 3, name: 'Wasser', streak: 40 },
-    { id: 4, name: 'Code', streak: 64 },
-    { id: 5, name: 'Medit.', streak: 34 },
-    { id: 6, name: 'Laufen', streak: 54 },
-    { id: 7, name: 'Schlaf', streak: 18 },
-    { id: 8, name: 'Lernen', streak: 25 },
-    { id: 9, name: 'Yoga', streak: 50 },
-    { id: 10, name: 'Kochen', streak: 40 },
-    { id: 11, name: 'Gehen', streak: 0 },
-    { id: 12, name: 'Planen', streak: 75 },
-  ];
+  const chartHabits = useMemo(() => {
+    const list = (habits || []) as Habit[];
+    return list.map(h => ({
+      id: h.id,
+      name: h.name,
+      description: h.description ?? '',
+      streak: typeof (h as any).getStreak === 'function' ? h.getStreak() : (h.currentStreak ?? 0) || 0,
+    }));
+  }, [habits]);
 
-  const maxStreak = Math.max(...exampleHabits.map(h => h.streak));
+  const maxStreak = useMemo(() => {
+    if (!chartHabits.length) return 0;
+    return Math.max(...chartHabits.map(h => h.streak), 0);
+  }, [chartHabits]);
+
+  const [statsModalVisible, setStatsModalVisible] = useState(false);
+  const [selectedHabit, setSelectedHabit] = useState<{ id: number; name: string; description: string; streak: number } | null>(null);
 
   const renderChart = () => {
     return (
@@ -83,7 +86,7 @@ export default function HomeScreen() {
         <ThemedText style={styles.chartTitle}>Habit-Statistiken (Tage)</ThemedText>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           <View style={styles.chartContent}>
-            {exampleHabits.map((habit) => {
+            {chartHabits.map((habit) => {
               // Max height 70% to prevent overlap with title and leave room for value text
               const calculatedHeight = maxStreak > 0 ? (habit.streak / maxStreak) * 70 : 0;
               const heightPercentage = Math.max(calculatedHeight, 2); // Min 2% height
@@ -95,17 +98,12 @@ export default function HomeScreen() {
                   key={habit.id} 
                   style={styles.barContainer}
                   onPress={() => {
-                      if (isSelected) {
-                          setSelectedBar(null);
-                          Alert.alert('Info', `${habit.name}: ${habit.streak} Tage Streak`);
-                      } else {
-                          setSelectedBar(habit.id);
-                      }
+                      setSelectedBar(habit.id);
+                      setSelectedHabit({ id: habit.id, name: habit.name, description: habit.description, streak: habit.streak });
+                      setStatsModalVisible(true);
                   }}
                 >
-                {isSelected && (
-                    <Text style={styles.barValue}>{habit.streak}</Text>
-                )}
+                <Text style={[styles.barValue, !isSelected && { color: '#999' }]}>{habit.streak}</Text>
                 <View 
                   style={[
                     styles.bar, 
@@ -123,6 +121,26 @@ export default function HomeScreen() {
     </View>
   );
 };
+
+  const renderStatsModal = () => (
+    <Modal
+      visible={statsModalVisible}
+      transparent
+      animationType="slide"
+      onRequestClose={() => setStatsModalVisible(false)}
+    >
+      <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.4)', justifyContent: 'center', alignItems: 'center' }}>
+        <View style={{ width: '85%', padding: 16, borderRadius: 12, backgroundColor: '#fff' }}>
+          <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 8 }}>{selectedHabit?.name ?? 'Habit'}</Text>
+          <Text style={{ marginBottom: 6 }}>{`Streak: ${selectedHabit?.streak ?? 0} Tage`}</Text>
+          <Text style={{ marginBottom: 16 }}>{selectedHabit?.description ? selectedHabit.description : 'Keine Beschreibung vorhanden.'}</Text>
+          <Pressable onPress={() => setStatsModalVisible(false)} style={{ alignSelf: 'flex-end', paddingVertical: 8, paddingHorizontal: 12, backgroundColor: '#ddd', borderRadius: 8 }}>
+            <Text>Schließen</Text>
+          </Pressable>
+        </View>
+      </View>
+    </Modal>
+  );
 
   useEffect(() => {
     fetchQuote();
@@ -250,8 +268,9 @@ export default function HomeScreen() {
         {/* Daily Quote */}
         <QuoteBanner quote={quote} />
 
-        {/* Example Habits Chart */}
+        {/* Habit Stats Chart */}
         {renderChart()}
+        {renderStatsModal()}
 
         {/* Streak Section */}
         <View style={styles.chartContainer}>
