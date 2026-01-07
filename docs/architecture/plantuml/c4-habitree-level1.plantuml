@@ -2,11 +2,13 @@
 !include <c4/C4_Context.puml>
 !include <C4/C4>  
 !include <C4/C4_Container> 
+!include <C4/C4_Container>
 
 Person(user, "Nutzer", "Möchte seine Habits tracken")
 System_Boundary(gewohnheitstier, "Habitree") {
   
-  Container(api,    "Backend API", "Node.js/Express.js", "Verarbeitet Anfragen von der Mobile App ")
+  Container(api, "Habitree Backend API", "Node.js / Express", "Verarbeitet Anfragen von Mobile App, bietet REST-Endpunkte, Authentifizierung")
+    Container(api,    "Backend API", "Node.js/Express.js", "Verarbeitet Anfragen von der Mobile App für Nutzerinteraktion")
   
   Container(mobileApp, "Mobile App", "Expo/JavaScript/", "Mobile UI für Nutzerinteraktion")
   ContainerDb(db,    "Database",  "PostgreSQL", "Datenspeicherung")
@@ -16,7 +18,7 @@ System_Boundary(gewohnheitstier, "Habitree") {
 
 
 Rel(user, mobileApp, "nutzt")
-Rel_R(api,       db,     "SQL-CRUD")
+Rel_R(api,       db,     "SQL via Prisma ORM")
 Rel(mobileApp, api, "REST-Calls")
 
 

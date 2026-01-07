@@ -1,18 +1,19 @@
-@startuml C4-level2
-!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+@startuml c4-habitree-level2
+!include <C4/C4_Context>
+!include <C4/C4_Container>
 
 Person(Nutzer, "Nutzer")
 
 Container(frontend, "Mobile App", "Expo (React Native)", "Frontend läuft auf dem Handy")
-Container(backend, "Backend Service", "Node.js, Express", "Backend läuft auf dem externen Hochschulserver")
+Container(backend, "Backend API", "Node.js, Express", "Backend läuft auf dem externen Hochschulserver")
 
-Container(db, "PostgreSQL Datenbank", "PostgreSQL", "Speichert Nutzerdaten, Gewohnheiten, etc.")
+ContainerDb(db, "PostgreSQL Datenbank", "PostgreSQL", "Speichert Nutzerdaten, Gewohnheiten, etc.")
 Container(prisma, "Prisma ORM", "Node.js Modul", "Schnittstelle zwischen Backend und Datenbank")
 
 Nutzer --> frontend : nutzt
 
 frontend -> backend : kommuniziert via REST API 
-prisma --> db : ORM-Zugriff auf Datenbank
+prisma --> db : SQL-Zugriff auf Datenbank
 
 backend -> prisma : persistiert Daten und greift über ORM auf DB zu
 

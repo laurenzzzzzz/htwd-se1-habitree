@@ -3,7 +3,7 @@ import { createResponsiveHelpers } from './responsive';
 
 export const createProfileStyles = (width?: number, height?: number) => {
   const { spacing, font, radius, width: screenWidth, height: screenHeight } = createResponsiveHelpers(width, height);
-  const modalWidth: number | string = screenWidth ? Math.min(screenWidth * 0.85, 520) : '80%';
+  const modalWidth: any = screenWidth ? Math.min(screenWidth * 0.85, 520) : '80%';
 
   return StyleSheet.create({
     loadingContainer: {

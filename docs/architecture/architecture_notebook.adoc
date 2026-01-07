@@ -45,7 +45,7 @@ Die Architektur der Habit-Tracking-App verfolgt das Ziel, eine robuste, nutzerfr
 
 == Annahmen und Abhängigkeiten
 * Zugriff auf eigenen Server.
-* Die App wird als mobile Anwendung umgesetzt, welche iOS (und Android gleichermaßen)  unterstützen soll.
+* Die App wird als mobile Anwendung umgesetzt, welche iOS (und Android zweitrangig) unterstützen soll.
 * Die Zielgruppe sind vor allem Einzelpersonen, die persönliche Routinen tracken wollen, eine Mehrbenutzerfähigkeit (z.B. Teams oder Gruppenfunktionen) ist  nicht vorgesehen.
 * Die initiale Entwicklung erfolgt durch ein kleines Team mit begrenzter Programmiererfahrung, daher sind einfache Tools, gute Dokumentation und Typsicherheit wichtig.
 //* Es ist vorgesehen, dass die App offlinefähig ist mittels lokalem Caching und späterer Synchronisation.
@@ -105,6 +105,7 @@ Die Architektur der Habit-Tracking-App verfolgt das Ziel, eine robuste, nutzerfr
 - Bekannte Syntax aus vorherigen Modulen (z. B. EWA) +
 - Schnelle Erstellung von REST-Endpunkten +
 - Hohe Community-Unterstützung und viele verfügbare Bibliotheken +
+- Einfache Integration von **node-cron** für zeitgesteuerte Hintergrundaufgaben (z. B. tägliche Routinen) +
 
 *DO:* +
 - Standardisierte Routenstruktur (z. B. `/habits`, `/users`, `/achievements`)  
@@ -313,49 +314,62 @@ Weitere optionale Sichten (nur bei Bedarf):
 
 === Kontextabgrenzung
 //Level 1 im C4-Modell
-image::c4-habitree-level1.png[]
-Das C4-Level-1-Diagramm zeigt das Kontextdiagramm der App „Habitreee“, einer Habit-Tracking-App zur Förderung positiver Gewohnheiten. Es stellt die wichtigsten Stakeholder, deren Rollen sowie deren Beziehungen zum System und zur Projektgruppe dar.
+//image::c4-habitree-level1.png[]
+[plantuml]
+....
+include::plantuml/c4-habitree-level1.plantuml[]
+....
+Das C4-Level-1-Diagramm zeigt das Kontextdiagramm der App „Habitree“, einer Habit-Tracking-App zur Förderung positiver Gewohnheiten. Es stellt die wichtigsten Stakeholder, deren Rollen sowie deren Beziehungen zum System und zur Projektgruppe dar.
 
 
 === Container
 //Level 2 im C4-Modell
-image::C4-level2.png[]
-Das C4-Level-2-Container-Diagramm zeigt die technische Struktur der Habitreee-Anwendung auf Container-Ebene.
+//image::C4-level2.png[]
+[plantuml]
+....
+include::plantuml/c4-habitree-level2.plantuml[]
+....
+Das C4-Level-2-Container-Diagramm zeigt die technische Struktur der Habitree-Anwendung auf Container-Ebene.
 
 * Die Mobile App, das Frontend programmiert mit React Native, wird direkt von den Studierenden genutzt
 * Das Backend basiert auf Node.js mit Express und läuft auf einem externen Server der Hochschule
 * Zur Nutzer-Authentifizierung wird auf das Backend zugegriffen.
 * Prisma ORM dient als Vermittler zwischen dem Backend und der PostgreSQL-Datenbank, in der Nutzerdaten und Gewohnheiten gespeichert werden
-* Die Kommunikation zwischen Frontend und Backend erfolgt über eine REST API
+* Die Kommunikation zwischen Frontend und Backend erfolgt über eine REST API.
+
 === Components
 //Level 3 im C4-Modell
+[plantuml]
+....
+include::plantuml/c4-habitree-level3.plantuml[]
+....
 
+Das C4-Level-3-Komponentendiagramm detailliert die internen Bausteine der Habitree-Plattform:
+
+* **Mobile App (Expo/React Native):** Expo Router & Screens kümmern sich um die Navigation. Controller-Hooks halten UI-Zustand und Validierung im Griff und rufen bei Bedarf die Application Services auf. Der ApplicationServicesProvider teilt die Services per React Context, der AuthContext merkt sich Token und Nutzerinfos. Domain-Klassen bleiben ohne Framework-Abhängigkeiten und sprechen über einfache Adapter (REST-Repos, SecureStore) mit der Technik. Der ServiceContainer steckt alle Teile einmal zentral zusammen.
+* **Backend API (Node.js/Express):** `index.js` hängt die Routen und Middleware ein und startet einen kleinen node-cron-Job. Die einzelnen Router (`/auth`, `/habits`, `/user`, `/quotes`) laufen hinter der JWT-Middleware. Unsere Hilfsfunktionen (`generateDailyEntries`, `streak`) werden entweder vom Cronjob nachts oder manuell über REST angestoßen und kümmern sich um tägliche Einträge und Streaks. Der Prisma Client erledigt alle Datenbankzugriffe.
+* **Persistenz:** Alle Komponenten interagieren ausschließlich über Prisma mit der PostgreSQL-Datenbank; dadurch bleibt die Trennung zwischen Domain-Logik und Infrastruktur gewahrt.
 
 === Verteilungsdiagramm (Deployment Diagramm)
 image::deployment-diagram-habitree.svg[]
 
-== Externe Schnittstellen und Integrationen
 
-=== Überblick
 
-* **Primäre Plattform:** iOS (React Native/Expo) +
-* **Optional:** Browsernutzung und Android (nicht primär unterstützt) +
+== Software-Dokumentation
 
-=== Schnittstellen- und Code-Dokumentation
+* **Frontend-Code-Doku (TypeDoc):** Unter `docs/development/frontend/index.html` liegt die generierte HTML-Dokumentation der React-Komponenten, Controller und Provider. 
+Regeneration bei Codeänderungen: 
+im Verzeichnis `src/habitree` 
+`npx typedoc --out ../../docs/development/frontend/ --entryPointStrategy expand --exclude "**/node_modules/**" --exclude "**/*.test.ts" --exclude "**/__tests__/**" --excludeExternals --excludePrivate --excludeProtected .` ausführen.
 
-* **REST-API (OpenAPI 3.0):** Die Spezifikation liegt in `docs/architecture/openapi.yaml`. Für eine interaktive Ansicht kann z. B. Redoc gestartet werden (`redoc-cli serve docs/architecture/openapi.yaml`) oder Swagger UI mit diesem Pfad gefüttert werden.
-* **Backend-Code-Doku (JSDoc):** Unter `docs/api/index.html` liegt die generierte HTML-Dokumentation der Express-Routen, Middleware und Utils. Regeneration bei Codeänderungen: im Verzeichnis `src/backend` `npx jsdoc -c jsdoc.json` ausführen.
+* **Backend-Code-Doku (JSDoc):** Unter `docs/development/backend/index.html` liegt die generierte HTML-Dokumentation der Express-Routen, Middleware und Utils. 
+Regeneration bei Codeänderungen: 
+im Verzeichnis `src/backend` 
+`npx jsdoc -c jsdoc.json` ausführen.
 
-=== Geplante externe Integrationen
 
-Folgende Integrationen sind für zukünftige Versionen vorgesehen:
-
-* Apple Fitness
-* Google/Apple Kalender
-* Wearables (z. B. HealthKit, Schrittzähler)
-* Produktivitätstools
-
-=== Potenzielle Fehlerszenarien
+//Muss das überhaupt hier rein??? ////
+== Potenzielle Fehlerszenarien
 
 * Keine Internetverbindung (z. B. HTW-Netz/VPN-Anforderungen) +
 * Server-/Datenbankausfälle +
@@ -406,4 +420,5 @@ Die  Ziele des Darmodes sind primär die Entlastung der Augen und die Erhöhung 
 | ServiceContainer|Zentrale Klasse, die alle Services und Adapter einmalig erstellt und per Dependency Injection dem restlichen System bereitstellt
 | SecureStore|Expo-Modul, das Schlüssel-Wert-Paare verschlüsselt auf dem Gerät speichert (z. B. Tokens)
 | AsyncStorage|Einfacher Key-Value-Speicher von React Native, um Daten lokal persistieren zu können (z. B. für geplantes Offline-Caching)
+| JWT (JSON Web Token)|Signiertes Token-Format, das der Client nach dem Login erhält und bei jedem Request im Header mitschickt, damit das Backend den Nutzer identifizieren kann
 |===

@@ -170,7 +170,7 @@ export default function HomeScreen() {
 
     const frequency = newHabitFrequency || 'Täglich';
     const descValue = newHabitDescription.trim() === '' ? undefined : newHabitDescription;
-    const result = await handleSaveHabit(newHabitName, descValue, frequency, newHabitStartDate, newHabitTime, newHabitWeekDays, newHabitIntervalDays);
+    const result = await handleSaveHabit(newHabitName, frequency, descValue, newHabitStartDate, newHabitTime, newHabitWeekDays, newHabitIntervalDays);
     if (result.success) {
       setNewHabitName('');
       setNewHabitDescription('');

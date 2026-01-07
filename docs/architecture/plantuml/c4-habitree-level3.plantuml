@@ -1,0 +1,67 @@
+@startuml c4-habitree-level3
+!include <C4/C4_Context>
+!include <C4/C4_Container>
+!include <C4/C4_Component>
+
+Person(user, "Nutzer", "Interagiert mit der Habitree-App")
+
+Container_Boundary(frontend, "Habitree Mobile App (Expo)") {
+    Component(router, "Expo Router & Screens", "app/*", "Navigationsstruktur, Tabs und Stacks")
+    Component(controllerHooks, "Controller Hooks", "presentation/controllers", "Managen UI-Status, Validierung und rufen Services")
+    Component(serviceProvider, "ApplicationServicesProvider", "presentation/providers", "Veröffentlicht Services via React Context")
+    Component(authContext, "AuthContext", "context/AuthContext.tsx", "Hält JWT, Nutzerprofil und Sign-In/Out")
+    Component(applicationServices, "Application Services", "application/services", "Use Cases: Auth, Habits, Quotes, Profile, Tree")
+    Component(domainLayer, "Domain Layer", "domain/*", "Entitäten, Policies, Ports, Repositories")
+    Component(infrastructureAdapters, "Infrastructure Adapters", "infrastructure/adapters", "REST-Repositories, SecureStore, Notification Port")
+    Component(diContainer, "ServiceContainer", "infrastructure/di/ServiceContainer.ts", "Verdrahtet Adapter, Ports und Services")
+}
+
+Container_Boundary(backend, "Habitree Backend API (Node.js / Express)") {
+    Component(expressApp, "Express App", "src/backend/src/index.js", "Registriert Routen, Middleware und Cronjobs")
+    Component(authRoutes, "Auth Routes", "routes/auth.js", "Register, Login, Passwortänderung")
+    Component(habitRoutes, "Habit Routes", "routes/habits.js", "Habits CRUD, Toggle, Daily, Harvest")
+    Component(userRoutes, "User Routes", "routes/user.js", "Status, Streak, Username")
+    Component(quotesRoutes, "Quote Routes", "routes/quotes.js", "Liefert motivierende Zitate")
+    Component(authMiddleware, "JWT Middleware", "middleware/authMiddleware.js", "Validiert Token & lädt Nutzer")
+    Component(cronScheduler, "Cron Scheduler", "node-cron", "Startet nightly Jobs um 00:01 Uhr")
+    Component(dailyEntries, "Daily Entry Generator", "utils/generateDailyEntries.js", "Erstellt HabitEntries für fällige Habits")
+    Component(streakEngine, "Streak Engine", "utils/streak.js", "Bestimmt Fälligkeit & berechnet Streaks")
+    Component(prismaORM, "Prisma Client", "prisma/", "ORM für User, Habit, HabitEntry, Quote")
+}
+
+ContainerDb(db, "Habitree Datenbank", "PostgreSQL", "Persistiert Nutzer, Habits, HabitEntries, Quotes")
+
+Rel(user, router, "Bedient Screens & Interaktionen")
+Rel(router, controllerHooks, "bindet UI an Logik")
+Rel(controllerHooks, authContext, "liest/aktualisiert Auth-Status")
+Rel(controllerHooks, applicationServices, "ruft Use Cases")
+Rel(serviceProvider, controllerHooks, "stellt Services via Kontext")
+Rel(applicationServices, domainLayer, "nutzt Entitäten & Policies")
+Rel(applicationServices, infrastructureAdapters, "nutzt Ports über Adapter")
+Rel(infrastructureAdapters, diContainer, "werden zentral instanziiert")
+Rel(authContext, applicationServices, "ruft AuthService für Sign-In/Out")
+
+Rel(infrastructureAdapters, authRoutes, "HTTPS /auth, /user")
+Rel(infrastructureAdapters, habitRoutes, "HTTPS /habits, /habits/today, /habits/toggle")
+Rel(infrastructureAdapters, userRoutes, "HTTPS /user/status, /user/streak")
+Rel(infrastructureAdapters, quotesRoutes, "HTTPS /quotes")
+
+Rel(expressApp, authRoutes, "mountet /auth")
+Rel(expressApp, habitRoutes, "mountet /habits (JWT geschützt)")
+Rel(expressApp, userRoutes, "mountet /user")
+Rel(expressApp, quotesRoutes, "mountet /quotes")
+Rel(authRoutes, authMiddleware, "nutzt bei geschützten Pfaden")
+Rel(habitRoutes, authMiddleware, "JWT-Schutz & req.user")
+Rel(userRoutes, authMiddleware, "JWT-Schutz")
+
+Rel(cronScheduler, dailyEntries, "ruft täglich (00:01)")
+Rel(cronScheduler, streakEngine, "berechnet nightly Streaks")
+Rel(dailyEntries, prismaORM, "liest Habits & erzeugt Entries")
+Rel(streakEngine, prismaORM, "liest & aktualisiert Streaks")
+Rel(authRoutes, prismaORM, "Persistiert User & Tokens")
+Rel(habitRoutes, prismaORM, "CRUD auf Habits & Entries")
+Rel(userRoutes, prismaORM, "liest User-Streaks")
+Rel(quotesRoutes, prismaORM, "liest Quotes")
+Rel(prismaORM, db, "SQL CRUD")
+
+@enduml

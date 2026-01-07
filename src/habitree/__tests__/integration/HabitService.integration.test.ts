@@ -26,6 +26,18 @@ class MockHabitsRepository implements IHabitsRepository {
     this.shouldFail = fail;
   }
 
+  async growHabit(authToken: string, id: number): Promise<void> {
+    return;
+  }
+  
+  async harvestHabit(authToken: string, id: number): Promise<void> {
+    return;
+  }
+
+  async fetchHarvestedHabits(authToken: string): Promise<any[]> {
+    return [];
+  }
+
   async fetchHabits(authToken: string): Promise<Habit[]> {
     if (this.shouldFail) {
       throw new Error('API Error: Server nicht erreichbar');

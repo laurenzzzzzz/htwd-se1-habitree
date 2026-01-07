@@ -5,7 +5,7 @@
     "excludePattern": ".+\\.test\\.js$"
   },
   "opts": {
-    "destination": "../../docs/api",
+    "destination": "../../docs/development/backend/",
     "recurse": true,
     "encoding": "utf8"
   },
