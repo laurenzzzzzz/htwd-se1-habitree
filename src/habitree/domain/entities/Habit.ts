@@ -67,37 +67,47 @@ export class Habit {
 
     if (this.entries.length === 0) return 0;
 
-    // Fallback: lokal berechnen, aber HEUTE nicht zählen und Lücken beenden den Streak
     const sortedEntries = [...this.entries]
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    let expectedDate = new Date(today);
-    expectedDate.setDate(expectedDate.getDate() - 1); // starte mit gestern
-
+    
     let streak = 0;
+    let checkDate = new Date(today);
+    
+    // Helper to check status on a specific date
+    const isDoneOnDate = (d: Date): boolean => {
+         const entry = sortedEntries.find(e => this.isSameDay(new Date(e.date), d));
+         return !!(entry && entry.status);
+    };
 
-    for (const entry of sortedEntries) {
-      const entryDate = new Date(entry.date);
-      entryDate.setHours(0, 0, 0, 0);
-
-      // Heute wird nicht gezählt
-      if (this.isSameDay(entryDate, today)) {
-        continue;
-      }
-
-      // Gap im Datum? -> Streak endet
-      if (!this.isSameDay(entryDate, expectedDate)) {
-        break;
-      }
-
-      if (entry.status) {
+    // 1. Check Today
+    if (isDoneOnDate(checkDate)) {
         streak++;
-        expectedDate.setDate(expectedDate.getDate() - 1);
-      } else {
-        break;
-      }
+    } 
+    
+    // Move to yesterday to continue checking
+    checkDate.setDate(checkDate.getDate() - 1);
+    
+    // 2. Loop backwards
+    while(true) {
+         // Optimization: since entries are sorted, we can search more efficiently, 
+         // but find() is sufficient for typical streak lengths.
+         const entry = sortedEntries.find(e => this.isSameDay(new Date(e.date), checkDate));
+         
+         if (entry) {
+             if (entry.status) {
+                 streak++;
+                 checkDate.setDate(checkDate.getDate() - 1);
+             } else {
+                 // Explicit false/failure breaks streak
+                 break;
+             }
+         } else {
+             // Entry missing implies not done. Break streak.
+             break;
+         }
     }
 
     return streak;

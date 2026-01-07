@@ -66,7 +66,7 @@ describe('Habit Entity', () => {
         // Lücke bei daysAgo(2)
         { id: 3, date: daysAgo(3), status: true, note: null }
       ]);
-      expect(habit.getStreak()).toBe(3);
+      expect(habit.getStreak()).toBe(2);
     });
 
     // Status false unterbricht Streak
