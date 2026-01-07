@@ -43,6 +43,9 @@ include::../development/plantuml/sequenzdiagramme.md[lines=19..55]
 
 == Schnittstellen
 // Dokumentation oder Verweise auf Schnittstellen, z.B REST-APIs
+
+* **REST-API (OpenAPI 3.0):** Die Spezifikation liegt in `docs/architecture/openapi.yaml`. Für eine interaktive Ansicht kann z. B. Redoc gestartet werden (`redoc-cli serve docs/architecture/openapi.yaml`) oder Swagger UI mit diesem Pfad gefüttert werden.
+
 [cols="1,1,2,2",options="header"]
 |===
 | Endpoint | Methode | Anfrage (wichtige Felder) | Antwort / Hinweise
