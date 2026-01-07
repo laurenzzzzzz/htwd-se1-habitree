@@ -26,8 +26,6 @@ export async function verifyJwtToken(req, res, next) {
         token = authHeader.split('Bearer ')[1];
     }
     
-    // (Optional: Entferne den Query-Parameter-Versuch, da JWTs nicht in Query-Params gehören)
-
     if (!token) {
         return res.status(401).json({ message: 'Authentifizierung fehlgeschlagen: Token fehlt.' });
     }

@@ -60,6 +60,7 @@ model Habit {
   currentStreak Int          @default(0)
   maxStreak     Int          @default(0)
   isHarvested   Int         @default(0)
+  durationDays  Int?         // optionale Dauer in Tagen
 
   // Verknüpfung zur Vorlage 
   predefined      PredefinedHabit? @relation(fields: [predefinedHabitId], references: [id])
