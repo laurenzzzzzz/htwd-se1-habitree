@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Datenbank (optional - wird nur gestartet wenn DATABASE_URL nicht gesetzt ist)
+  db:
+    image: postgres:16-alpine
+    container_name: habitree-db
+    environment:
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+      POSTGRES_DB: ${DB_NAME:-habitree_db}
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./prisma/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-postgres}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - habitree-network
+    profiles: ["local"]
+
+  # Express Backend
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: habitree-backend
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: ${DATABASE_URL:-postgresql://${DB_USER:-postgres}:${DB_PASSWORD:-postgres}@db:5432/${DB_NAME:-habitree_db}}
+      PORT: ${PORT:-8000}
+      JWT_SECRET: ${JWT_SECRET}
+    ports:
+      - "${PORT:-8000}:8000"
+    volumes:
+      - ./src:/app/src
+    networks:
+      - habitree-network
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
+
+networks:
+  habitree-network:
+    driver: bridge
