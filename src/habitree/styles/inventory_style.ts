@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { createResponsiveHelpers } from './responsive';
+import { Colors } from '../constants/Colors';
 
 type InventoryStyleOptions = {
   backgroundColor?: string;
@@ -40,6 +41,11 @@ export const createInventoryViewStyles = (
       width: scale(80),
       height: scale(80),
     },
+    completedTree: {
+      borderWidth: 3,
+      borderColor: Colors.light.accent,
+      borderRadius: radius(16),
+    },
     loadingContainer: {
       flex: 1,
       justifyContent: 'center',
@@ -70,6 +76,7 @@ export const createInventoryViewStyles = (
       fontSize: font(18),
       fontWeight: '700',
       marginBottom: spacing.sm,
+      textAlign: 'center',
     },
     modalText: {
       fontSize: font(14),

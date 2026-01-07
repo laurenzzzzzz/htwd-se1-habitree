@@ -56,7 +56,7 @@ export const InventoryView: React.FC<Props> = ({
               {isHabit(achievement) ? (
                 <Image 
                   source={require('@/assets/images/tree/tree8.png')} 
-                  style={inventoryviewStyles.badge} 
+                  style={[inventoryviewStyles.badge, inventoryviewStyles.completedTree]} 
                   contentFit="contain" 
                 />
               ) : (
@@ -92,14 +92,16 @@ export const InventoryView: React.FC<Props> = ({
                     <Text style={inventoryviewStyles.modalTitle}>
                       {selectedAchievement.name}
                     </Text>
-                    <View style={{ marginBottom: 12 }}>
-                      <Text style={[inventoryviewStyles.modalText, { fontWeight: 'bold', marginTop: 8 }]}>
-                        Name:
-                      </Text>
-                      <Text style={inventoryviewStyles.modalText}>
-                        {selectedAchievement.name}
-                      </Text>
-                    </View>
+                    {selectedAchievement.description && (
+                      <View style={{ marginBottom: 12, alignItems: 'center' }}>
+                        <Text style={[inventoryviewStyles.modalText, { fontWeight: 'bold', marginTop: 8 }]}>
+                          Beschreibung:
+                        </Text>
+                        <Text style={inventoryviewStyles.modalText}>
+                          {selectedAchievement.description}
+                        </Text>
+                      </View>
+                    )}
                     <View style={{ marginBottom: 12 }}>
                       <Text style={[inventoryviewStyles.modalText, { fontWeight: 'bold', marginTop: 8 }]}>
                         Erstellungsdatum:
@@ -116,16 +118,6 @@ export const InventoryView: React.FC<Props> = ({
                         {selectedAchievement.startDate ? formatDate(selectedAchievement.startDate) : '-'}
                       </Text>
                     </View>
-                    {selectedAchievement.description && (
-                      <View style={{ marginBottom: 12 }}>
-                        <Text style={[inventoryviewStyles.modalText, { fontWeight: 'bold', marginTop: 8 }]}>
-                          Beschreibung:
-                        </Text>
-                        <Text style={inventoryviewStyles.modalText}>
-                          {selectedAchievement.description}
-                        </Text>
-                      </View>
-                    )}
                   </>
                 ) : (
                   <>
