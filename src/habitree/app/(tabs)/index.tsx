@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { Image } from 'expo-image';
 import {
   Pressable,
@@ -23,6 +23,7 @@ import HabitModal from '../../presentation/ui/HabitModal';
 import { QuoteBanner } from '../../presentation/ui/QuoteBanner';
 import { WEEKDAYS } from '../../constants/HomeScreenConstants';
 import { Colors } from '../../constants/Colors';
+import { useFocusEffect } from 'expo-router';
 
 export default function HomeScreen() {
   const { width, height } = useWindowDimensions();
@@ -132,6 +133,13 @@ export default function HomeScreen() {
   useEffect(() => {
     fetchHabits();
   }, [fetchHabits]);
+
+  // Refetch habits whenever this tab gains focus
+  useFocusEffect(
+    useCallback(() => {
+      fetchHabits();
+    }, [fetchHabits])
+  );
 
   // Initialize form with current date and time when opening custom habit creation
   useEffect(() => {
