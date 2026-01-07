@@ -77,7 +77,7 @@ router.get('/predefined', async (req, res) => {
  */
 router.post('/', async (req, res) => {
   const userId = req.user.id;
-  const { name, description, frequency, startDate, time, weekDays, intervalDays } = req.body;
+  const { name, description, frequency, startDate, time, weekDays, intervalDays, durationDays } = req.body;
 
   if (!name || !frequency || !startDate || !time) {
     return res.status(400).json({ error: 'Name, Frequenz, Startdatum und Uhrzeit sind erforderlich' });
@@ -113,6 +113,9 @@ router.post('/', async (req, res) => {
         time,
         weekDays: Array.isArray(weekDays) ? weekDays.map(d => Number(d)) : undefined,
         intervalDays: frequency === 'Benutzerdefiniert' ? Number(intervalDays) : undefined,
+        durationDays: durationDays !== undefined && durationDays !== null && `${durationDays}`.trim() !== ''
+          ? Number(durationDays)
+          : undefined,
       },
     });
 
@@ -163,7 +166,7 @@ router.post('/', async (req, res) => {
 router.put('/:id', async (req, res) => {
   const userId = req.user.id;
   const { id } = req.params;
-  const { name, description, frequency, startDate, time, weekDays, intervalDays } = req.body;
+  const { name, description, frequency, startDate, time, weekDays, intervalDays, durationDays } = req.body;
 
   try {
     const habit = await prisma.habit.findUnique({ where: { id: Number(id) } });
@@ -199,6 +202,9 @@ router.put('/:id', async (req, res) => {
         time: time || habit.time,
         weekDays: Array.isArray(weekDays) ? weekDays.map(d => Number(d)) : habit.weekDays,
         intervalDays: frequency === 'Benutzerdefiniert' ? Number(intervalDays) : undefined,
+        durationDays: durationDays !== undefined && durationDays !== null && `${durationDays}`.trim() !== ''
+          ? Number(durationDays)
+          : null, // explizit auf null setzen, wenn leer
       },
     });
 

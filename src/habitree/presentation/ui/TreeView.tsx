@@ -109,7 +109,7 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
 
   //type HabitItem = { id: number; streak: number; name: string; description: string };
 
-  type HabitItem = { id: number; streak: number; maxStreak?: number | null; name: string; description: string; isHarvested?: number };
+  type HabitItem = { id: number; streak: number; maxStreak?: number | null; name: string; description: string; isHarvested?: number; durationDays?: number | null };
 
   const habitItems: HabitItem[] = useMemo(() => {
     const items: HabitItem[] = (habits || []).map(h => ({
@@ -119,6 +119,7 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
       streak: typeof (h as any).getStreak === 'function' ? (h as any).getStreak() : 0,
       maxStreak: (h as any).maxStreak ?? null,
       isHarvested: (h as any).isHarvested ?? 0,
+      durationDays: (h as any).durationDays ?? null,
     }));
     return items.sort((a, b) => b.streak - a.streak);
   }, [habits]);
@@ -148,10 +149,10 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
     }
   }, [habits]);
 
-  // Check for milestone habits (streak >= 66 and isHarvested = 0) and open modal
+  // Check for milestone habits (streak >= durationDays and isHarvested = 0) and open modal
   useEffect(() => {
     if (habitItems.length > 0) {
-      const habitWith66Streak = habitItems.find(h => h.streak >= 66 && h.isHarvested === 0);
+      const habitWith66Streak = habitItems.find(h => h.streak >= (h.durationDays ?? 66) && h.isHarvested === 0);
       if (habitWith66Streak && !milestoneModalVisible) {
         setMilestoneHabit({
           id: habitWith66Streak.id,
@@ -188,8 +189,10 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
   // Helper-Komponente für eine kleine Insel mit Baum
   const SmallIslandWithTree = ({ habit, style, treeStyle }: { habit: HabitItem, style: any, treeStyle?: any }) => {
     const isSelected = selectedItem !== 'main' && selectedItem.id === habit.id;
-    const isGrown = habit.streak >= 66 && grownHabitIds.has(habit.id); // Nur zeige tree8 wenn Baum gewachsen ist
-    const treeImg = getTreeImage(habit.streak, isSelected, isGrown);
+    const targetDays = habit.durationDays ?? 66;
+    const percent = Math.min(100, Math.round((habit.streak / Math.max(1, targetDays)) * 100));
+    const isGrown = habit.streak >= targetDays && grownHabitIds.has(habit.id); // Nur zeige tree8 wenn Baum gewachsen ist
+    const treeImg = getTreeImage(percent, isSelected, isGrown);
     
     return (
       <TouchableOpacity 
@@ -343,7 +346,8 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
           ) : (
             // --- INDIVIDUAL HABIT INFO ---
             (() => {
-              const progress = Math.min(100, Math.round((selectedItem.streak / 66) * 100));
+              const threshold = (selectedItem as HabitItem).durationDays ?? 66;
+              const progress = Math.min(100, Math.round((selectedItem.streak / Math.max(1, threshold)) * 100));
               return (
                 <>
                   <View style={treeviewStyles.infoBoxHeader}>
@@ -354,7 +358,7 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
                     >
                       Informationen: {selectedItem.name}
                     </Text>
-                    {selectedItem.streak >= 66 && (
+                    {selectedItem.streak >= ((selectedItem as HabitItem).durationDays ?? 66) && (
                       <TouchableOpacity
                         onPress={() => {
                           // Show modal if isHarvested = 0 or 1 (not 2)

@@ -55,6 +55,7 @@ model Habit {
   frequency   String // (Täglich, Wöchentlich, Monatlich, Benutzerdefiniert)
   weekDays    Int[]    @default([])   // [0..6] 0=Montag .. 6=Sonntag (für Wöchentlich)
   intervalDays Int?     // für Benutzerdefiniert: alle X Tage (z.B. 2, 4, 7)
+  durationDays Int?     // Laufzeit in Tagen (z. B. 66)
   createdAt   DateTime      @default(now())
   entries     HabitEntry[]
   currentStreak Int          @default(0)
