@@ -26,6 +26,16 @@ export class NotificationService {
       console.warn('NotificationService.rescheduleForHabits failed', error);
     }
   }
+
+  async showImmediate(title: string, body: string, data?: any): Promise<void> {
+    try {
+      const ready = await this.port.init();
+      if (!ready) return;
+      await this.port.showImmediateNotification(title, body, data);
+    } catch (error) {
+      console.warn('NotificationService.showImmediate failed', error);
+    }
+  }
 }
 
 export default NotificationService;

@@ -118,6 +118,24 @@ export class ExpoNotificationPort implements INotificationPort {
       console.error('ExpoNotificationPort.scheduleDailyReminders error', e);
     }
   }
+
+  async showImmediateNotification(title: string, body: string, data?: any): Promise<void> {
+    try {
+      const content: Notifications.NotificationContentInput = {
+        title,
+        body,
+        data: data ?? {},
+      };
+      const trigger: Notifications.NotificationTriggerInput | null = Platform.OS === 'android'
+        ? { type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL, seconds: 1, channelId: 'habit-reminders' }
+        : { type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL, seconds: 1 };
+
+      await Notifications.scheduleNotificationAsync({ content, trigger });
+      pushLog(`immediate notification shown: ${title}`);
+    } catch (e) {
+      console.error('ExpoNotificationPort.showImmediateNotification error', e);
+    }
+  }
 }
 
 function parseTimeString(value?: string | null): { hours: number; minutes: number; label: string } {
