@@ -132,9 +132,8 @@ Die Definition of Done legt fest, wann ein Backlog Item als vollständig abgesch
 - Dokumentation wurde ggf. aktualisiert
 - Die Akzeptanzkriterien der Story sind erfüllt
 - Die Software ist frei von kritischen/funktionseinschränkenden bekannten Fehlern
-
-//- Product Owner hat abgenommen +
-//- Es existieren automatisierte Unit Tests/Alle Tests sind erfolgreich bestanden. +
+- Product Owner hat abgenommen +
+- Es existieren ggf. automatisierte Unit Tests/Alle Tests werden überprüft. +
 
 == Deployment
 // Beschreibt kurz, wie und wo die Software (und deren Updates) für das Projekt bereitgestellt wird.
