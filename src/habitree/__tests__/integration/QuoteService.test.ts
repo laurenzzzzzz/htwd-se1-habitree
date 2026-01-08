@@ -76,4 +76,45 @@ describe('QuoteService', () => {
       expect(results.size).toBeGreaterThan(1);
     });
   });
+
+  describe('fetchQuoteOfDay', () => {
+    it('returns null when no quotes available', async () => {
+      mockRepo.fetchQuotes.mockResolvedValue([]);
+      const res = await quoteService.fetchQuoteOfDay(new Date('2025-01-01'));
+      expect(res).toBeNull();
+      expect(mockRepo.fetchQuotes).toHaveBeenCalledTimes(1);
+    });
+
+    it('selects a deterministic quote based on date regardless of input order', async () => {
+      // Create quotes out of order to ensure stable sort is applied
+      const q1 = new Quote({ id: 10, quote: 'Q10' });
+      const q2 = new Quote({ id: 2, quote: 'Q2' });
+      const q3 = new Quote({ id: 7, quote: 'Q7' });
+      // Provide shuffled array
+      mockRepo.fetchQuotes.mockResolvedValue([q1, q3, q2]);
+
+      const date = new Date('2025-06-15');
+      const first = await quoteService.fetchQuoteOfDay(date);
+
+      // Call again with the same date and different shuffle to verify stability
+      mockRepo.fetchQuotes.mockResolvedValue([q2, q1, q3]);
+      const second = await quoteService.fetchQuoteOfDay(date);
+
+      expect(first).not.toBeNull();
+      expect(second).not.toBeNull();
+      expect(first).toEqual(second);
+    });
+
+    it('returns null when repository returns undefined or falsy', async () => {
+      // Force undefined
+      (mockRepo.fetchQuotes as jest.Mock).mockResolvedValue(undefined as any);
+      const res = await quoteService.fetchQuoteOfDay(new Date());
+      expect(res).toBeNull();
+    });
+
+    it('propagates repository errors for fetchQuoteOfDay', async () => {
+      mockRepo.fetchQuotes.mockRejectedValue(new Error('repo-down'));
+      await expect(quoteService.fetchQuoteOfDay(new Date())).rejects.toThrow('repo-down');
+    });
+  });
 });
