@@ -215,7 +215,7 @@ export default function HabitModal({
                                     <View style={habitModalStyles.marginTop}>
                                         <ThemedText style={habitModalStyles.label}>Laufzeit (Tage)</ThemedText>
                                         <TextInput
-                                            placeholder="z.B. 66 oder leer lassen für unbegrenzt"
+                                            placeholder="z.B. 66 Tage"
                                             value={newHabitDurationDays || ''}
                                             onChangeText={setNewHabitDurationDays ? setNewHabitDurationDays : () => {}}
                                             keyboardType="number-pad"
@@ -300,15 +300,25 @@ export default function HabitModal({
                             <Pressable
                                 style={[
                                     habitModalStyles.halfButton,
-                                    (newHabitFrequency === 'Wöchentlich' && newHabitWeekDays.length === 0) ||
-                                    (newHabitFrequency === 'Benutzerdefiniert' && newHabitIntervalDays.trim() === '')
+                                    (newHabitName.trim() === '' ||
+                                    newHabitStartDate.trim() === '' ||
+                                    newHabitTime.trim() === '' ||
+                                    !newHabitDurationDays ||
+                                    newHabitDurationDays.trim() === '' ||
+                                    ((newHabitFrequency || 'Täglich') === 'Wöchentlich' && newHabitWeekDays.length === 0) ||
+                                    ((newHabitFrequency || 'Täglich') === 'Benutzerdefiniert' && newHabitIntervalDays.trim() === ''))
                                         ? habitModalStyles.disabledButton
                                         : null,
                                 ]}
                                 onPress={onAddCustom}
                                 disabled={
-                                    (newHabitFrequency === 'Wöchentlich' && newHabitWeekDays.length === 0) ||
-                                    (newHabitFrequency === 'Benutzerdefiniert' && newHabitIntervalDays.trim() === '')
+                                    newHabitName.trim() === '' ||
+                                    newHabitStartDate.trim() === '' ||
+                                    newHabitTime.trim() === '' ||
+                                    !newHabitDurationDays ||
+                                    newHabitDurationDays.trim() === '' ||
+                                    ((newHabitFrequency || 'Täglich') === 'Wöchentlich' && newHabitWeekDays.length === 0) ||
+                                    ((newHabitFrequency || 'Täglich') === 'Benutzerdefiniert' && newHabitIntervalDays.trim() === '')
                                 }
                             >
                                 <ThemedText style={habitModalStyles.buttonText}>{submitLabel || 'Hinzufügen'}</ThemedText>
