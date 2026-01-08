@@ -44,7 +44,7 @@ export default function ProfileScreen() {
   const { updateUsername, updatePassword: updatePasswordController, isUpdatingUsername, isUpdatingPassword } = useProfileController();
 
   // --- PROFILEINSTELLUNGEN ---
-  const [taeglicheErinnerungEnabled, setTaeglicheErinnerungEnabled] = useState(false);
+  const [habitPushReminderEnabled, setHabitPushReminderEnabled] = useState(false);
   //const [oeffentlichesProfilEnabled, setOeffentlichesProfilEnabled] = useState(false);
 
   // --- MODAL-STATES ---
@@ -75,7 +75,23 @@ export default function ProfileScreen() {
   };
 
   // --- TOGGLES ---
-  const toggleTaeglicheErinnerung = () => setTaeglicheErinnerungEnabled((prev) => !prev);
+  const toggleHabitPushReminder = useCallback(async () => {
+    const newValue = !habitPushReminderEnabled;
+    setHabitPushReminderEnabled(newValue);
+
+    try {
+      if (!newValue) {
+        await Notifications.cancelAllScheduledNotificationsAsync();
+      } else {
+        const { status } = await Notifications.getPermissionsAsync();
+        if (status !== 'granted') {
+          await Notifications.requestPermissionsAsync();
+        }
+      }
+    } catch (error) {
+      console.warn('toggleHabitPushReminder failed', error);
+    }
+  }, [habitPushReminderEnabled]);
   //const toggleOeffentlichesProfil = () => setOeffentlichesProfilEnabled((prev) => !prev);
 
   // --- BENUTZERNAME ÄNDERN ---
@@ -258,8 +274,8 @@ export default function ProfileScreen() {
           <ProfileSettings
             //isDarkMode={isDarkMode}
             //onToggleDarkMode={toggleDarkMode}
-            taeglicheErinnerungEnabled={taeglicheErinnerungEnabled}
-            onToggleTaeglicheErinnerung={toggleTaeglicheErinnerung}
+            habitPushReminderEnabled={habitPushReminderEnabled}
+            onToggleHabitPushReminder={toggleHabitPushReminder}
             //oeffentlichesProfilEnabled={oeffentlichesProfilEnabled}
             //onToggleOeffentlichesProfil={toggleOeffentlichesProfil}
             onChangeUsername={() => { setNewUsername(currentUser?.username || ''); setIsUpdateUsernameModalVisible(true); }}

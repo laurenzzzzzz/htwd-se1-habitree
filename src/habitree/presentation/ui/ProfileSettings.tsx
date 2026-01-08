@@ -6,8 +6,8 @@ import { styles } from '../../styles/profile_style';
 type Props = {
   //isDarkMode: boolean;
   //onToggleDarkMode: () => void;
-  taeglicheErinnerungEnabled: boolean;
-  onToggleTaeglicheErinnerung: () => void;
+  habitPushReminderEnabled: boolean;
+  onToggleHabitPushReminder: () => void;
   //oeffentlichesProfilEnabled: boolean;
   //onToggleOeffentlichesProfil: () => void;
   onChangeUsername: () => void;
@@ -18,8 +18,8 @@ type Props = {
 export const ProfileSettings: React.FC<Props> = ({
   //isDarkMode,
   //onToggleDarkMode,
-  taeglicheErinnerungEnabled,
-  onToggleTaeglicheErinnerung,
+  habitPushReminderEnabled,
+  onToggleHabitPushReminder,
   //oeffentlichesProfilEnabled,
   //onToggleOeffentlichesProfil,
   onChangeUsername,
@@ -30,8 +30,8 @@ export const ProfileSettings: React.FC<Props> = ({
     <View>
       <ThemedText type="subtitle">Einstellungen</ThemedText>
       <View style={styles.settingRow}>
-        <ThemedText>Tägliche Erinnerung</ThemedText>
-        <Switch value={taeglicheErinnerungEnabled} onValueChange={onToggleTaeglicheErinnerung} />
+        <ThemedText>Habit Push-Erinnerung</ThemedText>
+        <Switch value={habitPushReminderEnabled} onValueChange={onToggleHabitPushReminder} />
       </View>
       {/* <View style={styles.settingRow}>
         <ThemedText>Dark Mode</ThemedText>
