@@ -4,6 +4,7 @@ import { Modal, Pressable, Text, View, ScrollView } from 'react-native';
 import { ThemedText } from './ThemedText';
 import { ThemedView } from './ThemedView';
 import { inventoryviewStyles } from '../../styles/inventory_style';
+import { styles as homeStyles } from '../../styles/index_style';
 import { Achievement } from '../../domain/entities/Achievement';
 import { Habit } from '../../domain/entities/Habit';
 
@@ -41,35 +42,44 @@ export const InventoryView: React.FC<Props> = ({
 
   return (
     <ThemedView style={inventoryviewStyles.container}>
-      <ThemedText type="subtitle" style={inventoryviewStyles.title}>
+      {/* <ThemedText type="subtitle" style={inventoryviewStyles.title}>
         Erfolge
-      </ThemedText>
+      </ThemedText> */}
 
       {/* Render achievement badges in grid */}
-      {achievementRows.map((row, rowIndex) => (
-        <View key={rowIndex} style={inventoryviewStyles.badgeRow}>
-          {row.map((achievement) => (
-            <Pressable
-              key={achievement.id}
-              onPress={() => onSelectAchievement(achievement.id)}
-            >
-              {isHabit(achievement) ? (
-                <Image 
-                  source={require('@/assets/images/tree/tree8.png')} 
-                  style={[inventoryviewStyles.badge, inventoryviewStyles.completedTree]} 
-                  contentFit="contain" 
-                />
-              ) : (
-                <Image 
-                  source={(achievement as Achievement).imageUrl} 
-                  style={inventoryviewStyles.badge} 
-                  contentFit="contain" 
-                />
-              )}
-            </Pressable>
-          ))}
+      {achievements.length === 0 ? (
+        <View style={inventoryviewStyles.emptyStateContainer}>
+          <ThemedText style={homeStyles.noHabitsText}>Keine Erfolge freigeschaltet.</ThemedText>
+          <ThemedText style={homeStyles.noHabitsText}>
+            Bleib dran an deinen Habits - der nächste Erfolg wartet schon!
+          </ThemedText>
         </View>
-      ))}
+      ) : (
+        achievementRows.map((row, rowIndex) => (
+          <View key={rowIndex} style={inventoryviewStyles.badgeRow}>
+            {row.map((achievement) => (
+              <Pressable
+                key={achievement.id}
+                onPress={() => onSelectAchievement(achievement.id)}
+              >
+                {isHabit(achievement) ? (
+                  <Image 
+                    source={require('@/assets/images/tree/tree8.png')} 
+                    style={[inventoryviewStyles.badge, inventoryviewStyles.completedTree]} 
+                    contentFit="contain" 
+                  />
+                ) : (
+                  <Image 
+                    source={(achievement as Achievement).imageUrl} 
+                    style={inventoryviewStyles.badge} 
+                    contentFit="contain" 
+                  />
+                )}
+              </Pressable>
+            ))}
+          </View>
+        ))
+      )}
 
       {/* Achievement/Habit Details Modal */}
       <Modal

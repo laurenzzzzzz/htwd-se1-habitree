@@ -30,6 +30,12 @@ export const createInventoryViewStyles = (
       fontWeight: 'bold',
       marginBottom: spacing.lg,
     },
+    emptyStateContainer: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingVertical: spacing.lg,
+      gap: spacing.xs,
+    },
     badgeRow: {
       flexDirection: 'row',
       justifyContent: 'space-around',
