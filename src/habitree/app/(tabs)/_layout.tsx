@@ -41,12 +41,7 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Home',
-          headerTitle: () => (
-            <Image
-              source={require('@/assets/images/header.png')}
-              style={tabsLayoutStyles.headerLogo}
-            />
-          ),
+          headerTitle: () => renderHeaderTitle('Home'),
           tabBarIcon: ({ color }) => (
             <IconSymbol size={28} name="house.fill" color={color} />
           ),
