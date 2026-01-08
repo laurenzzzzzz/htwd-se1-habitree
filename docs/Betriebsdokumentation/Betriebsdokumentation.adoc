@@ -1,0 +1,361 @@
+= Betriebsdokumentation Habitree
+== Dokumentation Frontend
+
+
+=== 0. Öffnen im Container (Devcontainer)
+
+Falls du mit Visual Studio Code arbeitest, kannst du das Projekt auch direkt im Container (Devcontainer) öffnen. Das bietet eine einheitliche Entwicklungsumgebung ohne lokale Einrichtung.
+
+. Voraussetzungen:
+	* Docker Desktop installiert und gestartet
+	* Visual Studio Code mit der Erweiterung "Dev Containers" (bzw. "Devcontainer")
+
+. Schritte:
+ 1. Öffne den Projektordner in Visual Studio Code.
+ 2. Klicke unten links auf "><" oder öffne die Befehlspalette (F1) und wähle "Reopen in Container" ("Im Container erneut öffnen").
+ 3. Warte, bis der Container gebaut und gestartet ist. Es wird bereits automatisch npx ci ausgeführt.
+ 4. Führe die gewohnten Befehle im Container-Terminal aus (z.B. npx expo start`).
+
+
+
+=== 1. Node.js installieren
+
+==== 1.1 Download
+
+. Download: https://nodejs.org
+. Download: Docker Desktop
+
+==== 1.2 Installation
+
+. Installation von nodejs folgen
+. Installation von Docker Desktop folgen
+
+==== 1.3 Überprüfung
+
+Öffne Windows-Eingabeaufforderung (cmd) oder PowerShell und führe folgende Befehle aus:
+
+[source,shell]
+----
+node -v
+npm -v
+docker -v
+----
+
+
+
+=== 2. Habitree - Expo App starten
+
+Bitte beachten jeweils auf Handy und PC den eduVPN aktivieren, da der Backend Server im HTW Netzwerk ist.
+
+
+==== 2.1 Lokal ohne Docker
+
+[source,shell]
+----
+cd src/habitree
+npm ci
+npx expo install --fix <- Installiert und Updatet alle Packages
+npx expo start --tunnel --go --clear
+----
+
+Scanne den angezeigten QR-Code mit der **Expo Go App** auf deinem Smartphone.
+
+== Dokumentation Backend
+
+Kurzer Überblick zum Backend der Habitree-App (Node/Express, PostgreSQL via Prisma). Der Dienst läuft aktuell auf dem externen Server `iseproject01.informatik.htw-dresden.de:8000`; lokal kann er mit den unten stehenden Schritten gestartet werden.
+
+=== Voraus­setzungen
+* Node.js 18+ 
+* PostgreSQL (oder bestehender Zugang zum Projekt-DB-Server)
+* Git, npm
+
+=== Ordnerstruktur
+[options="header"]
+|===
+|Pfad | Inhalt / Zweck | Beispiel-Dateien
+|src/backend | Backend-Root, npm-Projekt | `package.json`, `.env`, `package-lock.json`
+|src/backend/src | Quellcode (ESM, JavaScript) | `index.js`
+|src/backend/src/routes | Express-Routen pro Ressource | `habits.js`, `user.js`, `auth.js`, `quotes.js`, `express_routes_template.js`
+|src/backend/src/middleware | Middleware (z. B. Auth) | `authMiddleware.js`
+|src/backend/src/utils | Hilfsfunktionen/Jobs | `generateDailyEntries.js`, `streak.js`
+|src/backend/prisma | Prisma-Schema, Migrationen, Seeds | `schema.prisma`, `migrations/*`, `seed.js`
+|src/backend/generated | (generiert) Prisma Client (per `prisma generate`) | `client`-Artefakte
+|===
+
+=== Umgebung (.env)
+[options="header"]
+|===
+|Variable | Zweck | Beispiel
+|DATABASE_URL | PostgreSQL-URL | `postgresql://user:pass@host:5432/HabitTrackerDatabase?schema=public`
+|PORT | Port des Express-Servers | `8000`
+|JWT_SECRET | Secret für Auth (falls genutzt) | `supersecret`
+|===
+
+=== Backend Einrichten
+
+.1 Projekt initialisieren:
+
+[source,shell]
+----
+npm init -y
+----
+// Initialisiert ein neues Node.js-Projekt
+
+.2 Abhängigkeiten installieren:
+
+[source,shell]
+----
+npm install express prisma @prisma/client dotenv cors axios bcrypt jsonwebtoken node-cron
+----
+
+[options="header"]
+|===
+|Paket            |Beschreibung
+|express          |Webserver-Framework
+|prisma           |ORM (für Datenbankzugriff)
+|@prisma/client   |Generierter Prisma-Client-Code
+|dotenv           |Lädt Umgebungsvariablen aus einer `.env`-Datei
+|cors             |Cross-Origin Requests erlauben 
+|axios            |HTTP-Client 
+|bcrypt           |Passworthashing
+|jsonwebtoken     |JWT-Erzeugung/-Prüfung (Auth)
+|node-cron        |Geplante Jobs (tägliche Habit-Einträge/Streaks)
+|===
+
+.3 Prisma initialisieren:
+
+[source,shell]
+----
+npx prisma init
+----
+
+Erstellt:
+
+* `prisma/schema.prisma` – das Datenbankschema
+* `.env` – Datei für Umgebungsvariablen (z. B. DB-Verbindung)
+
+. In `.env` die URL der Datenbank eintragen.
+
+. Datenmodell in `prisma/schema.prisma` definieren.
+
+* Migration ausführen:
+
+[source,shell]
+----
+npx prisma migrate dev --name init
+----
+// Erstellt das Datenmodell in der Datenbank
+
+
+.4 ts-node (für Prisma Seed / optionale TS-Nutzung)
+
+[source,shell]
+----
+npm install --save-dev ts-node
+----
+
+.5 Portfreigabe für Kommunikation zwischen Back- und Frontend
+* Windowsdefender Firewall mit erweitertet Sicherheit öffnen
+* unter *Eingehender* und *Ausgehender Regel* neue Regel ``Port 8000 für Server öffnen`` erstellt damit ausgehende und eingehende Anfragen nicht geblockt werden
+
+=== Starten (Lokal)
+* Installieren: `npm install`
+* Prisma-Migrationen anwenden: `npx prisma migrate deploy`
+* Dev-Mode (Nodemon): `npm run dev` (startet `src/index.js` mit automatischem Reload)
+* Direkt starten (ohne Nodemon): `node src/index.js`
+
+=== Deployment (Externer Server)
+1. Code aktualisieren: `git pull`
+2. Installieren: `npm ci`
+3. Migrationen: `npx prisma migrate deploy`
+4. Starten als Dienst (Beispiel PM2): `pm2 start src/index.js --name habitree-backend`
+5. Port 8000 freigeben (eingehend/ausgehend) wie oben beschrieben
+
+=== Datenbankeinträge ändern / hinzufügen / löschen
+
+.*Datenbank verändern (Tabellen erstellen)*
+* Datenbankmodell in `schema.prisma` erweitern oder anpassen
+* Neue Migration erstellen:
+
+[source,shell]
+----
+npx prisma migrate dev --name add-<NameDesModells>
+----
+
+* Unter `prisma/migrations/` wird dokumentiert, wie sich die Datenbank verändert
+
+.*Seed-Daten hinzufügen (Tabelle füllen):*
+* Einträge in `prisma/seed.js` schreiben
+* Seed ausführen:
+
+[source,shell]
+----
+npx prisma db seed
+----
+
+.*Überprüfen:*
+
+* In `pgAdmin4` 
+** oder
+* mit dem Prisma Studio:
+
+[source,shell]
+----
+npx prisma studio
+----
+
+.*Alternative in pgAdmin4(PostgreSQL)*
+* auf der Rechten Seite *Query Tool Workspace* auswählen und HabitTrackerDatabse als Server auswählen 
+* Als Databse *HabitTrackerDatabse* auswählen *nicht postgres* 
+* wenn angemeldet sollte bei der Verbindung *HabitTrackerDatabse/postgres@HabitTrackerDatabse* stehen und **nicht** *postgres/postgres@HabitTrackerDatabase* 
+* SQL Befehle wie gewohnt verwenden um Tabellen bzw. Einträge zu erstellen, veränder oder löschen
+** Wenn neue Tabelle erstellt wurde muss sie in `schema.prisma` ergänzt werden, damit man beim coden auf die Tabelle über Prisma zugreifen kann
+
+=== Express Routen
+
+Die Express-Routen definieren, wie unsere Backend-API auf Anfragen vom Frontend reagiert. +
+Vorhandene Routenmodule: `routes/habits.js`, `routes/user.js`, `routes/auth.js`, `routes/quotes.js` (plus das Template `express_routes_template.js`). Diese werden in `src/index.js` eingebunden. +
+Für jede neue Ressource wird ein eigenes `.js`-Modul im Ordner `routes` angelegt.
+
+==== Routen Template
+
+[source,js]
+----
+import express from 'express';
+import { PrismaClient } from '@prisma/client';
+
+const router = express.Router();
+const prisma = new PrismaClient();
+
+// GET /__models__ – alle Einträge abrufen
+router.get('/', async (req, res) => {
+  try {
+    const data = await prisma.__model__.findMany();
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ error: 'Fehler beim Abrufen der __models__' });
+  }
+});
+
+// POST /__models__ – neuen Eintrag erstellen
+router.post('/', async (req, res) => {
+  const { __field1__, __field2__, __field3__ } = req.body;
+
+  if (!__field1__ || !__field2__) {
+    return res.status(400).json({ error: '__field1__ und __field2__ sind erforderlich' });
+  }
+
+  try {
+    const newEntry = await prisma.__model__.create({
+      data: {
+        __field1__,
+        __field2__,
+        __field3__: __field3__ ?? __default__, //default wert wird genommen wenn Spalte nicht angegben falls in der Tabelle `schema.prisma` definiert 
+      },
+    });
+    res.status(201).json(newEntry);
+  } catch (err) {
+    res.status(500).json({ error: 'Fehler beim Erstellen des Eintrags' });
+  }
+});
+
+// PUT /__models__/:id – bestehenden Eintrag aktualisieren
+router.put('/:id', async (req, res) => {
+  const { id } = req.params;
+  const { __field1__, __field2__, __field3__ } = req.body;
+
+  try {
+    const updatedEntry = await prisma.__model__.update({
+      where: { id: Number(id) },
+      data: {
+        __field1__,
+        __field2__,
+        __field3__,
+      },
+    });
+    res.json(updatedEntry);
+  } catch (err) {
+    res.status(500).json({ error: 'Fehler beim Aktualisieren des Eintrags' });
+  }
+});
+
+// DELETE /__models__/:id – Eintrag löschen
+router.delete('/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    await prisma.__model__.delete({
+      where: { id: Number(id) },
+    });
+    res.json({ message: '__Model__ erfolgreich gelöscht' });
+  } catch (err) {
+    res.status(500).json({ error: 'Fehler beim Löschen des Eintrags' });
+  }
+});
+
+export default router;
+----
+
+==== Erklärung der wichtigsten Teile
+
+[options="header"]
+|===
+|Methode / Pfad           |Beschreibung
+|GET /__models__          |Liest alle Einträge aus der entsprechenden Tabelle
+|POST /__models__         |Erstellt einen neuen Eintrag. Erwartet JSON-Daten im Request-Body
+|PUT /__models__/:id      |Aktualisiert einen bestehenden Eintrag anhand der ID
+|DELETE /__models__/:id   |Löscht einen Eintrag anhand der ID
+|===
+
+==== Platzhalter ersetzen
+
+[options="header"]
+|===
+|Platzhalter      |Beschreibung                     |Beispiel
+|__model__        |Singular, Prisma-Modelname       |habit
+|__models__       |Pluralform für Route             |habits
+|__field1__ usw.  |Feldnamen aus dem Datenmodell    |label, description
+|__default__      |Standardwert bei optionalen Feldern |false, 0, ''
+|===
+
+==== Einbindung im Hauptserver
+
+Damit die Route verwendet wird, muss sie im Hauptserver (`index.js`) importiert werden:
+
+[source,js]
+----
+import express from 'express';
+import habitsRouter from './routes/habits.js'; // Pfad anpassen
+import __modelsRouter__ from './routes/__models__.js'
+
+const app = express();
+app.use(express.json()); // Damit JSON-Daten im Body gelesen werden können
+
+app.use('/habits', habitsRouter); // Bei neuen Routen immer so angeben
+app.use('/__models__',__modelsRouter__);
+
+app.listen(PORT, () => {
+  console.log(`Server läuft auf Port ${PORT}`); // ${PORT} ist in .env definiert
+});
+----
+
+==== Beispiel-Anfragen (Frontend)
+
+* **GET** http://iseproject01.informatik.htw-dresden.de:8000/habits  
+→ Gibt alle Habits zurück
+
+* **POST** http://iseproject01.informatik.htw-dresden.de:8000/habits mit folgendem JSON-Body:
+[source,json]
+----
+{
+  "label": "Täglich spazieren",
+  "description": "Mindestens 30 Minuten Bewegung",
+  "checked": false
+}
+----
+
+* **PUT** http://iseproject01.informatik.htw-dresden.de:8000/habits/1  
+Aktualisiert den Habit mit der ID `1`
+
+* **DELETE** http://iseproject01.informatik.htw-dresden.de:8000/habits/1  
+Löscht den Habit mit der ID `1`
