@@ -44,7 +44,6 @@ export default function ProfileScreen() {
   const { updateUsername, updatePassword: updatePasswordController, isUpdatingUsername, isUpdatingPassword } = useProfileController();
 
   // --- PROFILEINSTELLUNGEN ---
-  const [tagesMotivationEnabled, setTagesMotivationEnabled] = useState(false);
   const [taeglicheErinnerungEnabled, setTaeglicheErinnerungEnabled] = useState(false);
   //const [oeffentlichesProfilEnabled, setOeffentlichesProfilEnabled] = useState(false);
 
@@ -78,19 +77,6 @@ export default function ProfileScreen() {
   // --- TOGGLES ---
   const toggleTaeglicheErinnerung = () => setTaeglicheErinnerungEnabled((prev) => !prev);
   //const toggleOeffentlichesProfil = () => setOeffentlichesProfilEnabled((prev) => !prev);
-  const toggleTagesMotivation = async () => {
-    const newValue = !tagesMotivationEnabled;
-    setTagesMotivationEnabled(newValue);
-    if (newValue) {
-      await Notifications.scheduleNotificationAsync({
-        content: {
-          title: 'Tagesmotivation aktiviert',
-          body: 'Bleib heute dran – du schaffst das!',
-        },
-        trigger: null,
-      });
-    }
-  };
 
   // --- BENUTZERNAME ÄNDERN ---
   const handleUpdateUsername = async () => {
@@ -272,8 +258,6 @@ export default function ProfileScreen() {
           <ProfileSettings
             //isDarkMode={isDarkMode}
             //onToggleDarkMode={toggleDarkMode}
-            tagesMotivationEnabled={tagesMotivationEnabled}
-            onToggleTagesMotivation={toggleTagesMotivation}
             taeglicheErinnerungEnabled={taeglicheErinnerungEnabled}
             onToggleTaeglicheErinnerung={toggleTaeglicheErinnerung}
             //oeffentlichesProfilEnabled={oeffentlichesProfilEnabled}

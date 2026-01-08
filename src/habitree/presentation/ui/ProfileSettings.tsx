@@ -6,8 +6,6 @@ import { styles } from '../../styles/profile_style';
 type Props = {
   //isDarkMode: boolean;
   //onToggleDarkMode: () => void;
-  tagesMotivationEnabled: boolean;
-  onToggleTagesMotivation: () => void;
   taeglicheErinnerungEnabled: boolean;
   onToggleTaeglicheErinnerung: () => void;
   //oeffentlichesProfilEnabled: boolean;
@@ -20,8 +18,6 @@ type Props = {
 export const ProfileSettings: React.FC<Props> = ({
   //isDarkMode,
   //onToggleDarkMode,
-  tagesMotivationEnabled,
-  onToggleTagesMotivation,
   taeglicheErinnerungEnabled,
   onToggleTaeglicheErinnerung,
   //oeffentlichesProfilEnabled,
@@ -33,10 +29,6 @@ export const ProfileSettings: React.FC<Props> = ({
   return (
     <View>
       <ThemedText type="subtitle">Einstellungen</ThemedText>
-      <View style={styles.settingRow}>
-        <ThemedText>Tagesmotivation</ThemedText>
-        <Switch value={tagesMotivationEnabled} onValueChange={onToggleTagesMotivation} />
-      </View>
       <View style={styles.settingRow}>
         <ThemedText>Tägliche Erinnerung</ThemedText>
         <Switch value={taeglicheErinnerungEnabled} onValueChange={onToggleTaeglicheErinnerung} />
