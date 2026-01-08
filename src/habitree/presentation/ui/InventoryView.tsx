@@ -86,15 +86,15 @@ export const InventoryView: React.FC<Props> = ({
                   <>
                     <Image
                       source={require('@/assets/images/tree/tree8.png')}
-                      style={{ width: 80, height: 80, marginBottom: 16, alignSelf: 'center' }}
+                      style={inventoryviewStyles.modalImage}
                       contentFit="contain"
                     />
                     <Text style={inventoryviewStyles.modalTitle}>
                       {selectedAchievement.name}
                     </Text>
                     {selectedAchievement.description && (
-                      <View style={{ marginBottom: 12, alignItems: 'center' }}>
-                        <Text style={[inventoryviewStyles.modalText, { fontWeight: 'bold', marginTop: 8 }]}>
+                      <View style={inventoryviewStyles.modalDescriptionBlock}>
+                        <Text style={[inventoryviewStyles.modalText, inventoryviewStyles.modalLabel]}>
                           Beschreibung:
                         </Text>
                         <Text style={inventoryviewStyles.modalText}>
@@ -102,16 +102,16 @@ export const InventoryView: React.FC<Props> = ({
                         </Text>
                       </View>
                     )}
-                    <View style={{ marginBottom: 12 }}>
-                      <Text style={[inventoryviewStyles.modalText, { fontWeight: 'bold', marginTop: 8 }]}>
+                    <View style={inventoryviewStyles.modalSection}>
+                      <Text style={[inventoryviewStyles.modalText, inventoryviewStyles.modalLabel]}>
                         Erstellungsdatum:
                       </Text>
                       <Text style={inventoryviewStyles.modalText}>
                         {selectedAchievement.createdAt ? formatDate(selectedAchievement.createdAt) : '-'}
                       </Text>
-                      </View>
-                      <View style={{ marginBottom: 12 }}>
-                      <Text style={[inventoryviewStyles.modalText, { fontWeight: 'bold', marginTop: 8 }]}>
+                    </View>
+                    <View style={inventoryviewStyles.modalSection}>
+                      <Text style={[inventoryviewStyles.modalText, inventoryviewStyles.modalLabel]}>
                         Startdatum:
                       </Text>
                       <Text style={inventoryviewStyles.modalText}>
@@ -123,7 +123,7 @@ export const InventoryView: React.FC<Props> = ({
                   <>
                     <Image
                       source={(selectedAchievement as Achievement).imageUrl}
-                      style={{ width: 80, height: 80, marginBottom: 16 }}
+                      style={inventoryviewStyles.modalImage}
                       contentFit="contain"
                     />
                     <Text style={inventoryviewStyles.modalTitle}>

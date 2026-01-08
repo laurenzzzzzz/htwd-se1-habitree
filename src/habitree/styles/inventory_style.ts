@@ -72,6 +72,12 @@ export const createInventoryViewStyles = (
       maxHeight: height ? height * 0.7 : 500,
       alignItems: 'center',
     },
+    modalImage: {
+      width: scale(80),
+      height: scale(80),
+      marginBottom: spacing.lg,
+      alignSelf: 'center',
+    },
     modalTitle: {
       fontSize: font(18),
       fontWeight: '700',
@@ -83,6 +89,18 @@ export const createInventoryViewStyles = (
       lineHeight: font(20),
       marginBottom: spacing.lg,
       textAlign: 'center',
+    },
+    modalLabel: {
+      fontWeight: 'bold',
+      marginTop: spacing.sm,
+    },
+    modalDescriptionBlock: {
+      marginBottom: spacing.md,
+      alignItems: 'center',
+    },
+    modalSection: {
+      marginBottom: spacing.md,
+      width: '100%',
     },
     closeButton: {
       backgroundColor: '#1E9189',
