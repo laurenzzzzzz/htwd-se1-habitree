@@ -198,7 +198,7 @@ export default function HomeScreen() {
   };
 
   const handleAddPredefinedHabit = async (label: string, description: string, frequency: string) => {
-    const result = await handleSaveHabit(label, description, frequency);
+    const result = await handleSaveHabit(label, frequency, description);
     if (result.success) {
       setModalVisible(false);
       setHabitMode(null);

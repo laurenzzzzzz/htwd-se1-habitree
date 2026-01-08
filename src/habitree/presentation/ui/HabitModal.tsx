@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, View, Button, Pressable, TextInput, Text, ScrollView, Dimensions } from 'react-native';
+import { Modal, View, Button, Pressable, TextInput, Text, ScrollView, Dimensions, Image } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ThemedText } from './ThemedText';
 import { styles as loginStyles } from '../../styles/login_style';
@@ -183,7 +183,7 @@ export default function HabitModal({
                                                     style={habitModalStyles.iconInside}
                                                     onPress={() => setDatePickerVisible(true)}
                                                 >
-                                                    <Text style={habitModalStyles.iconButtonText}>📅</Text>
+                                                    <Image source={require('../../assets/images/calendar.png')} style={{ width: 20, height: 20 }} />
                                                 </Pressable>
                                             </View>
                                         </View>
@@ -205,7 +205,7 @@ export default function HabitModal({
                                                     style={habitModalStyles.iconInside}
                                                     onPress={() => setTimePickerVisible(true)}
                                                 >
-                                                    <Text style={habitModalStyles.iconButtonText}>⏰</Text>
+                                                    <Image source={require('../../assets/images/clock.png')} style={{ width: 20, height: 20 }} />
                                                 </Pressable>
                                             </View>
                                         </View>
