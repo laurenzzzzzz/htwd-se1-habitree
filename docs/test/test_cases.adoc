@@ -76,14 +76,31 @@ Domainobjekte und reine Logik mocken wir nicht – die sollen „echt“ geteste
 
 === Code Coverage (aktueller Stand)
 
-Aktuell liegen wir grob bei ~71% Lines / ~73% Statements / ~68% Functions / ~80% Branches.
+Aktueller Stand (aktualisiert):
+- Statements: 77.57%
+- Branches: 68.70%
+- Functions: 79.31%
+- Lines: 79.66%
 
-Stark abgedeckt:
-Habit/User/Quote-Domain und die Kernflüsse in Auth/Profile + Schedule Policies.
+In den letzten Iterationen haben wir die Coverage deutlich erhöht (+~20%) durch folgende Ergänzungen:
+- Neu implementierte Domain-Entity Tests:
+  - `Streak.entity.test.ts`
+  - `Achievement.entity.test.ts`
+  - `TreeGrowth.entity.test.ts`
+- Neu implementierte Service-/Integration-Tests:
+  - `StreakService.integration.test.ts`
+  - `AchievementService.integration.test.ts`
+  - `TreeGrowthService.integration.test.ts`
+  - `QuoteService.test.ts` (erweitert, inkl. `fetchQuoteOfDay`)
+  - `HabitService.integration.test.ts` (MockHabitsRepository, E2E-Flow)
 
-Lücken (Stand jetzt):
-TreeGrowthService, AchievementService, NotificationService, StreakService.
-Die sind als nächste Schritte eingeplant (siehe unten).
+Stark abgedeckt sind nun insbesondere die Domain-Entities (Habit, User, Quote, Streak, Achievement, TreeGrowth) sowie die genannten Services.
+
+Verbleibende Lücken / Fokusbereiche (Priorität):
+- `NotificationService` — noch ohne Tests (Port/Adapter-Interaktion testen)
+- Weitere Branch-Cases in `HabitService` (Payload-Varianten: weekDays / intervalDays / optional fields)
+- Optional: zusätzliche Edge-Case-Tests für `QuoteService` (Statistik-/Random-Pflege)
+- Interfaces/Ports (domain/ports, domain/repositories) zeigen 0% Coverage — erwartbar (keine Implementierungslogik)
 
 == Test Cases
 
@@ -231,9 +248,9 @@ Negativtests: keine Achievements bei falschen Inputs/States.
 *ID:* TC-12
 *Level:* Integration
 *SUT:* `NotificationService`, `StreakService`
-*Status:* geplant
+*Status:* teilweise umgesetzt (Streak jetzt getestet, Notification noch offen)
 
-Hier ist wichtig, externe Abhängigkeiten zu mocken (z.B. E-Mail/Push/Provider), damit Tests schnell und stabil bleiben.
+Ziel: Port-Interaktion (init, schedule, showImmediate) testen; Fehlerfälle abfangen; Payload-Validierung.
 
 == System- und Abnahmetests (Lightweight)
 
@@ -259,7 +276,7 @@ Je nach Priorität wird direkt gefixt oder als Bugfix-Item eingeplant.
 == Nächste Schritte
 
 Als nächstes wollen wir:
-1. Coverage Richtung >80% bringen.
-2. Die fehlenden Services (Tree/Achievements/Notifications/Streak) systematisch ergänzen.
-3. Mehr Negativtests/Robustheit reindrehen (falsche Inputs, kaputte Dependencies).
-4. CI sauber durchziehen, damit Tests bei PRs automatisch laufen.
+1. Tests für `NotificationService` schreiben (Mock `INotificationPort`, Happy & Error Paths, Payload-Checks).
+2. Branch-Cases in `HabitService` ergänzen (Payload-Varianten, weekDays/intervalDays-Randfälle).
+3. Ziel: Coverage > 80% — Fokus auf remaining service logic und Edge-Cases.
+4. TESTING_README.md um ein kurzes Mock-Klassen-Template ergänzen.
