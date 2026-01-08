@@ -9,7 +9,8 @@
   "extensions": [
     "dbaeumer.vscode-eslint",
     "GitHub.copilot-chat",
-    "esbenp.prettier-vscode"
+    "esbenp.prettier-vscode",
+    "asciidoctor.asciidoctor-vscode"
   ],
   "forwardPorts": [8081, 19000, 19001, 19002, 19006],
   "postCreateCommand": "cd src/habitree && npm ci && npx expo install && npx expo start --tunnel --go --clear"
