@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, View, Button, Text } from 'react-native';
+import { Modal, View, Pressable, Text } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { ThemedText } from './ThemedText';
 import { timePickerStyles } from '../../styles/timepicker_style';
@@ -90,8 +90,12 @@ export default function TimePicker({ visible, selectedTime, onSelectTime, onClos
 
           {/* Buttons */}
           <View style={timePickerStyles.buttonRow}>
-            <Button title="Abbrechen" onPress={onClose} />
-            <Button title="OK" onPress={handleConfirm} />
+            <Pressable style={timePickerStyles.button} onPress={onClose} accessibilityLabel="Uhrzeitauswahl abbrechen">
+              <ThemedText style={timePickerStyles.buttonText}>Abbrechen</ThemedText>
+            </Pressable>
+            <Pressable style={timePickerStyles.button} onPress={handleConfirm} accessibilityLabel="Uhrzeit bestätigen">
+              <ThemedText style={timePickerStyles.buttonText}>OK</ThemedText>
+            </Pressable>
           </View>
         </View>
       </View>

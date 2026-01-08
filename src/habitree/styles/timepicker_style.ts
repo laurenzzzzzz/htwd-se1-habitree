@@ -70,6 +70,17 @@ export const createTimePickerStyles = (width?: number, height?: number) => {
       gap: spacing.sm,
       justifyContent: 'space-around',
     },
+    button: {
+      flex: 1,
+      backgroundColor: '#f0f0f0',
+      paddingVertical: spacing.sm,
+      borderRadius: radius(10),
+      alignItems: 'center',
+    },
+    buttonText: {
+      color: '#333',
+      fontWeight: '500',
+    },
   });
 };
 
