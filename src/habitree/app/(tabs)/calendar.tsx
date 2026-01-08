@@ -123,7 +123,9 @@ export default function CalendarScreen() {
       setToday(now);
       setSelectedDate(buildDateKey(now));
       setCalendarInstanceKey((prev) => prev + 1);
-    }, [])
+      // Refetch latest habits when tab is focused
+      fetchHabits();
+    }, [fetchHabits])
   );
 
   const selectedDateObj = useMemo(() => {
