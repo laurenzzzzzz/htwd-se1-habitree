@@ -67,8 +67,12 @@ include::../development/plantuml/sequenzdiagramme.md[lines=19..55]
 |===
 
 == Datenmodell
-//Prüfen ob aktuell
-image::./images/Datenmodell_Datenbank.png[]
+
+//image::./images/Datenmodell_Datenbank.png[]
+[plantuml]
+....
+include::plantuml/datenbank-beziehungen.plantuml[]
+....
 
 
 == Umsetzungen und Erweiterungen der Architektur durch User Stories
