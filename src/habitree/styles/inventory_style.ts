@@ -35,10 +35,13 @@ export const createInventoryViewStyles = (
       marginBottom: spacing.lg,
       flexWrap: 'wrap',
       gap: spacing.md,
+      alignItems: 'flex-start',
     },
     badge: {
       width: scale(80),
       height: scale(80),
+      flexBasis: '33.333%',
+      maxWidth: scale(80),
     },
     loadingContainer: {
       flex: 1,
