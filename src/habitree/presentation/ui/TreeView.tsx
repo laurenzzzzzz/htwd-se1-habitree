@@ -9,6 +9,7 @@ import { TreeGrowth } from '../../domain/entities/TreeGrowth';
 import { useHabitsController } from '../controllers/useHabitsController';
 import { useStreakController } from '../controllers/useStreakController';
 import HabitModal from './HabitModal';
+import { useFocusEffect } from 'expo-router';
 
 type Props = {
   treeGrowth: TreeGrowth | null;
@@ -136,6 +137,13 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
     fetchHabits();
   }, [fetchHabits]);
 
+  // Refresh habits whenever this tab regains focus so creations/löschungen aus anderen Tabs sichtbar werden
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchHabits();
+    }, [fetchHabits])
+  );
+
   // Hydrate grownHabitIds from database (isHarvested = 1)
   useEffect(() => {
     if (habits && habits.length > 0) {
@@ -176,6 +184,7 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
   const [newHabitWeekDays, setNewHabitWeekDays] = useState<number[]>([]);
   const [newHabitIntervalDays, setNewHabitIntervalDays] = useState('');
   const [newHabitDurationDays, setNewHabitDurationDays] = useState('');
+  const [lastSyncedAt, setLastSyncedAt] = useState(0);
 
   // Hauptbaum: echte Streak-Tage (Gesamt-Streak)
   const mainStreakDays = streak?.currentStreak ?? 0;
