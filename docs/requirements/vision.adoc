@@ -10,13 +10,13 @@ Der Zweck dieses Dokuments ist es, die wesentlichen *Bedarfe* und *Fähigkeiten*
 Kompakte, nutzerzentrierte Beschreibung der zentralen Anforderungen in der Sprache der künftigen Anwender; gemeinsame Zielvorstellung für alle Beteiligten.
 
 === Gültigkeitsbereich (Scope)
-Dieses Visionsdokument bezieht sich auf *{project-system-name}*, entwickelt von *Team 3A*. Das System unterstützt primär Studierende und junge Berufstätige beim Aufbau positiver Routinen sowie beim Abtrainieren unerwünschter Verhaltensweisen. Die Anwendung ist für die Nutzung auf dem Smartphone optimier, wodurch eine hohe Verfügbarkeit und einfache Bedienung gewährleistet wird. Sie unterstützt zwar Android und iOS, der Fokus liegt jedoch auf iOS. 
+Dieses Visionsdokument bezieht sich auf *{project-system-name}*, entwickelt von *Team 3A*. Das System unterstützt primär Studierende und junge Berufstätige beim Aufbau positiver Routinen sowie beim Abtrainieren unerwünschter Verhaltensweisen. Die Anwendung ist für die Nutzung auf dem Smartphone optimiert, wodurch eine hohe Verfügbarkeit und einfache Bedienung gewährleistet wird. Sie unterstützt zwar Android und iOS, der Fokus liegt jedoch auf iOS. 
 
 *Im Umfang:* +
 1. Erstellen, Bearbeiten und Verfolgen persönlicher Gewohnheiten +
 2. Visuelle Statistik und Fortschrittsdarstellungen +
-3. Nutzerkontenverwaltung  +
-4. Motivationselemente in Forms von Streak- Tracking und Feedback- Mechanismen
+3. Nutzerkontenverwaltung +
+4. Motivationselemente in Form von Streak-Tracking und Feedback-Mechanismen
 
 *Außerhalb des Umfanges:* +
 1. Therapeutische, psychologische oder medizinische Diagnostik +
@@ -32,7 +32,7 @@ Siehe <<#glossary, Glossar>>.
 == Positionierung
 
 === Fachliche Motivation
-Viele Tools für Selbstorganisation sind überladen, wenig motivierend oder nicht alltagstauglich. *Habitree* adressiert dies mit einer *schlanken*, *intuitiven* und *motivierenden* App, die bewährte verhaltenspsychologische Prinzipien, wie  Streaks, Feedback‑Loops und Micro‑Rewards nutzt, um Nutzer*innen über die anfängliche Hürde hinaus langfristig zu begleiten. Aus betriebswirtschaftlicher Sicht steigert das System Produktivität und Selbstmanagement sowohl privat als auch beruflich.
+Viele Tools für Selbstorganisation sind überladen, wenig motivierend oder nicht alltagstauglich. *Habitree* adressiert dies mit einer *schlanken*, *intuitiven* und *motivierenden* App, die bewährte verhaltenspsychologische Prinzipien wie Streaks, Feedback‑Loops und Micro‑Rewards nutzt, um Nutzer*innen über die anfängliche Hürde hinaus langfristig zu begleiten. Aus betriebswirtschaftlicher Sicht steigert das System Produktivität und Selbstmanagement sowohl privat als auch beruflich.
 
 === Produktvision
 [cols="1,3"]
@@ -41,10 +41,9 @@ Viele Tools für Selbstorganisation sind überladen, wenig motivierend oder nich
 | die | ihre Gewohnheiten systematisch verfolgen, verbessern und reflektieren möchten
 | ist | {project-system-name}
 | eine | mobile Habit‑Tracking‑App
-| die |  durch klare Visualisierungen, motivierende Fortschrittsdarstellungen und eine intuitive Bedienung unterstützt.
-| Anders als | herkömmliche Kalender/Notiz‑Apps mit einfachen Erinnerungen oder klassischen Tagebüchern
-| konzentriert sich unser Produkt | 
-auf eine digitale, leichtgewichtige und motivierende Nutzungserfahrung, die den täglichen Fortschritt sichtbar macht, anhand einer Baumgrafik visualisiert und somit den Aufbau persönlicher Routinen erleichtert.
+| die | durch klare Visualisierungen, motivierende Fortschrittsdarstellungen und eine intuitive Bedienung unterstützt.
+| Anders als | herkömmliche Kalender‑/Notiz‑Apps mit einfachen Erinnerungen oder klassischen Tagebüchern
+| konzentriert sich unser Produkt | auf eine digitale, leichtgewichtige und motivierende Nutzungserfahrung, die den täglichen Fortschritt sichtbar macht, anhand einer Baumgrafik visualisiert und somit den Aufbau persönlicher Routinen erleichtert.
 |===
 
 // =====================================================================
@@ -64,10 +63,10 @@ auf eine digitale, leichtgewichtige und motivierende Nutzungserfahrung, die den 
 | Fordern Effizienz, Klarheit, Datenschutz und mobile Verfügbarkeit; erweitern den Blick über den Studierendenkontext
 
 | Projektgruppe (Team 3A)
-| Scrum‑Master, Product‑Owner, Entwicklungsteam, Entwicklet das System im Rahmen eines Hochschulprojekts. Ziel ist die termingerechte Lieferung eines funktionierendes Prototyps
+| Scrum‑Master, Product‑Owner, Entwicklungsteam; entwickelt das System im Rahmen eines Hochschulprojekts. Ziel ist die termingerechte Lieferung eines funktionierenden Prototyps
 | Iterative Konzeption, Entwicklung, Test; Sicherstellung von Nutzungswert, Qualität, Wartbarkeit und Planbarkeit
 
-| Wissenschaft/Expert*innen| Fachleute zu Verhaltenstherapie/Verhaltensökonomie| Validieren Ansätze (Gamification, Wissensbereich) und liefern belastbare Grundlagen
+| Wissenschaft/Expert*innen | Fachleute zu Verhaltenstherapie/Verhaltensökonomie | Validieren Ansätze (Gamification, Wissensbereich) und liefern belastbare Grundlagen
 
 | Behörden/Compliance
 | DSGVO/UrhG/BSI‑relevante Institutionen
@@ -106,7 +105,7 @@ auf eine digitale, leichtgewichtige und motivierende Nutzungserfahrung, die den 
 
 | *Klarheit über eigenen Fortschritt und tägliche Gewohnheiten gewinnen*
 | Muss
-|- Dashboard mit Tages und Wochenübersicht +
+|- Dashboard mit Tages‑ und Wochenübersicht +
 - Anzeige der für den aktuellen Tag geplanten Gewohnheiten +
 - Erfolgsübersicht über bereits absolvierte Habits +
 | R1: 27.06.2025 +
@@ -118,7 +117,7 @@ R2: 28.11.2025 +
 |- Einfaches Anlegen, Bearbeiten und Löschen von Gewohnheiten +
 - Vorlagen (vordefinierte Habits) sowie eigene/benutzerdefinierte Habits, die man anlegen kann +
 - flexible Wiederholungsintervalle (z. B. täglich, wöchentlich, benutzerdefiniert) +
-- Erinnerungsfunktion inklusive Uhrzeit, zu der man Erinnert wird, dass man den Habit absolvieren soll +
+- Erinnerungsfunktion inklusive Uhrzeit, zu der man erinnert wird, dass man den Habit absolvieren soll +
 | R1: 27.06.2025 +
 R2: 28.11.2025 +
 *R3: 28.12.2025*
@@ -152,11 +151,11 @@ R2: 28.11.2025 +
 |===
 | Anforderung | Priorität | Geplantes Release
 
-| **Plattformen:** iOS, iPhone, IPad und iPod touch mit iOS 15.1 oder neuer, Apple Vision visionOS 1.0 oder neuer 
+| **Plattformen:** iOS, iPhone, iPad und iPod touch mit iOS 15.1 oder neuer; Apple Vision mit visionOS 1.0 oder neuer 
 | Hoch
 | MVP
 
-| **Barrierefreiheit:** einfache Sprache, klare Labels/Icons, keine reine Farb-Kommunikation
+| **Barrierefreiheit:** einfache Sprache, klare Labels/Icons, keine reine Farbkommunikation
 | Mittel
 | MVP
 
