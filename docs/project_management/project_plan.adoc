@@ -6,7 +6,12 @@ include::../_includes/default-attributes.inc.adoc[]
 
 
 == Einführung
-//Kurze Beschreibung und Überblick zum Dokument.
+Der vorliegende Projektplan dokumentiert die organisatorischen, managementbezogene jedoch auch technische Praktiken des Projekts `Habitree` im Rahmen der Module Software Engineering 1 und Software Engineering 2.  +
+Er beschreibt die Struktur und Rollenverteilung des Teams, die eingesetzten Management und Entwicklungsmethoden, sowie positive und negative Ereignisse mitsamt deren Ursachen und unseren entsprechenden learnings. Darüber hinaus enthält der Projektplan ergänzende Projektartefakte wie Definition of Ready und Definition of Done. +
+ 
+Ziel des Dokuments ist es, die angewandten Vorgehensweisen transparent und nachvollziehbar zu machen. Hierbei beziehen wir uns primär auf organisatorische Abläufe, von der Sprintplanung über die Ausgestaltung des GitHub-Boards und der KPIs bis hin zum Umgang mit Risiken, Qualitätsmaßnahmen und dem Feature Stop am Projektende. +
+Die beschriebenen Praktiken spiegeln sowohl theoretische Grundlagen des Scrum-Frameworks als auch deren Anpassung an unser Team im universitären Umfeld wieder.  +
+Damit bietet der Projektplan eine umfassende Übersicht über Struktur, Ablauf und methodische Entscheidungen, die die Entwicklung von Habitree über die letzten 2 Semester geprägt haben.
 
 
 == Projektorganisation
