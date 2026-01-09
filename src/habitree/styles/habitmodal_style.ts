@@ -246,6 +246,10 @@ export const createHabitModalStyles = (width?: number, height?: number) => {
             textDecorationLine: 'underline',
             fontSize: font(12),
         },
+        pickerIcon: {
+            width: scale(20),
+            height: scale(20),
+        },
     });
 };
 

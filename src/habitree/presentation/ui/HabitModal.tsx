@@ -183,7 +183,7 @@ export default function HabitModal({
                                                     style={habitModalStyles.iconInside}
                                                     onPress={() => setDatePickerVisible(true)}
                                                 >
-                                                    <Image source={require('../../assets/images/calendar.png')} style={{ width: 20, height: 20 }} />
+                                                    <Image source={require('../../assets/images/calendar.png')} style={habitModalStyles.pickerIcon} />
                                                 </Pressable>
                                             </View>
                                         </View>
@@ -205,7 +205,7 @@ export default function HabitModal({
                                                     style={habitModalStyles.iconInside}
                                                     onPress={() => setTimePickerVisible(true)}
                                                 >
-                                                    <Image source={require('../../assets/images/clock.png')} style={{ width: 20, height: 20 }} />
+                                                    <Image source={require('../../assets/images/clock.png')} style={habitModalStyles.pickerIcon} />
                                                 </Pressable>
                                             </View>
                                         </View>
