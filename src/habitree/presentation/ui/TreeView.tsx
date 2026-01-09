@@ -175,6 +175,7 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
   const [newHabitFrequency, setNewHabitFrequency] = useState('');
   const [newHabitWeekDays, setNewHabitWeekDays] = useState<number[]>([]);
   const [newHabitIntervalDays, setNewHabitIntervalDays] = useState('');
+  const [newHabitDurationDays, setNewHabitDurationDays] = useState('');
 
   // Hauptbaum: echte Streak-Tage (Gesamt-Streak)
   const mainStreakDays = streak?.currentStreak ?? 0;
@@ -392,6 +393,7 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
                         setNewHabitFrequency(habit.frequency || '');
                         setNewHabitWeekDays(habit.weekDays || []);
                         setNewHabitIntervalDays(habit.intervalDays ? String(habit.intervalDays) : '');
+                        setNewHabitDurationDays(habit.durationDays ? String(habit.durationDays) : '');
                         setModalMode('custom');
                         setModalVisible(true);
                       }}
@@ -477,6 +479,7 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
           setNewHabitFrequency('');
           setNewHabitWeekDays([]);
           setNewHabitIntervalDays('');
+          setNewHabitDurationDays('');
         }}
         onOpenMode={(m) => {
           if (m === 'predefined') fetchPredefinedHabits();
@@ -490,6 +493,7 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
         newHabitFrequency={newHabitFrequency}
         newHabitWeekDays={newHabitWeekDays}
         newHabitIntervalDays={newHabitIntervalDays}
+        newHabitDurationDays={newHabitDurationDays}
         setNewHabitName={setNewHabitName}
         setNewHabitDescription={setNewHabitDescription}
         setNewHabitStartDate={setNewHabitStartDate}
@@ -497,6 +501,7 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
         setNewHabitFrequency={setNewHabitFrequency}
         setNewHabitWeekDays={setNewHabitWeekDays}
         setNewHabitIntervalDays={setNewHabitIntervalDays}
+        setNewHabitDurationDays={setNewHabitDurationDays}
         onAddPredefined={async (label, description, freq) => {
           const result = await handleSaveHabit(label, freq, description);
           if (result.success) {
@@ -522,7 +527,8 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
               newHabitStartDate,
               newHabitTime,
               newHabitWeekDays,
-              newHabitIntervalDays
+              newHabitIntervalDays,
+              newHabitDurationDays,
             );
             if (res.success) {
               setModalVisible(false);
@@ -548,7 +554,16 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
             }
             const freq = newHabitFrequency || 'Täglich';
             const descValue = newHabitDescription.trim() === '' ? undefined : newHabitDescription;
-            const result = await handleSaveHabit(newHabitName, freq, descValue, newHabitStartDate, newHabitTime, newHabitWeekDays, newHabitIntervalDays);
+            const result = await handleSaveHabit(
+              newHabitName,
+              freq,
+              descValue,
+              newHabitStartDate,
+              newHabitTime,
+              newHabitWeekDays,
+              newHabitIntervalDays,
+              newHabitDurationDays,
+            );
             if (result.success) {
               setNewHabitName('');
               setNewHabitDescription('');
@@ -557,6 +572,7 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
               setNewHabitFrequency('');
               setNewHabitWeekDays([]);
               setNewHabitIntervalDays('');
+              setNewHabitDurationDays('');
               setModalVisible(false);
               setModalMode(null);
             } else {

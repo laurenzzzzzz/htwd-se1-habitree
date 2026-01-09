@@ -430,7 +430,8 @@ export default function CalendarScreen() {
         setNewHabitIntervalDays={setNewHabitIntervalDays}
         setNewHabitDurationDays={setNewHabitDurationDays}
         onAddPredefined={async (label, description, frequency) => {
-          const result = await handleSaveHabit(label, description, frequency);
+          // Preserve argument order: name, frequency, description
+          const result = await handleSaveHabit(label, frequency, description);
           if (result.success) {
             setModalVisible(false);
             setModalMode(null);
@@ -447,7 +448,18 @@ export default function CalendarScreen() {
         }}
         onAddCustom={async () => {
           if (editHabitId) {
-            const res = await handleUpdateHabit(editHabitId, newHabitName, newHabitDescription, newHabitFrequency || 'Täglich', newHabitStartDate, newHabitTime, newHabitWeekDays, newHabitIntervalDays, newHabitDurationDays);
+            // Update expects: id, name, frequency, description, start, time, weekDays, intervalDays, durationDays
+            const res = await handleUpdateHabit(
+              editHabitId,
+              newHabitName,
+              newHabitFrequency || 'Täglich',
+              newHabitDescription,
+              newHabitStartDate,
+              newHabitTime,
+              newHabitWeekDays,
+              newHabitIntervalDays,
+              newHabitDurationDays,
+            );
             if (res.success) {
               setModalVisible(false);
               setEditHabitId(null);
@@ -458,7 +470,17 @@ export default function CalendarScreen() {
               return;
             }
             const frequency = newHabitFrequency || 'Täglich';
-            const result = await handleSaveHabit(newHabitName, newHabitDescription, frequency, newHabitStartDate, newHabitTime, newHabitWeekDays, newHabitIntervalDays, newHabitDurationDays);
+            // Create expects: name, frequency, description, start, time, weekDays, intervalDays, durationDays
+            const result = await handleSaveHabit(
+              newHabitName,
+              frequency,
+              newHabitDescription,
+              newHabitStartDate,
+              newHabitTime,
+              newHabitWeekDays,
+              newHabitIntervalDays,
+              newHabitDurationDays,
+            );
             if (result.success) {
               setNewHabitName('');
               setNewHabitDescription('');
