@@ -404,7 +404,14 @@ Definition of Ready enthalten +
 *-Anmerkung:* Dieses Vorgehen weicht von klassischen Scrum- Prinzipien ab, vor allem da man nicht einfach einen festgelegten Sprint mit neuen Inhalten befüllen sollte, wenn man all seine Task schon vor der eigentlichen Zeit abgearbeitet und validiert hat. +
 Wir haben uns dazu entschieden, dass dennoch so auszuleben, da das Zeitfenster für dieses Projekt allgemein sehr klein ist und wir uns die entstehende Leerlaufzeit nicht in dem Umfang leisten können. +
 Grund hierfür ist das universitäre Umfeld in dem sich die Projektteilnehmer befinden. Dies zeichnet sich aus durch unregelmäßige Kapazitäten, Prüfungsphasen und Deadlines in anderen Modulen oder dem Projektseminar, die teilweiße kurzfristig und unerwartet aufkommen.
-
+| Stabilisierung, Qualitätssicherung und Risikovermeidung in der Abhschlussphase - Feature Stop am 09.01.2025
+| - Einführung eines Feature- Stops am dem 09.01.2025 um sich in der  verbleidenden Projektzeit auf Qualitätssicherung, Feinschliff und Dokumentation auszurichten +
+- Ab diesem Zeitpunkt werden keine neuen funktionalen Features mehr implementiert, stattdessen werden nur noch: +
+(1) Kleiner UI- Anpassungen und Bugfixes vorgenommen +
+(2) Bestehende Funktionen stabilisiert +
+(3) Letzte Tests durchgeführt (welche auch bis zum 12.01.2025 abgeschlossen werden sollen) +
+(4) Finalisierung  der Dokumentation und Reflexion +
+- Ziele sind die Redution von Projektrisiken und Stress bei den Mitgliedern, sowie die Vermeidung von Implementierungsfehlern, und die sicherstellung, dass bei Abgabe und Präsentation der Anwendung alle bislang implementierten Dinge stabil und effizient funktionieren. +
 |===
 
 
