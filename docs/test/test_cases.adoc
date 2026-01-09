@@ -1,5 +1,5 @@
 = Test Cases: {project-name}
-include::../_includes/_default-attributes.inc.adoc[]
+include::../_includes/default-attributes.inc.adoc[]
 
 == Allgemeine Informationen
 
