@@ -53,11 +53,11 @@ export function buildHabitPersistenceRequest(
     intervalDays:
       payload.intervalDays && payload.intervalDays.trim() !== ''
         ? Number(payload.intervalDays)
-        : null,
+        : undefined,
     durationDays:
       payload.durationDays && payload.durationDays.trim() !== ''
         ? Number(payload.durationDays)
-        : null,
+        : undefined,
   };
 }
 
