@@ -36,18 +36,18 @@ include::../_includes/default-attributes.inc.adoc[]
 | Zusammenarbeit und Workflow
 | Nutzung des Scrum-Frameworks zur strukturierten Projektorganisation +
 - Arbeit in festen Zyklen (Sprints) von jeweils 4 Wochen +
-- Weekly-Meetings (30–45 Minuten) zur Besprechung und Aufzeigung des aktuellen Arbeitsstatus der Mitglieder, Aufgabenverteilung und operativer Planung für die nächste Woche und Identifikation von Hindernissen +
+- Weekly-Meetings (45 - 90 Minuten) zur Besprechung und Aufzeigung des aktuellen Arbeitsstatus der Mitglieder, Aufgabenverteilung, Identifikation von Hindernissen und operativer Planung für die nächste Woche +
 - Aufgaben werden als Issues und Tasks angelegt und in einem Git-Projekt mithilfe von Eigenschaften strukturiert, um eine Gesamtübersicht sowie eine iterationsbasierte und personengebundene Darstellung zu ermöglichen +
 - Aufgabenverteilung erfolgt zum großen Teil nach dem Prinzip der Freiwilligkeit zur Förderung eines positiven Arbeitsklimas in einem Team mit flachen Hierarchien, jedoch auch der Verfügbarkeit (KPI Kapazität)
 | Cross Functional Team | Unser Team besteht aus Personen verschiedener Fachbereiche, die gemeinsam an unserem Projekt zusammenarbeiten. Hierfür definierten wir für unsere Mitglieder Scrum- Rollen:  +
 **- Product Owner:**  +
 Dieser liest sich in die Domäne ein und kommuniziert mit Stakeholdern.  +
-Domänenwissen eignet er sich durch Bücher (wie z.B.: "Atomic Habits" oder "The Power of Habits") und Internet an.  +
+Domänenwissen eignet er sich durch Bücher (wie z.B.: "Atomic Habits", "1% Methode" oder "The Power of Habits") und Internet an.  +
 Kommunikation mit Stakeholdern erfolgt mit dem Durchforsten von Kommentaren in Foren oder Bewertungen in Kommentarspalten bei konkurrierenden Anwendungen. Zudem wurde eine Umfrage erstellt, die mit Stakeholdern durchgeführt wurde. +
-In unserem Team kümmert er maßgeblich sich um die Vision  sowie  um die User Stories.  +
+In unserem Team kümmert er maßgeblich sich um die Vision  sowie um die User Stories und dessen Planung.  +
 **- Scrum Master:** +
 Der Scrum Master organisiert und protokolliert die Meetings und hilft den Teammitgliedern bei der Konfliktbewältigung.  Dies bedeutet, dass er alle wichtigen Dinge, welche in Meetings thematisiert wurden aufnimmt und anschließend in Discord oder ins Miro- Board schreibt, Meetingräume reserviert, Schwerpunkte festlegt und ständig vor allem mit den Entwicklern potenzielle Probleme bespricht. +
-Er ermöglicht ein effizientes Arbeiten innerhalb des Teams bei einer hohen Teammitgliederzufriedenheit. + 
+Er ermöglicht ein effizientes Arbeiten innerhalb des Teams bei einer hohen Teammitgliederzufriedenheit. +
 Seine Ergebnisse schreibt der Scrum Master im  project_plan.adoc nieder.  +
 Zudem unterstützt er auch den Product Owner in seinen Tätigkeiten.  +
 **-Entwickler- Team: **
@@ -56,7 +56,8 @@ Das Entwickler- Team ist bei uns in der Planung und der konkreten Umsetzung der 
 - Erstellung und Planung des Domänenmodelles +
 - Festlegung von User Stories (mit dem PO) und Absprache darüber welche nochmals konkretisiert werden müssen  +
 - Herausarbeiten von Task aus den User Stories  +
-- Programmierung eines Prototypen  +  
+- Eigende Meetings, in welchem es um technische Aspekte der Umsetzung geht
+- Programmierung des Habit Trackers  +
 
 Sinn ist, dass jeder der Mitglieder seine Aufgaben genau kennt, versteht, dass er unersetzbar und wichtig für das Team ist und dementsprechend gemäß seiner spezialisierung Verantwortung übernimmt. Somit macht nicht jeder alles, da alle Rollen spezifische, ihnen zugeordnete Aufgaben besitzen.
 
@@ -65,19 +66,19 @@ Sinn ist, dass jeder der Mitglieder seine Aufgaben genau kennt, versteht, dass e
 | Sprint Planning zu Beginn jeder Iteration legt gemeinsam das Sprintziel fest +
 - Bearbeitung der vom Professor bereitgestellten Iterationsdokumente +
 - Zerlegung, Aufwandsschätzung, Konkretisierung und Priorisierung von User Stories und den Aufgaben in den Iterationsdokumenten. +
-- Zerlegung von hochpriorisierten User Stories in kleinere Tasks, vor allem in den späteren Iterationen.  +
+- Zerlegung von hochpriorisierten User Stories inkleinere Tasks, vor allem in den späteren Iterationen.  +
 - Aufwandsschätzung und Zuweisung der Tasks an Teammitglieder. Task in den früheren Iterationen beziehen sich primär auf die vom Professor bereitgestellten Aufgaben aus den Iterationsdokumenten. Im Verlauf der iterativen und agilen Entwicklung liegt nun aber mehr und mehr der Fokus auch auf den User Storie- Task.  +
 - Kontinuierliche Pflege des Product Backlogs (Ergänzung, Priorisierung, Schätzung, Zerlegung) durch Product Owner und Scrum Master in Abstimmung mit dem Entwicklungsteam.
 | Retrospektive & Reflexion
 | Nach jedem Sprint findet eine Retrospektive statt, in der das Team seine Zusammenarbeit reflektiert. +
-- Jeder Mitarbeiter hat 10 min Zeit positive und negative Eindrücke und Ereignisse, die er während der letzten Iteration erfahren hat, darzulegen.  +
+- Jedes Teammitglied hat 10 min Zeit positive und negative Eindrücke und Ereignisse, die er während der letzten Iteration erfahren hat, darzulegen.  +
 - Gegenseitiger Respekt ist bei uns sehr wichtig, sodass kein Mitglied während seiner Erklärungen durch andere verbessert, berichtigt oder unterbrochen werden darf.  +
 - Protokollierung aller technischen, sozialen und organisatorischen Problemen im Team durch den Scrum Master. +
 - Konkrete Maßnahmen zur Verbesserung werden abgeleitet und im "Lessons Learned"-Teil der Dokumentation dokumentiert.  +
 - Wie alle weiteren Meetings wird die Retrospektive im Miro-Board aus Gründen der Transparenz im Team jedem sichtbar gemacht.  +
 - Zum Ende der Retrospektive soll jedes Mitglied seine Hapiness bewerten. Hierfür haben wir einen Hapiness-Index eingeführt. Diesen protokollieren wir auch, um Entiwcklungen und Trends in den Emotionen einzelner Mitglieder sehen zu können.
-| Review von Ergebnissen | Am Ende jeder Iteration werden unsere bisherigen Ergebnisse Stakeholdern vorgestellt. Am Ende der zweiten Iteration wurden so z.B. unser Prototyp sowie Wireframes und Wireflows einer anderen Gruppe in einem Microsofft Teams- Meeting dargelegt. Wir holten uns über diesen Weg Feedback, Verbesserungsvorschläge und Ideen für weitere User Stories und Personas ein. Zudem wurde auch ein Meeting mit unseren Coach und den Professor durchgeführt um unseren bisherigen Arbeitsstand und Arbeitsphilosophie zu bewerten. Nach jedem Meeting mit weiteren Stakeholdern besprechen wir im Anschluss noch einmal kurz die Resultate, Protokollieren diese und leiten Aufgabe/Änderungen daran ab. 
-| Entwicklung | Unser Entwicklerteam arbeitet häufig zusammen und kommuniziert auch untereinander viel. Hierbei legt es individuelle Aufgaben nochmals fest und unterstützt sich gegenseitig auch bei Problemen. 
+| Review von Ergebnissen | Am Ende jeder Iteration werden unsere bisherigen Ergebnisse Stakeholdern vorgestellt. Am Ende der zweiten Iteration wurden so z.B. unser Prototyp sowie Wireframes und Wireflows einer anderen Gruppe in einem Microsofft Teams- Meeting dargelegt. Wir holten uns über diesen Weg Feedback, Verbesserungsvorschläge und Ideen für weitere User Stories und Personas ein. Zudem wurde auch ein Meeting mit unseren Coach und den Professor durchgeführt um unseren bisherigen Arbeitsstand und Arbeitsphilosophie zu bewerten. Nach jedem Meeting mit weiteren Stakeholdern besprechen wir im Anschluss noch einmal kurz die Resultate, Protokollieren diese und leiten Aufgabe/Änderungen daran ab. User Storys, welche im Sprint nicht geschafft wurden, landen im Product Backlock.
+| Entwicklung | Unser Entwicklerteam arbeitet häufig zusammen und kommuniziert auch untereinander viel. Hierbei legt es individuelle Aufgaben nochmals fest und unterstützt sich gegenseitig auch bei Problemen.
 |===
 
 === Technische Praktiken
@@ -85,7 +86,7 @@ Sinn ist, dass jeder der Mitglieder seine Aufgaben genau kennt, versteht, dass e
 | *Kategorie* | *Praktik*
 | Ergebnisübertragung | Ziel ist eine Softwareentwicklung unter Nutzung einer versionsverwaltenden Plattform. Hierfür wird GitHub verwendet. Ergebnisse in den Dokumenten oder auch im Code werden per standardisierter Commits in das Repository übertragen. Die Vorlage für die Commits wurde im Miro- Board öffentlich jedem Mitglied zur verfügung gestellt. +
 Update/Delete/Add {Beschreibungstext(Deutsch)} (Datei)
-| Dokumentation 
+| Dokumentation
 | Projektdokumentation in Ascii Doc  +
 -  Strukturierte Gliederung und Unterteilung des Projektes gemäß seiner einzelnen Komponenten(vision.adoc, project_plan.adoc, glossary.adoc etc.) +
 - Gemeinsame Ablage aller Dokumente im Git Repository für eine sinnvolle und effiziente Versionierung  +
@@ -93,15 +94,15 @@ Update/Delete/Add {Beschreibungstext(Deutsch)} (Datei)
 |UI/UX- Design
 |Erstellung von Wireframes und darauf aufbauend Wireflows mit Hilfe von Figma und penpot durch das Entwicklerteam +
 - Bewertung der Wireframes und Wireflows durch das gesamte Team und durch Stakeholder in Reviews. +
-- Feedback wird systematisch dokumentiert, gruppiert und fließt in die Weiterentwicklung ein. 
+- Feedback wird systematisch dokumentiert, gruppiert und fließt in die Weiterentwicklung ein.
 | Fehler und Risikomangement
 | Initiale Dokumentation von Risiken in separaten Git Risk Board. Hierbei werden die Risiken möglichst genau defniert.  +
-- Das Risiko- Board wird bei Bedarf geupdatet und um neue Risiken ergänzt. Bestehende Risiken werden in regelmäßigen Abständen durchgangen und verwaltet hisnichtlich des Aufwandes und Einflusses.  +
+- Das Risiko- Board wird bei Bedarf geupdatet und um neue Risiken ergänzt. Bestehende Risiken werden in regelmäßigen Abständen durchgangen und verwaltet hinsichtlich des Aufwandes und Einflusses.  +
 - Auftretende Fehler und Risiken werden direkt in Meetings besprochen und nach Dringlichkeit priorisiert +
 - Fehler und Bug-Fixes werden als eigene Tasks verwaltet und in die Iteration mit aufgenommen. (z.B.: Issues mit dem Label "Defect")
-| Entwicklungstechnologie 
+| Entwicklungstechnologie
 | Verwendung von Expo mit React Native zur plattformübergreifenden Entwicklung +
-- Entwicklung in Java Script und in Type- Script  +
+- Entwicklung in JavaScript und in TypeScript  +
 - Nutzung der Expo Go App zur Live Vorschau auf echter Hardware +
 - Einsatz von Visual Studio Code als Entwicklungsplattform.
 | Visualisierung von Aspekten unter Zuhilfenahme von Diagrammen
@@ -111,14 +112,14 @@ Update/Delete/Add {Beschreibungstext(Deutsch)} (Datei)
 
 === Definition of Ready
 [none]
-Die Definition of Ready beschreibt, wann ein Backlog Item als "bereit zur Umsetzung" gilt. Dazu müssen folgende Inhalte stimmen: 
+Die Definition of Ready beschreibt, wann ein Backlog Item als "bereit zur Umsetzung" gilt. Dazu müssen folgende Inhalte stimmen:
 
-- Die Akzeptanzkriterien sind klar formuliert 
-- Die Abhängigkeiten zu anderen Issues sind geklärt 
-- Story ist klein genug, um in einem Sprint abgeschlossen zu werden 
-- Das Team versteht die Issue/Story inhaltlich und technisch 
+- Die Akzeptanzkriterien sind klar formuliert
+- Die Abhängigkeiten zu anderen Issues sind geklärt
+- Story ist klein genug, um in einem Sprint abgeschlossen zu werden
+- Das Team versteht die Issue/Story inhaltlich und technisch
 - Falls nötig liegt Wireframes/UI-Skizzen vor
-//- Testkriterien oder Hinweise sind definiert 
+//- Testkriterien oder Hinweise sind definiert
 
 
 
@@ -139,7 +140,6 @@ Die Definition of Done legt fest, wann ein Backlog Item als vollständig abgesch
 // Beschreibt kurz, wie und wo die Software (und deren Updates) für das Projekt bereitgestellt wird.
 
 === Frontend (Mobile App)
-
 - Die App wird entwickelt und bereitgestellt für die Nutzung über die **Expo Go App**
 - Der Start erfolgt durch das Scannen eines **QR-Codes** vom lokalen Entwicklungsserver
 - Die Nutzung ist ausschließlich im **Netzwerk der Hochschule** (oder über eduVPN) möglich
@@ -181,7 +181,7 @@ Problem: Frederic war Teil des Development-Teams, hatte jedoch bis zu seinem Aus
 - Neuverteilung von Frederics Aufgaben auf andere Teammitglieder, besonders bezogen auf das Development-Team  +
 - Ist- Stand- Analyse, von Frederics bisherigem Arbeitsstand
 | - Ausstieg eines Gruppenmitgliedes ist nicht unmöglich  +
-- Es entsteht Mehrarbeit für die verbleidenden Gruppenmitglieder, insbesonders die Entwickler  +
+- Es entsteht Mehrarbeit für die verbleibenden Gruppenmitglieder, insbesonders die Entwickler  +
 - In der taktischen Planung müssen zeitliche Puffer existieren um den Erfolg des Projektes nicht zu gefährden und um in den angegebenen Zeiträumen alle Aufgaben abarbeiten zu können +
 - Strategische Planung im Vorhinein und Abwägung potenzieller Risiken vor allem bei der Teamstruktur sind unabdingbar. Hierfür eignet sich eine Visualisierung im GitHub Risk- Board.
 - Wöchentliche  Meetings mit kurzer Arbeitsstandangabe und nächster Schritte sind elementar um zu sehen dass jeder Mitarbeiter effizient arbeitet und das Projekt nicht gefährdet wird.
@@ -202,7 +202,7 @@ Problem: Frederic war Teil des Development-Teams, hatte jedoch bis zu seinem Aus
 | **Mitteilungen über unbeachteten Kommunikationskanal, was dazu führte, dass der Empfänger die Nachrichten nicht gelesen hatte und dadurch wichtige Sachen im Sprint- Review nicht dargestellt werden konnten**
 |- Vereinbarung von gemeinsamen Kommunikationskanälen, die allen Teammitgliedern bekannt sind, und von jedem regelmäßig genutzt werden und genutzt werden können. (z.B.: keine Plattformabhängigkeit)  +
 - Festlegung von wenigen, bestenfalls einen bis zwei festen Kommunikationswegen. In unserem Team nutzen wir WhatsApp für den täglichen Nachrichtenaustausch und GitHub für den Transfer umfangreicher Dokumente und Discord für Online-Meetings.  +
-| - Vorab-Festelegung der genutzten Kommunikationsplattformen und dessen zeitlicher Nutzung.  
+| - Vorab-Festelegung der genutzten Kommunikationsplattformen und dessen zeitlicher Nutzung.
 
 | **Unkenntniss über Reihenfolge des Arbeitens gemäß des Scrum- Frameworks und den Prinzipien der iterativen und agilen Entwicklung:**  +
 - Verzögerungen bei der Rollenbildung  +
@@ -219,8 +219,8 @@ Problem: Frederic war Teil des Development-Teams, hatte jedoch bis zu seinem Aus
     (1) Kleinere Fragen jeweils direkt im Anschluss an der Lehrveranstaltung  +
     (2) Größere Fragen und Anliegen nach Terminabsprache in einem längeren Gespräch
 - Ein guter und regelmäßiger Kontakt zu den Betreuern und Stakeholdern ist für ein erfolgreiches Projekt unabdingbar
-| Zu viele Bewertungsfelder und Kategorisierungsfelder in Git 
-Hub für einzelne Issues/Boards. +
+| **Zu viele Bewertungsfelder und Kategorisierungsfelder in Git
+Hub für einzelne Issues/Boards.** +
 Dies steigerte die Unübersichtlichkeit innerhalb des GitHub-Projects, da zum Beispiel es für User Stories 3 Bewertungsfelder "Aufwand" gab.  +
 Es war unstrukturiert, wo welche Bewertung erfolgen sollte.
 | - Standardisierung aller Kategorien zur Bewertung von Labels  +
@@ -234,8 +234,8 @@ Es war unstrukturiert, wo welche Bewertung erfolgen sollte.
 === Positive Ereignisse
 |===
 |*Ereignis* |*Erkenntnis*
-| Schnelle Teambildung 
-|Alle Teilnehmer außer Frederic haben sich sofort mit der Gruppe und der 
+| Schnelle Teambildung
+|Alle Teilnehmer außer Frederic haben sich sofort mit der Gruppe und der
 Gruppendynamik identifiziert und fühlten sich zur Gruppe zugehörig.  +
 Es entstand ein freundschaftliches Verhältnis auf Augenhöhe und alle Mitglieder sind gleichberechtigt.  +
 Durch die schnelle Teambildung konnten fast alle Mitglieder gleich schon von Beginn an harmonisch zusammenarbeiten ohne größere Konflikte.
@@ -244,14 +244,15 @@ Durch die schnelle Teambildung konnten fast alle Mitglieder gleich schon von Beg
 | Ist- Standsanalyse und Befragung von Coach und Professor führten dazu, dass die einzelnen Mitglieder ihren eigenen Wissensstand reflektierten und aktiv sich Wissen über das agile Projektmanagement aneigneten.  +
 Schlussendlich führte dies dann dazu, dass alle Beteiligten erkannten, dass die Regelungen hilfreich und sinnvoll sind und diese dann zeitnah umsetzten.
 | Wenn man Probleme hat, sollte man sich nicht scheuen nachzufragen.  +
-Es ist außerdem sinnvoll auf dem Wissens- und Erfahrungsschatz von Experten prinzipiell aufzubauen. 
-| Erfolgreiches Einbringen eigener Ideen  zur effizienten Modifizierung 
+Es ist außerdem sinnvoll auf dem Wissens- und Erfahrungsschatz von Experten prinzipiell aufzubauen.
+| Erfolgreiches Einbringen eigener Ideen  zur effizienten Modifizierung
 des Projektes. Projekt  enthält eigene Gedanken und Ideen und ist somit hinsichtlich der Gestaltung und Arbeitsweise individuell.  +
 - Einführung unterschiedlicher Labels für Aufgaben auf GitHub um klar zwschen den durch User Stories entstehenden Task und den vom Professor vorgegebenen Iterationsaufgaben zu differenzieren +
 -  Flexible Kommunikationswege:   +
 (1) GitHub für Austausch größere Dokumente und Aufgabenverteilung  +
 (2) Whats- App für spontane Kommuikation und Meetingplanung  +
-(3) Miro- Board für Festlegung von Zufriedenheit nach Meetings und Templates (z.B.: für Git Commit- Messages)  +
+(3) Discord meist für Austausch von Ergebnissen, Quellen, Wireframes etc. während des Meetings +
+(4) Miro- Board für Festlegung von Zufriedenheit nach Meetings und Templates (z.B.: für Git Commit- Messages)  +
 - Einführung Hapiness- Index für alle Mitarbeiter nach Retrospektiven und transparente Darstellung im Miro- Board.
 | Wissen und Kenntnisse sind anwendbar und können individuell angepasst werden, sodass diese nochmals mehr den Bedürfnissen des Teams entsprechen.
 |===
@@ -272,7 +273,7 @@ des Projektes. Projekt  enthält eigene Gedanken und Ideen und ist somit hinsich
 | - Administrative Arbeit darf nicht den Entwicklungsaufwand übersteigen
 | **Anhaltend geringes Engagement eines Teammitglieds trotz wiederholter Aufgabenvergabe**
 +
-Bereits in Software Engineering 1 wurden vereinbarte Aufgaben (z. B. Erstellung von Wireframes) nicht oder nur unvollständig erledigt.  
+Bereits in Software Engineering 1 wurden vereinbarte Aufgaben (z. B. Erstellung von Wireframes) nicht oder nur unvollständig erledigt.
 In Software Engineering 2 setzte sich dieses Verhalten verstärkt fort:
 +
 - über mehrere Wochen keine Bearbeitung zugewiesener Aufgaben (z. B. Benutzerhandbuch, Sequenzdiagramme) +
@@ -282,9 +283,9 @@ In Software Engineering 2 setzte sich dieses Verhalten verstärkt fort:
 - Kaum Commits in Git Hub  +
 - Wenn Commits vollzogen wurden, dann wurde nur Chat- Gpt Text ins Git gepushed
 |
-- Mehrfache freundliche Erinnerungen und persönliche Gespräche im Team, vor allem veranlasst durch Scrum Master, was keine Wirkung erzielte +  
+- Mehrfache freundliche Erinnerungen und persönliche Gespräche im Team, vor allem veranlasst durch Scrum Master, was keine Wirkung erzielte +
 - Klare Aufgabenverteilung mit festen Zuständigkeiten und Deadlines, was auch kaum Wirkung erzielte  +
-- Thematisierung des Problems in Retrospektiven, was ebenfalls wirkungslos war + 
+- Thematisierung des Problems in Retrospektiven, was ebenfalls wirkungslos war +
 - Eskalation auf eine deutlich verbindlichere, autoritärere Kommunikation, was schlussendlich Erfolge in der Arbeitsweise der Person mit sich brachte:
   +
   - explizite Delegation von Aufgaben +
@@ -296,12 +297,12 @@ In Software Engineering 2 setzte sich dieses Verhalten verstärkt fort:
 - Autoritäres Eingreifen ist kein Widerspruch zu Agilität, sondern in Ausnahmesituationen notwendig, um das Projekt zu schützen (Beschrieben auch z.B.: im Situativen Reifegradmodell der Führung nach Hersey/Blanchard)  +
 - Fehlende Beiträge einzelner gefährden nicht nur Ergebnisse, sondern auch kaskadierend Motivation und Fairness im Team  +
 - Frühes und konsequentes Handeln ist entscheidend, damit sich die unerledigten Task der Person nicht aufsummieren +
-- Man sollte sich nicht einlullen lassen und nicht immer Ausreden wie 'Das werde ich heute Abend noch machen...' akzeotieren. +
+- Man sollte sich nicht einlullen lassen und nicht immer Ausreden wie 'Das werde ich heute Abend noch machen...' akzeptieren. +
 | Ungeeignete Sprintlänge und ungenaue Sprintplanung im universitären Kontext
 | - Einführung eines Kapazitätenboards zur Verfassung verfügbarer Arbeitszeit +
 - Wenn innerhalb eines Sprints noch mehr Kapazität besteht und bereits alle Artefakte abgearbeitet wurden, werden in einem Meeting mit dem gesamten Team neue Artefakte in den Sprint aufgenommen. +
-- Wenn User Stories od. andere Artefakte nicht abgeschlossen werden können innerhalb eines Sprints, werden sie erst einmal in den Product Backlog zurückgeführt +
-- Ggf. werden Stories die nicht abgearbeitet konnten in feinere Einheiten zerlegt am Sprintende (innerhalb von Refinement Meetings), allenfalls wird deren Komplexität aber vom Team erneut kritisch überprüft. +
+- Wenn User Stories oder andere Artefakte nicht abgeschlossen werden innerhalb eines Sprints, werden sie erst einmal in den Product Backlog zurückgeführt +
+- Ggf. werden Stories die nicht abgearbeitet werden konnten in feinere Einheiten zerlegt am Sprintende (innerhalb von Refinement Meetings), allenfalls wird deren Komplexität aber vom Team erneut kritisch überprüft. +
 | - Eine feste Sprintlänge von vier Wochen ist im Studium nur eingeschränkt planbar, da Arbeitsbelastung (u.a. durch andere Module oder dem Projektseminar aber auch durch außeruniversitäre Belastungen einzelner Mitglieder) stark schwankt +
 - Kapazitäten lassen sich im Studium nur bedingt und kurzfristig planen +
 - Sowohl die Über als auch die Unterplanung eines Sprints wirken sich negativ auf die Effizienz innerhalb des Teams aus, da immer Abstimmungs oder zusätzlicher Klärungsbedarf besteht. +
@@ -312,7 +313,7 @@ In Software Engineering 2 setzte sich dieses Verhalten verstärkt fort:
 
 === Positive Ereignisse
 |===
-|*Ereignis* |*Erkenntnis* 
+|*Ereignis* |*Erkenntnis*
 | Einführung klarer KPIs (Hapiness, Kapazität, Task- finish rate)
 | - Sichtbarkeit der Arbeitsbelastung und Motivation verbessert Planung, Teamverständnis, Zusammenarbeit, und dienem
 dem Scrum Master als Arbeitsunterstützung (z.B.: Ansprechen in Retrospektive, wenn Hapiness stark fällt, oder sich Kapazitäten drastisch reduzieren)
@@ -341,7 +342,7 @@ dem Scrum Master als Arbeitsunterstützung (z.B.: Ansprechen in Retrospektive, w
 
 === Managementpraktiken
 |===
-|*Kategorie* |*Praktik* 
+|*Kategorie* |*Praktik*
 | Meeting-Struktur- Verbesserung
 |- Wöchentliche Weeklies +
 - Retrospektive am Ende des Sprint +
