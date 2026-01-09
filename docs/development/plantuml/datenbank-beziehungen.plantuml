@@ -1,0 +1,73 @@
+@startuml
+' Database ER diagram generated from Prisma schema
+' Direction for readability
+left to right direction
+
+hide circle
+skinparam entityStyle rectangle
+skinparam classFontSize 12
+skinparam shadowing false
+
+' Entities
+entity "User" as User <<table: user>> {
+  * id : Int <<PK>>
+  --
+  email : String <<UQ>>
+  username : String? 
+  passwordHash : String
+  createdAt : DateTime
+  maxStreak : Int (default: 0)
+  currentStreak : Int (default: 0)
+}
+
+entity "Habit" as Habit <<table: habit>> {
+  * id : Int <<PK>>
+  --
+  userId : Int <<FK to user.id>>
+  name : String
+  description : String?
+  startDate : DateTime?
+  time : String?
+  frequency : String
+  weekDays : Int[] (default: [])
+  intervalDays : Int?
+  createdAt : DateTime (default: now())
+  currentStreak : Int (default: 0)
+  maxStreak : Int (default: 0)
+  isHarvested : Int (default: 0)
+  durationDays : Int?
+  predefinedHabitId : Int? <<FK to predefined_habit.id>>
+}
+
+entity "HabitEntry" as HabitEntry <<table: habitEntry>> {
+  * id : Int <<PK>>
+  --
+  habitId : Int <<FK to habit.id>>
+  date : DateTime
+  status : Boolean (default: false)
+  note : String?
+  userId : Int? <<FK to user.id>>
+  --
+  UNIQUE (habitId, date)
+}
+
+entity "PredefinedHabit" as PredefinedHabit <<table: predefined_habit>> {
+  * id : Int <<PK>>
+  --
+  name : String <<UQ>>
+  description : String
+  frequency : String
+}
+
+entity "Quote" as Quote <<table: quote>> {
+  * id : Int <<PK>>
+  --
+  quote : String
+}
+
+' Relationships
+User ||--|{ Habit : besitzt
+Habit ||--|{ HabitEntry : hat Einträge
+PredefinedHabit ||--o{ Habit : Vorlage für
+
+@enduml
