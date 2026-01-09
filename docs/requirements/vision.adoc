@@ -1,15 +1,5 @@
-= Vision: Habitree
-:project-name: Habitree
-:project-system-name: Habitree
-:revnumber: 4.0
-:revdate: {docdate}
-:toc: left
-:toclevels: 3
-:sectnums:
-:sectanchors:
-:icons: font
-:imagesdir: ./images
-
+= Vision: {project-name}
+Laurenz Born (laurenz.born@stud.htw-dresden.de); Alexander Chlebowski (alexander.chlebowski@stud.htw-dresden.de); Leonhard Hermann (leonhard.hermann@stud.htw-dresden.de); Johann Schmidt (johann.schmidt@stud.htw-dresden.de); Kimi Jerke (kimi.jerke@stud.htw-dresden.de); Jannes Lehmann (s86317@htw-dresden.de)
 include::../_includes/default-attributes.inc.adoc[]
 
 // =====================================================================
@@ -20,7 +10,7 @@ Der Zweck dieses Dokuments ist es, die wesentlichen *Bedarfe* und *Fähigkeiten*
 Kompakte, nutzerzentrierte Beschreibung der zentralen Anforderungen in der Sprache der künftigen Anwender; gemeinsame Zielvorstellung für alle Beteiligten.
 
 === Gültigkeitsbereich (Scope)
-Dieses Visionsdokument bezieht sich auf *{project-system-name}*, entwickelt von *Team 3A*. Das System unterstützt primär Studierende und junge Berufstätige beim Aufbau positiver Routinen sowie beim Abtrainieren unerwünschter Verhaltensweisen.
+Dieses Visionsdokument bezieht sich auf *{project-system-name}*, entwickelt von *Team 3A*. Das System unterstützt primär Studierende und junge Berufstätige beim Aufbau positiver Routinen sowie beim Abtrainieren unerwünschter Verhaltensweisen. Die Anwendung ist für die Nutzung auf dem Smartphone optimier, wodurch eine hohe Verfügbarkeit und einfache Bedienung gewährleistet wird. Sie unterstützt zwar Android und iOS, der Fokus liegt jedoch auf iOS. 
 
 *Im Umfang:* +
 1. Erstellen, Bearbeiten und Verfolgen persönlicher Gewohnheiten +
@@ -42,7 +32,7 @@ Siehe <<#glossary, Glossar>>.
 == Positionierung
 
 === Fachliche Motivation
-Viele Tools für Selbstorganisation sind überladen, wenig motivierend oder nicht alltagstauglich. *Habitree* adressiert dies mit einer *schlanken*, *intuitiven* und *motivierenden* App, die bewährte verhaltenspsychologische Prinzipien (z. B. Streaks, Feedback‑Loops, Micro‑Rewards) nutzt, um Nutzer*innen über die anfängliche Hürde hinaus langfristig zu begleiten. Aus betriebswirtschaftlicher Sicht steigert das System Produktivität und Selbstmanagement sowohl privat als auch beruflich.
+Viele Tools für Selbstorganisation sind überladen, wenig motivierend oder nicht alltagstauglich. *Habitree* adressiert dies mit einer *schlanken*, *intuitiven* und *motivierenden* App, die bewährte verhaltenspsychologische Prinzipien, wie  Streaks, Feedback‑Loops und Micro‑Rewards nutzt, um Nutzer*innen über die anfängliche Hürde hinaus langfristig zu begleiten. Aus betriebswirtschaftlicher Sicht steigert das System Produktivität und Selbstmanagement sowohl privat als auch beruflich.
 
 === Produktvision
 [cols="1,3"]
@@ -51,8 +41,8 @@ Viele Tools für Selbstorganisation sind überladen, wenig motivierend oder nich
 | die | ihre Gewohnheiten systematisch verfolgen, verbessern und reflektieren möchten
 | ist | {project-system-name}
 | eine | mobile Habit‑Tracking‑App
-| die |  durch klare Visualisierungen, motivierende Fortschrittsdarstellungen (z. B. Streaks, Verlaufsgrafiken) und eine intuitive Bedienung unterstützt.
-| Anders als | herkömmliche Kalender/Notiz‑Apps mit einfachen Erinnerungen oder klassische Tagebücher
+| die |  durch klare Visualisierungen, motivierende Fortschrittsdarstellungen und eine intuitive Bedienung unterstützt.
+| Anders als | herkömmliche Kalender/Notiz‑Apps mit einfachen Erinnerungen oder klassischen Tagebüchern
 | konzentriert sich unser Produkt | 
 auf eine digitale, leichtgewichtige und motivierende Nutzungserfahrung, die den täglichen Fortschritt sichtbar macht, anhand einer Baumgrafik visualisiert und somit den Aufbau persönlicher Routinen erleichtert.
 |===
@@ -67,14 +57,14 @@ auf eine digitale, leichtgewichtige und motivierende Nutzungserfahrung, die den 
 
 | Studierende (Primäre Nutzer)
 | Schwankende Tagesrhythmen, teils hoher Stress, Wunsch nach Selbstoptimierung
-| Nutzen die App zur Habit‑Bildung; geben Feedback zu Bedienung, Zeitplanung, Motivation und Visualisierung
+| Nutzen die App zur Habit‑Bildung; geben Feedback zu Bedienung, Zeitplanung, Motivation und Visualisierung 
 
 | Berufstätige (Sekundäre Nutzer)
 | Fester oder flexibler Arbeitsalltag; Wunsch nach Struktur und gesunden Routinen
 | Fordern Effizienz, Klarheit, Datenschutz und mobile Verfügbarkeit; erweitern den Blick über den Studierendenkontext
 
 | Projektgruppe (Team 3A)
-| Scrum‑Master, Product‑Owner, Entwicklungsteam
+| Scrum‑Master, Product‑Owner, Entwicklungsteam, Entwicklet das System im Rahmen eines Hochschulprojekts. Ziel ist die termingerechte Lieferung eines funktionierendes Prototyps
 | Iterative Konzeption, Entwicklung, Test; Sicherstellung von Nutzungswert, Qualität, Wartbarkeit und Planbarkeit
 
 | Wissenschaft/Expert*innen| Fachleute zu Verhaltenstherapie/Verhaltensökonomie| Validieren Ansätze (Gamification, Wissensbereich) und liefern belastbare Grundlagen
@@ -90,6 +80,10 @@ auf eine digitale, leichtgewichtige und motivierende Nutzungserfahrung, die den 
 | Lehrstühle/Betreuende
 | Auftraggeber/Coachings (z. B. Prof. Dr.‑Ing. habil. Jürgen Anke; Dipl.‑Inf. (FH) Christoph Zirkelbach)
 | Aufgabenstellung, Coaching, Bewertung; Unterstützung bei fachlichen/technischen Fragen
+
+| Review-Team
+| Testet das entwickelte System auf Funktionalität, Usability und Qualität
+| Bewertet Funktionen aus Nutzersicht, gibt Hinweise zur Benutzerfreundlichkeit und erkennt mögliche Probleme in der Bedienung oder Logik
 |===
 
 *Die Detaillierung nutzerseitiger Stakeholder erfolgt im UX‑Konzept via Personas.*
@@ -101,26 +95,26 @@ auf eine digitale, leichtgewichtige und motivierende Nutzungserfahrung, die den 
 
 [%header, cols="4,1,4,1"]
 |===
-| Bedarf (Warum) | Priorität | Fähigkeit/Feature (Was) | (Geplantes) Release
+| Bedarf | Priorität | Fähigkeit/Feature  | Geplantes Release
 
 | *Routine leichter aufbauen und langfristig motiviert bleiben*
-| Hoch
+| Muss
 |- Streak Tracking (Fortsetzungsserien der einzelnen Habits) +
-- einfache Fortschrittsvisualisierungen (z. B. Baumwachstum, Prozentuale Anzeige des Forschritts wobei 100% bei 66 Tagen erreicht werden sollen) +
+- einfache Fortschrittsvisualisierungen +
 | R1: 28.11.2025 +
 *R2: 28.12.2025*
 
 | *Klarheit über eigenen Fortschritt und tägliche Gewohnheiten gewinnen*
-| Hoch
+| Muss
 |- Dashboard mit Tages und Wochenübersicht +
 - Anzeige der für den aktuellen Tag geplanten Gewohnheiten +
-- Verlaufsgrafiken zur Analyse des Fortschritts
+- Erfolgsübersicht über bereits absolvierte Habits +
 | R1: 27.06.2025 +
 R2: 28.11.2025 +
 *R3: 28.12.2025*
 
 | *Schnelles Erfassen und Verwalten von Gewohnheiten*
-| Hoch
+| Muss
 |- Einfaches Anlegen, Bearbeiten und Löschen von Gewohnheiten +
 - Vorlagen (vordefinierte Habits) sowie eigene/benutzerdefinierte Habits, die man anlegen kann +
 - flexible Wiederholungsintervalle (z. B. täglich, wöchentlich, benutzerdefiniert) +
@@ -130,131 +124,71 @@ R2: 28.11.2025 +
 *R3: 28.12.2025*
 
 | *Barrierearme und konsistente Nutzung*
-| Mittel
+| Kann
 |- Zweisprachige Benutzeroberfläche (Deutsch, Englisch) +
 - klar strukturierte und konsistente UI +
 - Berücksichtigung von Nutzerfeedback aus Sprint Reviews +
 - gute Lesbarkeit durch ausreichende Kontraste sowie geeignete Schriftarten
-| R2: 28.11.2025
+| xx
 
 | *Vertrauenswürdiger Umgang mit persönlichen Daten*
-| Hoch
+| Kann
 |- Anmeldung über ein persönliches Nutzerkonto +
 - datensparsame Speicherung (nur notwendige Habit- und Fortschrittsdaten) +
 - keine Weitergabe personenbezogener Daten an Dritte +
 - sicherer Umgang mit Daten (Details werden in der Architektur spezifiziert)
-| R1: 27.06.2025
+| xx
 
 | *Verstehen, warum Gewohnheiten funktionieren oder scheitern*
-| Niedrig
+| Soll
 |- Optionaler Wissensbereich mit kurzen, leicht verständlichen Hinweisen zu Grundlagen der Gewohnheitsbildung
-| xxx
+| xx
 |===
 
 
 === Zusätzliche Produktanforderungen
 
-==== Standards & Plattformen
-
-* iOS (React Native/Expo); App-Store (Apple)
-* Relevante Leitlinien: +
-WCAG 2.2 (AA): Barrierefreiheit und Usability +
-DSGVO: Speicherung personenbezogener Daten +
-App-Store Richtlinien: jedoch erst einmal kein produktiver Store- Release angedacht
-
-==== Leistungsziele:
-
-* *Interaktion lokal:* +
-visuelles Feedback weniger als 300 ms +
-* *Backend:* +
-API-Antwort weniger als 1000 ms +
-Start bis erster nutzbarer Screen weniger als 3 Sekunden +
-
-==== Robustheit & Ausfalltoleranz
-
-* Das System soll für Nutzer während der regulären Nutzung stabil funktionieren. Kurzzeitige Unterbrechungen etwa durch Neustart sollen innerhalb von maximal 2 Minuten behoben sein. +
-* Zentrale Nutzungsdaten (z.B.: heutige Gewohnheiten, letzte Streak- Werte) sollen offline lesbar sein. Sobald wieder eine Internetverbindung besteht erfolgt eine automatische Synchronisation. +
-* Fehlerzustände werden verständlich kommuniziert durch geeignete, präzise und verständliche Statusmeldungen.
-
-==== Benutzbarkeit & Barrierefreiheit
-
-* Einfache Sprache +
-* konsistente Navigation +
-* bei kritischen Aktionen (z.B.: Löschen von Habits), sol es Rückgängig- Möglichkeit geben +
-* Keine Statuskommunikation ausschließlich über Farbe +
-* klare Labels/Icons
-
-==== Entwurfseinschränkungen & Annahmen
-
-* *Primärzielgruppe:* +
-- 16–60 Jahre +
-- grundlegende Medienkompetenz wird angenommen
-* *Nutzungsmuster:* +
-- tägliche Nutzung (Reminder- getrieben) +
-- frühe sichtbare Erfolge erhöhen Bindung
-* *Onboarding:* +
-- Einrichtung in in weniger als 2 Minuten +
-- Habit- Vorlagen sollen vorhanden sein, um Nutzer Inspiration zu geben und zeitgleich Arbeit abzunehmen
-
-
-==== Qualitätsanforderungen
-
-[%header, cols="4,1"]
+[%header, cols="4,1,1"]
 |===
-| Anforderung | Priorität 
+| Anforderung | Priorität | Geplantes Release
 
-| *Einfache Bedienbarkeit*  +
-  - Kurze Wege zu zentralen Funktionen +
-  - klare Labels und konsistente Navigation +  
-  - Wichtige Aktionen (z. B. Habit anlegen, abhaken) sollen in weniger als 3 Interaktionen erreichbar sein.
+| **Plattformen:** iOS, iPhone, IPad und iPod touch mit iOS 15.1 oder neuer, Apple Vision visionOS 1.0 oder neuer 
 | Hoch
+| MVP
 
-
-| *Reaktionszeiten*  +
-  - Lokale UI-Interaktionen (Tippen, Button-Feedback): maximal 300 ms  +
-  - API-Antwortzeiten: maximal 1000 ms + 
-  - Warmstart bis erster nutzbarer Screen: maximal 3 s +  
-  **(Werte müssen durch Testen validiert werden!)** +
+| **Barrierefreiheit:** einfache Sprache, klare Labels/Icons, keine reine Farb-Kommunikation
 | Mittel
+| MVP
 
-
-| *Mehrsprachigkeit (DE/EN)*  +
-  - Alle sichtbaren UI- Elemente sollen sowohl in Deutsch als auch in Englisch vorliegen +
-  - Der Nutzer kann einstellen, in welcher der beiden Sprachen er seine UI- Bedienen kann
+| **Performance:** Kernfunktionen < 2s, API-Antwort < 2s, App-Start < 10s, 
 | Mittel
+| MVP
 
+| **Onboarding:** Einrichtung < 2 Min inkl. Habit-Vorlagen zur Inspiration
+| niedrig
+| MVP
 
-| *Sicherheit & Datenschutz*  +
-  - Nutzung von Firebase Authentication +
-  - Die Anmeldung des Nutzers wird überprüft   
-  - Privatsphäre-Option: Nutzerprofil kann auf „privat“ oder „öffentlich“ gestellt werden.
-| Mittel
+| **Usability:** Konsistente Navigation und Undo-Funktion bei kritischen Aktionen (Löschen)
+| niedrig
+| MVP
 
-
-| *Barrierefreiheit (orientiert an WCAG 2.2 AA)*  +
-  - Mindestkontrast 4.5:1  +
-  - keine Statuskommunikation ausschließlich über Farbe  + 
-| Mittel
-
-
-| *Übersichtlichkeit von Layout & Icons*  
-  - Einheitliche Icon-Sprache +
-  - konsistente Abstände und Strukturierung +  
-  - Mobile-optimierte Darstellung (Responsive Design)
+| **Datenschutz:** DSGVO-konforme Speicherung personenbezogener Daten
 | Hoch
+| xx
 
-| *Fehlertoleranz & Robustheit*  +
-  - Lokale Daten (heutige Habits, letzte Streaks) sind auch ohne Internet verfügbar +  
-  - Synchronisation erfolgt automatisch bei Wiederverbindung.
+| **Robustheit:** Systemstabilität, Wiederherstellung nach Neustart < 2 Min, präzise Fehlermeldungen
 | Mittel
+| xx
+
+| **Store-Release:** Technischer Rahmen für Apple-Richtlinien (kein produktiver Release geplant)
+| Niedrig
+| xx
+
+| **Offline-Fähigkeit:** Zentrale Daten (Streaks, Habits) offline lesbar mit automatischer Synchronisation
+| Niedrig
+| xx
 
 |===
 
-// =====================================================================
-[[glossary]]
-== Glossar (Kurz)
-
-* *Habit:* Wiederkehrende Tätigkeit mit Ziel‑/Frequenzvorgabe
-* *Streak:* Anzahl aufeinanderfolgender Erfolgstage
 
 // EOF
