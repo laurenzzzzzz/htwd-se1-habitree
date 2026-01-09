@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Modal, View, Button, Pressable, Text, Dimensions, ScrollView } from 'react-native';
+import { Modal, View, Pressable, Text } from 'react-native';
 import { ThemedText } from './ThemedText';
 import { datePickerStyles } from '../../styles/datepicker_style';
 
@@ -83,9 +83,13 @@ export default function DatePicker({ visible, selectedDate, onSelectDate, onClos
 
           {/* Month/Year and Navigation */}
           <View style={datePickerStyles.monthHeader}>
-            <Button title="◄" onPress={handlePrevMonth} />
+            <Pressable style={datePickerStyles.navButton} onPress={handlePrevMonth} accessibilityLabel="Vorheriger Monat">
+              <Text style={datePickerStyles.navButtonText}>◄</Text>
+            </Pressable>
             <ThemedText style={datePickerStyles.monthText}>{monthYear}</ThemedText>
-            <Button title="►" onPress={handleNextMonth} />
+            <Pressable style={datePickerStyles.navButton} onPress={handleNextMonth} accessibilityLabel="Nächster Monat">
+              <Text style={datePickerStyles.navButtonText}>►</Text>
+            </Pressable>
           </View>
 
           {/* Weekday Labels */}
@@ -129,7 +133,9 @@ export default function DatePicker({ visible, selectedDate, onSelectDate, onClos
           </View>
 
           {/* Close Button */}
-          <Button title="Schließen" onPress={onClose} />
+          <Pressable style={datePickerStyles.actionButton} onPress={onClose} accessibilityLabel="Datumsauswahl schließen">
+            <ThemedText style={datePickerStyles.actionButtonText}>Schließen</ThemedText>
+          </Pressable>
         </View>
       </View>
     </Modal>

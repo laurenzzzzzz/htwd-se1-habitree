@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, View, Button, Pressable, TextInput, Text, ScrollView, Dimensions } from 'react-native';
+import { Modal, View, Button, Pressable, TextInput, Text, ScrollView, Dimensions, Image } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ThemedText } from './ThemedText';
 import { styles as loginStyles } from '../../styles/login_style';
@@ -24,6 +24,7 @@ type Props = {
     newHabitFrequency: string;
     newHabitWeekDays: number[];
     newHabitIntervalDays: string;
+    newHabitDurationDays?: string;
     setNewHabitName: (s: string) => void;
     setNewHabitDescription: (s: string) => void;
     setNewHabitStartDate: (s: string) => void;
@@ -31,6 +32,7 @@ type Props = {
     setNewHabitFrequency: (s: string) => void;
     setNewHabitWeekDays: (days: number[]) => void;
     setNewHabitIntervalDays: (s: string) => void;
+    setNewHabitDurationDays?: (s: string) => void;
     onAddPredefined: (label: string, description: string, frequency: string) => void;
     onSelectPredefined?: (p: Predefined) => void;
     onAddCustom: () => void;
@@ -50,6 +52,7 @@ export default function HabitModal({
     newHabitFrequency,
     newHabitWeekDays,
     newHabitIntervalDays,
+    newHabitDurationDays,
     setNewHabitName,
     setNewHabitDescription,
     setNewHabitStartDate,
@@ -57,6 +60,7 @@ export default function HabitModal({
     setNewHabitFrequency,
     setNewHabitWeekDays,
     setNewHabitIntervalDays,
+    setNewHabitDurationDays,
     onAddPredefined,
     onSelectPredefined,
     onAddCustom,
@@ -80,6 +84,7 @@ export default function HabitModal({
         setNewHabitFrequency('');
         setNewHabitWeekDays([]);
         setNewHabitIntervalDays('');
+        setNewHabitDurationDays && setNewHabitDurationDays('');
         setDatePickerVisible(false);
         setTimePickerVisible(false);
         onClose();
@@ -163,49 +168,72 @@ export default function HabitModal({
                                     />
 
                                     {/* Start Date Input */}
-                                    <View style={habitModalStyles.inputRowContainer}>
-                                        <View style={[habitModalStyles.inputWithIcon, loginStyles.input]}>
-                                            <TextInput
-                                                placeholder="Startdatum (dd.mm.yyyy)"
-                                                value={newHabitStartDate}
-                                                onChangeText={setNewHabitStartDate}
-                                                style={habitModalStyles.inputInner}
-                                                editable={false}
-                                            />
-                                            <Pressable
-                                                style={habitModalStyles.iconInside}
-                                                onPress={() => setDatePickerVisible(true)}
-                                            >
-                                                <Text style={habitModalStyles.iconButtonText}>📅</Text>
-                                            </Pressable>
+                                    <View style={habitModalStyles.marginTop}>
+                                        <ThemedText style={habitModalStyles.label}>Startdatum</ThemedText>
+                                        <View style={habitModalStyles.inputRowContainer}>
+                                            <View style={[habitModalStyles.inputWithIcon, loginStyles.input, habitModalStyles.inputWithIconFix]}>
+                                                <TextInput
+                                                    placeholder="dd.mm.yyyy"
+                                                    value={newHabitStartDate}
+                                                    onChangeText={setNewHabitStartDate}
+                                                    style={habitModalStyles.inputInner}
+                                                    editable={false}
+                                                />
+                                                <Pressable
+                                                    style={habitModalStyles.iconInside}
+                                                    onPress={() => setDatePickerVisible(true)}
+                                                >
+                                                    <Image source={require('../../assets/images/calendar.png')} style={habitModalStyles.pickerIcon} />
+                                                </Pressable>
+                                            </View>
                                         </View>
                                     </View>
 
                                     {/* Time Input */}
-                                    <View style={habitModalStyles.inputRowContainer}>
-                                        <View style={[habitModalStyles.inputWithIcon, loginStyles.input]}>
-                                            <TextInput
-                                                placeholder="Uhrzeit (hh:mm)"
-                                                value={newHabitTime}
-                                                onChangeText={setNewHabitTime}
-                                                style={habitModalStyles.inputInner}
-                                                editable={false}
-                                            />
-                                            <Pressable
-                                                style={habitModalStyles.iconInside}
-                                                onPress={() => setTimePickerVisible(true)}
-                                            >
-                                                <Text style={habitModalStyles.iconButtonText}>⏰</Text>
-                                            </Pressable>
+                                    <View style={habitModalStyles.marginTop}>
+                                        <ThemedText style={habitModalStyles.label}>Erinnerungszeit</ThemedText>
+                                        <View style={habitModalStyles.inputRowContainer}>
+                                            <View style={[habitModalStyles.inputWithIcon, loginStyles.input, habitModalStyles.inputWithIconFix]}>
+                                                <TextInput
+                                                    placeholder="hh:mm"
+                                                    value={newHabitTime}
+                                                    onChangeText={setNewHabitTime}
+                                                    style={habitModalStyles.inputInner}
+                                                    editable={false}
+                                                />
+                                                <Pressable
+                                                    style={habitModalStyles.iconInside}
+                                                    onPress={() => setTimePickerVisible(true)}
+                                                >
+                                                    <Image source={require('../../assets/images/clock.png')} style={habitModalStyles.pickerIcon} />
+                                                </Pressable>
+                                            </View>
                                         </View>
                                     </View>
 
+                                    {/* Duration Input (Laufzeit) */}
+                                    <View style={habitModalStyles.marginTop}>
+                                        <ThemedText style={habitModalStyles.label}>Laufzeit (Tage)</ThemedText>
+                                        <TextInput
+                                            placeholder="z.B. 66 Tage"
+                                            value={newHabitDurationDays || ''}
+                                            onChangeText={setNewHabitDurationDays ? setNewHabitDurationDays : () => {}}
+                                            keyboardType="number-pad"
+                                            style={[loginStyles.input, habitModalStyles.inputFontFix, habitModalStyles.noMarginBottom]}
+                                        />
+                                        <Pressable style={habitModalStyles.infoLinkContainer} onPress={() => alert('Psychologisch werden 66 Tage oft als sinnvoll angesehen, um neue Gewohnheiten zu festigen. Kürzere Laufzeiten eignen sich zum Einstieg, längere für nachhaltige Etablierung.') }>
+                                            <Text style={habitModalStyles.infoLinkText}>Warum 66 Tage?</Text>
+                                        </Pressable>
+                                    </View>
+
                                     {/* Frequency Dropdown */}
-                                    
-                                    <FrequencyDropdown
-                                        selectedFrequency={newHabitFrequency}
-                                        onSelectFrequency={setNewHabitFrequency}
-                                    />
+                                    <View style={habitModalStyles.marginTop}>
+                                        <ThemedText style={habitModalStyles.label}>Häufigkeit</ThemedText>
+                                        <FrequencyDropdown
+                                            selectedFrequency={newHabitFrequency}
+                                            onSelectFrequency={setNewHabitFrequency}
+                                        />
+                                    </View>
 
                                     {/* Interval Input - Only show if frequency is Benutzerdefiniert */}
                                     {newHabitFrequency === 'Benutzerdefiniert' && (
@@ -272,15 +300,25 @@ export default function HabitModal({
                             <Pressable
                                 style={[
                                     habitModalStyles.halfButton,
-                                    (newHabitFrequency === 'Wöchentlich' && newHabitWeekDays.length === 0) ||
-                                    (newHabitFrequency === 'Benutzerdefiniert' && newHabitIntervalDays.trim() === '')
+                                    (newHabitName.trim() === '' ||
+                                    newHabitStartDate.trim() === '' ||
+                                    newHabitTime.trim() === '' ||
+                                    !newHabitDurationDays ||
+                                    newHabitDurationDays.trim() === '' ||
+                                    ((newHabitFrequency || 'Täglich') === 'Wöchentlich' && newHabitWeekDays.length === 0) ||
+                                    ((newHabitFrequency || 'Täglich') === 'Benutzerdefiniert' && newHabitIntervalDays.trim() === ''))
                                         ? habitModalStyles.disabledButton
                                         : null,
                                 ]}
                                 onPress={onAddCustom}
                                 disabled={
-                                    (newHabitFrequency === 'Wöchentlich' && newHabitWeekDays.length === 0) ||
-                                    (newHabitFrequency === 'Benutzerdefiniert' && newHabitIntervalDays.trim() === '')
+                                    newHabitName.trim() === '' ||
+                                    newHabitStartDate.trim() === '' ||
+                                    newHabitTime.trim() === '' ||
+                                    !newHabitDurationDays ||
+                                    newHabitDurationDays.trim() === '' ||
+                                    ((newHabitFrequency || 'Täglich') === 'Wöchentlich' && newHabitWeekDays.length === 0) ||
+                                    ((newHabitFrequency || 'Täglich') === 'Benutzerdefiniert' && newHabitIntervalDays.trim() === '')
                                 }
                             >
                                 <ThemedText style={habitModalStyles.buttonText}>{submitLabel || 'Hinzufügen'}</ThemedText>

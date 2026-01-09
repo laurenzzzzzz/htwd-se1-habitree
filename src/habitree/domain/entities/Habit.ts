@@ -14,6 +14,7 @@ export type HabitData = {
   startDate?: string | Date | null;
   weekDays?: number[];
   intervalDays?: number | null;
+  durationDays?: number | null;
   entries: HabitEntry[];
   currentStreak?: number | null;
   maxStreak?: number | null;
@@ -34,6 +35,7 @@ export class Habit {
   readonly startDate?: string | Date | null;
   readonly weekDays?: number[];
   readonly intervalDays?: number | null;
+  readonly durationDays?: number | null;
   readonly entries: HabitEntry[];
   readonly currentStreak: number | null;
   readonly maxStreak: number | null;
@@ -49,6 +51,7 @@ export class Habit {
     this.startDate = data.startDate ?? null;
     this.weekDays = data.weekDays ?? [];
     this.intervalDays = data.intervalDays ?? null;
+    this.durationDays = data.durationDays ?? null;
     this.entries = data.entries;
     this.currentStreak = data.currentStreak ?? null;
     this.maxStreak = data.maxStreak ?? null;

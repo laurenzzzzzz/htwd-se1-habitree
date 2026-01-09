@@ -3,13 +3,14 @@ import { HabitPersistencePayload } from '../repositories/IHabitsRepository';
 
 export type HabitScheduleLike = Pick<
   Habit,
-  'frequency' | 'startDate' | 'weekDays' | 'intervalDays' | 'time'
+  'frequency' | 'startDate' | 'weekDays' | 'intervalDays' | 'time' | 'durationDays'
 > & {
   entries?: Habit['entries'];
 };
 
-export type HabitPersistenceRequestBody = Omit<HabitPersistencePayload, 'intervalDays'> & {
-  intervalDays?: number;
+export type HabitPersistenceRequestBody = Omit<HabitPersistencePayload, 'intervalDays' | 'durationDays'> & {
+  intervalDays?: number | null;
+  durationDays?: number | null;
   weekDays?: number[];
 };
 
@@ -52,7 +53,11 @@ export function buildHabitPersistenceRequest(
     intervalDays:
       payload.intervalDays && payload.intervalDays.trim() !== ''
         ? Number(payload.intervalDays)
-        : undefined,
+        : null,
+    durationDays:
+      payload.durationDays && payload.durationDays.trim() !== ''
+        ? Number(payload.durationDays)
+        : null,
   };
 }
 
@@ -66,6 +71,15 @@ export function shouldHabitOccurOnDate(habit: HabitScheduleLike, targetDate: Dat
   const normalizedTarget = startOfDay(targetDate);
   if (normalizedTarget.getTime() < startDate.getTime()) {
     return false;
+  }
+
+  // Check duration (Laufzeit)
+  if (habit.durationDays && habit.durationDays > 0) {
+    const diffTime = normalizedTarget.getTime() - startDate.getTime();
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    if (diffDays >= habit.durationDays) {
+      return false;
+    }
   }
 
   if (habit.frequency === DAILY) {
@@ -106,6 +120,41 @@ export function isSameDay(dateA: Date, dateB: Date): boolean {
     dateA.getMonth() === dateB.getMonth() &&
     dateA.getDate() === dateB.getDate()
   );
+}
+
+/**
+ * Finds the first valid date for a weekly habit starting from the given date.
+ */
+export function findFirstValidDateForWeekdays(startDateStr: string, weekDays: number[]): string {
+  if (!weekDays || weekDays.length === 0) return startDateStr;
+
+  const parts = startDateStr.trim().split('.');
+  if (parts.length !== 3) return startDateStr;
+  
+  const [d, m, y] = parts.map(Number);
+  const date = new Date(y, m - 1, d);
+  date.setHours(0, 0, 0, 0);
+
+  // Safety break to prevent infinite loops
+  let safety = 0;
+  while (safety < 365) {
+     // JS getDay: 0=Sun, 1=Mon...
+     // Our mapping: 0=Mon...6=Sun
+     const jsDay = date.getDay();
+     const ourDay = (jsDay + 6) % 7;
+
+     if (weekDays.includes(ourDay)) {
+        const dd = String(date.getDate()).padStart(2, '0');
+        const mm = String(date.getMonth() + 1).padStart(2, '0');
+        const yy = date.getFullYear();
+        return `${dd}.${mm}.${yy}`;
+     }
+
+     // Add 1 day
+     date.setDate(date.getDate() + 1);
+     safety++;
+  }
+  return startDateStr;
 }
 
 function sanitizeDateString(value?: string): string | null {

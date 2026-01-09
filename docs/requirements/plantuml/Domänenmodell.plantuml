@@ -26,6 +26,7 @@ class Habit {
   - time: String
   - weekDays: Int[]
   - intervalDays: Int?
+  - durationDays: Int?
   - createdAt: DateTime
   - currentStreak: Int
   - maxStreak: Int

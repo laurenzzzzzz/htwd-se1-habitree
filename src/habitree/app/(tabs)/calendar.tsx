@@ -76,6 +76,7 @@ export default function CalendarScreen() {
   const [newHabitFrequency, setNewHabitFrequency] = useState('');
   const [newHabitWeekDays, setNewHabitWeekDays] = useState<number[]>([]);
   const [newHabitIntervalDays, setNewHabitIntervalDays] = useState('');
+  const [newHabitDurationDays, setNewHabitDurationDays] = useState('');
   
   useEffect(() => {
     fetchHabits();
@@ -298,6 +299,7 @@ export default function CalendarScreen() {
                           setNewHabitFrequency(habit.frequency || '');
                           setNewHabitWeekDays(habit.weekDays || []);
                           setNewHabitIntervalDays(habit.intervalDays ? String(habit.intervalDays) : '');
+                          setNewHabitDurationDays(habit.durationDays ? String(habit.durationDays) : '');
                           setModalMode('custom');
                           setModalVisible(true);
                         }} style={calendarStyles.actionControl}>
@@ -353,6 +355,7 @@ export default function CalendarScreen() {
                       setNewHabitFrequency(habit.frequency || '');
                       setNewHabitWeekDays(habit.weekDays || []);
                       setNewHabitIntervalDays(habit.intervalDays ? String(habit.intervalDays) : '');
+                      setNewHabitDurationDays(habit.durationDays ? String(habit.durationDays) : '');
                       setModalVisible(true);
                     }} style={calendarStyles.actionControl}>
                       <Image source={EditIcon} style={calendarStyles.actionIcon} />
@@ -403,6 +406,7 @@ export default function CalendarScreen() {
           setNewHabitFrequency('');
           setNewHabitWeekDays([]);
           setNewHabitIntervalDays('');
+          setNewHabitDurationDays('');
         }}
         onOpenMode={(m) => {
           if (m === 'predefined') fetchPredefinedHabits();
@@ -416,6 +420,7 @@ export default function CalendarScreen() {
         newHabitFrequency={newHabitFrequency}
         newHabitWeekDays={newHabitWeekDays}
         newHabitIntervalDays={newHabitIntervalDays}
+        newHabitDurationDays={newHabitDurationDays}
         setNewHabitName={setNewHabitName}
         setNewHabitDescription={setNewHabitDescription}
         setNewHabitStartDate={setNewHabitStartDate}
@@ -423,8 +428,10 @@ export default function CalendarScreen() {
         setNewHabitFrequency={setNewHabitFrequency}
         setNewHabitWeekDays={setNewHabitWeekDays}
         setNewHabitIntervalDays={setNewHabitIntervalDays}
+        setNewHabitDurationDays={setNewHabitDurationDays}
         onAddPredefined={async (label, description, frequency) => {
-          const result = await handleSaveHabit(label, description, frequency);
+          // Preserve argument order: name, frequency, description
+          const result = await handleSaveHabit(label, frequency, description);
           if (result.success) {
             setModalVisible(false);
             setModalMode(null);
@@ -441,7 +448,18 @@ export default function CalendarScreen() {
         }}
         onAddCustom={async () => {
           if (editHabitId) {
-            const res = await handleUpdateHabit(editHabitId, newHabitName, newHabitDescription, newHabitFrequency || 'Täglich', newHabitStartDate, newHabitTime, newHabitWeekDays, newHabitIntervalDays);
+            // Update expects: id, name, frequency, description, start, time, weekDays, intervalDays, durationDays
+            const res = await handleUpdateHabit(
+              editHabitId,
+              newHabitName,
+              newHabitFrequency || 'Täglich',
+              newHabitDescription,
+              newHabitStartDate,
+              newHabitTime,
+              newHabitWeekDays,
+              newHabitIntervalDays,
+              newHabitDurationDays,
+            );
             if (res.success) {
               setModalVisible(false);
               setEditHabitId(null);
@@ -452,7 +470,17 @@ export default function CalendarScreen() {
               return;
             }
             const frequency = newHabitFrequency || 'Täglich';
-            const result = await handleSaveHabit(newHabitName, newHabitDescription, frequency, newHabitStartDate, newHabitTime, newHabitWeekDays, newHabitIntervalDays);
+            // Create expects: name, frequency, description, start, time, weekDays, intervalDays, durationDays
+            const result = await handleSaveHabit(
+              newHabitName,
+              frequency,
+              newHabitDescription,
+              newHabitStartDate,
+              newHabitTime,
+              newHabitWeekDays,
+              newHabitIntervalDays,
+              newHabitDurationDays,
+            );
             if (result.success) {
               setNewHabitName('');
               setNewHabitDescription('');
@@ -461,6 +489,7 @@ export default function CalendarScreen() {
               setNewHabitFrequency('');
               setNewHabitWeekDays([]);
               setNewHabitIntervalDays('');
+              setNewHabitDurationDays('');
               setModalVisible(false);
               setModalMode(null);
             } else {

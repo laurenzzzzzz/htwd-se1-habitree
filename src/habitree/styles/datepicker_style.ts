@@ -31,6 +31,17 @@ export const createDatePickerStyles = (width?: number, height?: number) => {
       alignItems: 'center',
       marginBottom: spacing.md,
     },
+    navButton: {
+      backgroundColor: '#f0f0f0',
+      paddingVertical: spacing.xs,
+      paddingHorizontal: spacing.md,
+      borderRadius: radius(8),
+    },
+    navButtonText: {
+      color: '#333',
+      fontWeight: '600',
+      fontSize: font(16),
+    },
     monthText: {
       fontSize: font(16),
       fontWeight: 'bold',
@@ -77,6 +88,17 @@ export const createDatePickerStyles = (width?: number, height?: number) => {
     dayTextSelected: {
       color: '#fff',
       fontWeight: 'bold',
+    },
+    actionButton: {
+      backgroundColor: '#f0f0f0',
+      borderRadius: radius(10),
+      paddingVertical: spacing.sm,
+      alignItems: 'center',
+      marginTop: spacing.sm,
+    },
+    actionButtonText: {
+      color: '#333',
+      fontWeight: '600',
     },
   });
 };

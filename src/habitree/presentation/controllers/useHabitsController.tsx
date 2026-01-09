@@ -3,6 +3,7 @@ import { useApplicationServices } from '../providers/ApplicationServicesProvider
 import { useAuth } from '../../context/AuthContext';
 import { Habit } from '../../domain/entities/Habit';
 import { FilterKey } from '../../constants/HomeScreenConstants';
+import { findFirstValidDateForWeekdays } from '../../domain/policies/HabitSchedulePolicy';
 
 export function useHabitsController() {
   const { habitService, notificationService, quoteService } = useApplicationServices();
@@ -68,10 +69,10 @@ export function useHabitsController() {
   }, [habitService, authToken]);
 
   const saveHabit = useCallback(
-    async (name: string, frequency: string, description?: string | null | undefined, startDate?: string, time?: string, weekDays?: number[], intervalDays?: string) => {
+    async (name: string, frequency: string, description?: string | null | undefined, startDate?: string, time?: string, weekDays?: number[], intervalDays?: string, durationDays?: string) => {
       if (!authToken) throw new Error('Kein Auth-Token vorhanden');
       try {
-        const updatedHabits = await habitService.saveHabit(authToken, name, frequency, description, startDate, time, weekDays, intervalDays);
+        const updatedHabits = await habitService.saveHabit(authToken, name, frequency, description, startDate, time, weekDays, intervalDays, durationDays);
         setHabits(updatedHabits);
         await rescheduleNotifications(updatedHabits);
         return updatedHabits;
@@ -130,10 +131,10 @@ export function useHabitsController() {
     }
   }, [authToken, habitService, rescheduleNotifications]);
 
-  const updateHabit = useCallback(async (id: number, name: string, frequency: string, description?: string | null | undefined, startDate?: string, time?: string, weekDays?: number[], intervalDays?: string) => {
+  const updateHabit = useCallback(async (id: number, name: string, frequency: string, description?: string | null | undefined, startDate?: string, time?: string, weekDays?: number[], intervalDays?: string, durationDays?: string) => {
     if (!authToken) throw new Error('Kein Auth-Token vorhanden');
     try {
-      const updatedHabits = await habitService.updateHabit(authToken, id, name, frequency, description, startDate, time, weekDays, intervalDays);
+      const updatedHabits = await habitService.updateHabit(authToken, id, name, frequency, description, startDate, time, weekDays, intervalDays, durationDays);
       setHabits(updatedHabits);
       await rescheduleNotifications(updatedHabits);
       return updatedHabits;
@@ -174,9 +175,15 @@ export function useHabitsController() {
    * Handler for habit creation
    */
   const handleSaveHabit = useCallback(
-    async (name: string, frequency: string, description?: string | null | undefined, startDate?: string, time?: string, weekDays?: number[], intervalDays?: string) => {
+    async (name: string, frequency: string, description?: string | null | undefined, startDate?: string, time?: string, weekDays?: number[], intervalDays?: string, durationDays?: string) => {
       try {
-        await saveHabit(name, frequency, description, startDate, time, weekDays, intervalDays);
+        // Adjust start date if weekly and specific weekdays are selected
+        let adjustedStartDate = startDate;
+        if (frequency === 'Wöchentlich' && weekDays && weekDays.length > 0 && startDate) {
+           adjustedStartDate = findFirstValidDateForWeekdays(startDate, weekDays);
+        }
+
+        await saveHabit(name, frequency, description, adjustedStartDate, time, weekDays, intervalDays, durationDays);
         return { success: true };
       } catch (error) {
         console.error('saveHabit error:', error);
@@ -211,9 +218,15 @@ export function useHabitsController() {
     }
   }, [deleteHabit]);
 
-  const handleUpdateHabit = useCallback(async (id: number, name: string, frequency: string, description?: string | null | undefined, startDate?: string, time?: string, weekDays?: number[], intervalDays?: string) => {
+  const handleUpdateHabit = useCallback(async (id: number, name: string, frequency: string, description?: string | null | undefined, startDate?: string, time?: string, weekDays?: number[], intervalDays?: string, durationDays?: string) => {
     try {
-      await updateHabit(id, name, frequency, description, startDate, time, weekDays, intervalDays);
+      // Adjust start date if weekly and specific weekdays are selected
+      let adjustedStartDate = startDate;
+      if (frequency === 'Wöchentlich' && weekDays && weekDays.length > 0 && startDate) {
+           adjustedStartDate = findFirstValidDateForWeekdays(startDate, weekDays);
+      }
+
+      await updateHabit(id, name, frequency, description, adjustedStartDate, time, weekDays, intervalDays, durationDays);
       return { success: true };
     } catch (error) {
       console.error('updateHabit error', error);

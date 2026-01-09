@@ -7,7 +7,7 @@ export const createFrequencyDropdownStyles = (width?: number, height?: number) =
 
   return StyleSheet.create({
     container: {
-      marginBottom: spacing.md,
+      marginBottom: spacing.xs *0.2,
     },
     button: {
       flexDirection: 'row',

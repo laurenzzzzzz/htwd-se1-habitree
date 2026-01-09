@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Pressable, Modal, Text } from 'react-native';
 import { ThemedText } from './ThemedText';
 import { frequencyDropdownStyles } from '../../styles/frequencydropdown_style';
+import { habitModalStyles } from '../../styles/habitmodal_style';
 import { styles as loginStyles } from '../../styles/login_style';
 
 type Props = {
@@ -22,7 +23,7 @@ export default function FrequencyDropdown({ selectedFrequency = 'Täglich', onSe
   return (
     <View style={frequencyDropdownStyles.container}>
       <Pressable
-        style={[loginStyles.input, frequencyDropdownStyles.button]}
+        style={[loginStyles.input, frequencyDropdownStyles.button, habitModalStyles.dropdownFix]}
         onPress={() => setIsOpen(true)}
       >
           <ThemedText style={frequencyDropdownStyles.buttonText}>
