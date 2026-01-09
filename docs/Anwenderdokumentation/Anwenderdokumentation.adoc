@@ -1,7 +1,7 @@
 = Benutzerhandbuch – Habit Tracker (Expo)
 
 == 1. Ziel des Dokuments
-Dieses Handbuch unterstützt Nutzer dabei, die **Habit Tracker App** zu starten und erklärt die Bedienung der App.
+Dieses Handbuch unterstützt Nutzer dabei, die **habitree-App** zu starten und erklärt die Bedienung der App.
 
 == 2. Voraussetzungen
 * Expo Go App auf dem Handy
@@ -10,7 +10,7 @@ Dieses Handbuch unterstützt Nutzer dabei, die **Habit Tracker App** zu starten 
 
 == 3. App auf dem Handy starten
 
-Bitte beachten das auf dem Handy der eduVPN aktiviert sein muss bzw. im Netz der HTW-Dresden sein muss.
+Bitte beachten, dass auf dem Handy der eduVPN aktiviert sein muss bzw. Sie sich im Netz der HTW Dresden befinden müssen.
 
 Scanne den angezeigten QR-Code mit der **Expo Go App** auf deinem Smartphone.
 
