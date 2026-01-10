@@ -95,7 +95,7 @@ Update/Delete/Add (Datei) {Beschreibungstext(Deutsch)}
 | Projektdokumentation in Ascii Doc  +
 -  Strukturierte Gliederung und Unterteilung des Projektes gemäß seiner einzelnen Komponenten(vision.adoc, project_plan.adoc, glossary.adoc etc.) +
 - Gemeinsame Ablage aller Dokumente im Git Repository für eine sinnvolle und effiziente Versionierung  +
-- Zusätzlich ergänzende Inhalte im Miro Board, WhatsApp-Gruppenchat und in Discord (Kommentare,  Templates, Meeting- Dokumentationen)
+//- Zusätzlich ergänzende Inhalte im Miro Board, WhatsApp-Gruppenchat und in Discord (Kommentare,  Templates, Meeting- Dokumentationen) 
 |UI/UX- Design
 |Erstellung von Wireframes und darauf aufbauend Wireflows mit Hilfe von Figma und penpot durch das Entwicklerteam +
 - Bewertung der Wireframes und Wireflows durch das gesamte Team und durch Stakeholder in Reviews. +
