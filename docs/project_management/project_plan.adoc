@@ -114,7 +114,7 @@ Update/Delete/Add (Datei) {Beschreibungstext(Deutsch)}
 | Visualisierung von Aspekten unter Zuhilfenahme von Diagrammen
 |- Nutzen von PlantUML um Strukturen und Interkationen innerhalb von unserem Softwaresystemen in Form von den ersten beiden Level zu einem C4 Modell zu modellieren
 | CI/CD & Automatisierung (Continuous Integration/ Continuous Deployment)
-| Nutzung von GitHub Actions zur automatisierten Qualitätssicherung: +
+| Nutzung von GitHub Actions zur automatisierten Qualitätssicherung +
 - Trigger bei Pushes auf den Main-Branch zur sofortigen Überprüfung von Änderungen +
 - Durchführung automatisierter Security-Scans mittels Shai-Hulud Detector +
 - Prüfung der Projektabhängigkeiten und Umgebung durch Expo Doctor +
