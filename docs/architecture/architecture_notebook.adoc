@@ -262,6 +262,20 @@ Die Codebasis folgt konsequent einer Domain-Driven-Design-Struktur (DDD) und wen
 ** *Wie:* Konsistente Nutzung von Try-Catch-Blöcken und HTTP-Statuscodes.
 ** *Wo:* Backend-Routen (`routes/habits.js`) und Middleware (`authMiddleware.js`).
 
+* **Code-Standards & Formatierung**
+** *Was:* Einhalten eines einheitlichen Code-Stils im Team.
+** *Wie:* Code Konventionen
+*** **Dateinamen:**
+**** React-Komponenten: PascalCase (z. B. `HabitList.tsx`)
+**** Hooks/Funktionen: camelCase (z. B. `useAuth.ts`, `streak.ts`)
+**** Klassen/Typen: PascalCase (z. B. `Habit.ts`)
+*** **Code:**
+**** Variablen/Methoden: camelCase (z. B. `toggleHabit`, `isHarvested`)
+**** Interfaces: PascalCase, teils mit Prefix 'I' (z. B. `IHabitsRepository`)
+**** Komponenten: PascalCase (z. B. `function HabitList(...)`)
+
+
+
 === Architektur auf einen Blick
 
 [cols="1,2,2",options="header"]
