@@ -661,7 +661,7 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
                   }
                 }}
               >
-                <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 16 }}>🍎 Früchte Ernten</Text>
+                <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 16 }}>Früchte Ernten</Text>
               </TouchableOpacity>
 
               <TouchableOpacity
@@ -676,7 +676,7 @@ export const TreeView: React.FC<Props> = ({ treeGrowth, isLoading, backgroundCol
                   }
                 }}
               >
-                <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 16 }}>🌱 Baum wachsen lassen</Text>
+                <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 16 }}>Baum wachsen lassen</Text>
               </TouchableOpacity>
             </View>
           </View>

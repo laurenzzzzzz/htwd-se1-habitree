@@ -45,10 +45,9 @@ export const createInventoryViewStyles = (
       alignItems: 'flex-start',
     },
     badge: {
-      width: scale(80),
-      height: scale(80),
-      flexBasis: '33.333%',
-      maxWidth: scale(80),
+      width: scale(200),
+      height: scale(200), 
+      flexBasis: '55%',
     },
     completedTree: {
       borderWidth: 3,

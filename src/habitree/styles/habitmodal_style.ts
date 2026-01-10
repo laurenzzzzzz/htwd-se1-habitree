@@ -200,11 +200,11 @@ export const createHabitModalStyles = (width?: number, height?: number) => {
         },
         weekdayGrid: {
             flexDirection: 'row',
-            flexWrap: 'wrap',
-            gap: spacing.xs * 0.6,
+            flexWrap: 'nowrap',
+            justifyContent: 'space-between',
         },
         weekdayButton: {
-            width: '13%',
+            width: '12%',
             aspectRatio: 1,
             borderRadius: radius(10),
             justifyContent: 'center',
