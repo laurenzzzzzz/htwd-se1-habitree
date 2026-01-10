@@ -229,7 +229,38 @@ Exponierte Ports:
 
 == Schichten oder Architektur-Framework
 
-Die Codebasis folgt konsequent einer Domain-Driven-Design-Struktur (DDD).
+=== Clean Code Prinzipien & Code Conventions 
+Die Codebasis folgt konsequent einer Domain-Driven-Design-Struktur (DDD) und wendet etablierte Clean-Code-Prinzipien an:
+
+* **Separation of Concerns (SoC) & Schichtenarchitektur**
+** *Was:* Trennung des Codes in logische Schichten mit klaren Zuständigkeiten.
+** *Wie:* Aufteilung in Domain (Logik), Application (Use Cases), Infrastructure (Datenzugriff) und Presentation (UI).
+** *Wo:* Sichtbar in der Ordnerstruktur `src/habitree/` (`domain/`, `application/`, `infrastructure/`, `presentation/`).
+
+* **Meaningful Names (Sprechende Namen)**
+** *Was:* Klassen, Methoden und Variablen beschreiben ihre Funktion eindeutig.
+** *Wie:* Verzicht auf generische Namen, Nutzung von Verben für Aktionen und Substantiven für Objekte.
+** *Wo:* `HabitService.ts` (Methoden wie `toggleHabit`), `authMiddleware.js` (Funktion `verifyJwtToken`), `Habit.ts` (Eigenschaften wie `isHarvested`).
+
+* **Single Responsibility Principle (SRP)**
+** *Was:* Jede Klasse oder jedes Modul hat nur einen Änderungsgrund bzw. eine Aufgabe.
+** *Wie:* Auslagerung von Styles, Trennung von UI-Darstellung, Logik und Datenzugriff.
+** *Wo:* `HabitList.tsx` kümmert sich nur um die Darstellung, `HabitList_style.ts` um das Design und `HabitService.ts` um die Logik.
+
+* **Encapsulation & Immutability**
+** *Was:* Schutz von Daten vor ungewollter Änderung und Kapselung von Geschäftsregeln.
+** *Wie:* Verwendung von `readonly`-Eigenschaften in Entitäten.
+** *Wo:* Domain Entities wie `Habit.ts` (`readonly id`, `readonly name`).
+
+* **Dependency Inversion Principle (DIP)**
+** *Was:* High-Level-Module hängen von Abstraktionen ab, nicht von Details.
+** *Wie:* Services nutzen Interfaces (Ports) anstelle von konkreten Implementierungen.
+** *Wo:* `HabitService` nutzt `IHabitsRepository` (Interface), wodurch die Datenquelle (API, Local Storage) austauschbar ist.
+
+* **Error Handling & Fail-Fast**
+** *Was:* Sauberes Abfangen und Behandeln von Fehlern, um inkonsistente Zustände zu vermeiden.
+** *Wie:* Konsistente Nutzung von Try-Catch-Blöcken und HTTP-Statuscodes.
+** *Wo:* Backend-Routen (`routes/habits.js`) und Middleware (`authMiddleware.js`).
 
 === Architektur auf einen Blick
 
