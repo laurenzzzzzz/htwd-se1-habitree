@@ -90,7 +90,7 @@ Sinn ist, dass jeder der Mitglieder seine Aufgaben genau kennt, versteht, dass e
 |===
 | *Kategorie* | *Praktik*
 | Ergebnisübertragung | Ziel ist eine Softwareentwicklung unter Nutzung einer versionsverwaltenden Plattform. Hierfür wird GitHub verwendet. Ergebnisse in den Dokumenten oder auch im Code werden per standardisierter Commits in das Repository übertragen. Die Vorlage für die Commits wurde im Miro- Board öffentlich jedem Mitglied zur verfügung gestellt. +
-Update/Delete/Add {Beschreibungstext(Deutsch)} (Datei)
+Update/Delete/Add (Datei) {Beschreibungstext(Deutsch)} 
 | Dokumentation
 | Projektdokumentation in Ascii Doc  +
 -  Strukturierte Gliederung und Unterteilung des Projektes gemäß seiner einzelnen Komponenten(vision.adoc, project_plan.adoc, glossary.adoc etc.) +
@@ -100,18 +100,25 @@ Update/Delete/Add {Beschreibungstext(Deutsch)} (Datei)
 |Erstellung von Wireframes und darauf aufbauend Wireflows mit Hilfe von Figma und penpot durch das Entwicklerteam +
 - Bewertung der Wireframes und Wireflows durch das gesamte Team und durch Stakeholder in Reviews. +
 - Feedback wird systematisch dokumentiert, gruppiert und fließt in die Weiterentwicklung ein.
-| Fehler und Risikomangement
-| Initiale Dokumentation von Risiken in separaten Git Risk Board. Hierbei werden die Risiken möglichst genau defniert.  +
+| Fehler- und Risikomanagement
+| Initiale Dokumentation von Risiken in separaten Git Risk Board. Hierbei werden die Risiken möglichst genau definiert.  +
 - Das Risiko- Board wird bei Bedarf geupdatet und um neue Risiken ergänzt. Bestehende Risiken werden in regelmäßigen Abständen durchgangen und verwaltet hinsichtlich des Aufwandes und Einflusses.  +
 - Auftretende Fehler und Risiken werden direkt in Meetings besprochen und nach Dringlichkeit priorisiert +
-- Fehler und Bug-Fixes werden als eigene Tasks verwaltet und in die Iteration mit aufgenommen. (z.B.: Issues mit dem Label "Defect")
+- Fehler und Bug-Fixes werden als eigene Tasks mit dem Label Defects verwaltet und im Github Project mit eigener Sicht dargestellt. +
 | Entwicklungstechnologie
 | Verwendung von Expo mit React Native zur plattformübergreifenden Entwicklung +
 - Entwicklung in JavaScript und in TypeScript  +
 - Nutzung der Expo Go App zur Live Vorschau auf echter Hardware +
+- Ausführung der Entwicklungsumgebung in Docker Containern zur Sicherstellung konsistenter Abhängigkeiten und Vermeidung von Konfigurationsproblemen +
 - Einsatz von Visual Studio Code als Entwicklungsplattform.
 | Visualisierung von Aspekten unter Zuhilfenahme von Diagrammen
 |- Nutzen von PlantUML um Strukturen und Interkationen innerhalb von unserem Softwaresystemen in Form von den ersten beiden Level zu einem C4 Modell zu modellieren
+| CI/CD & Automatisierung (Continuous Integration/ Continuous Deployment)
+| Nutzung von GitHub Actions zur automatisierten Qualitätssicherung: +
+- Trigger bei Pushes auf den Main-Branch zur sofortigen Überprüfung von Änderungen +
+- Durchführung automatisierter Security-Scans mittels Shai-Hulud Detector +
+- Prüfung der Projektabhängigkeiten und Umgebung durch Expo Doctor +
+- Ausführung der Tests zur Gewährleistung der Funktionalität
 
 |===
 
