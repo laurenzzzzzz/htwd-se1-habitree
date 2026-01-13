@@ -1,3 +1,4 @@
+
 /**
  * Unit Tests für Habit Entity
  * 
@@ -232,6 +233,188 @@ describe('Habit Entity', () => {
 
       expect(habit.entries).toHaveLength(1);
       expect(habit.entries[0].note).toBe('Gut gemacht!');
+    });
+  });
+
+  // ============================================
+  // getStreak mit Backend-Wert (currentStreak)
+  // ============================================
+  describe('getStreak mit Backend currentStreak', () => {
+    it('sollte Backend-Wert verwenden wenn currentStreak gesetzt ist', () => {
+      const habit = new Habit({
+        id: 1,
+        name: 'Test',
+        description: 'Test',
+        frequency: 'daily',
+        entries: [
+          { id: 1, date: daysAgo(0), status: true, note: null },
+          { id: 2, date: daysAgo(1), status: true, note: null }
+        ],
+        currentStreak: 15 // Backend sagt: Streak ist 15
+      });
+
+      // Sollte Backend-Wert verwenden, nicht selbst berechnen
+      expect(habit.getStreak()).toBe(15);
+    });
+
+    it('sollte 0 zurückgeben wenn Backend currentStreak 0 ist', () => {
+      const habit = new Habit({
+        id: 1,
+        name: 'Test',
+        description: 'Test',
+        frequency: 'daily',
+        entries: [],
+        currentStreak: 0
+      });
+
+      expect(habit.getStreak()).toBe(0);
+    });
+  });
+
+  // ============================================
+  // getEntryForDate - Entry für Datum finden
+  // ============================================
+  describe('getEntryForDate', () => {
+    it('sollte Entry für gegebenes Datum zurückgeben', () => {
+      const targetDate = new Date(2024, 5, 15);
+      const habit = createHabit([
+        { id: 1, date: '2024-06-15', status: true, note: 'Geschafft!' },
+        { id: 2, date: '2024-06-16', status: false, note: null }
+      ]);
+
+      const entry = habit.getEntryForDate(targetDate);
+
+      expect(entry).toBeDefined();
+      expect(entry?.id).toBe(1);
+      expect(entry?.status).toBe(true);
+      expect(entry?.note).toBe('Geschafft!');
+    });
+
+    it('sollte undefined zurückgeben wenn kein Entry für Datum existiert', () => {
+      const habit = createHabit([
+        { id: 1, date: '2024-06-15', status: true, note: null }
+      ]);
+
+      const entry = habit.getEntryForDate(new Date(2024, 5, 20));
+
+      expect(entry).toBeUndefined();
+    });
+
+    it('sollte auch bei mehreren Entries das richtige Datum finden', () => {
+      const habit = createHabit([
+        { id: 1, date: '2024-06-10', status: true, note: null },
+        { id: 2, date: '2024-06-15', status: true, note: null },
+        { id: 3, date: '2024-06-20', status: false, note: null }
+      ]);
+
+      const entry = habit.getEntryForDate(new Date(2024, 5, 20));
+
+      expect(entry?.id).toBe(3);
+      expect(entry?.status).toBe(false);
+    });
+  });
+
+  // ============================================
+  // isCompletedOn - Completion-Check für Datum
+  // ============================================
+  describe('isCompletedOn', () => {
+    it('sollte true zurückgeben wenn Habit an dem Tag erledigt wurde', () => {
+      const habit = createHabit([
+        { id: 1, date: '2024-06-15', status: true, note: null }
+      ]);
+
+      expect(habit.isCompletedOn(new Date(2024, 5, 15))).toBe(true);
+    });
+
+    it('sollte false zurückgeben wenn Entry existiert aber status = false', () => {
+      const habit = createHabit([
+        { id: 1, date: '2024-06-15', status: false, note: null }
+      ]);
+
+      expect(habit.isCompletedOn(new Date(2024, 5, 15))).toBe(false);
+    });
+
+    it('sollte false zurückgeben wenn kein Entry für das Datum existiert', () => {
+      const habit = createHabit([
+        { id: 1, date: '2024-06-15', status: true, note: null }
+      ]);
+
+      expect(habit.isCompletedOn(new Date(2024, 5, 20))).toBe(false);
+    });
+  });
+
+  // ============================================
+  // matchesFilter - Filter-Logik
+  // ============================================
+  describe('matchesFilter', () => {
+    it('sollte true zurückgeben für Filter "alle"', () => {
+      const habit = new Habit({
+        id: 1,
+        name: 'Joggen',
+        description: 'Test',
+        frequency: 'daily',
+        entries: []
+      });
+
+      expect(habit.matchesFilter('alle')).toBe(true);
+      expect(habit.matchesFilter('Alle')).toBe(true);
+      expect(habit.matchesFilter('ALLE')).toBe(true);
+    });
+
+    it('sollte true zurückgeben wenn Filter leer oder undefined ist', () => {
+      const habit = new Habit({
+        id: 1,
+        name: 'Meditation',
+        description: 'Test',
+        frequency: 'daily',
+        entries: []
+      });
+
+      expect(habit.matchesFilter('')).toBe(true);
+      expect(habit.matchesFilter(null as any)).toBe(true);
+      expect(habit.matchesFilter(undefined as any)).toBe(true);
+    });
+
+    it('sollte true zurückgeben wenn Name den Filter enthält (case-insensitive)', () => {
+      const habit = new Habit({
+        id: 1,
+        name: 'Morgendliches Joggen',
+        description: 'Test',
+        frequency: 'daily',
+        entries: []
+      });
+
+      expect(habit.matchesFilter('joggen')).toBe(true);
+      expect(habit.matchesFilter('JOGGEN')).toBe(true);
+      expect(habit.matchesFilter('Morgen')).toBe(true);
+      expect(habit.matchesFilter('lich')).toBe(true);
+    });
+
+    it('sollte false zurückgeben wenn Name den Filter nicht enthält', () => {
+      const habit = new Habit({
+        id: 1,
+        name: 'Meditation',
+        description: 'Test',
+        frequency: 'daily',
+        entries: []
+      });
+
+      expect(habit.matchesFilter('Sport')).toBe(false);
+      expect(habit.matchesFilter('Joggen')).toBe(false);
+    });
+
+    it('sollte mit Sonderzeichen und Leerzeichen umgehen können', () => {
+      const habit = new Habit({
+        id: 1,
+        name: 'Bücher lesen',
+        description: 'Test',
+        frequency: 'daily',
+        entries: []
+      });
+
+      expect(habit.matchesFilter('Bücher')).toBe(true);
+      expect(habit.matchesFilter('lesen')).toBe(true);
+      expect(habit.matchesFilter('Bücher lesen')).toBe(true);
     });
   });
 });

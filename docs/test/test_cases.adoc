@@ -273,10 +273,43 @@ Wenn ein Test fehlschlägt oder ein Fehler auffällt, wird das als Issue dokumen
 Dann wird kurz geklärt, ob es ein Testproblem ist (falsch spezifiziert/ausgeführt), ein Umgebungsproblem oder ein echter Code-Defekt.
 Je nach Priorität wird direkt gefixt oder als Bugfix-Item eingeplant.
 
+Alle Bugs werden auf GitHub mit dem Label `defect` erfasst und sind hier einsehbar:
+https://github.com/laurenzzzzzz/htwd-se1-habitree/issues?q=is%3Aissue+label%3Adefect
+
+=== Aktueller Stand: Offene Bugs und deren Auswirkungen
+
+Stand: Januar 2025 haben wir noch 4 offene Bugs, die wir aus Zeitgründen nicht mehr vor Abgabe fixen konnten.
+Die meisten davon sind eher kleinere Probleme, die die Kernfunktionalität nicht komplett lahmlegen, aber trotzdem nerven.
+
+*Offene Defects:*
+
+- https://github.com/laurenzzzzzz/htwd-se1-habitree/issues/350[#350 - Statistik zeigt keine echten Daten an]
+  * Die neue Statistik auf dem Home-Screen zeigt Dummy-Daten statt echter User-Daten
+  * Impact: Mittel - Feature ist da, aber halt nicht funktional
+  * Warum nicht gefixt: Wurde spät entdeckt, nach Feature Stop niedrige Prio
+
+- https://github.com/laurenzzzzzz/htwd-se1-habitree/issues/347[#347 - JWT-Ablauf führt zu falscher Anzeige]
+  * Wenn der JWT abläuft, werden falsche Habits angezeigt statt zum Login zu leiten
+  * Impact: Mittel - User sieht fremde Daten, aber nur temporär bis Neustart
+  * Warum nicht gefixt: Backend-Auth-Flow müsste überarbeitet werden, zu riskant kurz vor Abgabe
+
+- https://github.com/laurenzzzzzz/htwd-se1-habitree/issues/326[#326 - Benutzername ändern geht nicht]
+  * Update der Username-Funktion schlägt fehl
+  * Impact: Niedrig - Workaround: neuen Account anlegen
+  * Warum nicht gefixt: Backend-Validierung ist komplizierter als gedacht, braucht mehr Zeit zum Debuggen
+
+- https://github.com/laurenzzzzzz/htwd-se1-habitree/issues/269[#269 - Unverschlüsselte Verbindung zum Backend]
+  * HTTP statt HTTPS (Server-Setup-Problem)
+  * Impact: Mittel - Security-Risiko, aber nur Test-Umgebung
+  * Warum nicht gefixt: Braucht HTTPS-Zertifikat auf HTW-Server, liegt außerhalb unserer Kontrolle
+
+*Geschlossene Defects:*
+Insgesamt haben wir 8 Bugs erfolgreich behoben (z.B. Darkmode-Probleme, Notification-Bugs, Habit-Sync-Issues).
+Die Rate zeigt, dass wir die meisten Probleme im Griff hatten.
+
 == Nächste Schritte
 
 Als nächstes wollen wir:
 1. Tests für `NotificationService` schreiben (Mock `INotificationPort`, Happy & Error Paths, Payload-Checks).
 2. Branch-Cases in `HabitService` ergänzen (Payload-Varianten, weekDays/intervalDays-Randfälle).
 3. Ziel: Coverage > 80% — Fokus auf remaining service logic und Edge-Cases.
-4. TESTING_README.md um ein kurzes Mock-Klassen-Template ergänzen.
