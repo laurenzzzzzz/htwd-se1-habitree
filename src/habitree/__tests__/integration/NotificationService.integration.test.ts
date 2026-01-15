@@ -1,3 +1,6 @@
+// Integration test - NotificationService
+// SUT: NotificationService (Port-Adapter Interaktion, Fehlerhandling)
+
 // Integration/Unit tests for NotificationService
 
 import NotificationService from '../../application/services/NotificationService';

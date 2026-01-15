@@ -1,3 +1,12 @@
+/**
+ * Integrationstests für StreakService
+ * 
+ * Testet: application/services/StreakService.ts
+ *         + infrastructure/adapters/ (gemockt)
+ * 
+ * Diese Tests prüfen Streak-Logik auf Service-Ebene und das Zusammenspiel mit Repositories.
+ */
+
 // Unit/Integration Tests für StreakService
 
 import { Streak } from '../../domain/entities/Streak';

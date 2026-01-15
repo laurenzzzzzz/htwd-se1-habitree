@@ -1,3 +1,12 @@
+/**
+ * Integrationstests für ProfileService
+ * 
+ * Testet: application/services/ProfileService.ts
+ *         + infrastructure/adapters/ (gemockt)
+ * 
+ * Diese Tests prüfen Update-/Validierungs-Logik und Zusammenspiel mit Repository.
+ */
+
 import { ProfileService } from '../../application/services/ProfileService';
 import IProfileRepository from '../../domain/repositories/IProfileRepository';
 import { User } from '../../domain/entities/User';

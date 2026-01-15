@@ -1,3 +1,12 @@
+/**
+ * Integrationstests für TreeGrowthService
+ * 
+ * Testet: application/services/TreeGrowthService.ts
+ *         + infrastructure/adapters/ (gemockt)
+ * 
+ * Diese Tests prüfen Wachstum/State-Transitions und die Zusammenarbeit mit Repositories.
+ */
+
 // Integration/Unit tests for TreeGrowthService
 
 import { TreeGrowth } from '../../domain/entities/TreeGrowth';

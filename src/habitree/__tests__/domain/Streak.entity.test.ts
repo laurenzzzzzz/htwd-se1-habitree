@@ -1,3 +1,11 @@
+/**
+ * Unittests für Streak
+ * 
+ * Testet: domain/entities/Streak.ts
+ *
+ * Diese Tests prüfen die Streak-Berechnung und Hilfsfunktionen der Streak-Entity.
+ */
+
 import { Streak } from '../../domain/entities/Streak';
 
 describe('Streak Entity', () => {

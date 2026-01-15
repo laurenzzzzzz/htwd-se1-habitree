@@ -1,3 +1,11 @@
+/*
+ * Unittests für User
+ * 
+ * Testet: domain/entities/User.ts
+ * 
+ * Diese Tests prüfen Validierung und Hilfsfunktionen der User-Entity.
+ */
+
 import { User } from '../../domain/entities/User';
 
 describe('User Entity', () => {

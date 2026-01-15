@@ -1,13 +1,9 @@
-
 /**
- * Unit Tests für Habit Entity
+ * Unittests für Habit
  * 
  * Testet: domain/entities/Habit.ts
- * 
- * Testmethoden:
- * - Äquivalenzklassen (gültige/ungültige Eingaben)
- * - Grenzwertanalyse (0, 1, max Tage)
- * - Negativtests (leere Arrays, fehlerhafte Daten)
+ *
+ * Diese Tests prüfen Streak-, Eintrags- und Filter-Logik der Habit-Entity.
  */
 
 import { Habit, HabitData, HabitEntry } from '../../domain/entities/Habit';

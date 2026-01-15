@@ -1,3 +1,13 @@
+/**
+ * Integrationstests für QuoteService
+ * 
+ * Testet: application/services/QuoteService.ts
+ *         + infrastructure/adapters/ (gemockt)
+ *         + domain/entities/Quote.ts
+ *
+ * Diese Tests prüfen das Verhalten des Quote-Services (Random-Quote / Quote-of-Day) und Fehlerpfade.
+ */
+
 import { QuoteService } from '../../application/services/QuoteService';
 import IQuotesRepository from '../../domain/repositories/IQuotesRepository';
 import { Quote } from '../../domain/entities/Quote';

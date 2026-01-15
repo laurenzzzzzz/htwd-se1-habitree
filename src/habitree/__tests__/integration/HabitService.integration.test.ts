@@ -1,4 +1,4 @@
-/**
+/*
  * Integrationstests für HabitService
  * 
  * Testet: application/services/HabitService.ts

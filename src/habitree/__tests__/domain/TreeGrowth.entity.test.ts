@@ -1,3 +1,11 @@
+/*
+ * Unittests für TreeGrowth
+ * 
+ * Testet: domain/entities/TreeGrowth.ts
+ * 
+ * Diese Tests prüfen die Logik zur Baum-Wachstumsberechnung und State-Transitions.
+ */
+
 // Unit Tests für TreeGrowth Entity
 
 import { TreeGrowth } from '../../domain/entities/TreeGrowth';

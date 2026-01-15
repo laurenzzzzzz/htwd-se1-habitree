@@ -1,3 +1,12 @@
+/**
+ * Integrationstests für AuthService
+ * 
+ * Testet: application/services/AuthService.ts
+ *         + infrastructure/adapters/ (gemockt)
+ * 
+ * Diese Tests prüfen Authentifizierung, Registrierung und Fehlerpfade.
+ */
+
 import { AuthService } from '../../application/services/AuthService';
 import IAuthRepository from '../../domain/repositories/IAuthRepository';
 import IAuthApiRepository from '../../domain/repositories/IAuthApiRepository';

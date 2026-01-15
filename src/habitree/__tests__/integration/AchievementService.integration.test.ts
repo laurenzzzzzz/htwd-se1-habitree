@@ -1,3 +1,12 @@
+/*
+ * Integrationstests für AchievementService
+ * 
+ * Testet: application/services/AchievementService.ts
+ *         + infrastructure/adapters/ (gemockt)
+ * 
+ * Diese Tests prüfen die Vergabe von Achievements und das Zusammenspiel mit Repositories.
+ */
+
 // Integration/Unit tests for AchievementService
 
 import { Achievement } from '../../domain/entities/Achievement';

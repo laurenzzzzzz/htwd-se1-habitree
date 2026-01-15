@@ -1,3 +1,11 @@
+/**
+ * Unittests für Quote
+ * 
+ * Testet: domain/entities/Quote.ts
+ *
+ * Diese Tests prüfen die Quote-Entity (Formatierung, Validierung, Zufalls-Auswahl).
+ */
+
 import { Quote } from '../../domain/entities/Quote';
 
 describe('Quote Entity', () => {

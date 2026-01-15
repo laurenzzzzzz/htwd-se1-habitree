@@ -1,3 +1,11 @@
+/**
+ * Unittests für HabitSchedulePolicy
+ * 
+ * Testet: domain/policies/HabitSchedulePolicy.ts
+ *
+ * Diese Tests prüfen die Scheduling-Logik und Hilfsfunktionen (Datum, Intervalle, Weekdays).
+ */
+
 import {
   buildHabitPersistenceRequest,
   shouldHabitOccurOnDate,

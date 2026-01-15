@@ -441,6 +441,21 @@ Grund hierfür ist das universitäre Umfeld in dem sich die Projektteilnehmer be
 - Namenskonvention: `<Funktion>_<Szenario>_<ErwartetesErgebnis>` +
 - Detaillierte Testdokumentation in `testing.adoc`
 
+|===
+| Aktueller Teststand (15.01.2026) | Kurzbeschreibung
+
+| Coverage (Statements) | 97.98% - aktuell sehr gut; Ziel (>80%) übertroffen
+| Coverage (Branches) | 92.21% - gute Verzweigungsabdeckung, noch kleine Ecken in Policies
+| Coverage (Functions) | 100% - alle Funktionen sind getestet
+| Coverage (Lines) | 99.24% - praktisch vollständige Zeilenabdeckung
+| Tests (Anzahl) | 202 automatisierte Tests (Unit + Integration)
+| Test-Suites | 15 Test-Suites (Unit + Integration)
+| Systemtests | 10 manuelle System-/Smoke-Tests dokumentiert (ST-01..ST-10)
+| Wichtige Verbesserungen | HabitService: von 41% → 100% Coverage; HabitSchedulePolicy: 53% → 94%; Habit Entity: 100% Statements
+| Bleibende Lücken | NotificationService: noch ohne automatisierte Tests; einige Interfaces/Ports sind typbedingt nicht testbar (0% erwartet)
+| Nächste Schritte (kurz) | 1) NotificationService-Tests (Mock INotificationPort)  2) CI-Check: Coverage-Gates einführen  3) Konsistente Kommentar-Header in allen Testdateien
+|===
+
 | Testpyramide & Testarten
 | *Teststufen:* +
 (1) Unit-Tests zur Überprüfung einzelner Methoden +
