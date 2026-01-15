@@ -1,362 +1,434 @@
 = Betriebsdokumentation Habitree
+:toc:
+:toc-title: Inhaltsverzeichnis
+:sectnums:
 
-== Dokumentation Frontend
+== Zielgruppe und Zweck
 
+Diese Dokumentation richtet sich an technische Administratoren und ist Grundlage für die Inbetriebnahme, Konfiguration und Wartung der Habitree-Anwendung.
 
-=== 0. Öffnen im Container (Devcontainer)
+Sie ermöglicht:
 
-Falls du mit Visual Studio Code arbeitest, kannst du das Projekt auch direkt im Container (Devcontainer) öffnen. Das bietet eine einheitliche Entwicklungsumgebung ohne lokale Einrichtung.
+* Deployment des Systems in Produktions- und Testumgebungen
+* Konfiguration und Verwaltung der Systemkomponenten
+* Fehlerdiagnose und Wartung
+* Backup- und Restoreverfahren
 
-. Voraussetzungen:
-	* Docker Desktop installiert und gestartet
-	* Visual Studio Code mit der Erweiterung "Dev Containers" (bzw. "Devcontainer")
+*Zielgruppe:* Systemadministratoren mit Linux/Unix-Kenntnissen und Erfahrung in der Verwaltung von Docker-Containern und PostgreSQL-Datenbanken.
 
-. Schritte:
- 1. Öffne den Projektordner in Visual Studio Code.
- 2. Klicke unten links auf "><" oder öffne die Befehlspalette (F1) und wähle "Reopen in Container" ("Im Container erneut öffnen").
- 3. Warte, bis der Container gebaut und gestartet ist. Es wird bereits automatisch npx ci ausgeführt.
- 4. Führe die gewohnten Befehle im Container-Terminal aus (z.B. npx expo start`).
+*Hinweis:* Diese Dokumentation konzentriert sich auf systemspezifische Besonderheiten von Habitree. Standarddokumentation für PostgreSQL, Docker, Node.js etc. wird verlinkt. Die produktive Hochschulinstanz läuft aktuell auf `iseproject01.informatik.htw-dresden.de:8000`; die folgenden Schritte beschreiben aber ausschließlich, wie Habitree auf einer eigenen Infrastruktur betrieben wird.
 
+== Systemvoraussetzungen
 
+=== Hardware
 
-=== 1. Node.js installieren
-
-==== 1.1 Download
-
-. Download: https://nodejs.org
-. Download: Docker Desktop
-
-==== 1.2 Installation
-
-. Installation von nodejs folgen
-. Installation von Docker Desktop folgen
-
-==== 1.3 Überprüfung
-
-Öffne Windows-Eingabeaufforderung (cmd) oder PowerShell und führe folgende Befehle aus:
-
-[source,shell]
-----
-node -v
-npm -v
-docker -v
-----
-
-
-
-=== 2. Habitree - Expo App starten
-
-Bitte beachten jeweils auf Handy und PC den eduVPN aktivieren, da der Backend Server im HTW Netzwerk ist.
-
-
-==== 2.1 Lokal ohne Docker
-
-[source,shell]
-----
-cd src/habitree
-npm ci
-npx expo install --fix <- Installiert und Updatet alle Packages
-npx expo start --tunnel --go --clear
-----
-
-Scanne den angezeigten QR-Code mit der **Expo Go App** auf deinem Smartphone.
-
-== Dokumentation Backend
-
-Kurzer Überblick zum Backend der Habitree-App (Node/Express, PostgreSQL via Prisma). Der Dienst läuft aktuell auf dem externen Server `iseproject01.informatik.htw-dresden.de:8000`; lokal kann er mit den unten stehenden Schritten gestartet werden.
-
-=== Voraus­setzungen
-* Node.js 18+ 
-* PostgreSQL (oder bestehender Zugang zum Projekt-DB-Server)
-* Git, npm
-
-=== Ordnerstruktur
-[options="header"]
 |===
-|Pfad | Inhalt / Zweck | Beispiel-Dateien
-|src/backend | Backend-Root, npm-Projekt | `package.json`, `.env`, `package-lock.json`
-|src/backend/src | Quellcode (ESM, JavaScript) | `index.js`
-|src/backend/src/routes | Express-Routen pro Ressource | `habits.js`, `user.js`, `auth.js`, `quotes.js`, `express_routes_template.js`
-|src/backend/src/middleware | Middleware (z. B. Auth) | `authMiddleware.js`
-|src/backend/src/utils | Hilfsfunktionen/Jobs | `generateDailyEntries.js`, `streak.js`
-|src/backend/prisma | Prisma-Schema, Migrationen, Seeds | `schema.prisma`, `migrations/*`, `seed.js`
-|src/backend/generated | (generiert) Prisma Client (per `prisma generate`) | `client`-Artefakte
+|Komponente |Minimum |Empfohlen
+|CPU |2 Kerne |4 Kerne (x86_64)
+|RAM |4 GB |8 GB
+|Festplatte |40 GB |50 GB (SSD)
+|Netzwerk |1 Gbps |1 Gbps 
 |===
 
-=== Umgebung (.env)
-[options="header"]
+=== Betriebssystem
+
+* **Linux** (Ubuntu 20.04 LTS, Debian 11+, oder äquivalent)
+* **macOS** 12+ (für lokale Entwicklung)
+* Windows mit WSL2 (für lokale Entwicklung)
+
+=== Software-Stack
+
 |===
-|Variable | Zweck | Beispiel
-|DATABASE_URL | PostgreSQL-URL | `postgresql://user:pass@host:5432/HabitTrackerDatabase?schema=public`
-|PORT | Port des Express-Servers | `8000`
-|JWT_SECRET | Secret für Auth (falls genutzt) | `supersecret`
+|Komponente |Version |Zweck
+|Docker Engine |20.10+ |Container-Runtime
+|Docker Compose |1.29+ |Container-Orchestrierung
+|PostgreSQL |14+ |Datenbank (läuft in Container)
+|Node.js |20 LTS |Laufzeitumgebung Backend
+|Git |2.30+ |Versionskontrolle
 |===
 
-=== Backend Einrichten
+=== Netzwerk
 
-.1 Projekt initialisieren:
+* Internetzugriff für Package-Downloads und Updates
+* Offene Ports:
+  - **8000** (Backend API, intern oder extern je nach Konfiguration)
+  - **5432** (PostgreSQL, nur intern in Docker-Netzwerk)
+  - **3000** (Frontend Expo-Tunnel, optional)
 
-[source,shell]
-----
-npm init -y
-----
-// Initialisiert ein neues Node.js-Projekt
+== Systemarchitektur
 
-.2 Abhängigkeiten installieren:
-
-[source,shell]
-----
-npm install express prisma @prisma/client dotenv cors axios bcrypt jsonwebtoken node-cron
-----
+Habitree besteht aus drei Komponenten:
 
 [options="header"]
 |===
-|Paket            |Beschreibung
-|express          |Webserver-Framework
-|prisma           |ORM (für Datenbankzugriff)
-|@prisma/client   |Generierter Prisma-Client-Code
-|dotenv           |Lädt Umgebungsvariablen aus einer `.env`-Datei
-|cors             |Cross-Origin Requests erlauben 
-|axios            |HTTP-Client 
-|bcrypt           |Passworthashing
-|jsonwebtoken     |JWT-Erzeugung/-Prüfung (Auth)
-|node-cron        |Geplante Jobs (tägliche Habit-Einträge/Streaks)
+|Komponente |Technologie |Beschreibung
+|Frontend |React Native / Expo |Mobile App, React-basiert
+|Backend |Node.js / Express |REST-API, läuft in Docker-Container
+|Datenbank |PostgreSQL 14+ |Persistenter Datenspeicher, läuft in Docker-Container
 |===
 
-.3 Prisma initialisieren:
+Das System wird über Docker Compose orchestriert. Die Komponenten kommunizieren über ein Docker-internes Netzwerk (`habitree-network`).
+
+== Systemeinrichtung
+
+=== Voraussetzungen
+
+==== Docker installieren
+
+Siehe offizielle Dokumentation: https://docs.docker.com/engine/install/
+
+Überprüfung:
+[source,shell]
+----
+docker --version
+docker compose version
+----
+
+==== Git-Repository klonen
 
 [source,shell]
 ----
-npx prisma init
+git clone <repository-url> habitree
+cd habitree
 ----
 
-Erstellt:
+=== Konfiguration
 
-* `prisma/schema.prisma` – das Datenbankschema
-* `.env` – Datei für Umgebungsvariablen (z. B. DB-Verbindung)
+==== Umgebungsvariablen (.env-Datei)
 
-. In `.env` die URL der Datenbank eintragen.
+Erstelle eine `.env`-Datei im Verzeichnis `src/backend/`:
 
-. Datenmodell in `prisma/schema.prisma` definieren.
+[source,bash]
+----
+# Datenbank-Konfiguration
+DB_USER=habitree_user
+DB_PASSWORD=<secure-password-hier-setzen>
+DB_NAME=habitree_db
+DB_PORT=5432
 
-* Migration ausführen:
+# Backend-Server
+PORT=8000
+NODE_ENV=production
+JWT_SECRET=<jwt-secret-hier-setzen>
+
+# Externe API (optional)
+DATABASE_URL=postgresql://${DB_USER}:${DB_PASSWORD}@db:5432/${DB_NAME}
+----
+
+*Sicherheitshinweise:*
+- `DB_PASSWORD` und `JWT_SECRET` müssen komplexe, zufällige Strings sein (Mindestens 32 Zeichen, Mixed-Case, Zahlen, Sonderzeichen)
+- Diese `.env`-Datei muss vor Git-Commits geschützt sein (.gitignore)
+- Auf Produktionssystemen muss die Datei durch ein Secrets-Management-System ersetzt werden
+
+==== PostgreSQL-Initialisierung
+
+Die Datenbank wird automatisch beim ersten Start erstellt. Optional kann eine Seed-Datei vorab geladen werden:
+
+[source,bash]
+----
+src/backend/prisma/init.sql
+----
+
+Diese wird automatisch beim Datenbankstart ausgeführt und kann Testdaten enthalten.
+
+==== Datenbankverbindung (externe DB)
+
+Falls eine externe PostgreSQL-Instanz verwendet wird (z.B. HTW-Server), setze in `.env`:
+
+[source,bash]
+----
+DATABASE_URL=postgresql://user:password@external-host:5432/habitree_db
+----
+
+Dann starte nur das Backend ohne die lokale DB (Docker Compose Profile):
 
 [source,shell]
 ----
-npx prisma migrate dev --name init
+docker compose --profile local up -d backend
 ----
-// Erstellt das Datenmodell in der Datenbank
 
+=== Inbetriebnahme
 
-.4 ts-node (für Prisma Seed / optionale TS-Nutzung)
+==== Vollständiger Start (mit lokaler DB)
 
 [source,shell]
 ----
-npm install --save-dev ts-node
+cd src/backend
+docker compose up -d
 ----
 
-.5 Portfreigabe für Kommunikation zwischen Back- und Frontend
-* Windowsdefender Firewall mit erweitertet Sicherheit öffnen
-* unter *Eingehender* und *Ausgehender Regel* neue Regel ``Port 8000 für Server öffnen`` erstellt damit ausgehende und eingehende Anfragen nicht geblockt werden
+Dies startet:
+- PostgreSQL-Container (`habitree-db`)
+- Express-Backend-Container (`habitree-backend`)
 
-=== Starten (Lokal)
-* Installieren: `npm install`
-* Prisma-Migrationen anwenden: `npx prisma migrate deploy`
-* Dev-Mode (Nodemon): `npm run dev` (startet `src/index.js` mit automatischem Reload)
-* Direkt starten (ohne Nodemon): `node src/index.js`
+==== Datenbankmigration ausführen
 
-=== Deployment (Externer Server)
-1. Code aktualisieren: `git pull`
-2. Installieren: `npm ci`
-3. Migrationen: `npx prisma migrate deploy`
-4. Starten als Dienst (Beispiel PM2): `pm2 start src/index.js --name habitree-backend`
-5. Port 8000 freigeben (eingehend/ausgehend) wie oben beschrieben
-
-=== Datenbankeinträge ändern / hinzufügen / löschen
-
-.*Datenbank verändern (Tabellen erstellen)*
-* Datenbankmodell in `schema.prisma` erweitern oder anpassen
-* Neue Migration erstellen:
+Nach dem Start der Container:
 
 [source,shell]
 ----
-npx prisma migrate dev --name add-<NameDesModells>
+docker compose exec backend npx prisma migrate deploy
 ----
 
-* Unter `prisma/migrations/` wird dokumentiert, wie sich die Datenbank verändert
+Dies lädt das aktuelle Datenbankschema (`schema.prisma`) in die Datenbank.
 
-.*Seed-Daten hinzufügen (Tabelle füllen):*
-* Einträge in `prisma/seed.js` schreiben
-* Seed ausführen:
+==== Optionale Seed-Daten laden
 
 [source,shell]
 ----
-npx prisma db seed
+docker compose exec backend npx prisma db seed
 ----
 
-.*Überprüfen:*
+Dies lädt Testdaten aus `prisma/seed.js`.
 
-* In `pgAdmin4` 
-** oder
-* mit dem Prisma Studio:
+==== Überprüfung des Systems
+
+Health-Check des Backends:
+[source,shell]
+----
+curl -s http://localhost:8000/health | jq .
+----
+
+Oder: Bei 200 OK ist der Service betriebsbereit.
+
+=== Frontend (Expo)
+
+Das Frontend wird separat deployed. Siehe link:../Anwenderdokumentation/Anwenderdokumentation.adoc[Anwenderdokumentation] für Benutzerbereitstellung.
+
+== Systembetreuung
+
+=== Laufende Überwachung
+
+==== Container-Status überprüfen
 
 [source,shell]
 ----
-npx prisma studio
+cd src/backend
+docker compose ps
 ----
 
-.*Alternative in pgAdmin4(PostgreSQL)*
-* auf der Rechten Seite *Query Tool Workspace* auswählen und HabitTrackerDatabse als Server auswählen 
-* Als Databse *HabitTrackerDatabse* auswählen *nicht postgres* 
-* wenn angemeldet sollte bei der Verbindung *HabitTrackerDatabse/postgres@HabitTrackerDatabse* stehen und **nicht** *postgres/postgres@HabitTrackerDatabase* 
-* SQL Befehle wie gewohnt verwenden um Tabellen bzw. Einträge zu erstellen, veränder oder löschen
-** Wenn neue Tabelle erstellt wurde muss sie in `schema.prisma` ergänzt werden, damit man beim coden auf die Tabelle über Prisma zugreifen kann
+Erwartete Ausgabe:
+- `habitree-backend`: Status `Up` mit Health `healthy`
+- `habitree-db`: Status `Up` mit Health `healthy`
 
-=== Express Routen
+==== Logs anzeigen
 
-Die Express-Routen definieren, wie unsere Backend-API auf Anfragen vom Frontend reagiert. +
-Vorhandene Routenmodule: `routes/habits.js`, `routes/user.js`, `routes/auth.js`, `routes/quotes.js` (plus das Template `express_routes_template.js`). Diese werden in `src/index.js` eingebunden. +
-Für jede neue Ressource wird ein eigenes `.js`-Modul im Ordner `routes` angelegt.
-
-==== Routen Template
-
-[source,js]
+Backend-Logs:
+[source,shell]
 ----
-import express from 'express';
-import { PrismaClient } from '@prisma/client';
-
-const router = express.Router();
-const prisma = new PrismaClient();
-
-// GET /__models__ – alle Einträge abrufen
-router.get('/', async (req, res) => {
-  try {
-    const data = await prisma.__model__.findMany();
-    res.json(data);
-  } catch (err) {
-    res.status(500).json({ error: 'Fehler beim Abrufen der __models__' });
-  }
-});
-
-// POST /__models__ – neuen Eintrag erstellen
-router.post('/', async (req, res) => {
-  const { __field1__, __field2__, __field3__ } = req.body;
-
-  if (!__field1__ || !__field2__) {
-    return res.status(400).json({ error: '__field1__ und __field2__ sind erforderlich' });
-  }
-
-  try {
-    const newEntry = await prisma.__model__.create({
-      data: {
-        __field1__,
-        __field2__,
-        __field3__: __field3__ ?? __default__, //default wert wird genommen wenn Spalte nicht angegben falls in der Tabelle `schema.prisma` definiert 
-      },
-    });
-    res.status(201).json(newEntry);
-  } catch (err) {
-    res.status(500).json({ error: 'Fehler beim Erstellen des Eintrags' });
-  }
-});
-
-// PUT /__models__/:id – bestehenden Eintrag aktualisieren
-router.put('/:id', async (req, res) => {
-  const { id } = req.params;
-  const { __field1__, __field2__, __field3__ } = req.body;
-
-  try {
-    const updatedEntry = await prisma.__model__.update({
-      where: { id: Number(id) },
-      data: {
-        __field1__,
-        __field2__,
-        __field3__,
-      },
-    });
-    res.json(updatedEntry);
-  } catch (err) {
-    res.status(500).json({ error: 'Fehler beim Aktualisieren des Eintrags' });
-  }
-});
-
-// DELETE /__models__/:id – Eintrag löschen
-router.delete('/:id', async (req, res) => {
-  const { id } = req.params;
-
-  try {
-    await prisma.__model__.delete({
-      where: { id: Number(id) },
-    });
-    res.json({ message: '__Model__ erfolgreich gelöscht' });
-  } catch (err) {
-    res.status(500).json({ error: 'Fehler beim Löschen des Eintrags' });
-  }
-});
-
-export default router;
+docker compose logs -f backend
 ----
 
-==== Erklärung der wichtigsten Teile
+Datenbank-Logs:
+[source,shell]
+----
+docker compose logs -f db
+----
+
+==== Automatische Restarts
+
+Container sind mit `restart: unless-stopped` konfiguriert und starten automatisch nach System-Reboot.
+
+=== Häufige Probleme und Lösungen
+
+|===
+|Problem |Ursache |Lösung
+|Backend antwortet nicht (Timeout) |Port 8000 belegt oder Container abgestürzt |`docker compose restart backend` oder Portkonflikt prüfen
+|Datenbank-Verbindungsfehler |DB nicht erreichbar oder `DATABASE_URL` falsch |`docker compose logs db` prüfen, `.env` überprüfen
+|Migrationen schlagen fehl |Alter DB-Schema incompatibel mit neuem Code |`docker compose exec backend npx prisma migrate resolve --rolled-back <migration-name>`
+|OOM-Fehler (Out of Memory) |Zu wenig RAM verfügbar |Siehe Systemvoraussetzungen, evtl. Docker-Memory-Limit erhöhen
+|Frontend kann Backend nicht erreichen |DNS-Auflösung oder IP-Adresse falsch |Frontend-Konfiguration prüfen, `curl http://backend:8000/health` im Container testen
+|===
+
+=== Fehlerdiagnose
+
+==== Backend-Logs analysieren
+
+Typische Fehler:
+- `ECONNREFUSED` → Datenbank nicht erreichbar
+- `SequelizeConnectionError` → Datenbankverbindung fehlgeschlagen
+- `INVALID_JWT` → `JWT_SECRET` falscher Wert
+
+==== Datenbankzustand überprüfen
+
+[source,shell]
+----
+docker compose exec db psql -U habitree_user -d habitree_db -c "SELECT * FROM \"user\";"
+----
+
+Oder via Prisma Studio:
+[source,shell]
+----
+docker compose exec backend npx prisma studio
+----
+
+öffnet dann ein Web-Interface auf http://localhost:5555 (nur lokal erreichbar).
+
+==== Container Debug-Modus
+
+[source,shell]
+----
+docker compose exec backend sh
+----
+
+Dann innerhalb des Containers:
+[source,shell]
+----
+node src/index.js  # Direkter Start mit Fehlerausgabe
+npm run dev        # Mit Nodemon (automatischer Restart bei Änderungen)
+----
+
+=== Backup & Restore
+
+==== Datenbank-Backup erstellen
+
+[source,shell]
+----
+docker compose exec db pg_dump -U habitree_user habitree_db > backup_$(date +%Y%m%d_%H%M%S).sql
+----
+
+Dies erstellt eine SQL-Dump-Datei.
+
+==== Backup in Docker-Volume sichern
+
+Die Daten liegen im Docker-Volume `postgres_data`. Für regelmäßige Sicherungen:
+
+[source,shell]
+----
+docker run --rm -v habitree-backend_postgres_data:/data -v $(pwd):/backup \
+  alpine tar czf /backup/postgres_backup_$(date +%Y%m%d_%H%M%S).tar.gz /data
+----
+
+==== Restore aus Backup
+
+Aus SQL-Dump:
+[source,shell]
+----
+cat backup_20240115_120000.sql | docker compose exec -T db psql -U habitree_user habitree_db
+----
+
+Aus Volume-Backup: Container stoppen, Volume löschen, neu erstellen und Backup zurückschreiben (komplex - siehe https://docs.docker.com/storage/volumes/[Docker Volume Dokumentation]).
+
+=== Datenbank-Schema-Änderungen
+
+==== Neue Migration erstellen
+
+Nach Änderung von `prisma/schema.prisma`:
+
+[source,shell]
+----
+docker compose exec backend npx prisma migrate dev --name <description>
+----
+
+Dies erstellt eine neue Migration unter `prisma/migrations/`.
+
+==== Migration auf Produktivserver durchführen
+
+[source,shell]
+----
+docker compose exec backend npx prisma migrate deploy
+----
+
+Dies wendet alle ausstehenden Migrationen an. Die Datenbank wird während der Migration gesperrt.
+
+*Hinweis:* Immer vor Migrationen auf Produktivservern ein Backup erstellen!
+
+=== Datenbankadministration
+
+==== Datenbank-Tabellen
+
+Die Habitree-App nutzt folgende Tabellen (siehe `prisma/schema.prisma`):
+
+|===
+|Tabelle |Zweck
+|`user` |Benutzer mit Authentifizierungsdaten
+|`habit` |Habit-Vorlagen und Benutzer-Habits
+|`predefined_habit` |Vordefinierte Habit-Templates
+|`habitEntry` |Tägliche Habit-Einträge (Erfolgsprotokoll)
+|`quote` |Motivations-Zitate
+|===
+
+==== Daten manuell hinzufügen/ändern
+
+Via SQL (psql im Container):
+[source,shell]
+----
+docker compose exec db psql -U habitree_user -d habitree_db
+----
+
+Beispiel: Benutzer löschen
+[source,sql]
+----
+DELETE FROM "user" WHERE email = 'user@example.com';
+----
+
+*Warnung:* Manuelles Löschen kann CASCADE-Löschungen auslösen (Habits, Entries werden mitgelöscht).
+
+Siehe https://www.postgresql.org/docs/[PostgreSQL Dokumentation] für erweiterte SQL-Operationen.
+
+=== Performance-Tuning
+
+|===
+|Parameter |Empfohlener Wert |Grund
+|DB Connection Pool |Default: 10 |Anzahl gleichzeitiger DB-Verbindungen
+|Node.js Heap |--max-old-space-size=1024 |Wenn hohe Last > 1GB RAM nutzt
+|PostgreSQL shared_buffers |25% RAM |Für größere Datenbanken
+|===
+
+Änderungen in `docker-compose.yml` oder `.env` durchführen und Container neu starten.
+
+=== Sicherheits-Richtlinien
+
+* **Datenbank-Passwort:** Komplexes Passwort verwenden (Mindestens 16 Zeichen)
+* **JWT_SECRET:** Regelmäßig wechseln, starkes Secret verwenden
+* **Firewall:** Port 8000 nur für vertraute Clients freigeben
+* **Container-Updates:** Docker-Images regelmäßig aktualisieren (siehe https://docs.docker.com/engine/reference/commandline/pull/[Docker Pull])
+* **Secrets-Management:** In Produktion externe Secrets-Systeme nutzen (z.B. HashiCorp Vault, AWS Secrets Manager)
+* **Regelmäßige Backups:** Tägliche oder stündliche DB-Backups einrichten (Cron-Job empfohlen)
+
+== Koexistenz mit HTW-Server
+
+Die produktive Instanz der Hochschule erreicht man unter `iseproject01.informatik.htw-dresden.de:8000`. Diese Information dient lediglich zur Referenz, falls ein Abgleich oder ein Fallback auf das zentrale System nötig ist. Betrieb, Wartung und Deployments orientieren sich jedoch an einer selbst verwalteten Infrastruktur wie in den vorherigen Kapiteln beschrieben.
+
+* **Eigene Umgebung:** Backend läuft auf `localhost:8000` bzw. dem jeweiligen Server-Host
+* **HTW-Server:** Für Vergleichs- und Testzwecke
+* **Frontend-Konfiguration:** Umgebungsvariable `BACKEND_URL` bestimmt, ob gegen das eigene System oder den Hochschulserver gearbeitet wird
+
+== Dateistruktur (Referenz)
 
 [options="header"]
 |===
-|Methode / Pfad           |Beschreibung
-|GET /__models__          |Liest alle Einträge aus der entsprechenden Tabelle
-|POST /__models__         |Erstellt einen neuen Eintrag. Erwartet JSON-Daten im Request-Body
-|PUT /__models__/:id      |Aktualisiert einen bestehenden Eintrag anhand der ID
-|DELETE /__models__/:id   |Löscht einen Eintrag anhand der ID
+|Pfad |Inhalt |Zweck
+|`src/backend/Dockerfile` |Multi-Stage Docker Build |Backend-Container erstellen
+|`src/backend/docker-compose.yml` |Orchestrierung Backend + DB |Beide Services gemeinsam starten
+|`src/backend/.env` |Umgebungsvariablen |Konfiguration (lokal/Produktion)
+|`src/backend/prisma/schema.prisma` |Datenbankschema |Tabellen-Definitionen (ORM)
+|`src/backend/prisma/migrations/` |Migrations-Scripts |Alle Schema-Änderungen dokumentiert
+|`src/backend/src/index.js` |Express Server Entry-Point |API-Server Hauptdatei
+|`src/backend/src/routes/` |API-Endpoints |Habits, User, Auth, Quotes
 |===
 
-==== Platzhalter ersetzen
+== Anhang: Wichtige Docker Compose Befehle
 
-[options="header"]
 |===
-|Platzhalter      |Beschreibung                     |Beispiel
-|__model__        |Singular, Prisma-Modelname       |habit
-|__models__       |Pluralform für Route             |habits
-|__field1__ usw.  |Feldnamen aus dem Datenmodell    |label, description
-|__default__      |Standardwert bei optionalen Feldern |false, 0, ''
+|Befehl |Beschreibung
+|`docker compose up -d` |Start (Hintergrund)
+|`docker compose down` |Stop und Cleanup
+|`docker compose restart` |Neustart
+|`docker compose logs -f` |Live-Logs anzeigen
+|`docker compose ps` |Container-Status
+|`docker compose exec <service> <cmd>` |Befehl im Container ausführen
 |===
 
-==== Einbindung im Hauptserver
+Siehe https://docs.docker.com/compose/reference/[Docker Compose CLI Reference].
 
-Damit die Route verwendet wird, muss sie im Hauptserver (`index.js`) importiert werden:
+== Support und Kontakt
 
-[source,js]
-----
-import express from 'express';
-import habitsRouter from './routes/habits.js'; // Pfad anpassen
-import __modelsRouter__ from './routes/__models__.js'
+Bei Problemen oder Fragen:
 
-const app = express();
-app.use(express.json()); // Damit JSON-Daten im Body gelesen werden können
+1. **Logs überprüfen:** `docker compose logs -f backend`
+2. **Container-Status prüfen:** `docker compose ps`
+3. **Disk-Space überprüfen:** `docker system df`
+4. **Manuelle Tests:** SSH auf Host → `docker compose exec backend sh`
 
-app.use('/habits', habitsRouter); // Bei neuen Routen immer so angeben
-app.use('/__models__',__modelsRouter__);
-
-app.listen(PORT, () => {
-  console.log(`Server läuft auf Port ${PORT}`); // ${PORT} ist in .env definiert
-});
-----
-
-==== Beispiel-Anfragen (Frontend)
-
-* **GET** http://iseproject01.informatik.htw-dresden.de:8000/habits  
-→ Gibt alle Habits zurück
-
-* **POST** http://iseproject01.informatik.htw-dresden.de:8000/habits mit folgendem JSON-Body:
-[source,json]
-----
-{
-  "label": "Täglich spazieren",
-  "description": "Mindestens 30 Minuten Bewegung",
-  "checked": false
-}
-----
-
-* **PUT** http://iseproject01.informatik.htw-dresden.de:8000/habits/1  
-Aktualisiert den Habit mit der ID `1`
-
-* **DELETE** http://iseproject01.informatik.htw-dresden.de:8000/habits/1  
-Löscht den Habit mit der ID `1`
+Siehe link:../architecture/architecture_notebook.adoc[Architektur-Dokumentation] für technische Details.
