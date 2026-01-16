@@ -251,6 +251,18 @@ export const API_BASE_URL = 'http://192.168.x.x:8000';
 
 ==== Start des Frontends
 
+Die Entwicklungsumgebung ist als VS Code Dev Container konfiguriert. Dies stellt sicher, dass alle notwendigen Tools (Node.js, Expo CLI, ...) vorinstalliert sind.
+
+1. **Projekt im Dev Container öffnen:**
+   * Öffnen Sie den Projektordner in VS Code.
+   * Klicken Sie auf das grüne Symbol unten links ("><") oder drücken Sie `F1`.
+   * Wählen Sie **"Dev Containers: Reopen in Container"**.
+   * VS Code startet neu und baut den Container (beim ersten Mal kann dies einige Minuten dauern).
+
+2. **Verbindung herstellen:**
+   * Scannen Sie den angezeigten QR-Code mit der **Expo Go** App (iOS/Android) auf Ihrem Smartphone.
+   * Das Smartphone und der PC müssen Internetzugriff haben (durch die `--tunnel` Option ist kein gemeinsames WLAN zwingend erforderlich, aber empfohlen vorallem weil sich sonst die Verbindung zum Backend verkompliziert).
+
 Siehe link:../Anwenderdokumentation/Anwenderdokumentation.adoc[Anwenderdokumentation] für die detaillierten Schritte zur Installation der Expo Go App.
 
 
