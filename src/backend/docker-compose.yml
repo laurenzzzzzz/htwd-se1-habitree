@@ -35,14 +35,14 @@ services:
       JWT_SECRET: ${JWT_SECRET}
     ports:
       - "${PORT:-8000}:8000"
+      - "5555:5555"
     volumes:
       - ./src:/app/src
     networks:
       - habitree-network
     restart: unless-stopped
-    depends_on:
-      db:
-        condition: service_healthy
+    # depends_on entfernt, da Backend via Entrypoint selbst auf DB wartet
+    # und dies den Start ohne lokales DB-Profil (für externe DB) ermöglichen soll.
 
 volumes:
   postgres_data:
