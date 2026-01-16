@@ -101,17 +101,17 @@ Erstelle eine `.env`-Datei im Verzeichnis `src/backend/`:
 ----
 # Datenbank-Konfiguration
 DB_USER=habitree_user
-DB_PASSWORD=<secure-password-hier-setzen>
+DB_PASSWORD=<zufälliger_starker_string>
 DB_NAME=habitree_db
-DB_PORT=5432
+DATABASE_PORT=5432
 
 # Backend-Server
 PORT=8000
 NODE_ENV=production
-JWT_SECRET=<jwt-secret-hier-setzen>
+JWT_SECRET=<zufälliger_starker_string>
 
-# Externe API (optional)
-DATABASE_URL=postgresql://${DB_USER}:${DB_PASSWORD}@db:5432/${DB_NAME}
+# Optional: Externe Datenbank (falls nicht Docker-intern)
+# DATABASE_URL=postgresql://${DB_USER}:${DB_PASSWORD}@external-host:5432/${DB_NAME}
 ----
 
 *Sicherheitshinweise:*
@@ -121,30 +121,25 @@ DATABASE_URL=postgresql://${DB_USER}:${DB_PASSWORD}@db:5432/${DB_NAME}
 
 ==== PostgreSQL-Initialisierung
 
-Die Datenbank wird automatisch beim ersten Start erstellt. Optional kann eine Seed-Datei vorab geladen werden:
-//nochmal prüfen
-[source,bash]
-----
-src/backend/prisma/init.sql
-----
+Die Datenbankstruktur wird primär über Prisma Migrations verwaltet (siehe unten).
+Das Docker-Image ist so konfiguriert, dass Skripte im Ordner `src/backend/prisma/` (wie `init.sql`) beim allerersten Start der Datenbank (wenn das Volume noch leer ist) ausgeführt werden. Dies ist jedoch optional.
 
-Diese wird automatisch beim Datenbankstart ausgeführt und kann Testdaten enthalten.
+Die eigentliche Schema-Erstellung erfolgt durch den Backend-Start.
 
 ==== Datenbankverbindung (externe DB)
 
-Falls eine externe PostgreSQL-Instanz verwendet wird (z.B. HTW-Server), setze in `.env`:
+Falls eine externe PostgreSQL-Instanz verwendet wird, setze in `.env`:
 
 [source,bash]
 ----
 DATABASE_URL=postgresql://user:password@external-host:5432/habitree_db
 ----
 
-docker compose --profile local up -d backend
-Dann starte nur das Backend ohne die lokale DB (Docker Compose Profile):
+Dann starte nur das Backend ohne die lokale DB:
 
 [source,shell]
 ----
-docker compose up -d backend
+docker compose -f src/backend/docker-compose.yml up -d backend
 ----
 
 === Inbetriebnahme
@@ -153,10 +148,9 @@ docker compose up -d backend
 
 [source,shell]
 ----
-cd src/backend
-docker compose --profile local up -d
+docker compose -f src/backend/docker-compose.yml --profile local up -d
 ----
-Hinweis: Das Profil "local" muss angegeben werden, damit auch der Datenbank-Service (db) mitgestartet wird.
+Hinweis: Das Profil "local" muss angegeben werden, damit auch der Datenbank-Service (db) mitgestartet wird, da er in `docker-compose.yml` als `profiles: ["local"]` definiert ist.
 
 Dies startet:
 - PostgreSQL-Container (`habitree-db`)
@@ -164,14 +158,19 @@ Dies startet:
 
 Hinweis zur automatischen Migration:
 
-Wenn Sie den Stack mit `--profile local` starten, führt die aktuelle Backend-Image-Entrypoint-Skripte automatisch die ausstehenden Prisma-Migrationen gegen die lokale `db` aus, bevor der Node-Prozess gestartet wird. Dadurch ist in der Regel kein manueller Migrationsschritt mehr erforderlich.
-Wenn Sie den Docker-Image- oder Entrypoint-Code geändert haben, bauen Sie das Backend-Image erneut mit `--build`, damit die Änderungen aktiv werden (siehe unten).
+Wenn Sie den Stack mit `--profile local` starten, führt das Entrypoint-Skript des Backend-Images automatisch die ausstehenden Prisma-Migrationen gegen die lokale `db` aus, bevor der Node-Prozess gestartet wird. Dadurch ist in der Regel kein manueller Migrationsschritt mehr erforderlich.
+Wenn Sie den Docker-Image- oder Entrypoint-Code geändert haben, verwenden Sie zusätzlich `--build`:
+
+[source,shell]
+----
+docker compose -f src/backend/docker-compose.yml --profile local up -d --build
+----
 
 ==== Datenbankmigration ausführen
 
 Bei Start mit dem lokalen Compose-Profil (`--profile local`) werden ausstehende Prisma-Migrationen automatisch vom Backend-Entrypoint gegen die lokale `db` ausgeführt. Ein manueller Migrationsschritt ist in diesem Fall in der Regel nicht erforderlich.
 
-Diese Sektion beschreibt ausschließlich, wie Migrationen gegen eine externe Datenbank (z. B. ein HTW-Server) manuell angewendet werden — nutzen Sie diese Schritte nur, wenn Sie nicht die lokale `db` verwenden.
+Diese Sektion beschreibt ausschließlich, wie Migrationen gegen eine externe Datenbank manuell angewendet werden — nutzen Sie diese Schritte nur, wenn Sie nicht die lokale `db` verwenden.
 
 1. Setzen Sie in `src/backend/.env` oder in Ihrer Umgebung die `DATABASE_URL` auf die externe Datenbank, z. B.:
 
@@ -184,17 +183,15 @@ DATABASE_URL=postgresql://user:password@external-host:5432/habitree_db
 
 [source,shell]
 ----
-cd src/backend
-docker compose up -d backend
-docker compose exec backend npx prisma migrate deploy
+docker compose -f src/backend/docker-compose.yml up -d backend
+docker compose -f src/backend/docker-compose.yml exec backend npx prisma migrate deploy
 ----
 
 3. Alternativ: Migration einmalig in einem temporären Container (empfohlen für Wartungsaufgaben):
 
 [source,shell]
 ----
-cd src/backend
-docker compose run --rm -e DATABASE_URL="postgresql://user:password@external-host:5432/habitree_db" backend npx prisma migrate deploy
+docker compose -f src/backend/docker-compose.yml run --rm -e DATABASE_URL="postgresql://user:password@external-host:5432/habitree_db" backend npx prisma migrate deploy
 ----
 
 Wichtige Hinweise:
@@ -206,31 +203,57 @@ Wichtige Hinweise:
 
 [source,shell]
 ----
-docker compose --profile local exec backend npx prisma db seed
+docker compose -f src/backend/docker-compose.yml exec backend npx prisma db seed
 ----
 
 Dies lädt Testdaten aus `prisma/seed.js`.
-
-Falls der `backend`-Service nicht verfügbar ist, kann das Seeder-Skript in einem einmaligen Container ausgeführt werden:
-
-[source,shell]
-----
-docker compose --profile local run --rm backend npx prisma db seed
-----
 
 ==== Überprüfung des Systems
 
 Health-Check des Backends:
 [source,shell]
 ----
-curl -s http://localhost:8000/health | jq .
+curl -s http://localhost:8000/health
+# Unter Windows PowerShell: curl.exe -s http://localhost:8000/health
 ----
 
-Oder: Bei 200 OK ist der Service betriebsbereit.
+Wenn die Antwort `{"status":"ok"}` (oder ähnlich) lautet, ist der Service betriebsbereit.
+
 
 === Frontend (Expo)
 
-Das Frontend wird separat deployed. Siehe link:../Anwenderdokumentation/Anwenderdokumentation.adoc[Anwenderdokumentation] für Benutzerbereitstellung.
+Das Frontend (mobile App) läuft lokal auf dem Smartphone (via Expo Go App) oder einem Emulator, **nicht** im Docker-Container. Der Docker-Container für das Frontend dient lediglich als "Packager" und Tunnel-Provider.
+
+==== Netzwerkkonfiguration (WICHTIG)
+
+Damit das Smartphone (im WLAN) mit dem Backend (auf dem PC im Docker-Netzwerk) kommunizieren kann, muss die **lokale IP-Adresse** des PCs konfiguriert werden. `localhost` funktioniert auf dem Handy nicht.
+
+1. **Lokale IP ermitteln:**
+   * Windows: `ipconfig` (IPv4-Adresse, z.B. 192.168.178.20)
+   * Linux/Mac: `ifconfig` oder `ip addr`
+
+2. **Konfiguration anpassen:**
+   Öffnen Sie `src/habitree/constants/ApiConfig.ts` und tragen Sie die IP ein:
+
+[source,typescript]
+----
+// src/habitree/constants/ApiConfig.ts
+export const API_BASE_URL = 'http://192.168.x.x:8000'; 
+----
+
+3. **Voraussetzungen prüfen:**
+   * **Netzwerk:** PC und Smartphone müssen im **selben WLAN** sein.
+   * **Firewall:** Die Firewall des PCs muss eingehende Verbindungen auf Port 8000 zulassen.
+   * **VPN:** VPN-Verbindungen (NordVPN, Tailscale, Uni-VPN) sollten deaktiviert werden, da sie oft das lokale Routing blockieren.
+
+4. **Tunnel-Option (Alternative):**
+   Falls eine direkte IP-Verbindung nicht möglich ist (z.B. Gast-WLAN), kann `ngrok` verwendet werden, um das Backend öffentlich verfügbar zu machen: `npx ngrok http 8000` -> URL in `ApiConfig.ts` eintragen.
+
+==== Start des Frontends
+
+Siehe link:../Anwenderdokumentation/Anwenderdokumentation.adoc[Anwenderdokumentation] für die detaillierten Schritte zur Installation der Expo Go App.
+
+
 
 == Systembetreuung
 
@@ -240,26 +263,26 @@ Das Frontend wird separat deployed. Siehe link:../Anwenderdokumentation/Anwender
 
 [source,shell]
 ----
-cd src/backend
-docker compose ps
+docker compose -f src/backend/docker-compose.yml ps
 ----
 
 Erwartete Ausgabe:
 - `habitree-backend`: Status `Up` mit Health `healthy`
-- `habitree-db`: Status `Up` mit Health `healthy`
+- `habitree-db`: Status `Up` mit Health `healthy` (nur mit Profil `local`)
 
 ==== Logs anzeigen
 
 Backend-Logs:
 [source,shell]
 ----
-docker compose logs -f backend
+docker compose -f src/backend/docker-compose.yml logs -f backend
 ----
 
 Datenbank-Logs:
 [source,shell]
 ----
-docker compose logs -f db
+# Nur relevant bei lokaler Datenbank (Profil local)
+docker compose -f src/backend/docker-compose.yml logs -f db
 ----
 
 ==== Automatische Restarts
@@ -270,9 +293,9 @@ Container sind mit `restart: unless-stopped` konfiguriert und starten automatisc
 
 |===
 |Problem |Ursache |Lösung
-|Backend antwortet nicht (Timeout) |Port 8000 belegt oder Container abgestürzt |`docker compose restart backend` oder Portkonflikt prüfen
-|Datenbank-Verbindungsfehler |DB nicht erreichbar oder `DATABASE_URL` falsch |`docker compose logs db` prüfen, `.env` überprüfen
-|Migrationen schlagen fehl |Alter DB-Schema incompatibel mit neuem Code |`docker compose exec backend npx prisma migrate resolve --rolled-back <migration-name>`
+|Backend antwortet nicht (Timeout) |Port 8000 belegt oder Container abgestürzt |`docker compose -f src/backend/docker-compose.yml restart backend` oder Portkonflikt prüfen
+|Datenbank-Verbindungsfehler |DB nicht erreichbar oder `DATABASE_URL` falsch |`docker compose -f src/backend/docker-compose.yml [--profile local] logs db` prüfen, `.env` überprüfen
+|Migrationen schlagen fehl |Alter DB-Schema incompatibel mit neuem Code |`docker compose -f src/backend/docker-compose.yml exec backend npx prisma migrate resolve --rolled-back <migration-name>`
 |OOM-Fehler (Out of Memory) |Zu wenig RAM verfügbar |Siehe Systemvoraussetzungen, evtl. Docker-Memory-Limit erhöhen
 |Frontend kann Backend nicht erreichen |DNS-Auflösung oder IP-Adresse falsch |Frontend-Konfiguration prüfen, `curl http://backend:8000/health` im Container testen
 |===
@@ -290,13 +313,14 @@ Typische Fehler:
 
 [source,shell]
 ----
-docker compose exec db psql -U habitree_user -d habitree_db -c "SELECT * FROM \"user\";"
+# Funktioniert nur bei lokaler Datenbank
+docker compose -f src/backend/docker-compose.yml exec db psql -U habitree_user -d habitree_db -c 'SELECT * FROM "user";'
 ----
 
 Oder via Prisma Studio:
 [source,shell]
 ----
-docker compose exec backend npx prisma studio
+docker compose -f src/backend/docker-compose.yml exec backend npx prisma studio
 ----
 
 öffnet dann ein Web-Interface auf http://localhost:5555 (nur lokal erreichbar).
@@ -305,7 +329,7 @@ docker compose exec backend npx prisma studio
 
 [source,shell]
 ----
-docker compose exec backend sh
+docker compose -f src/backend/docker-compose.yml exec backend sh
 ----
 
 Dann innerhalb des Containers:
@@ -321,30 +345,27 @@ npm run dev        # Mit Nodemon (automatischer Restart bei Änderungen)
 
 [source,shell]
 ----
-docker compose exec db pg_dump -U habitree_user habitree_db > backup_$(date +%Y%m%d_%H%M%S).sql
+# Linux / Mac
+docker compose -f src/backend/docker-compose.yml [--profile local] exec db pg_dump -U habitree_user habitree_db > backup_$(date +%Y%m%d_%H%M%S).sql
+
+# Windows PowerShell
+docker compose -f src/backend/docker-compose.yml [--profile local] exec db pg_dump -U habitree_user habitree_db > ("backup_" + (Get-Date -Format "yyyyMMdd_HHmmss") + ".sql")
 ----
 
-Dies erstellt eine SQL-Dump-Datei.
+Dies erstellt eine SQL-Dump-Datei. (Funktioniert nur mit lokaler DB).
 
-==== Backup in Docker-Volume sichern
-
-Die Daten liegen im Docker-Volume `postgres_data`. Für regelmäßige Sicherungen:
-
-[source,shell]
-----
-docker run --rm -v habitree-backend_postgres_data:/data -v $(pwd):/backup \
-  alpine tar czf /backup/postgres_backup_$(date +%Y%m%d_%H%M%S).tar.gz /data
-----
 
 ==== Restore aus Backup
 
 Aus SQL-Dump:
 [source,shell]
 ----
-cat backup_20240115_120000.sql | docker compose exec -T db psql -U habitree_user habitree_db
+# Funktioniert nur bei lokaler Datenbank
+cat backup_20240115_120000.sql | docker compose -f src/backend/docker-compose.yml [--profile local] exec -T db psql -U habitree_user habitree_db
 ----
 
-Aus Volume-Backup: Container stoppen, Volume löschen, neu erstellen und Backup zurückschreiben (komplex - siehe https://docs.docker.com/storage/volumes/[Docker Volume Dokumentation]).
+(Funktioniert nur mit lokaler DB).
+
 
 === Datenbank-Schema-Änderungen
 
@@ -354,7 +375,7 @@ Nach Änderung von `prisma/schema.prisma`:
 
 [source,shell]
 ----
-docker compose exec backend npx prisma migrate dev --name <description>
+docker compose -f src/backend/docker-compose.yml exec backend npx prisma migrate dev --name <description>
 ----
 
 Dies erstellt eine neue Migration unter `prisma/migrations/`.
@@ -363,7 +384,7 @@ Dies erstellt eine neue Migration unter `prisma/migrations/`.
 
 [source,shell]
 ----
-docker compose exec backend npx prisma migrate deploy
+docker compose -f src/backend/docker-compose.yml exec backend npx prisma migrate deploy
 ----
 
 Dies wendet alle ausstehenden Migrationen an. Die Datenbank wird während der Migration gesperrt.
@@ -376,22 +397,21 @@ Dies wendet alle ausstehenden Migrationen an. Die Datenbank wird während der Mi
 
 Die Habitree-App nutzt folgende Tabellen (siehe `prisma/schema.prisma`):
 
-|===
-|Tabelle |Zweck
-|`user` |Benutzer mit Authentifizierungsdaten
-|`habit` |Habit-Vorlagen und Benutzer-Habits
-|`predefined_habit` |Vordefinierte Habit-Templates
-|`habitEntry` |Tägliche Habit-Einträge (Erfolgsprotokoll)
-|`quote` |Motivations-Zitate
-|===
+[plantuml]
+....
+include::../development/plantuml/datenbank-beziehungen.plantuml[]
+....
 
 ==== Daten manuell hinzufügen/ändern
 
 Via SQL (psql im Container):
 [source,shell]
 ----
-docker compose exec db psql -U habitree_user -d habitree_db
+# Funktioniert nur bei lokaler Datenbank
+docker compose -f src/backend/docker-compose.yml [--profile local] exec db psql -U habitree_user -d habitree_db
 ----
+
+(Funktioniert nur mit lokaler DB).
 
 Beispiel: Benutzer löschen
 [source,sql]
@@ -422,14 +442,6 @@ Siehe https://www.postgresql.org/docs/[PostgreSQL Dokumentation] für erweiterte
 * **Container-Updates:** Docker-Images regelmäßig aktualisieren (siehe https://docs.docker.com/engine/reference/commandline/pull/[Docker Pull])
 * **Secrets-Management:** In Produktion externe Secrets-Systeme nutzen (z.B. HashiCorp Vault, AWS Secrets Manager)
 * **Regelmäßige Backups:** Tägliche oder stündliche DB-Backups einrichten (Cron-Job empfohlen)
-
-== Koexistenz mit HTW-Server
-
-Die produktive Instanz der Hochschule erreicht man unter `iseproject01.informatik.htw-dresden.de:8000`. Diese Information dient lediglich zur Referenz, falls ein Abgleich oder ein Fallback auf das zentrale System nötig ist. Betrieb, Wartung und Deployments orientieren sich jedoch an einer selbst verwalteten Infrastruktur wie in den vorherigen Kapiteln beschrieben.
-
-* **Eigene Umgebung:** Backend läuft auf `localhost:8000` bzw. dem jeweiligen Server-Host
-* **HTW-Server:** Für Vergleichs- und Testzwecke
-* **Frontend-Konfiguration:** Umgebungsvariable `BACKEND_URL` bestimmt, ob gegen das eigene System oder den Hochschulserver gearbeitet wird
 
 == Dateistruktur (Referenz)
 
@@ -463,9 +475,9 @@ Siehe https://docs.docker.com/compose/reference/[Docker Compose CLI Reference].
 
 Bei Problemen oder Fragen:
 
-1. **Logs überprüfen:** `docker compose logs -f backend`
-2. **Container-Status prüfen:** `docker compose ps`
+1. **Logs überprüfen:** `docker compose -f src/backend/docker-compose.yml logs -f backend`
+2. **Container-Status prüfen:** `docker compose -f src/backend/docker-compose.yml [--profile local] ps`
 3. **Disk-Space überprüfen:** `docker system df`
-4. **Manuelle Tests:** SSH auf Host → `docker compose exec backend sh`
+4. **Manuelle Tests:** SSH auf Host → `docker compose -f src/backend/docker-compose.yml exec backend sh`
 
 Siehe link:../architecture/architecture_notebook.adoc[Architektur-Dokumentation] für technische Details.
