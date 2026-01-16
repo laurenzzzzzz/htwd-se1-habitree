@@ -35,7 +35,7 @@ fi
 info "Waiting for database at $DB_HOST:${DB_PORT_VAL:-5432}..."
 retries=0
 max_retries=30
-while ! pg_isready -h "$DB_HOST" -p "${DB_PORT_VAL:-5432}" >/dev/null 2>&1; do
+while ! pg_isready -d "$DATABASE_URL" >/dev/null 2>&1; do
   retries=$((retries+1))
   if [ $retries -ge $max_retries ]; then
     echo "[entrypoint] timed out waiting for database at $DB_HOST:${DB_PORT_VAL:-5432}" >&2

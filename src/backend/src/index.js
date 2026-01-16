@@ -29,6 +29,12 @@ app.use('/user', userRoutes);
 // Auth-Middleware für alle Routen, die Auth benötigen
 app.use('/habits', verifyJwtToken, habitsRoutes);
 
+
+// Health-Check-Route für Docker
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'ok' });
+});
+
 // Root-Route zum Testen (öffentlich)
 app.get('/', (req, res) => {
   res.send('API ist online');
