@@ -263,7 +263,6 @@ Die Entwicklungsumgebung ist als VS Code Dev Container konfiguriert. Dies stellt
    * Scannen Sie den angezeigten QR-Code mit der **Expo Go** App (iOS/Android) auf Ihrem Smartphone.
    * Das Smartphone und der PC müssen Internetzugriff haben (durch die `--tunnel` Option ist kein gemeinsames WLAN zwingend erforderlich, aber empfohlen vorallem weil sich sonst die Verbindung zum Backend verkompliziert).
 
-Siehe link:../Anwenderdokumentation/Anwenderdokumentation.adoc[Anwenderdokumentation] für die detaillierten Schritte zur Installation der Expo Go App.
 
 
 
