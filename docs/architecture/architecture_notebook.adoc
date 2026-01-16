@@ -185,7 +185,7 @@ _Status: Geplantes Feature – derzeit nur Auth-Tokens werden lokal zwischengesp
 
 *Vorgehensweise:* +
 - Express.js-Server aufgesetzt und über *Prisma* an *PostgreSQL* angebunden +
-- Kommunikation erfolgt über REST-API +
+- Kommunikation erfolgt über REST-API (Backend URL zentral konfiguriert in `constants/ApiConfig.ts`) +
 - *Firebase Auth* war hier ursprünglich vorgesehen, ist aber verworfen (siehe Abschnitt "Authentifizierung") +
 - Setup wurde dokumentiert, sodass Teammitglieder es lokal reproduzieren und erweitern +
 
