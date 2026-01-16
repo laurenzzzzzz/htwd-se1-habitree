@@ -37,10 +37,23 @@ app.get('/', (req, res) => {
 //Quotes-Route (öffentlich)
 app.use('/quotes', quotesRoutes);
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 8000;
+const HOST = process.env.HOST || '0.0.0.0';
 
-app.listen(PORT, async () => {
-  console.log(`Server läuft auf http://iseproject01.informatik.htw-dresden.de:${PORT}`);
+console.log('process.env.PORT:', process.env.PORT);
+console.log('Verwendeter PORT:', PORT);
+
+// Display "localhost" when running against the local compose `db` service
+const inferDisplayHost = () => {
+  const dbUrl = process.env.DATABASE_URL || '';
+  if (dbUrl.includes('@db:') || dbUrl.includes('@db:5432')) return 'localhost';
+  if (process.env.HOST_DISPLAY) return process.env.HOST_DISPLAY;
+  return 'iseproject01.informatik.htw-dresden.de';
+};
+
+app.listen(PORT, HOST, async () => {
+  const displayHost = inferDisplayHost();
+  console.log(`Server läuft auf http://${displayHost}:${PORT}`);
 
   await createDailyHabitEntries();
 

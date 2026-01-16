@@ -1,0 +1,1 @@
+-- Initialisierungsskript für Habitree DB (optional)

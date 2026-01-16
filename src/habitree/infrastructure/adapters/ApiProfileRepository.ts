@@ -1,8 +1,8 @@
+
 import axios from 'axios';
 import IProfileRepository from '../../domain/repositories/IProfileRepository';
 import { User, UserData } from '../../domain/entities/User';
-
-const API_BASE_URL = 'http://iseproject01.informatik.htw-dresden.de:8000';
+import { API_BASE_URL } from '../../constants/ApiConfig';
 
 export class ApiProfileRepository implements IProfileRepository {
   async updateUsername(authToken: string, newUsername: string): Promise<User> {

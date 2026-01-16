@@ -1,8 +1,8 @@
+
 import axios from 'axios';
 import { TreeGrowth, TreeGrowthData, TreeGrowthUpdatePayload } from '../../domain/entities/TreeGrowth';
 import ITreeGrowthRepository from '../../domain/repositories/ITreeGrowthRepository';
-
-const API_BASE_URL = 'http://iseproject01.informatik.htw-dresden.de:8000';
+import { API_BASE_URL } from '../../constants/ApiConfig';
 
 export class ApiTreeGrowthRepository implements ITreeGrowthRepository {
   async fetchTreeGrowth(authToken: string, userId: number): Promise<TreeGrowth> {

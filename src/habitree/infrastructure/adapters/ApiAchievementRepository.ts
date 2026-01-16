@@ -1,8 +1,8 @@
+
 import axios from 'axios';
 import { Achievement } from '../../domain/entities/Achievement';
 import IAchievementRepository from '../../domain/repositories/IAchievementRepository';
-
-const API_BASE_URL = 'http://iseproject01.informatik.htw-dresden.de:8000';
+import { API_BASE_URL } from '../../constants/ApiConfig';
 
 type AchievementResponse = {
   id: number;

@@ -88,8 +88,7 @@ docker compose version
 
 [source,shell]
 ----
-git clone <repository-url> habitree
-cd habitree
+git clone https://github.com/laurenzzzzzz/htwd-se1-habitree.git
 ----
 
 === Konfiguration
@@ -123,7 +122,7 @@ DATABASE_URL=postgresql://${DB_USER}:${DB_PASSWORD}@db:5432/${DB_NAME}
 ==== PostgreSQL-Initialisierung
 
 Die Datenbank wird automatisch beim ersten Start erstellt. Optional kann eine Seed-Datei vorab geladen werden:
-
+//nochmal prüfen
 [source,bash]
 ----
 src/backend/prisma/init.sql
@@ -140,11 +139,12 @@ Falls eine externe PostgreSQL-Instanz verwendet wird (z.B. HTW-Server), setze in
 DATABASE_URL=postgresql://user:password@external-host:5432/habitree_db
 ----
 
+docker compose --profile local up -d backend
 Dann starte nur das Backend ohne die lokale DB (Docker Compose Profile):
 
 [source,shell]
 ----
-docker compose --profile local up -d backend
+docker compose up -d backend
 ----
 
 === Inbetriebnahme
@@ -154,32 +154,69 @@ docker compose --profile local up -d backend
 [source,shell]
 ----
 cd src/backend
-docker compose up -d
+docker compose --profile local up -d
 ----
+Hinweis: Das Profil "local" muss angegeben werden, damit auch der Datenbank-Service (db) mitgestartet wird.
 
 Dies startet:
 - PostgreSQL-Container (`habitree-db`)
 - Express-Backend-Container (`habitree-backend`)
 
+Hinweis zur automatischen Migration:
+
+Wenn Sie den Stack mit `--profile local` starten, führt die aktuelle Backend-Image-Entrypoint-Skripte automatisch die ausstehenden Prisma-Migrationen gegen die lokale `db` aus, bevor der Node-Prozess gestartet wird. Dadurch ist in der Regel kein manueller Migrationsschritt mehr erforderlich.
+Wenn Sie den Docker-Image- oder Entrypoint-Code geändert haben, bauen Sie das Backend-Image erneut mit `--build`, damit die Änderungen aktiv werden (siehe unten).
+
 ==== Datenbankmigration ausführen
 
-Nach dem Start der Container:
+Bei Start mit dem lokalen Compose-Profil (`--profile local`) werden ausstehende Prisma-Migrationen automatisch vom Backend-Entrypoint gegen die lokale `db` ausgeführt. Ein manueller Migrationsschritt ist in diesem Fall in der Regel nicht erforderlich.
+
+Diese Sektion beschreibt ausschließlich, wie Migrationen gegen eine externe Datenbank (z. B. ein HTW-Server) manuell angewendet werden — nutzen Sie diese Schritte nur, wenn Sie nicht die lokale `db` verwenden.
+
+1. Setzen Sie in `src/backend/.env` oder in Ihrer Umgebung die `DATABASE_URL` auf die externe Datenbank, z. B.:
+
+[source,bash]
+----
+DATABASE_URL=postgresql://user:password@external-host:5432/habitree_db
+----
+
+2. Migrationen mit laufendem Backend-Container (Backend gegen externe DB starten und migrieren):
 
 [source,shell]
 ----
+cd src/backend
+docker compose up -d backend
 docker compose exec backend npx prisma migrate deploy
 ----
 
-Dies lädt das aktuelle Datenbankschema (`schema.prisma`) in die Datenbank.
+3. Alternativ: Migration einmalig in einem temporären Container (empfohlen für Wartungsaufgaben):
+
+[source,shell]
+----
+cd src/backend
+docker compose run --rm -e DATABASE_URL="postgresql://user:password@external-host:5432/habitree_db" backend npx prisma migrate deploy
+----
+
+Wichtige Hinweise:
+- Erstellen Sie vor Migrationen stets ein Backup der Produktionsdatenbank.
+- Verwenden Sie die `run --rm`-Variante, wenn Sie Migrationen unabhängig vom laufenden `backend`-Service anwenden möchten.
+- Die automatische Entrypoint-Migration gilt nur für den lokalen Compose-Start mit `--profile local`.
 
 ==== Optionale Seed-Daten laden
 
 [source,shell]
 ----
-docker compose exec backend npx prisma db seed
+docker compose --profile local exec backend npx prisma db seed
 ----
 
 Dies lädt Testdaten aus `prisma/seed.js`.
+
+Falls der `backend`-Service nicht verfügbar ist, kann das Seeder-Skript in einem einmaligen Container ausgeführt werden:
+
+[source,shell]
+----
+docker compose --profile local run --rm backend npx prisma db seed
+----
 
 ==== Überprüfung des Systems
 

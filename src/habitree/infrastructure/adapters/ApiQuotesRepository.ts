@@ -1,8 +1,8 @@
+
 import axios from 'axios';
 import IQuotesRepository from '../../domain/repositories/IQuotesRepository';
 import { Quote, QuoteData } from '../../domain/entities/Quote';
-
-const API_BASE_URL = 'http://iseproject01.informatik.htw-dresden.de:8000';
+import { API_BASE_URL } from '../../constants/ApiConfig';
 const QUOTES_API_URL = `${API_BASE_URL}/quotes`;
 
 export class ApiQuotesRepository implements IQuotesRepository {

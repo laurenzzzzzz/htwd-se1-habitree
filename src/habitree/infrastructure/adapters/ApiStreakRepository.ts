@@ -1,8 +1,8 @@
+
 import axios from 'axios';
 import { Streak, StreakData } from '../../domain/entities/Streak';
 import IStreakRepository from '../../domain/repositories/IStreakRepository';
-
-const API_BASE_URL = 'http://iseproject01.informatik.htw-dresden.de:8000';
+import { API_BASE_URL } from '../../constants/ApiConfig';
 
 export class ApiStreakRepository implements IStreakRepository {
   async fetchStreak(authToken: string, userId: number): Promise<Streak> {

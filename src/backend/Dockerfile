@@ -23,6 +23,9 @@ ENV NODE_ENV=production
 RUN addgroup -g 1001 -S nodejs && \
     adduser -S nodejs -u 1001
 
+# Install small clients (pg_isready)
+RUN apk add --no-cache postgresql-client
+
 # Dependencies aus Builder kopieren
 COPY --from=builder --chown=nodejs:nodejs /app/node_modules ./node_modules
 COPY --from=builder --chown=nodejs:nodejs /app/package*.json ./
@@ -44,5 +47,9 @@ USER nodejs
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
     CMD node -e "require('http').get('http://localhost:8000/health', (r) => {if (r.statusCode !== 200) throw new Error(r.statusCode)})"
 
-# App starten
-CMD ["node", "src/index.js"]
+# Copy entrypoint and make executable
+COPY --chown=nodejs:nodejs entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+# App starten via entrypoint (waits for DB, runs migrations)
+ENTRYPOINT ["/bin/sh", "/usr/local/bin/entrypoint.sh"]

@@ -6,7 +6,7 @@ import {
   HabitPersistenceRequestBody,
 } from '../../domain/policies/HabitSchedulePolicy';
 
-const API_BASE_URL = 'http://iseproject01.informatik.htw-dresden.de:8000';
+import { API_BASE_URL } from '../../constants/ApiConfig';
 const HABITS_API_URL = `${API_BASE_URL}/habits`;
 
 export class ApiHabitsRepository implements IHabitsRepository {

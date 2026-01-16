@@ -1,8 +1,8 @@
+
 import axios from 'axios';
 import IAuthApiRepository from '../../domain/repositories/IAuthApiRepository';
 import { User, UserData } from '../../domain/entities/User';
-
-const API_BASE_URL = 'http://iseproject01.informatik.htw-dresden.de:8000';
+import { API_BASE_URL } from '../../constants/ApiConfig';
 
 export class ApiAuthRepository implements IAuthApiRepository {
   async login(email: string, password: string): Promise<{ token: string; user: User }> {
