@@ -217,14 +217,16 @@ Exponierte Ports:
 - **Frontend-Entwicklung:** Der Dev Container ist primär für die Expo-Frontend-Entwicklung ausgelegt. Entwickler können die React Native App im Container entwickeln und über Expo Go oder einen Tunnel auf ihrem Gerät testen.
 - **Integration mit VS Code:** Das `devcontainer.json` integriert den Container nahtlos mit VS Code, mit vordefinierten Extensions (ESLint, GitHub Copilot Chat, Prettier) und automatischem Port-Forwarding.
 
+*Backend-Container:* +
+Für das Backend existieren ebenfalls Docker-Container (siehe `src/backend/Dockerfile` und `docker-compose.yml`). Diese ermöglichen einen containerisierten Betrieb des Backends und der Datenbank für lokale Entwicklung oder Deployment.
+
+*Wichtiger Hinweis:* +
+Im Rahmen dieses Projekts wird das Backend jedoch **nicht** im Container betrieben, sondern klassisch auf einem bereitgestellten lokalen Server ausgeführt. Die Container-Lösung für das Backend ist vorhanden und dessen Betrieb wird in der Betriebsdokumentation beschrieben.
+
 *Nebenbedingung:* +
 - Docker und Docker Desktop müssen installiert sein +
 - Initiales Setup beim ersten Container-Start dauert länger (npm ci, Expo-Installation)
 - Container benötigt angemessene Hardware-Ressourcen 
-
-*Nächste mögliche Schritte:* +
-- Bei Bedarf Backend und Datenbank als separate Services in Docker definieren (docker-compose.yml für lokale Entwicklung) +
-- Deployment-Container für Backend-Produktion separat konfigurieren +
 
 
 == Schichten oder Architektur-Framework
