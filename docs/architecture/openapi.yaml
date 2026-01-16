@@ -432,6 +432,11 @@ components:
           type: integer
           minimum: 1
           nullable: true
+        durationDays:
+          type: integer
+          minimum: 1
+          nullable: true
+          description: Optionale Laufzeit in Tagen (null = unendlich)
         isHarvested:
           type: integer
           description: 0 = aktiv, 1 = wachsend, 2 = geerntet
@@ -485,6 +490,10 @@ components:
           type: integer
           minimum: 1
           description: Pflicht für benutzerdefinierte Habits
+        durationDays:
+          type: integer
+          minimum: 1
+          description: Optional, legt fest wie viele Tage das Habit läuft
 
     HabitUpdateRequest:
       type: object
@@ -507,6 +516,9 @@ components:
             minimum: 0
             maximum: 6
         intervalDays:
+          type: integer
+          minimum: 1
+        durationDays:
           type: integer
           minimum: 1
 
