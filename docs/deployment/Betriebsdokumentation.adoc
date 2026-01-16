@@ -482,6 +482,79 @@ Siehe https://www.postgresql.org/docs/[PostgreSQL Dokumentation] für erweiterte
 
 Siehe https://docs.docker.com/compose/reference/[Docker Compose CLI Reference].
 
+== Versions- und Konfigurationsmanagement
+
+=== Repository-Struktur
+
+* **Main Branch**: `main` - Produktionsbereiter Code
+* **Feature Branches**: Temporäre Branches für neue Features
+* **Bugfix Branches**: Temporäre Branches für Fehlerbehebungen
+
+=== Branch-Naming Convention
+
+* `feature/<kurze-beschreibung>` (z.B. `feature/add-streak-tracking`)
+* `bugfix/<kurze-beschreibung>` (z.B. `bugfix/fix-login-error`)
+* feature sowie bugfix branches werden nach merge gelöscht
+
+
+=== Commit Message Format
+
+----
+<type> kurze beschreibung
+----
+
+**Types:**
+
+* `Update`: bestehendes Dokument aktualisiert oder bestehenden Code aktualisieren ohne neue Funktionen hinzuzufügen
+* `Add`: neues Feature oder neue Datei hinzufügen, neue Bereiche in der Dokumentation erstellen
+* `Bugfix`: Fehlerbehebung
+* `Delete`: Datei oder Code entfernen, bestehnede Bereiche in der Dokumentation löschen
+
+=== GitHub Workflow
+
+==== Branch erstellen
+
+[source,bash]
+----
+git checkout main
+git pull origin main
+
+# Neuen Feature Branch erstellen
+git checkout -b feature/mein-neues-feature
+----
+
+==== Entwicklung & Commits
+
+[source,bash]
+----
+# Änderungen staged
+git add .
+git commit -m "add habit streak visualization"
+----
+
+==== Push & Pull Request erstellen
+
+[source,bash]
+----
+# Branch pushen
+git push origin feature/mein-neues-feature
+
+# Pull Request auf GitHub erstellen
+----
+
+==== Code Review
+
+* **Selbstreview**: vor Pull Request neue Feature selbst prüfen
+* **Mindestens 1 Reviewer** muss den Code prüfen
+* **Review-Kriterien**: Code-Qualität, Lesbarkeit
+* **Änderungen umsetzen**: Feedback aus Review einarbeiten
+
+==== Merge
+
+* **Squash and Merge** 
+* **Delete Branch** nach erfolgreichem Merge
+* **Main aktualisieren**: Lokalen Main Branch aktualisieren
+
 == Support und Kontakt
 
 Bei Problemen oder Fragen:
