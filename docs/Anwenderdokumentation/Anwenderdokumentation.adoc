@@ -16,7 +16,13 @@ Bitte beachten, dass auf dem Handy der eduVPN aktiviert sein muss bzw. Sie sich 
 
 Scanne den angezeigten QR-Code mit der **Expo Go App** auf deinem Smartphone.
 
+image:images/qrcode.png[width=200]
+
 Hinweis: Würde man die App tatsächlich veröffentlichen wäre der QR-Code nicht notwendig, da die App dann über den App Store/Play Store installiert werden könnte.
+
+Der bereitgestellte QR-Code gehört zu einer auf dem HTW-Server laufendem Frontend Docker Container Instanz. In Der Betriebsdokumentation ist angegeben wie man selbst eine Instanz der App starten kann.
+
+Siehe link:../deployment/Betriebsdokumentation.adoc[Betriebsdokumentation] für die detaillierten Schritte zur Installation der Expo Go App.
 
 == Benutzeroberfläche
 
