@@ -197,16 +197,22 @@ docker compose -f src/backend/docker-compose.yml run --rm -e DATABASE_URL="postg
 Wichtige Hinweise:
 - Erstellen Sie vor Migrationen stets ein Backup der Produktionsdatenbank.
 - Verwenden Sie die `run --rm`-Variante, wenn Sie Migrationen unabhängig vom laufenden `backend`-Service anwenden möchten.
-- Die automatische Entrypoint-Migration gilt nur für den lokalen Compose-Start mit `--profile local`.
 
 ==== Optionale Seed-Daten laden
 
 [source,shell]
-----
 docker compose -f src/backend/docker-compose.yml exec backend npx prisma db seed
-----
 
-Dies lädt Testdaten aus `prisma/seed.js`.
+
+Dies lädt Testdaten aus `prisma/seed.js`:
+
+* **Vordefinierte Habits** (z.B. "Täglich Wasser trinken", "Morgendliches Stretching", "30 Minuten Lesen") werden als Templates in die Tabelle `predefinedHabit` eingefügt.
+* **Test-User** mit der E-Mail `test@example.com` und Passwort `password123` wird angelegt (sofern nicht vorhanden).
+* **Persönliche Habit-Instanzen** für den Test-User werden aus den Templates erstellt.
+* **Tages-Einträge (habitEntry)** für den Test-User und die Habits werden für das aktuelle Datum angelegt.
+* **Motivationssprüche (quotes)** werden eingefügt.
+
+Die genauen Inhalte und Logik finden sich in `src/backend/prisma/seed.js`.
 
 ==== Überprüfung des Systems
 
