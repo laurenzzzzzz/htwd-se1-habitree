@@ -255,6 +255,12 @@ export const API_BASE_URL = 'http://192.168.x.x:8000';
 4. **Tunnel-Option (Alternative):**
    Falls eine direkte IP-Verbindung nicht möglich ist (z.B. Gast-WLAN), kann `ngrok` verwendet werden, um das Backend öffentlich verfügbar zu machen: `npx ngrok http 8000` -> URL in `ApiConfig.ts` eintragen.
 
+[NOTE]
+====
+**Hinweis bei Verbindungsproblemen:**
+Sollte die App trotz korrekter Netzwerkkonfiguration Verbindungsfehler anzeigen oder eine Anmeldung nicht möglich sein, versuchen Sie, sich in der App von Ihrem Habitree-Account abzumelden und anschließend erneut anzumelden. Dies kann insbesondere nach Änderungen an der Backend-URL oder nach Netzwerkwechseln helfen, Verbindungsprobleme zu beheben.
+====
+
 ==== Start des Frontends
 
 Die Entwicklungsumgebung ist als VS Code Dev Container konfiguriert. Dies stellt sicher, dass alle notwendigen Tools (Node.js, Expo CLI, ...) vorinstalliert sind.
@@ -314,7 +320,7 @@ Container sind mit `restart: unless-stopped` konfiguriert und starten automatisc
 |Datenbank-Verbindungsfehler |DB nicht erreichbar oder `DATABASE_URL` falsch |`docker compose -f src/backend/docker-compose.yml [--profile local] logs db` prüfen, `.env` überprüfen
 |Migrationen schlagen fehl |Alter DB-Schema incompatibel mit neuem Code |`docker compose -f src/backend/docker-compose.yml exec backend npx prisma migrate resolve --rolled-back <migration-name>`
 |OOM-Fehler (Out of Memory) |Zu wenig RAM verfügbar |Siehe Systemvoraussetzungen, evtl. Docker-Memory-Limit erhöhen
-|Frontend kann Backend nicht erreichen |DNS-Auflösung oder IP-Adresse falsch |Frontend-Konfiguration prüfen, `curl http://backend:8000/health` im Container testen
+|Frontend kann Backend nicht erreichen |DNS-Auflösung oder IP-Adresse falsch bzw. Session-Problem |Frontend-Konfiguration prüfen, `curl http://backend:8000/health` im Container testen. Zusätzlich: Bei Verbindungsproblemen in der App ab- und wieder anmelden, um mögliche Session-Probleme zu beheben.
 |===
 
 === Fehlerdiagnose
