@@ -83,29 +83,47 @@ async function main() {
 
   for (const template of templates) {
       
-      // 3.1 Prüfen, ob der User dieses Habit bereits hat
-      let targetHabit = await prisma.habit.findFirst({
-        where: {
-          userId: TEST_USER_ID,
-          predefinedHabitId: template.id, // Suche über die korrekte Verknüpfung
+
+    // 3.1 Prüfen, ob der User dieses Habit bereits hat
+    let targetHabit = await prisma.habit.findFirst({
+      where: {
+        userId: TEST_USER_ID,
+        predefinedHabitId: template.id, // Suche über die korrekte Verknüpfung
+      },
+    });
+
+    // Standardwerte für neue Felder
+    const startDate = todayUTC;
+    const durationDays = 30; // Beispiel: 30 Tage Laufzeit
+    const time = "08:00"; // Beispiel: 8 Uhr morgens als Erinnerungszeit
+
+    if (!targetHabit) {
+      // 3.2 Erstellt die persönliche Habit-Instanz aus dem Template
+      const habitData = {
+        userId: TEST_USER_ID,
+        name: template.name,
+        description: template.description,
+        frequency: template.frequency,
+        predefinedHabitId: template.id, // ⚠️ Verknüpfung setzen
+        startDate: startDate,
+        durationDays: durationDays,
+        time: time,
+      };
+
+      targetHabit = await prisma.habit.create({ data: habitData });
+      console.log(` Habit "${targetHabit.name}" (Vorlage #${template.id}) für Nutzer erstellt.`);
+    } else {
+      // Falls das Habit schon existiert, fehlende Felder ergänzen/aktualisieren
+      targetHabit = await prisma.habit.update({
+        where: { id: targetHabit.id },
+        data: {
+          startDate: targetHabit.startDate || startDate,
+          durationDays: targetHabit.durationDays || durationDays,
+          time: targetHabit.time || time,
         },
       });
-
-      if (!targetHabit) {
-        // 3.2 Erstellt die persönliche Habit-Instanz aus dem Template
-        const habitData = {
-          userId: TEST_USER_ID,
-          name: template.name,
-          description: template.description,
-          frequency: template.frequency,
-          predefinedHabitId: template.id, // ⚠️ Verknüpfung setzen
-        };
-
-        targetHabit = await prisma.habit.create({ data: habitData });
-        console.log(` Habit "${targetHabit.name}" (Vorlage #${template.id}) für Nutzer erstellt.`);
-      } else {
-        console.log(`Habit "${template.name}" existiert bereits für Nutzer.`);
-      }
+      console.log(`Habit "${template.name}" existiert bereits für Nutzer. Felder aktualisiert.`);
+    }
 
       // 3.3 HabitEntry für HEUTE erstellen/prüfen (mit korrigiertem Datum)
       const entryExists = await prisma.habitEntry.findFirst({
