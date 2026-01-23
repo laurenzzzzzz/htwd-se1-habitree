@@ -348,3 +348,9 @@ Ein kurzer Reminder kann zusätzlich helfen.
 
 == Abschluss / Weiterführende Links
 GitHub Repository: https://github.com/laurenzzzzzz/htwd-se1-habitree
+
+- Login Test Daten mit bereits angelegten Daten:
+
+    Email: marc@gmail.com
+
+    Passwort: marc
