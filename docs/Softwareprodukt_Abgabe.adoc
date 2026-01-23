@@ -1,0 +1,19 @@
+= Softwareprodukt: Habitree
+
+== Name des Systems
+Habitree
+
+== URL zur laufenden Instanz
+Die laufende Instanz ist über das HTW-Netzwerk erreichbar:
+
+https://iseproject01.informatik.htw-dresden.de:8000
+
+(Siehe Anwenderdokumentation für Details zur Nutzung und QR-Code)
+
+== Demo-Login
+Für Testzwecke steht folgender Demo-Account zur Verfügung:
+
+Email: marc@gmail.com
+Passwort: marc
+
+Weitere Hinweise zur Anmeldung und Nutzung finden sich in der Anwenderdokumentation.
