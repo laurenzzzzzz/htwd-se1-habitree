@@ -1,6 +1,8 @@
 = Benutzerhandbuch – Habit Tracker (Expo) 
 :toc: 
 :toclevels: 3 
+:numbered:
+
 
 == Ziel des Dokuments
 Dieses Handbuch unterstützt Nutzer dabei, die **habitree-App** zu starten und erklärt die Bedienung der App.
@@ -344,5 +346,5 @@ Ein kurzer Reminder kann zusätzlich helfen.
 **Hab Spaß dabei**: Es geht nicht um Perfektion oder Wettbewerb, sondern um Entwicklung. Jeder kleine Schritt zählt.
 
 
-== 12. Abschluss / Weiterführende Links
+== Abschluss / Weiterführende Links
 GitHub Repository: https://github.com/laurenzzzzzz/htwd-se1-habitree
