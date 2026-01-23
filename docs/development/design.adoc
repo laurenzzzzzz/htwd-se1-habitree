@@ -27,15 +27,75 @@ Dieses Dokument beschreibt wesentliche Entwurfsentscheidungen auf Ebene der Komp
 
 
 == Ausgewählte Sichten
-=== Sequenzdiagramme:
+=== Sequenzdiagramme mit User Stories:
 
-**Für Login und Registrierung die Seuenzdiagramme im plantuml Format:**
+==== Registrierung (US #250)
+
+**User Story**  
+Als neuer Nutzer möchte ich ein Konto erstellen können, um die App nutzen zu können.
+
+[mermaid]
+....
+include::../development/plantuml/sequenzdiagramme.md[lines=66..104]
+....
+
+==== Login (US #250)
+
+**User Story**  
+Als Nutzer möchte ich mich anmelden können, um Zugriff auf meine persönlichen Habits zu erhalten.
+
+[mermaid]
+....
+include::../development/plantuml/sequenzdiagramme.md[lines=19..55]
+....
+
+==== Logout (US #250)
+
+**User Story**  
+Als Nutzer möchte ich mich ausloggen können, um mein Konto zu schützen.
+
+[mermaid]
+....
+include::../development/plantuml/sequenzdiagramme.md[lines=115..122]
+....
+
+==== Habit erstellen (US #92/ US #279 / US #280)
+
+**User Story**  
+Als Nutzer möchte ich ein neues Habit erstellen können, damit ich meine Ziele strukturiert planen kann.
+
+[mermaid]
+....
+include::../development/plantuml/sequenzdiagramme.md[lines=133..163]
+....
+
+==== Habit abhaken (US #93/ US #299)
+
+**User Story**  
+Als Nutzer möchte ich ein Habit abhaken können, um meinen täglichen Fortschritt zu dokumentieren.
+
+[mermaid]
+....    
+include::../development/plantuml/sequenzdiagramme.md[lines=174..192]
+....
+
+==== Habit-Liste abrufen (US #93)
+
+**User Story**  
+Als Nutzer möchte ich eine Übersicht meiner Habits sehen können, um meinen Fortschritt zu verfolgen.
+
+[mermaid]
+....
+include::../development/plantuml/sequenzdiagramme.md[lines=203..221]
+....
+
+
+
+**Die Links zu der Dokumentation und Visualisierung für alle unserer Sequenzdiagramme mit den passenden User Stories:**
 
 link:plantuml/Sequenzdiagramm_Login.plantuml[Link zu den Login Sequenzdiagramm]
 
 link:plantuml/Sequenzdiagramm_Registrierung.plantuml[Link zu den Registrierung Sequenzdiagramm]
-
-**Die Dokumentation und Visualisierung für alle unserer Sequenzdiagramme mit den passenden User Stories:**
 
 link:plantuml/sequenzdiagramme.md[Link zu den restlichen Sequenzdiagramme]
 
@@ -66,6 +126,11 @@ link:plantuml/sequenzdiagramme.md[Link zu den restlichen Sequenzdiagramme]
 //|===
 
 == Datenmodell
+
+[plantuml]
+....
+include::plantuml/datenbank-beziehungen.plantuml[]
+....
 
 link:plantuml/datenbank-beziehungen.plantuml[Link zu der Datenbank Beziehung]
 
@@ -101,6 +166,11 @@ Der Nutzer soll unmittelbar nach dem App-Start eine chronologische Übersicht se
 * Task #172: Design der Tagesplan-Anzeige
 
 ==== Sequenzdiagramm:
+
+[mermaid]
+....
+include::../development/plantuml/Sequenzdiagramm_AutomatischeAnzeige_Tagesplan.md[lines=2..31]
+....
 
 link:plantuml/Sequenzdiagramm_AutomatischeAnzeige_Tagesplan.md[Link zu den passenden Sequenzdiagramm]
 
