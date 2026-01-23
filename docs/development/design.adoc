@@ -246,3 +246,6 @@ git push origin feature/mein-neues-feature
 * **Squash and Merge** 
 * **Delete Branch** nach erfolgreichem Merge
 * **Main aktualisieren**: Lokalen Main Branch aktualisieren
+
+== Link zum Repo
+GitHub Repository: https://github.com/laurenzzzzzz/htwd-se1-habitree
