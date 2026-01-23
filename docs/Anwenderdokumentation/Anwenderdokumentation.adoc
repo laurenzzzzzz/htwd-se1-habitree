@@ -20,7 +20,7 @@ image:images/qrcode.png[width=200]
 
 Hinweis: Würde man die App tatsächlich veröffentlichen wäre der QR-Code nicht notwendig, da die App dann über den App Store/Play Store installiert werden könnte.
 
-Der bereitgestellte QR-Code gehört zu einer auf dem HTW-Server laufendem Frontend Docker Container Instanz. In Der Betriebsdokumentation ist angegeben wie man selbst eine Instanz der App starten kann.
+Der bereitgestellte QR-Code gehört zu einer auf dem HTW-Server laufenden Frontend Docker Container Instanz. In der Betriebsdokumentation ist angegeben, wie man selbst eine Instanz der App starten kann.
 
 Siehe link:../deployment/Betriebsdokumentation.adoc[Betriebsdokumentation] für die detaillierten Schritte zur Installation der Expo Go App.
 
@@ -32,18 +32,18 @@ image:images/Home01.jpg[width=200] image:images/Home02.jpg[width=200]
 
 Auf der Startseite siehst du eine Übersicht über deinen aktuellen Fortschritt und deine heutigen Ziele.  
 
-* **Persönliche Begrüßung** – oben wirst du mit deinem Namen begrüßt. 
-* **Tagesspruch** – ein motivierender Spruch für den Tag. 
-* **Habit Statistiken** – Anzahl der Tage jedes Habits. 
-* **Streak-Anzeige** – wie viele Tage du deine Habits in Folge geschafft hast. 
-* **Heutige Ziele** – Liste deiner Habits, die heute anstehen.  
-* **Plus-Button (+)** zum Hinzufügen neuer Habits
+* **Persönliche Begrüßung:** Oben wirst du mit deinem Namen begrüßt
+* **Tagesspruch:** Ein motivierender Spruch für den Tag
+* **Habit Statistiken:** Anzahl der Tage jedes Habits
+* **Streak-Anzeige:** Wie viele Tage du deine Habits in Folge geschafft hast
+* **Heutige Ziele:** Liste deiner Habits, die heute anstehen
+* **Plus-Button (+):** Zum Hinzufügen neuer Habits
 
 Funktionen auf der Startseite:
 
 - Prüfe deine **heutigen Ziele** und deine **Streak**
-- Tippe auf die Check-Box eines Habits, um es abzuhaken.
-- Tippe auf den **Plus-Button (+)**, um ein neues Habit zu erstellen.
+- Tippe auf die Check-Box eines Habits, um es abzuhaken
+- Tippe auf den **Plus-Button (+)**, um ein neues Habit anzulegen
 
 ---
 
@@ -54,16 +54,16 @@ image:images/habits01.jpg[width=200] image:images/habits02.jpg[width=200] image:
 In der Habits-Ansicht verwaltet der Benutzer seine Gewohnheiten.  
 Die Ansicht ist in drei Bereiche unterteilt:
 
-* **Kalender**: Anstehende Habits für den nächsten Tag 
+* **Kalender**: Anstehende Habits für einen ausgewählten Tag
 * **Heutige Habits**: Alle geplanten Habits für den aktuellen Tag  
 * **Alle Habits**: Vollständige Liste aller angelegten Gewohnheiten  
 
 Funktionen in der Habits-Übersicht: 
 
-- Tippe auf die entsprechenden Symbole eines Habits, um es abzuhaken, zu bearbeiten oder zu löschen. 
-- Tippe auf das **Datum** deiner Wahl, um die anstehenden Habits für diesen Tag zu sehen. 
-- Nutze den **Plus-Button (+)**, um ein neues Habit anzulegen. 
-- Wechsle zwischen den Tabs „Kalender“ und „Alle Habits“, um die Übersicht zu ändern.
+- Tippe auf die entsprechenden Symbole eines Habits, um es abzuhaken, zu bearbeiten oder zu löschen
+- Tippe auf das **Datum** deiner Wahl, um die anstehenden Habits für diesen Tag zu sehen
+- Nutze den **Plus-Button (+)**, um ein neues Habit anzulegen
+- Wechsle zwischen den Tabs „Kalender“ und „Alle Habits“, um die Übersicht zu ändern (Filter)
 
 ---
 
@@ -71,11 +71,11 @@ Funktionen in der Habits-Übersicht:
 
 image:images/tree01.jpg[width=200] image:images/tree1.jpg[width=200]
 
-Die Baum-Ansicht zeigt deinen langfristigen Fortschritt in Form eines wachsenden Baumes und noch einen seperaten Baum pro Habit.
+Die Baum-Ansicht zeigt deinen langfristigen Fortschritt in Form eines wachsenden Baumes und noch einen separaten Baum pro Habit.
 
-* **Baumgröße** – je mehr Habits du erfüllst, desto größer wird dein Baum. 
-* **Fortschrittsanzeige** – zeigt deinen aktuellen Fortschritt eines Habits in Prozent. 
-* **Streak-Anzeige** – zeigt, wie viele Tage du aktiv warst. 
+* **Baumgröße:** Je mehr Habits du erfüllst, desto größer wird dein Baum
+* **Fortschrittsanzeige:** Zeigt deinen aktuellen Fortschritt eines Habits in Prozent
+* **Streak-Anzeige:** Zeigt, wie viele Tage du aktiv warst
 
 Der Baum dient als zentrales Motivations- und Belohnungselement der App.
 
@@ -85,12 +85,12 @@ Der Baum dient als zentrales Motivations- und Belohnungselement der App.
 
 image:images/erfolge01.jpg[width=200] 
 
-In der Erfolge-Ansicht findest du alle Abzeichen, die du durch das Erreichen bestimmter Meilensteine freigeschaltet hast.
+In der Erfolge-Ansicht findest du alle Abzeichen (Bäume), die du durch Erreichen der Laufzeit freigeschaltet hast.
 
-* **Abzeichenübersicht** – zeigt alle erreichten und noch gesperrten Abzeichen. 
-* **Detailansicht** – tippe ein Abzeichen an, um zu sehen, wie du es verdient hast.
+* **Abzeichenübersicht:** Zeigt alle erreichten Abzeichen
+* **Detailansicht:** Tippe ein Abzeichen an, um zu sehen, wie du es verdient hast
 
-Die Inventar-Ansicht dient der Gamification und zusätzlichen Motivation, regelmäßig Habits zu erfüllen.
+Die Inventar-Ansicht dient der Gamification und zusätzlichen Motivation, regelmäßig Habits zu erfüllen und seine gewählte Laufzeit zu erreichen.
 
 ---
 
@@ -103,7 +103,7 @@ In der Profil-Ansicht kann der Benutzer persönliche Daten und App-Einstellungen
 * **Benutzername**, **Profilbild** und **E-Mail** angezeigt bekommen
 * **Information**, warum es ein Ziel von 66 Tagen gibt
 * **Benachrichtigungen** aktivieren/deaktivieren 
-* **Account verwalten**, z. B. Passwort und Benutzername ändern  oder Abmelden  
+* **Account verwalten**, z. B. Passwort und Benutzername ändern oder abmelden  
 
 ---
 
@@ -129,13 +129,13 @@ image:images/habit1n.jpg[width=200] image:images/habit2.jpg[width=200] image:ima
 
 So legst du ein vordefiniertes Habit an: 
 
-- Tippe auf den **Plus-Button (+)**, um ein neues Habit zu erstellen.
-- Tippe auf **vordefiniertes Ziel wählen**.
-- Wähle ein **vordefiniertes Ziel** aus der Liste. 
-- Lege **Häufigkeit** fest.
+- Tippe auf den **Plus-Button (+)**, um ein neues Habit zu erstellen
+- Tippe auf **vordefiniertes Ziel wählen**
+- Wähle ein **vordefiniertes Ziel** aus der Liste
+- Lege **Häufigkeit** fest
 - Passe bei Bedarf **Name**, **Häufigkeit**, **Uhrzeit** und **Startdatum** an
 - Bestätige mit **Hinzufügen**
-- Das Habit erscheint nun in deinen **heutigen** oder **kommenden Habits**.
+- Das Habit erscheint nun in deinen **heutigen** oder **kommenden Habits**
 
 ==== Ein eigenes Ziel wählen
 Wenn du ein individuelles Ziel hast, kannst du ein eigenes Habit erstellen.
@@ -150,7 +150,7 @@ So legst du ein eigenes Habit an:
 - Lege **Laufzeit** und **Beschreibung** fest.
 - Passe bei Bedarf **Häufigkeit**, **Uhrzeit** und **Startdatum** an.
 - Bestätige mit **Hinzufügen**
-- Das Habit erscheint nun in deinen **heutigen** oder **kommenden Habits**.
+- Das Habit erscheint nun in deinen **heutigen** oder **kommenden Habits**
 
 
 === Gewohnheit abhaken
@@ -161,18 +161,18 @@ image:images/habit5.jpg[width=200] image:images/habit6.jpg[width=200]
 
 ==== So hakst du ein Habit ab (1. Möglichkeit): 
 
-- Scrolle bei Home runter zu **heutige Habits**. 
-- Tippe auf die **Checkbox** des erledigten Habits.
-- Dein **Baum** und deine **Streak** aktualisieren sich automatisch.
+- Scrolle bei Home runter zu **heutige Habits**
+- Tippe auf die **Checkbox** des erledigten Habits
+- Dein **Baum** und deine **Streak** aktualisieren sich automatisch
 
 image:images/habits01n.jpg[width=200] image:images/kal3.jpg[width=200]
 
 ==== So hakst du ein Habit ab (2. Möglichkeit): 
 
-- Navigiere zu der Seite **Habits**. 
-- Scrolle runter zu **heutige Habits**.
-- Tippe auf die **Checkbox** des erledigten Habits.
-- Dein **Baum** und deine **Streak** aktualisieren sich automatisch.
+- Navigiere zu der Seite **Habits**.
+- Scrolle runter zu **heutige Habits**
+- Tippe auf die **Checkbox** des erledigten Habits
+- Dein **Baum** und deine **Streak** aktualisieren sich automatisch
 
 === Gewohnheit bearbeiten / löschen
 
@@ -182,23 +182,23 @@ image:images/habits01n.jpg[width=200] image:images/kal31.jpg[width=200]
 
 ==== So bearbeitest oder löschst du ein Habit (1. Möglichkeit):
 
-- Navigiere zu der Seite **Habits**.
-- Scrolle runter zu **heutige Habits**.
-- Tippe auf das **Stift Symbol** um das Habit zu bearbeiten.
-- Tippe auf das **Papierkorb Symbol** um das Habit zu löschen.
+- Navigiere zu der Seite **Habits**
+- Scrolle runter zu **heutige Habits**
+- Tippe auf das **Stift Symbol** um das Habit zu bearbeiten
+- Tippe auf das **Papierkorb Symbol** um das Habit zu löschen
 
 image:images/habits01.jpg[width=200] image:images/kal6.jpg[width=200]
 
 ==== So bearbeitest oder löschst du ein Habit (2. Möglichkeit):
 
-- Navigiere zu der Seite **Habits**.
-- Wechsel zu **Alle Habits**.
-- Tippe auf das **Stift Symbol** um das Habit zu bearbeiten.
-- Tippe auf das **Papierkorb Symbol** um das Habit zu löschen.
+- Navigiere zu der Seite **Habits**
+- Wechsel zu **Alle Habits**
+- Tippe auf das **Stift Symbol** um das Habit zu bearbeiten
+- Tippe auf das **Papierkorb Symbol** um das Habit zu löschen
 
 image:images/kal4.jpg[width=200] image:images/kal5.jpg[width=200]
 
-- Jetzt kann das Habit bearbeitet oder das Löschen bestätigt werden.
+- Jetzt kann das Habit bearbeitet oder das Löschen bestätigt werden
 
 === Baum anzeigen und wachsen lassen
 
@@ -211,10 +211,10 @@ image:images/tree2.jpg[width=200]
 
 image:images/tree3.jpg[width=200] image:images/tree1.jpg[width=200] image:images/tree4.jpg[width=200]
 
-- Klicke einen Baum um sein Habit und dessen Streak anzeigen zu lassen.
-- Je mehr Tage erfolgreich abgeschlossen wurden, desto mehr wächst der Baum.
-- Klicke auf das Pokal-Symbol um den Baum zu ernten, nur möglcih wenn das Streak-Ziel erreicht wurde. 
-- Beim Ernten erhält man einen Erfolg.
+- Klicke einen Baum an, um sein Habit und dessen Streak anzeigen zu lassen
+- Je mehr Tage erfolgreich abgeschlossen wurden, desto mehr wächst der Baum
+- Klicke auf das Pokal-Symbol um den Baum zu ernten, nur möglich wenn das Streak-Ziel erreicht wurde
+- Beim Ernten erhält man einen Erfolg
 
 === Abzeichen verdienen und anzeigen lassen
 
@@ -224,11 +224,9 @@ image:images/erfolg1.jpg[width=200] image:images/erfolg2.jpg[width=200]
 
 So verdienst du Abzeichen:
 
-- Erfülle regelmäßig deine Habits. 
-- Erreiche bestimmte Meilensteine (z. B. mehrere Tage in Folge).
-- Ernte deine Bäume.
-- Öffne die Ansicht **Erfolge**, um neue Abzeichen zu sehen 
-- Tippe ein Abzeichen an, um Details zu sehen.
+- Erfülle regelmäßig deine Habits
+- Ernte deine Bäume
+- Tippe ein Abzeichen an, um Details zu sehen
 
 === Anmelden/ Abmelden/ Registrieren
 
@@ -238,41 +236,41 @@ Beim ersten Start der App oder nach dem Abmelden meldest du dich (erneut) an ode
 
 image:images/login1.jpg[width=200] 
 
-- Gebe deinen Benutzernamen und Passwort ein und klicke auf **Anmelden**.
+- Gib deinen Benutzernamen und Passwort ein und klicke auf **Anmelden**
 
 ==== Registrieren:
 
 image:images/login2.jpg[width=200]
 
-- Auf **Jetzt registrieren** klicken.
-- Neuen Benutzernamen, Email und Passwort eingeben.
-- Auf **Registrieren & Anmelden** klicken.
+- Auf **Jetzt registrieren** klicken
+- Neuen Benutzernamen, E-Mail und Passwort eingeben
+- Auf **Registrieren & Anmelden** klicken
 
 ==== Abmelden:
 
 image:images/profil01.jpg[width=200]
 
-- Navigiere zu der Seite **Profil**.
-- Auf *Abmelden** klicken.
+- Navigiere zu der Seite **Profil**
+- Auf *Abmelden** klicken
 
 
 == FAQ / Häufige Probleme
 
 ==== Warum funktioniert der QR-Code nicht?
   
-  - Stelle sicher, dass Expo läuft und die VPN an ist damit dein Handy im gleichen Netzwerk ist.
+  - Stelle sicher, dass Expo läuft und die VPN aktiviert ist damit dein Handy im gleichen Netzwerk ist
 
 ==== Meine Habits werden nicht geladen / Ich kann mich nicht einloggen
  
-  - Prüfe, ob du angemeldet bist.
-  - Stelle sicher, dass du Zugriff auf das HTW‑Netzwerk hast und die VPN aktiv ist.
-  - Falls weiterhin Probleme auftreten: App neu starten oder Internetverbindung prüfen.
+  - Prüfe, ob du angemeldet bist
+  - Stelle sicher, dass du Zugriff auf das HTW‑Netzwerk hast und die VPN aktiv ist
+  - Falls weiterhin Probleme auftreten: App neu starten oder Internetverbindung prüfen
 
 ==== Der Baum wächst nicht?
   
-  - Nur wenn du deine Habits regelmäßig abhaken kannst, steigt der Fortschritt.
-  - Wenn du mehrere Tage auslässt, wird die Streak zurückgesetzt.
-  - Vergesse also nicht deine Habits zu erledigen.
+  - Nur wenn du deine Habits regelmäßig abhaken kannst, steigt der Fortschritt
+  - Wenn du einen Tag dein Habit nicht abhakst, verringert sich die Streak um einen Tag
+  - Vergiss also nicht deine Habits zu erledigen
 
 ==== Warum 66 Tage?
 
@@ -282,96 +280,69 @@ image:images/faq1.jpg[width=200]
 
 image:images/Home01.jpg[width=200] image:images/habit8.jpg[width=200]
  
-  - Im Home Menü unter dem Menüpunkt **Streak**.
+  - Im Home Menü unter dem Menüpunkt **Streak**
 
 
 ==== Wo sehe ich meine aktuelle Streak eines Habits?
 
 image:images/Home01.jpg[width=200] image:images/habit7.jpg[width=200]
 
-  - Im Home Menü unter dem Menüpunkt **Habit Statistiken (Tage)**.
-  - Klicke auf das gewünschte Habit um genauere Informationen zu dem Habit und dessen Streak zu bekommen.
+  - Im Home Menü unter dem Menüpunkt **Habit Statistiken (Tage)**
+  - Klicke auf das gewünschte Habit um genauere Informationen zu dem Habit und dessen Streak zu bekommen
 
 ==== Was passiert nachdem ich mein Habit abgeschlossen habe?
 
 image:images/tree4.jpg[width=200] image:images/erfolg1.jpg[width=200] image:images/erfolg2.jpg[width=200]
 
-  - Du kannst entscheiden ob du weiter dran bleiben möchtest oder den Baum ernten willst.
-  - Wenn du weiter dran bleibst, wächst der Baum weiter und deine Streak erhöht sich.
-  - Wenn du das Streak‑Ziel erreicht hast, kannst du aber auch den Baum ernten und erhältst ein Abzeichen.
-  - Hierfür einfach auf das **Pokal Symbol** unten bei den abgeschlossenen Baum tippen.
+  - Du kannst entscheiden ob du weiter dran bleiben möchtest oder den Baum ernten willst
+  - Wenn du weiter dran bleibst, wächst der Baum weiter und deine Streak erhöht sich
+  - Wenn du das Streak‑Ziel erreicht hast, kannst du aber auch den Baum ernten und erhältst ein Abzeichen
+  - Hierfür einfach auf das **Pokal Symbol** unten bei dem abgeschlossenen Baum tippen
 
 ==== Kann ich ein Habit nachträglich bearbeiten?
 
-- Ja, du kannst Name, Beschreibung oder Häufigkeit jederzeit anpassen. Dein bisheriger Fortschritt bleibt dabei erhalten.
+- Ja, du kannst Name, Beschreibung oder Häufigkeit jederzeit anpassen. Dein bisheriger Fortschritt bleibt dabei erhalten
 
 ==== Kann ich ein Habit löschen?
 
-- Ja, aber Achtung: Beim Löschen gehen Streak und Baum verloren. 
+- Ja, aber Achtung: Beim Löschen gehen Streak und Baum verloren
 
 ==== Was passiert, wenn ich einen Tag vergesse?
 
-- Dann wird der Streak zurückgesetzt. Das ist nicht schlimm – wichtig ist, dass du wieder einsteigst.
+- Dann wird der Streak zurückgesetzt. Das ist nicht schlimm, wichtig ist, dass du wieder einsteigst.
 
 
 == Tipps & Tricks
 
-**Fang klein an**
-
-Du musst nicht direkt große Ziele setzen. 
+**Fang klein an**: Du musst nicht direkt große Ziele setzen. 
 Ein paar Minuten pro Tag reichen völlig. 
 
-**Mach es dir leicht**
-
-Verbinde neue Gewohnheiten mit Dingen, die du sowieso tust, 
+**Mach es dir leicht**: Verbinde neue Gewohnheiten mit Dingen, die du sowieso tust, 
 zum Beispiel: „Nach dem Zähneputzen trinke ich ein Glas Wasser“. 
 
-**Fang klein an**
-
-Du musst nicht direkt große Ziele setzen. 
-Ein paar Minuten pro Tag reichen völlig.
-
-**Nutze die Streaks als kleinen Motivationsschub**
-
-Es fühlt sich gut an, wenn die Kette länger wird.  
+**Nutze die Streaks als kleinen Motivationsschub**: Es fühlt sich gut an, wenn die Kette länger wird.  
 Versuche, sie nicht zu unterbrechen – aber sei nicht zu streng mit dir.
 
-**Plane realistisch**
-
-Zu viele Habits auf einmal überfordern. 
+**Plane realistisch**: Zu viele Habits auf einmal überfordern. 
 Starte lieber mit ein bis zwei Gewohnheiten und steigere dich später.
 
-**Belohne dich bewusst**
-
-Wenn du dein Streak-Ziel erreichst, gönn dir etwas Schönes.  
+**Belohne dich bewusst**: Wenn du dein Streak-Ziel erreichst, gönn dir etwas Schönes.  
 Das verstärkt den positiven Effekt und macht Spaß.
 
-**Der Baum ist dein Fortschrittsbarometer**
-
-Der wachsende Baum zeigt dir, dass du dranbleibst.  
+**Der Baum ist dein Fortschrittsbarometer**: Der wachsende Baum zeigt dir, dass du dranbleibst.  
 Das Ernten fühlt sich wie ein kleines Level-Up an.
 
-**Rückschläge gehören dazu**
-
-Ein verpasster Tag ist kein Weltuntergang. 
+**Rückschläge gehören dazu**: Ein verpasster Tag ist kein Weltuntergang. 
 Wichtig ist, dass du wieder einsteigst und weitermachst.
 
-**Passe deine Habits an dein Leben an**
-
-Wenn etwas nicht funktioniert, ändere es. 
+**Passe deine Habits an dein Leben an**: Wenn etwas nicht funktioniert, ändere es. 
 Ein Habit soll dich unterstützen, nicht stressen.
 
-**Nutze feste Zeiten**
-
-Gewohnheiten bleiben leichter hängen, wenn sie einen festen Platz im Alltag haben. 
+**Nutze feste Zeiten**: Gewohnheiten bleiben leichter hängen, wenn sie einen festen Platz im Alltag haben. 
 Ein kurzer Reminder kann zusätzlich helfen.
 
-**Hab Spaß dabei**
-
-Es geht nicht um Perfektion, sondern um Entwicklung. 
-Jeder kleine Schritt zählt.
+**Hab Spaß dabei**: Es geht nicht um Perfektion oder Wettbewerb, sondern um Entwicklung. Jeder kleine Schritt zählt.
 
 
 == 12. Abschluss / Weiterführende Links
 GitHub Repository: https://github.com/laurenzzzzzz/htwd-se1-habitree
-
