@@ -20,6 +20,14 @@ Scanne den angezeigten QR-Code mit der **Expo Go App** auf deinem Smartphone.
 
 image:images/qrcode.png[width=200]
 
+- Falls der QR-Code nicht funktionieren sollte, gerne eine Email an unser Team schreiben.
+
+- Login Test Daten mit bereits angelegten Daten:
+
+    Email: marc@gmail.com
+
+    Passwort: marc
+
 Hinweis: Würde man die App tatsächlich veröffentlichen wäre der QR-Code nicht notwendig, da die App dann über den App Store/Play Store installiert werden könnte.
 
 Der bereitgestellte QR-Code gehört zu einer auf dem HTW-Server laufenden Frontend Docker Container Instanz. In der Betriebsdokumentation ist angegeben, wie man selbst eine Instanz der App starten kann.
@@ -349,8 +357,4 @@ Ein kurzer Reminder kann zusätzlich helfen.
 == Abschluss / Weiterführende Links
 GitHub Repository: https://github.com/laurenzzzzzz/htwd-se1-habitree
 
-- Login Test Daten mit bereits angelegten Daten:
 
-    Email: marc@gmail.com
-
-    Passwort: marc
