@@ -1,6 +1,9 @@
 // Meta
 :project-name: Habit-Tracker (T03) - Habitree
 :project-system-name: Habitree
+// Links
+:github-repo-url: https://github.com/laurenzzzzzz/htwd-se1-habitree
+:github-project-url: https://github.com/laurenzzzzzz/htwd-se1-habitree/projects
 // Settings:
 :toc:
 :toc-title: Inhaltsverzeichnis

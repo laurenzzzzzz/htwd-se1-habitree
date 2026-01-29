@@ -248,4 +248,7 @@ git push origin feature/mein-neues-feature
 * **Main aktualisieren**: Lokalen Main Branch aktualisieren
 
 == Link zum Repo
-GitHub Repository: https://github.com/laurenzzzzzz/htwd-se1-habitree
+GitHub Repository: {github-repo-url}
+
+== Link zum GitHub Project
+GitHub Project: {github-project-url}
