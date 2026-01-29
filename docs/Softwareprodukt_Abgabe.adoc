@@ -3,12 +3,16 @@
 == Name des Systems
 Habitree
 
-== URL zur laufenden Instanz
-Die laufende Instanz ist über das HTW-Netzwerk erreichbar:
+== URL zur laufenden Backend Instanz & Nutzung der Software
+
+Für die Installation und Nutzung der mobilen App folgen Sie bitte den Anweisungen in der Anwenderdokumentation.
+
+Die laufende Backend-Instanz ist über das HTW-Netzwerk erreichbar:
 
 https://iseproject01.informatik.htw-dresden.de:8000
 
-(Siehe Anwenderdokumentation für Details zur Nutzung und QR-Code)
+
+
 
 == Demo-Login
 Für Testzwecke steht folgender Demo-Account zur Verfügung:
