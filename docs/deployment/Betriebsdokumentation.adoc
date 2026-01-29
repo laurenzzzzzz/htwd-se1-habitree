@@ -18,7 +18,7 @@ Sie ermöglicht:
 
 *Hinweis:* Diese Dokumentation konzentriert sich auf systemspezifische Besonderheiten von Habitree. Standarddokumentation für PostgreSQL, Docker, Node.js etc. wird verlinkt. Die produktive Hochschulinstanz läuft aktuell auf `iseproject01.informatik.htw-dresden.de:8000`; die folgenden Schritte beschreiben aber ausschließlich, wie Habitree auf einer eigenen Infrastruktur betrieben wird.
 
-== Systemvoraussetzungen
+== Systemvoraussetzungen für Backend
 
 === Hardware
 
@@ -32,9 +32,7 @@ Sie ermöglicht:
 
 === Betriebssystem
 
-* **Linux** (Ubuntu 20.04 LTS, Debian 11+, oder äquivalent)
-* **macOS** 12+ (für lokale Entwicklung)
-* Windows mit WSL2 (für lokale Entwicklung)
+* alle gängigen Betriebssysteme mit Docker-Unterstützung (Linux, Windows 10/11, macOS)
 
 === Software-Stack
 
@@ -43,8 +41,7 @@ Sie ermöglicht:
 |Docker Engine |20.10+ |Container-Runtime
 |Docker Compose |1.29+ |Container-Orchestrierung
 |PostgreSQL |14+ |Datenbank (läuft in Container)
-|Node.js |20 LTS |Laufzeitumgebung Backend
-|Git |2.30+ |Versionskontrolle
+|Node.js |20 LTS |Laufzeitumgebung Backend (läuft in Container)
 |===
 
 === Netzwerk
