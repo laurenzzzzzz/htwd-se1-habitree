@@ -90,14 +90,14 @@ include::../development/plantuml/sequenzdiagramme.md[lines=203..221]
 ....
 
 
+//
+//**Die Links zu der Dokumentation und Visualisierung für alle unserer Sequenzdiagramme mit den passenden User Stories:**//
 
-**Die Links zu der Dokumentation und Visualisierung für alle unserer Sequenzdiagramme mit den passenden User Stories:**
+//link:plantuml/Sequenzdiagramm_Login.plantuml[Link zu den Login Sequenzdiagramm]
 
-link:plantuml/Sequenzdiagramm_Login.plantuml[Link zu den Login Sequenzdiagramm]
+//link:plantuml/Sequenzdiagramm_Registrierung.plantuml[Link zu den Registrierung Sequenzdiagramm]
 
-link:plantuml/Sequenzdiagramm_Registrierung.plantuml[Link zu den Registrierung Sequenzdiagramm]
-
-link:plantuml/sequenzdiagramme.md[Link zu den restlichen Sequenzdiagramme]
+//link:plantuml/sequenzdiagramme.md[Link zu den restlichen Sequenzdiagramme]
 
 
 == Schnittstellen
@@ -132,7 +132,7 @@ link:plantuml/sequenzdiagramme.md[Link zu den restlichen Sequenzdiagramme]
 include::plantuml/datenbank-beziehungen.plantuml[]
 ....
 
-link:plantuml/datenbank-beziehungen.plantuml[Link zu der Datenbank Beziehung]
+//link:plantuml/datenbank-beziehungen.plantuml[Link zu der Datenbank Beziehung]
 
 == Umsetzungen und Erweiterungen der Architektur durch User Stories
 
@@ -172,7 +172,7 @@ Der Nutzer soll unmittelbar nach dem App-Start eine chronologische Übersicht se
 include::../development/plantuml/Sequenzdiagramm_AutomatischeAnzeige_Tagesplan.md[lines=2..31]
 ....
 
-link:plantuml/Sequenzdiagramm_AutomatischeAnzeige_Tagesplan.md[Link zu den passenden Sequenzdiagramm]
+//link:plantuml/Sequenzdiagramm_AutomatischeAnzeige_Tagesplan.md[Link zu den passenden Sequenzdiagramm]
 
 == Versions- und Konfigurationsmanagement
 
