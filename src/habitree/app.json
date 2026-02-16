@@ -26,7 +26,9 @@
     "plugins": [
       "expo-web-browser",
       "expo-router",
-      "expo-secure-store"
+      "expo-secure-store",
+      "expo-font",
+      "expo-image"
     ]
   }
 }
